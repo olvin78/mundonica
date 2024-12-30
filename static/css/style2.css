@@ -1,0 +1,68 @@
+/* Menú desplegable */
+.dropdown-menu {
+    display: none;
+    /* Oculto por defecto */
+    position: absolute;
+    top: 60px;
+    /* Justo debajo del botón de perfil */
+    right: 0;
+    background: #c4c3c3;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    /* Asegura que el menú esté visible */
+}
+
+.dropdown-menu.active {
+    display: block;
+    /* Muestra el menú cuando está activo */
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #cfcfcf;
+}
+
+.welcome-message {
+    position: absolute;
+    top: 50%;
+    left: -150px;
+    /* Ajusta si es necesario */
+    transform: translateY(-50%);
+    background: #4caf50;
+    /* Fondo verde */
+    color: #fff;
+    /* Texto blanco */
+    padding: 5px 10px;
+    border-radius: 20px;
+    /* Esquinas redondeadas */
+    font-size: 14px;
+    opacity: 0;
+    /* Oculto por defecto */
+    visibility: hidden;
+    /* No visible por defecto */
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    /* Transición suave */
+    z-index: 1000;
+}
+
+.welcome-message.show {
+    opacity: 1;
+    /* Visible cuando tiene la clase `show` */
+    visibility: visible;
+}
+
+
+.cta-btn {
+    position: relative !important;
+    /* Esto asegura que el mensaje esté dentro del contexto del botón */
+    display: inline-block !important;
+    cursor: pointer !important;
+}

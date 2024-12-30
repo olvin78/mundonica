@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/abogados.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+
+  <main class="main">
+      <!-- Page Title -->
+      <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: rgb(75, 112, 108);">
+        <div class="container position-relative">
+          <h1>Abogados</h1>
+          <h2>tu abogado cerca de ti</h2>
+        </div>
+      </div><!-- End Page Title -->
+
+     <!--fin del div para los mapas-->
+  </main>
+
+  <div class="container">
+
+    {% for dato in datos %}
+    {% if dato.verificado == True %}
+    <div class="row">
+
+      <div class="col-lg-4">
+        <img src="/media/{{dato.imagen}}" alt="Aogados de nicaragua">
+      </div>
+
+
+      <div class="col-lg-8"><h3><strong>{{dato.nombre}} {{dato.apellido}} </strong></h3><br> 
+            <i class="bi bi-star-fill"> 5 .0 {{dato.ciudad}} {{dato.pais}}</i> <br><br>
+        <p>{{dato.resumen|safe}}</p>
+       
+        <span>
+          <i class="bi bi-cash-stack">  Desde {{dato.precio}} C$</i>
+        </span>
+        <br><br>
+        <a href="{% url 'home_app:abogado_detalle' dato.id %}"><button class="btn w-50 text-center" id="detalles">ver detalle</button></a>
+      </div>
+
+
+    </div>
+      <hr>
+      {% endif %}
+       {% endfor %}
+
+      
+  </div>
+
+  {% endblock %}

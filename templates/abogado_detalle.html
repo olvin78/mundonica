@@ -1,0 +1,604 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" 
+integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+<style>
+    body{
+    font-size: 16px;
+    color: #6f6f6f;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0.8px;
+    margin-top:20px;
+}
+.font-size38 {
+    font-size: 38px;
+}
+.team-single-text .section-heading h4,
+.section-heading h5 {
+    font-size: 36px
+}
+
+.team-single-text .section-heading.half {
+    margin-bottom: 20px
+}
+
+@media screen and (max-width: 1199px) {
+    .team-single-text .section-heading h4,
+    .section-heading h5 {
+        font-size: 32px
+    }
+    .team-single-text .section-heading.half {
+        margin-bottom: 15px
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .team-single-text .section-heading h4,
+    .section-heading h5 {
+        font-size: 28px
+    }
+    .team-single-text .section-heading.half {
+        margin-bottom: 10px
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .team-single-text .section-heading h4,
+    .section-heading h5 {
+        font-size: 24px
+    }
+}
+
+
+.team-single-icons ul li {
+    display: inline-block;
+    border: 1px solid #4CAF50;
+    border-radius: 50%;
+    color: #86bc42;
+    margin-right: 8px;
+    margin-bottom: 5px;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s
+}
+
+.team-single-icons ul li a {
+    color: #4CAF50;
+    display: block;
+    font-size: 14px;
+    height: 25px;
+    line-height: 26px;
+    text-align: center;
+    width: 25px
+}
+
+.team-single-icons ul li:hover {
+    background: #4CAF50;
+    border-color: #4CAF50
+}
+
+.team-single-icons ul li:hover a {
+    color: #fff
+}
+
+.team-social-icon li {
+    display: inline-block;
+    margin-right: 5px
+}
+
+.team-social-icon li:last-child {
+    margin-right: 0
+}
+
+.team-social-icon i {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 50px
+}
+
+.padding-30px-all {
+    padding: 30px;
+}
+.bg-light-gray {
+    background-color: #f7f7f7;
+}
+.text-center {
+    text-align: center!important;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.list-style9 {
+    list-style: none;
+    padding: 0
+}
+
+.list-style9 li {
+    position: relative;
+    padding: 0 0 15px 0;
+    margin: 0 0 15px 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1)
+}
+
+.list-style9 li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0
+}
+
+
+.text-sky {
+    color: #189d6d
+}
+
+.text-orange {
+    color: #189d6d
+}
+
+.text-green {
+    color: #189d6d
+}
+
+.text-pink {
+    color: #189d6d
+}
+
+.text-purple {
+    color: #189d6d
+}
+
+
+.custom-progress {
+    height: 10px;
+    border-radius: 50px;
+    box-shadow: none;
+    margin-bottom: 25px;
+}
+.progress {
+    display: -ms-flexbox;
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+}
+
+/*esto es para las opciones de abogado*/
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.col-lg-6, .col-md-12 {
+    padding: 15px;
+    flex: 1;
+    min-width: 300px; /* Ajuste responsivo */
+}
+
+.custom-list {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.list-item {
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+.list-item:hover {
+    background-color: #4CAF50;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.list-item:active {
+    background-color: #189d6d;
+}
+
+@media (max-width: 768px) {
+    .list-item {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+
+  <main class="main">
+      <!-- Page Title -->
+      <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: rgb(75, 112, 108);">
+        <div class="container position-relative">
+            <h2 class="section-heading text-uppercase" style="text-shadow: 2px 2px 5px white;">
+                Abogados</h2>
+          <h3 class="section-subheading text-muted" style="text-shadow: 2px 2px 5px white;">
+            ¡tu abogado cerca de ti!.</h3>
+        </div>
+      </div><!-- End Page Title -->
+
+     <!--fin del div para los mapas-->
+  </main>
+
+    <div class="container" style="margin-top: 10px;margin-bottom: 100px;">
+        <a href="{% url 'home_app:abogados' %}">
+            <button class="btn" style="margin: 10px;">
+                <strong>Volver</strong>
+            </button>
+        </a>
+        <div class="team-single">
+            <div class="row" style="padding-left:10px;">
+                <div class="col-lg-4 col-md-5 xs-margin-30px-bottom">
+                    <div class="team-single-img">
+                        <img src="{{ detalle.imagen.url }}" alt="">
+                    </div>
+                    <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
+                        <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">{{ detalle.nombre }}</h4>
+                        <p class="sm-width-95 sm-margin-auto">{{ detalle.resumen|safe }}</p>
+                        <div class="margin-20px-top team-single-icons">
+                            <ul class="no-margin">
+                                <li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fab fa-google-plus-g"></i></a></li>
+                                <li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-lg-8 col-md-7">
+                    <div class="team-single-text padding-50px-left sm-no-padding-left mt-5 mb-5">
+                        <h4 class="font-size38 sm-font-size32 xs-font-size30">Detalles</h4>
+                        <p class="no-margin-bottom">{{ detalle.descripcion|safe }}</p>
+                        <div class="contact-info-section margin-40px-tb">
+                            <ul class="list-style9 no-margin">
+                                <li>
+    
+                                    <div class="row">
+                                        <div class="col-md-5 col-5 mt-5">
+                                            <i class="fas fa-graduation-cap text-orange"></i>
+                                            <strong class="margin-10px-left text-orange">TITULO:</strong>
+                                        </div>
+                                        <div class="col-md-7 col-7 mt-5">
+                                            <p>{{ detalle.titulo }}</p>
+                                        </div>
+                                    </div>
+    
+                                </li>
+                                <li>
+    
+                                    <div class="row">
+                                        <div class="col-md-5 col-5">
+                                            <i class="fas fa-map-marker-alt text-green"></i>
+                                            <strong class="margin-10px-left text-green">Address:</strong>
+                                        </div>
+                                        <div class="col-md-7 col-7">
+                                            <p>{{ detalle.ciudad }}</p>
+                                        </div>
+                                    </div>
+    
+                                </li>
+                                <li>
+    
+                                    <div class="row">
+                                        <div class="col-md-5 col-5">
+                                            <i class="fas fa-mobile-alt text-purple"></i>
+                                            <strong class="margin-10px-left xs-margin-four-left text-purple">Phone:</strong>
+                                        </div>
+                                        <div class="col-md-7 col-7">
+                                            <p>{{ detalle.telefono }}</p>
+                                        </div>
+                                    </div>
+    
+                                </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-5 col-5">
+                                            <i class="fas fa-envelope text-pink"></i>
+                                            <strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
+                                        </div>
+                                        <div class="col-md-7 col-7">
+                                            <p><a href="javascript:void(0)">{{ detalle.email }}</a></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="div" style="padding-top: 30px;">
+                        <h2>SERVICIOS:</h2>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+
+                                <div class="custom-list">    
+                                    {% if detalle.asesoriajuridicageneral or detalle.redaccionyrevisiondedocumentos or detalle.representacionlegal or detalle.mediacionyarbitraje %}
+                                    <div class="list-item bg-success text-white">SERVICIOS LEGALES GENERALES</div> 
+
+                                   {% endif %}
+
+                                   {% if detalle.asesoriajuridicageneral %}
+                                    <div class="list-item">
+                                        <h3>Asesoría Jurídica General</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Resolución de Consultas Legales</li>
+                                            <li>Orientación Sobre Derecho y Deberes</li>
+                                        </ul>
+                                    
+                                    </div>
+
+                                    {% endif %}
+
+                                    {% if detalle.redaccionyrevisiondedocumentos %}
+                                    <div class="list-item">
+                                        <h3>Redacción y revisión de Documentos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Contratos (alquiler, compra-venta, servicios).</li>
+                                            <li>Acuerdos legales.</li>
+                                            <li>Cartas poder.</li>
+                                        </ul>
+                                        
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.representacionlegal %}
+                                    <div class="list-item">
+                                        <h3>Representasión Legal</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Representación en procesos judiciales o administrativos.</li>
+                                            <li>Defensa ante tribunales.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.mediacionyarbitraje %}
+                                    <div class="list-item">
+                                        <h3>Mediación y Arbitraje</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Resolución de conflictos extrajudiciales.</li>
+                                            <li>Mediación entre partes para evitar litigios.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+
+                                <br>
+                                <div class="custom-list">   
+                                    {% if detalle.tramitesdevisasypermisosdetrabajo or detalle.procesosdenaturalizacion or detalle.defensaencasosdedeportacion or detalle.asesoriaenreagrupacionfamiliar %}
+                                    <div class="list-item bg-success text-white">Derecho Migratorio</div> 
+                                   {% endif %}
+
+                                   {% if detalle.tramitesdevisasypermisosdetrabajo %}
+                                    <div class="list-item">
+                                        <h3>Trámites de Visas y Permisos de Trabajo</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Solicitud de residencia temporal o permanente.</li>
+                                            <li>Renovación de permisos de trabajo.</li>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.procesosdenaturalizacion %}
+                                    <div class="list-item">
+                                        <h3>Procesos de Naturalización</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Asistencia para obtener la ciudadanía.</li>
+                                            <li>Preparación para entrevistas y exámenes de naturalización.</li>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.defensaencasosdedeportacion %}
+                                    <div class="list-item">
+                                        <h3>Defensa en Casos de Deportación</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Asistencia en audiencias de inmigración.</li>
+                                            <li>Apelaciones en casos de denegación de asilo.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.asesoriaenreagrupacionfamiliar %}
+                                    <div class="list-item">
+                                        <h3>Asesoría en Reagrupación Familiar</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Trámites para traer familiares al país de destino.</li>
+                                            <li>Información sobre requisitos legales.</li>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+
+                                <br>
+                                <div class="custom-list">   
+                                    {% if detalle.asesoriaencasosdedivorcioyseparacion or detalle.tramitesdepartidadenacimientoydefunciones or detalle.asesoriaenherenciasytestamentos %}
+                                    <div class="list-item bg-success text-white">Derecho Civil y Familiar</div> 
+                                   {% endif %}
+
+                                   {% if detalle.asesoriaencasosdedivorcioyseparacion %}
+                                    <div class="list-item">
+                                        <h3>Asesoría en Casos de Divorcio y Separación</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Resolución de disputas legales entre parejas.</li>
+                                            <li>Acuerdos de separación de bienes y custodia.</li>
+                                        </ul></div>
+                                    {% endif %}
+
+                                    {% if detalle.tramitesdepartidadenacimientoydefunciones %}
+                                    <div class="list-item">
+                                        <h3>Trámites de Partidas de Nacimiento y Defunciones</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Registro y obtención de certificados oficiales.</li>
+                                            <li>Legalización de documentos en otros países.</li>
+                                        </ul></div>
+                                    {% endif %}
+
+                                    {% if detalle.asesoriaenherenciasytestamentos %}
+                                    <div class="list-item">
+                                        <h3>Asesoría en Herencias y Testamentos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Redacción y revisión de testamentos.</li>
+                                            <li>Resolución de conflictos hereditarios.</li>
+                                        </ul></div>
+                                    {% endif %}
+                                </div>
+                                
+
+                                <br>
+                                <div class="custom-list">   
+                                    {% if detalle.negocioacionyredacciondecontratos or detalle.asistenciaencasosdedespidos %}
+                                    <div class="list-item bg-success text-white">Derecho Laboral</div> 
+                                   {% endif %}
+
+                                   {% if detalle.asesoriaencasosdedivorcioyseparacion %}
+                                    <div class="list-item">
+                                        <h3>Negociación y Redacción de Contratos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Elaboración de contratos laborales.</li>
+                                            <li>Mediación en conflictos laborales.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.asistenciaencasosdedespidos %}
+                                    <div class="list-item">
+                                        <h3>Asistencia en Casos de Despidos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Reclamos por despido injustificado.</li>
+                                            <li>Asesoría sobre derechos laborales.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-12">
+                                <div class="custom-list">   
+                                    {% if detalle.asesoramientoparaemprendedores or detalle.propiedadintelectual or detalle.asesoriaparaexportaciondeproductos %}
+                                    <div class="list-item bg-success text-white">Derecho Mercantíl</div> 
+                                   {% endif %}
+
+                                   {% if detalle.asesoramientoparaemprendedores %}
+                                    <div class="list-item">
+                                        <h3>Asesoría Para Emprendedores</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Constitución de empresas.</li>
+                                            <li>Cumplimiento de normativas legales.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.propiedadintelectual %}
+                                    <div class="list-item">
+                                        <h3>Propiedad Intelectual</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Registro de marcas y patentes.</li>
+                                            <li>Protección de derechos de autor.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.asesoriaparaexportaciondeproductos %}
+                                    <div class="list-item">
+                                        <h3>Asesoría en Exportación de Productos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Cumplimiento de normas aduaneras.</li>
+                                            <li>Elaboración de contratos de exportación</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+
+                                <br>
+<!--aca estoy poniendo li desordenados para crear primero la basse de etiqueta-->
+                                <div class="custom-list">   
+                                    {% if detalle.defenzaencasospenales or detalle.asesoriaencasosdeviolenciaoabusos %}
+                                    <div class="list-item bg-success text-white">Derecho Penal
+                                    </div> 
+                                   {% endif %}
+
+                                   {% if detalle.defenzaencasospenales %}
+                                    <div class="list-item"><h3>Defensa en Casos penales
+                                        <ul style="text-align: left;">
+                                            <li>Representación en juicios por delitos menores o graves.</li>
+                                            <li>Asistencia legal en procesos de investigación policial.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if detalle.asesoriaencasosdeviolenciaoabusos %}
+                                    <div class="list-item"><h3>Asesoría en Casos de Violecia o Abuso</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Asistencia legal para víctimas de violencia doméstica.</li>
+                                            <li>Orientación sobre medidas cautelares, como órdenes de restricción.</li>
+                                            <li>Acompañamiento en denuncias y procesos judiciales por abuso físico, psicológico o sexual.</li>
+                                        </ul></div>
+                                    {% endif %}
+                                </div>
+
+                                <br>
+
+                                <div class="custom-list">   
+                                    {% if detalle.traduccionylegalizaciondedocumentos or detalle.capacitacionesytalleresjuridicos %}
+                                    <div class="list-item bg-success text-white">Servicios Adicionales</div> 
+                                   {% endif %}
+
+                                   {% if detalle.traduccionylegalizaciondedocumentos %}
+                                    <div class="list-item"><h3>Táduccion y Legalización de Documentos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Traducción oficial de documentos legales, como certificados y contratos.</li>
+                                            <li>Legalización de documentos para uso en el extranjero.</li>
+                                            <li>Apostillado de documentos según el Convenio de La Haya.</li>
+                                        </ul></div>
+                                    {% endif %}
+
+                                    {% if detalle.capacitacionesytalleresjuridicos %}
+                                    <div class="list-item">
+                                        <h3>Capacitaciones y Talleres Jurídicos</h3>
+                                        <ul style="text-align: left;">
+                                            <li>Capacitación en normativas legales para emprendedores y negocios.</li>
+                                            <li>Talleres sobre resolución de conflictos y mediación.</li>
+                                            <li>Formación sobre derechos laborales y contractuales para empleados y empleadores.</li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!--pruava para desaparecer contenido segun pantallas pequenas-->
+
+
+    {% endblock %}

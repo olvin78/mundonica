@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+  <!-- Page Title -->
+  <div class="page-title bg-dark" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);">
+    <div class="container position-relative"  style="text-shadow: 1px 1px 2px white;">
+      <h1>"Hablemos de tus dudas"</h1>
+      <p style="color: black;">"Desliza hacia abajo y encuentra respuestas claras a las preguntas más comunes."</p>
+    </div>
+  </div><!-- End Page Title -->
+
+
+
+  <main class="main">
+    <!-- Faq Section -->
+    <section id="faq" class="faq section">
+
+      <div class="container">
+
+
+        <a href="{% url 'home_app:home' %}">
+          <button class="btn  mb-5" style="margin: 10px;margin-bottom: 2px;">
+              <strong>Volver</strong>
+          </button>
+      </a>
+
+
+        <div class="row gy-4">
+
+          <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+
+            <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
+              <h3>
+                <span>Preguntas más </span>
+                <strong>frecuentes</strong>
+              </h3>
+              <p>
+              </p>
+            </div>
+
+            <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
+
+              <div class="faq-item faq-active" >
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Cuáles son los beneficios?</h3>
+                <div class="faq-content">
+                  <p><b>Comodidad y Ahorro de Tiempo:</b><br>
+                      1.Todo en un solo lugar: Enfatiza que los usuarios encontrarán toda la información que necesitan sin tener que navegar por múltiples sitios web. <br>
+                      2.Eliminación de búsquedas dispersas: Resalta cómo se evita que los usuarios pierdan tiempo buscando datos en diferentes fuentes. <br>
+                      3.Acceso rápido y fácil: Destaca la interfaz intuitiva y la facilidad de navegación de la web.
+                      </ul>
+                  </p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>Por qué esta web?</h3>
+                <div class="faq-content">
+                  <p>Fuentes confiables. <br>
+                      Equipo especializado. <br>
+                      Proceso de verificación. <br>
+                  </p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Es de pago?</h3>
+                <div class="faq-content">
+                  <p>"No" <br><br>Esta web es completamente gratuita para todos. Nos mantenemos gracias a la generosidad de nuestros usuarios, que pueden hacer donaciones voluntarias para ayudarnos a seguir ofreciendo este servicio."</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo solicito un pasaporte nicaragüense en el extranjero?</h3>
+    <div class="faq-content">
+      <p>Debe acudir al consulado más cercano con los documentos necesarios, como partida de nacimiento, cédula y fotos tamaño pasaporte. Verifique los costos y tiempo de procesamiento en la oficina consular.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué necesito para solicitar una visa de turismo a otro país?</h3>
+    <div class="faq-content">
+      <p>Generalmente se requiere pasaporte válido, prueba de solvencia económica, itinerario de viaje, y carta de invitación si aplica. Consulte los requisitos específicos de cada embajada.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo puedo registrar a mi hijo nacido en el extranjero como nicaragüense?</h3>
+    <div class="faq-content">
+      <p>Debe acudir al consulado nicaragüense con la partida de nacimiento extranjera debidamente apostillada y traducida, junto con su identificación como progenitor nicaragüense.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué documentos necesito para regresar a Nicaragua si mi pasaporte está vencido?</h3>
+    <div class="faq-content">
+      <p>Puede solicitar un salvoconducto en el consulado nicaragüense. Necesitará una identificación válida, como su cédula, y completar un formulario de solicitud.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Puedo tramitar mi cédula de identidad desde el extranjero?</h3>
+    <div class="faq-content">
+      <p>En la mayoría de los casos, deberá realizar este trámite en Nicaragua. Algunos consulados ofrecen asistencia limitada para renovaciones o actualizaciones.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo solicito antecedentes penales desde fuera de Nicaragua?</h3>
+    <div class="faq-content">
+      <p>Puede autorizar a un tercero en Nicaragua mediante un poder notarial para tramitar los antecedentes penales en su nombre o consultar si el consulado ofrece este servicio.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué debo hacer si pierdo mi pasaporte en el extranjero?</h3>
+    <div class="faq-content">
+      <p>Debe reportarlo a las autoridades locales y al consulado nicaragüense. Solicite un nuevo pasaporte o un salvoconducto para regresar al país.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo obtengo una visa para trabajar en otro país?</h3>
+    <div class="faq-content">
+      <p>Necesitará un contrato de trabajo, pasaporte válido y cumplir con los requisitos migratorios del país de destino. Consulte con la embajada correspondiente.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Puedo votar desde el extranjero?</h3>
+    <div class="faq-content">
+      <p>Dependerá de la legislación electoral vigente. Consulte con su consulado para verificar si se permite el voto en el extranjero.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué necesito para traer a mi familia a vivir conmigo en el extranjero?</h3>
+    <div class="faq-content">
+      <p>Dependerá de las leyes de inmigración del país donde reside. Generalmente necesitará demostrar solvencia económica y presentar documentos como actas de nacimiento y matrimonio.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <!-- Repite el formato para las siguientes preguntas -->
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo puedo obtener la residencia permanente en otro país?</h3>
+    <div class="faq-content">
+      <p>Los requisitos varían según el país, pero generalmente incluyen tener una oferta de trabajo, familiares directos residentes, o invertir en el país. Consulte con las autoridades migratorias locales para detalles específicos.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué es una visa de trabajo y cómo la obtengo?</h3>
+    <div class="faq-content">
+      <p>Una visa de trabajo permite laborar legalmente en otro país. Para obtenerla, se necesita una oferta de empleo de una empresa en el país de destino y cumplir con los requisitos migratorios locales.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo solicito asilo en otro país?</h3>
+    <div class="faq-content">
+      <p>El asilo se solicita ante las autoridades migratorias del país donde busca protección. Debe demostrar persecución o temor fundado de persecución en su país de origen por motivos de raza, religión, nacionalidad, grupo social u opiniones políticas.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué es el Estatus de Protección Temporal (TPS) y cómo aplica a los nicaragüenses?</h3>
+    <div class="faq-content">
+      <p>El TPS permite vivir y trabajar temporalmente en ciertos países debido a condiciones extraordinarias en el país de origen. Verifique si Nicaragua está designado bajo TPS en el país donde reside.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Puedo tener doble nacionalidad siendo nicaragüense?</h3>
+    <div class="faq-content">
+      <p>Sí, Nicaragua permite la doble nacionalidad. Sin embargo, es importante verificar las leyes del otro país involucrado para asegurarse de que también lo permita.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo puedo traer a mi familia a vivir conmigo en el extranjero?</h3>
+    <div class="faq-content">
+      <p>La reunificación familiar requiere demostrar lazos familiares, solvencia económica y cumplir con los requisitos migratorios del país de residencia. Consulte con las autoridades migratorias locales para detalles específicos.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué debo hacer si mi visa expira mientras estoy en el extranjero?</h3>
+    <div class="faq-content">
+      <p>Debe regularizar su situación lo antes posible en la oficina de migración local. Estar en un estatus irregular puede acarrear multas, deportación o restricciones futuras.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué es una carta de invitación y cómo se utiliza?</h3>
+    <div class="faq-content">
+      <p>Es un documento emitido por un residente o ciudadano de otro país que declara que lo hospedará durante su estadía. Es comúnmente necesario para visas de turismo o visita.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Puedo abrir una cuenta bancaria en otro país como extranjero?</h3>
+    <div class="faq-content">
+      <p>Sí, la mayoría de los países lo permiten si presenta un pasaporte válido, prueba de residencia y, en algunos casos, una visa de trabajo o estudio.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Cómo puedo solicitar la ciudadanía en otro país?</h3>
+    <div class="faq-content">
+      <p>Los requisitos varían, pero generalmente incluyen haber residido legalmente por un período específico, demostrar integración cultural, y aprobar un examen de idioma o conocimientos cívicos.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué necesito para estudiar en el extranjero?</h3>
+    <div class="faq-content">
+      <p>Debe ser aceptado por una institución educativa del país de destino. Necesitará una visa de estudiante, prueba de fondos suficientes, y un pasaporte válido.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+  <div class="faq-item">
+    <i class="faq-icon bi bi-question-circle"></i>
+    <h3>¿Qué sucede si soy deportado de un país?</h3>
+    <div class="faq-content">
+      <p>Debe contactar a su consulado para recibir apoyo legal. Podrá enfrentar restricciones para ingresar nuevamente al país de deportación dependiendo de las leyes locales.</p>
+    </div>
+    <i class="faq-toggle bi bi-chevron-right"></i>
+  </div>
+
+
+
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 order-1 order-lg-2 mt-1">
+            <img src="{% static 'images/logopregunta1.webp' %}" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100" style="border-radius: 10px;">
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Faq Section -->
+<hr>
+ 
+
+  </main>
+
+ {% endblock %}

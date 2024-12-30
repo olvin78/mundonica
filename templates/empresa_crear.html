@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);background-color: #0067c6;">
+      <div class="container position-relative">
+        <h1>Crear empresa</h1>
+        <p>Crea tu empresa para darlo a conocer y esté localizable.</p>
+        <nav class="breadcrumbs">
+         
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+    <!-- Blog Posts Section -->
+
+
+<div class="container mt-5 mb-5">
+    <h2 class="text-center">¡Vamos  crear una empresa, Genial!</h2>
+    <form method="post" enctype="multipart/form-data" class="needs-validation">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success w-100 mt-3 mb-5">Guardar Empresa</button>
+    </form>
+</div>
+
+
+  </main>
+
+  {% endblock %}

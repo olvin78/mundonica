@@ -1,0 +1,764 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block content %}
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="{% static 'images/nicaraguaheader.webp' %}" alt="" data-aos="fade-in">
+
+      <div class="container d-flex flex-column align-items-center text-center">
+        <h2 data-aos="fade-up" data-aos-delay="100">Bienvenido a esta página web</h2>
+        <p data-aos="fade-up" data-aos-delay="200">"Esta web es un proyecto personal dedicado a informar, promover la cultura nicaragüense y fomentar el desarrollo tecnológico y web, reflejando nuestra identidad y capacidad."</p>
+        <div data-aos="fade-up" data-aos-delay="300">
+          <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Sobre</h2>
+        <h6 style="color: #2c612d;">
+          "Información clave y práctica para facilitar tu camino, conectar con recursos esenciales y aprovechar al máximo las oportunidades disponibles."</h6>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p>"Aquí te presentamos una selección de temas con datos útiles para que te ubiques de forma simple y práctica."
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i> <span>Ubicar y facilitar información clave sobre trámites de extranjería, legales, recursos culturales, y servicios esenciales.</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>Impulsar el aprendizaje y el desarrollo en tecnología y desarrollo web, fomentando la innovación.</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>Promover la conexión entre personas, la economía local y el acceso a oportunidades de crecimiento.</span></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <p>"En esta web somos conscientes de lo difícil que puede ser encontrar información centralizada. Por eso, nos hemos dedicado a investigar y organizar datos clave para facilitar el acceso a información confiable y útil."</p>
+            <a href="#" class="read-morem"><span>Vamos a ello</span><i class="bi bi-arrow-right"></i></a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Servicios</h2>
+        <p>Necesitas información, aquí te dejamos información de diferentes sectores en una misma web.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item  position-relative">
+              <div class="icon">
+                <i class="bi bi-globe-americas"></i>
+              </div>
+              <a href="#" class="stretched-link">
+                <h3>Trámites Migratorios</h3>
+              </a>
+              <p>"Encuentra información clave sobre cómo gestionar visas, residencias temporales o permanentes, permisos de trabajo, y otros procedimientos migratorios necesarios para moverte o establecerte legalmente en cualquier país."</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-person-bounding-box"></i>
+              </div>
+              <a href="#" class="stretched-link">
+                <h3>Trámites Legales</h3>
+              </a>
+              <p>"Accede a guías prácticas para realizar trámites legales, como certificación de documentos, poderes notariales, antecedentes penales, registros de nacimiento, y procesos de nacionalización o ciudadanía."</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-person-arms-up"></i>
+              </div>
+              <a href="#" class="stretched-link">
+                <h3>Culturales</h3>
+              </a>
+              <p>"Conoce sobre actividades, festivales, tradiciones y recursos culturales que conectan a los nicaragüenses con su identidad, tanto dentro como fuera del país. Una ventana a nuestras raíces y patrimonio."</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-cup-hot"></i>
+              </div>
+              <a href="#" class="stretched-link">
+                <h3>Gastronomía</h3>
+              </a>
+              <p>""Explora lo mejor de la cocina nicaragüense, desde recetas tradicionales hasta eventos gastronómicos. Una oportunidad para disfrutar y compartir nuestra cultura a través de los sabores."</p>
+              <a href="#" class="stretched-link"></a>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-currency-exchange"></i>
+              </div>
+              <a href="#" class="stretched-link">
+                <h3>Económicos</h3>
+              </a>
+              <p>"Infórmate sobre oportunidades económicas, desde envío de remesas hasta emprendimientos y negocios internacionales. Encuentra recursos para aprovechar al máximo las ventajas financieras disponibles."</p>
+              <a href="#" class="stretched-link"></a>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-arrows-angle-expand"></i>
+              </div>
+              <a href="#" class="stretched-link">
+                <h3>Exportación</h3>
+              </a>
+              <p>"Aprende sobre los procedimientos necesarios para exportar productos nicaragüenses al extranjero, incluyendo requisitos legales, certificaciones y estrategias para expandir tus mercados."</p>
+              <a href="#" class="stretched-link"></a>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Services Section -->
+
+    <!-- Call To Action Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="{% static 'images/donacion.webp' %}" alt="">
+
+      <div class="container">
+
+        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-9 text-center text-xl-start">
+            <h2><b>"Tu Apoyo es Nuestra Fuerza"</b></h2>
+            <h4><b>"Haz que este recurso siga creciendo. Tu donación nos permite mantener la web gratuita para todos."</b></h4>
+          </div>
+          <div class="col-xl-3 cta-btn-container text-center">
+            <a class="cta-btn align-middle" href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E">Donativos</a>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Call To Action Section -->
+
+    <!-- Features Section -->
+    <section id="features" class="features section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="features-image col-lg-6 order-lg-2" data-aos="fade-up" data-aos-delay="100"><img src="{% static 'images/digitalizacion-2.webp' %}" alt=""></div>
+
+          <div class="col-lg-6 order-lg-1">
+
+            <div class="features-item d-flex ps-0 ps-lg-3 pt-4 pt-lg-0" data-aos="fade-up" data-aos-delay="200">
+              <i class="bi bi-shop flex-shrink-0"></i>
+              <div>
+                <h4>Fortalecimiento del Comercio Local</h4>
+                <p>Proporcionamos a pequeños y grandes comercios un espacio digital para mostrar sus productos y servicios, permitiéndoles competir en el mercado en línea y expandir su alcance.</p>
+              </div>
+            </div><!-- End Features Item-->
+
+            <div class="features-item d-flex mt-5 ps-0 ps-lg-3" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h4>Conexión con la Comunidad</h4>
+                <p>Nuestra plataforma facilita la localización de negocios, restaurantes, abogados, consulados y embajadas en un mapa interactivo, conectando a las personas con los recursos que necesitan.</p>
+              </div>
+            </div><!-- End Features Item-->
+
+            <div class="features-item d-flex mt-5 ps-0 ps-lg-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-cpu flex-shrink-0"></i>
+              <div>
+                <h4>Transformación Digital Integral</h4>
+                <p>Con herramientas como reservas, ventas en línea y exportación, ayudamos a modernizar procesos y a digitalizar los negocios, promoviendo la eficiencia y el crecimiento.</p>
+              </div>
+            </div><!-- End Features Item-->
+
+            <div class="features-item d-flex mt-5 ps-0 ps-lg-3" data-aos="fade-up" data-aos-delay="500">
+              <i class="bi bi-people flex-shrink-0"></i>
+              <div>
+                <h4>Inclusión y Acceso Simplificado</h4>
+                <p>Bajo un único dominio, los usuarios y negocios pueden acceder a una plataforma centralizada que fomenta la inclusión digital y facilita la transición hacia una economía conectada.</p>
+              </div>
+            </div><!-- End Features Item-->
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Features Section -->
+
+    <!-- Clients Section -->
+    <section id="clients" class="clients section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0 clients-wrap">
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/Lala.jpg' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/flordecaña2.jpg' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/parmalat2.svg' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'assets/img/clients/client-4.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/pali.png' %}"class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/sasalogo.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'assets/img/clients/client-7.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'assets/img/clients/client-8.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Clients Section -->
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats section dark-background">
+
+      <img src="{% static 'assets/img/stats-bg.jpg' %}" alt="" data-aos="fade-in">
+
+      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="subheading">
+          <h3>"Conversor de Divisas en Tiempo Real"</h3>
+          <p>"Las equivalencias mostradas corresponden al valor actual de 100 córdobas nicaragüenses en diferentes monedas."</p>
+        </div>
+
+        <div class="row gy-4">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span 
+                data-purecounter-start="0" 
+                data-purecounter-end="2.71" 
+                data-purecounter-duration="1" 
+                data-purecounter-decimals="2" 
+                data-purecounter-separator="True" 
+                class="purecounter">
+              </span>
+              <p>Dólare</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span 
+                data-purecounter-start="0" 
+                data-purecounter-end="2.57" 
+                data-purecounter-duration="1" 
+                data-purecounter-decimals="2" 
+                data-purecounter-separator="True" 
+                class="purecounter">
+              </span>
+              <p>Euro</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span 
+                data-purecounter-start="0" 
+                data-purecounter-end="1377.4" 
+                data-purecounter-duration="1" 
+                data-purecounter-decimals="2" 
+                data-purecounter-separator="True" 
+                class="purecounter">
+              </span>
+              <p>Colón</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span 
+                data-purecounter-start="0" 
+                data-purecounter-end="20.95" 
+                data-purecounter-duration="1" 
+                data-purecounter-decimals="2" 
+                data-purecounter-separator="True" 
+                class="purecounter">
+              </span>
+              <p>Quetzal</p>
+            </div>
+          </div><!-- End Stats Item -->
+        </div>
+
+      </div>
+
+    </section><!-- /Stats Section -->
+
+    <!-- Portfolio Section -->
+    <section id="galeria" class="portfolio section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Galería</h2>
+        <h4 style="color: grey;text-align: center;">"Cada imagen, una historia por contar."</h4>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">Todas</li>
+            <li data-filter=".filter-app">Cultura</li>
+            <li data-filter=".filter-product">Tradición</li>
+            <li data-filter=".filter-branding">Naturaleza</li>
+          </ul><!-- End Portfolio Filters -->
+
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="{% static 'images/gueguense.JPG' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Baile Tradicional</h4>
+                <p>El Güegüense, una expresión virulenta de protesta contra el dominio colonial, es un drama satírico bien conocido en Nicaragua</p>
+                <a href="{% static 'images/gueguense.JPG' %}" title="App 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="{% static 'images/tabaco.jpg' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>El TABACO</h4>
+                <p>Los puros nicaragüenses se fuman en más de 90 países alrededor del mundo.</p>
+                <a href="{% static 'images/tabaco.jpg' %}" title="Product 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="{% static 'images/pinol.webp' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Pozol y el Pinol</h4>
+                <p>El pozol es una bebida fermentada a base de maíz, agua y cacao, muy popular en Nicaragua. <br> El pinol es un polvo fino obtenido de maíz tostado y molido. </p>
+                <a href="{% static 'images/pinol.webp'' %}" title="Branding 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="{% static 'images/folklorenica.webp' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Folclore</h4>
+                <p> La tradición folclórica nicaragüense posee diversas manifestaciones culturales que incluyen la música, la danza, las leyendas y tradiciones, las canciones, los proverbios populares, las bombas y retahílas, los cuentos, los refranes, los romances, las adivinanzas, los instrumentos coloniales</p>
+                <a href="{% static 'images/folklorenica.webp' %}" title="App 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="{% static 'images/nacatamal.webp' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Nacatamal</h4>
+                <p>Nacatamal, es un plato Nicaragüense que se originó de los Nahua Nicaraos del oeste de Nicaragua, Consiste en una masa a base de carne, verduras y arroz, entre otros, dividida en porciones que se cuecen envueltos en hojas de plátano o banano.</p>
+                <a href="{% static 'images/nacatamal.webp' %}" title="App 3" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item  filter-app">
+              <img src="{% static 'images/ciudadanos.webp' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Pueblo Nicaraüense</h4>
+                <p>los nicaragüenses son personas alegres, creativas y hospitalarias, con un sentido del humor único que los distingue. Su capacidad para encontrar el lado positivo de las cosas, incluso en tiempos difíciles.</p>
+                <a href="{% static 'images/ciudadanos.webp' %}" title="Product 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="{% static 'images/islaometepe.jpeg' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Ometepe, un Edén Volcánico en el Corazón de Nicaragua</h4>
+                <p>La isla de Ometepe, ubicada en el gran Lago de Nicaragua, es una joya natural que cautiva a los viajeros con sus paisajes volcánicos, exuberante vegetación y rica biodiversidad.</p>
+                <a href="{% static 'images/islaometepe.jpeg' %}" title="Product 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="{% static 'images/cornisland.jpeg' %}" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Corn Island, Archipiélago</h4>
+                <p>Corn Island, también conocida como Islas del Maíz, es un archipiélago ubicado en el mar Caribe nicaragüense. Este destino turístico es famoso por sus playas de arena blanca, aguas cristalinas y una rica biodiversidad marina.</p>
+                <a href="{% static 'assets/img/masonry-portfolio/masonry-portfolio-9.jpg' %}" title="Branding 2" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+          </div><!-- End Portfolio Container -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Portfolio Section -->
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing section light-background">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Donativos</h2>
+        <h5 style="color: #4a804b;">"Contribuye al Desarrollo de Este Espacio"</h5>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="pricing-item">
+              <h3>Colaborar Con</h3>
+              <h4><sup>$</sup>5<!--<span> / month</span>--></h4>
+              <ul>
+                <li>Soporte técnico esencial.</li>
+                <li>Ayuda a mantener el dominio web activo.</li>
+                <li>Contribuye al mantenimiento del servidor.</li>
+                <li class="na">Web de pago</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E" class="btn-buy">Colaborar</a>
+              </div>
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="pricing-item recommended">
+              <!--<span class="recommended-badge">Recommended</span>-->
+              <h3>Colaborar Con</h3>
+              <h4><sup>$</sup>10<!--<span> / month</span>--></h4>
+              <ul>
+                <li>Mejora la experiencia del usuario en la web.</li>
+                <li>Permite la investigación y validación de datos.</li>
+                <li>Asegura la actualización constante de la información.</li>
+                <li class="na">Web de pago</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E" class="btn-buy">Colaborar</a>
+              </div>
+            </div>
+          </div><!-- End Pricing Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="pricing-item">
+              <h3>Colaborar Con</h3>
+              <h4><sup>$</sup>25<!--<span> / month</span>--></h4>
+              <ul>
+                <li>Facilita el desarrollo de nuevas funcionalidades.</li>
+                <li>Cubre costos de diseño y optimización de la web.</li>
+                <li>Apoya la creación de contenido educativo y relevante.</li>
+                
+                <li class="na">Web de pago</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E" class="btn-buy">Colaborar</a>
+              </div>
+            </div>
+          </div><!-- End Pricing Item -->
+
+        </div>
+
+        <div class="donativo" style="text-align: center; margin: 20px;">
+          <form action="https://www.paypal.com/donate" method="post" target="_top">
+            <input type="hidden" name="hosted_button_id" value="B826RUSWYUF5E" />
+            <input type="image" src="https://www.paypalobjects.com/es_ES/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - La manera segura y fácil de pagar en línea!" alt="Donate with PayPal button" />
+            <img alt="" border="0" src="https://www.paypal.com/en_ES/i/scr/pixel.gif" width="2" height="2" />
+            </form>
+            
+      </div>
+      
+
+      </div>
+    </section><!-- /Pricing Section -->
+
+    <!-- Faq Section -->
+    <section id="faq" class="faq section">
+
+      <div class="container-fluid">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+
+            <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
+              <h3>
+                <span>Preguntas más </span>
+                <strong>frecuentes</strong>
+              </h3>
+              <p>
+                "Encuentra respuestas claras y rápidas a las dudas más comunes sobre nuestros servicios."
+              </p>
+            </div>
+
+            <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
+
+              <div class="faq-item faq-active" >
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Cuáles son los beneficios?</h3>
+                <div class="faq-content">
+                  <p><b>Comodidad y Ahorro de Tiempo:</b><br>
+                      1.Todo en un solo lugar: Enfatiza que los usuarios encontrarán toda la información que necesitan sin tener que navegar por múltiples sitios web. <br>
+                      2.Eliminación de búsquedas dispersas: Resalta cómo se evita que los usuarios pierdan tiempo buscando datos en diferentes fuentes. <br>
+                      3.Acceso rápido y fácil: Destaca la interfaz intuitiva y la facilidad de navegación de la web.
+                      </ul>
+                  </p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>Por qué esta web?</h3>
+                <div class="faq-content">
+                  <p>Fuentes confiables. <br>
+                      Equipo especializado. <br>
+                      Proceso de verificación. <br>
+                  </p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+
+              <div class="faq-item">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Es de pago?</h3>
+                <div class="faq-content">
+                  <p>"No" <br><br>Esta web es completamente gratuita para todos. Nos mantenemos gracias a la generosidad de nuestros usuarios, que pueden hacer donaciones voluntarias para ayudarnos a seguir ofreciendo este servicio."</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div><!-- End Faq item-->
+              <div class="w-100 preguntas text-center">
+                <a href="{% url  'home_app:preguntas' %}"><button 
+                  style="
+                    position: relative;
+                    display: inline-block;
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: white;
+                    background-color: #4CAF50; 
+                    border: none;
+                    border-radius: 8px;
+                    transition: all 0.3s ease-in-out;
+                    overflow: hidden;
+                    cursor: pointer;
+                    outline: none;
+                  "
+                  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 8px 15px rgba(40, 167, 69, 0.3)';"
+                  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
+                  onmousedown="this.style.transform='scale(0.95)'; this.style.backgroundColor='#218838';"
+                  onmouseup="this.style.transform='scale(1.05)'; this.style.backgroundColor='#28a745';"
+                >
+                  Más preguntas
+                </button></a>
+              </div>
+             
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 order-1 order-lg-2">
+            <img src="{% static 'images/logopregunta2.webp' %}" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100" style="border-radius: 10px;">
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Faq Section -->
+<hr>
+  <!-- Recent Posts Section -->
+<section id="recent-posts" class="recent-posts section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Últimas publicaciones.</h2>
+    <h5 style="color: grey;">¿Quieres estar al día con nuestras últimas publicaciones?</h5>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row gy-4">
+      {% for dato in datos|slice:"-3:" %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+        <article>
+          <a href="{% url 'home_app:articulo' dato.id %}">
+            <div class="post-img">
+              <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
+            </div>
+          </a>
+
+          <p class="post-category">{{dato.categoria}}</p>
+
+          <h2 class="title">
+            <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
+          </h2>
+
+          <p class="post-summary">{{dato.resumen|safe}}</p>
+          <div class="d-flex align-items-center">
+            <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
+            <div class="post-meta">
+              <p class="post-author">{{dato.autor}}</p>
+              <p class="post-date">
+                <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div><!-- End recent posts list -->
+
+  </div>
+
+</section><!-- /Recent Posts Section -->
+
+
+<section id="contact" class="contact section light-background">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Contáctanos</h2>
+    <h5 style="color: grey;">¿Necesitas más información?</h5>
+  </div>
+
+  <div class="container" data-aos="fade" data-aos-delay="100">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+          <i class="bi bi-geo-alt flex-shrink-0"></i>
+          <div>
+            <h3>Dirección</h3>
+            <p>Sin datos</p>
+          </div>
+        </div>
+
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+          <i class="bi bi-telephone flex-shrink-0"></i>
+          <div>
+            <h3>Teléfono</h3>
+            <p>+34 --- -- -- --</p>
+          </div>
+        </div>
+
+        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+          <i class="bi bi-envelope flex-shrink-0"></i>
+          <div>
+            <h3>Email</h3>
+            <p>Sin datos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center">Contáctanos</h1>
+                <form method="post" action="{% url 'home_app:contactar' %}">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                      {{ form.name.label_tag }} 
+                      {{ form.name }}
+                  </div>
+                  <div class="mb-3">
+                      {{ form.email.label_tag }}
+                      {{ form.email }}
+                  </div>
+                  <div class="mb-3">
+                      {{ form.message.label_tag }}
+                      {{ form.message }}
+                  </div>
+                  <button type="submit" class="btn btn-success" style="
+                        width: 200px;
+                        display: flex;
+                        margin: auto;
+                        padding-right: 5px;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        background: linear-gradient(80deg, #0067c6, #198754);
+                        color: white;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border: none;
+                        border-radius: 5px;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                        "
+                    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.3)';"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.2)';">
+                        <strong>Enviar</strong>
+                    </button>
+              </form>
+              
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  </main>
+
+ {% endblock %}

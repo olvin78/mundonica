@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" 
+integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+<style>
+    body{
+    font-size: 16px;
+    color: #6f6f6f;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0.8px;
+    margin-top:20px;
+}
+.font-size38 {
+    font-size: 38px;
+}
+.team-single-text .section-heading h4,
+.section-heading h5 {
+    font-size: 36px
+}
+
+.team-single-text .section-heading.half {
+    margin-bottom: 20px
+}
+
+@media screen and (max-width: 1199px) {
+    .team-single-text .section-heading h4,
+    .section-heading h5 {
+        font-size: 32px
+    }
+    .team-single-text .section-heading.half {
+        margin-bottom: 15px
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .team-single-text .section-heading h4,
+    .section-heading h5 {
+        font-size: 28px
+    }
+    .team-single-text .section-heading.half {
+        margin-bottom: 10px
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .team-single-text .section-heading h4,
+    .section-heading h5 {
+        font-size: 24px
+    }
+}
+
+
+.team-single-icons ul li {
+    display: inline-block;
+    border: 1px solid #4CAF50;
+    border-radius: 50%;
+    color: #86bc42;
+    margin-right: 8px;
+    margin-bottom: 5px;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s
+}
+
+.team-single-icons ul li a {
+    color: #4CAF50;
+    display: block;
+    font-size: 14px;
+    height: 25px;
+    line-height: 26px;
+    text-align: center;
+    width: 25px
+}
+
+.team-single-icons ul li:hover {
+    background: #4CAF50;
+    border-color: #4CAF50
+}
+
+.team-single-icons ul li:hover a {
+    color: #fff
+}
+
+.team-social-icon li {
+    display: inline-block;
+    margin-right: 5px
+}
+
+.team-social-icon li:last-child {
+    margin-right: 0
+}
+
+.team-social-icon i {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 50px
+}
+
+.padding-30px-all {
+    padding: 30px;
+}
+.bg-light-gray {
+    background-color: #f7f7f7;
+}
+.text-center {
+    text-align: center!important;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.list-style9 {
+    list-style: none;
+    padding: 0
+}
+
+.list-style9 li {
+    position: relative;
+    padding: 0 0 15px 0;
+    margin: 0 0 15px 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1)
+}
+
+.list-style9 li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0
+}
+
+
+.text-sky {
+    color: #189d6d
+}
+
+.text-orange {
+    color: #189d6d
+}
+
+.text-green {
+    color: #189d6d
+}
+
+.text-pink {
+    color: #189d6d
+}
+
+.text-purple {
+    color: #189d6d
+}
+
+
+.custom-progress {
+    height: 10px;
+    border-radius: 50px;
+    box-shadow: none;
+    margin-bottom: 25px;
+}
+.progress {
+    display: -ms-flexbox;
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+}
+
+/*esto es para las opciones de abogado*/
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.col-lg-6, .col-md-12 {
+    padding: 15px;
+    flex: 1;
+    min-width: 300px; /* Ajuste responsivo */
+}
+
+.custom-list {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.list-item {
+    font-size: 25px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+.list-item:hover {
+    background-color: #4CAF50;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.list-item:active {
+    background-color: #189d6d;
+}
+
+@media (max-width: 768px) {
+    .list-item {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+.sitename{
+text-shadow: 1px 1px 2px black;;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+
+  <main class="main" style="position: relative;top: -20px;">
+      <!-- Page Title -->
+      <div class="page-title" data-aos="fade" style="background-image: url('{{ datos.imagen_portada.url }}');background-size: cover;">
+        <div class="container position-relative">
+            <h2 class="section-heading text-uppercase" style="text-shadow: 2px 2px 5px white;">
+                {{ datos.nombre }}</h2>
+          <h3 class="section-subheading text-muted" style="text-shadow: 2px 2px 5px white;">
+            {{ datos.subtitulo }}</h3>
+        </div>
+      </div><!-- End Page Title -->
+
+     <!--fin del div para los mapas-->
+  </main>
+
+    <div class="container" style="margin-top: 10px;margin-bottom: 100px;">
+        <a href="{% url 'home_app:abogados' %}">
+            <button class="btn" style="margin: 10px;">
+                <strong>Volver</strong>
+            </button>
+        </a>
+
+    </div>
+    <!--pruava para desaparecer contenido segun pantallas pequenas-->
+
+
+    {% endblock %}

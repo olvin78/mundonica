@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+
+
+  <main class="main">
+      <!-- Page Title -->
+      <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: rgb(75, 112, 108);">
+        <div class="container position-relative">
+            <h2 class="section-heading text-uppercase" style="text-shadow: 2px 2px 5px white;">
+                Blog</h2>
+          <h3 class="section-subheading text-muted" style="text-shadow: 2px 2px 5px white;">
+            Últimas novedades!.</h3>
+        </div>
+      </div><!-- End Page Title -->
+
+     <!--fin del div para los mapas-->
+  </main>
+
+
+    <div class="container text-center elemento-a-ocultar">
+        <div class="row">
+            <!--fin de los anuncios de el apartadoi de articulo completo-->
+            <div class="col-2">
+            </div>
+            <div class="col-8">
+                <div class="container">
+                    <div class="row">
+                        <div class=" text-start">
+                            <h1 class="text-center mt-5">{{ articulo.titulo }}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8 mt-5 mb-5">
+                            <p style="color:gray; text-align:right;">
+                                {{ articulo.fecha_hora|date:"Y/m/d" }} | {{ articulo.autor }}</p>
+                            <img src="{{ articulo.imagen.url }}" class="w-100">
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row">
+                        <p>{{ articulo.cuerpo|safe }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+    </div>
+
+    <!--pruava para desaparecer contenido segun pantallas pequenas-->
+
+
+    {% endblock %}

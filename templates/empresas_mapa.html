@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% load static %}
+  {% block head %}
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+  <style>
+
+    #map {
+      height: 75vh;
+      width: 90vw;
+    }
+
+    
+  </style>
+   {% endblock %}
+{% block content %}
+  <main class="main">
+      <!-- Page Title -->
+      <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: rgb(75, 112, 108);">
+        <div class="container position-relative">
+          {% for dato in datos|slice:"1" %}
+          <h1>Empresas</h1>
+          <p>"¡Haz zoom y explora! Nuestro mapa te lleva a los mejores negocios de Nicaragua."</p>
+         {% endfor %}
+          <!-- <nav class="breadcrumbs">
+            <ol>
+              <li><a href="index.html">Home</a></li>
+              <li class="current">Starter Page</li>
+            </ol>
+          </nav>-->
+        </div>
+      </div><!-- End Page Title -->
+  
+    <!--inicio del div para los mapas-->
+    <section>
+      <div class="container" id="map"></div>
+</section>
+     <!--fin del div para los mapas-->
+  </main>
+  {% endblock %}
+
+  {% block mapa %}
+    <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script>
+    var map = L.map('map').setView([40.459391311992704, -3.65254964179598], 3);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: ''
+    }).addTo(map);
+
+    //esto es para la marca de el mapa
+    //////////////////////////////////////////////
+
+
+    // Configuración del icono personalizado
+    const customIcon1 = L.icon({
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/203/203089.png',
+      iconSize: [50, 50],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
+  
+    {% for dato in datos %}
+      var marker = L.marker([{{ dato.latitud }}, {{ dato.longitud }}], {icon: customIcon1}).addTo(map);
+      marker.bindPopup(`<strong>{{ dato.nombre }}</strong> 
+      <br> {{ dato.pais}}<br>  
+      <img class='w-100' src='/media/{{ dato.imagen}}'>
+     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' dato.id %}"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`);
+    {% endfor %}
+
+  </script>
+  <!--fin del javascript de bootstrap para leaflet-->
+{% endblock %}
