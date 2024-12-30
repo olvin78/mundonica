@@ -1,0 +1,1 @@
+[{"model": "home.tipoempresa", "pk": 1, "fields": {"nombre": "Comercio", "descripcion": ""}}, {"model": "home.tipoempresa", "pk": 2, "fields": {"nombre": "Restaurante", "descripcion": ""}}, {"model": "home.tipoempresa", "pk": 3, "fields": {"nombre": "Peluquería", "descripcion": ""}}]
