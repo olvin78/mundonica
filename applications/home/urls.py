@@ -32,18 +32,11 @@ urlpatterns = [
         name='empresa_crear',
     ),
 
-    path('<slug:nombreUrl>/',
-        views.EmpresaDetailView.as_view(),
-        name='empresa_detalle'
-        
-    ),
-
 
     path('abogados/',
-        views.AbogadosView.as_view(),
+        views.AbogadosListView.as_view(),
         name='abogados',
     ),
-
 
     path('abogados/<int:pk>/',
         views.AbogadosDetailView.as_view(),
@@ -76,5 +69,14 @@ urlpatterns = [
     
 
     path('contact/', contact_view, name='contactar'),
+
+#esta  url tiene que estar de ultimo para evitar conflictos con los anteriores
+#ya que si esta arriba puede tomarlo como una empresa y no como abogados
+    path('<slug:nombreUrl>/',
+        views.EmpresaDetailView.as_view(),
+        name='empresa_detalle'
+        
+    ),
+
 
 ]

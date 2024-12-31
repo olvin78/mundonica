@@ -83,16 +83,10 @@ class CrearEmpresaCreateView(LoginRequiredMixin, CreateView):
 
 #fin de clase
 
-class EmpresaDetailView(DetailView):
-    model = Empresa # Especifica el modelo Restaurante
-    template_name = 'empresas/yummy-red/index.html' # Define el template "articulo_completo.html"
-    context_object_name = 'datos'
-    slug_field = 'nombreUrl'
-    slug_url_kwarg = 'nombreUrl'
 
 #fin de clase
 
-class AbogadosView(ListView):
+class AbogadosListView(ListView):
     template_name = "abogados.html"
 
     model = Abogado
@@ -186,3 +180,10 @@ class MapaListView(ListView):
 
 
 
+
+class EmpresaDetailView(DetailView):
+    model = Empresa # Especifica el modelo Restaurante
+    template_name = 'empresas/yummy-red/index.html' # Define el template "articulo_completo.html"
+    context_object_name = 'datos'
+    slug_field = 'nombreUrl'
+    slug_url_kwarg = 'nombreUrl'
