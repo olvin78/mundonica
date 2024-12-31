@@ -118,7 +118,7 @@
         <a href="#profile">Ver Perfil</a>
         <a href="#settings">Configuración</a>
         {% if user.is_authenticated %}
-        <a href="{% url 'home_app:bogado_crear' %}">Registrarme <br> como abogado</a>
+        <a href="{% url 'home_app:abogado_crear' %}">Registrarme <br> como abogado</a>
         
         <a href="{% url 'home_app:empresa_crear' %}">Crear Empresa</a>
         {% endif %}
