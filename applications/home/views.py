@@ -75,7 +75,8 @@ class CrearEmpresaCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user  # Asigna el usuario actual
-        nombre_url = form.cleaned_data.get('nombreUrl', '')     #obtener el valor del campo nombreUrl ingresado por l usuario
+        nombre_url = form.cleaned_data.get('nombreUrl', '')
+        nombre_url = nombre_url.lower()     #obtener el valor del campo nombreUrl ingresado por l usuario
         slugify_url = slugify(nombre_url)                       #usa slugify para convertirlo en un slugy valido
         form.instance.nombreUrl = slugify_url                   #asignar el valor trasformado al campo nombreUrl
         return super().form_valid(form)
