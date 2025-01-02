@@ -7,8 +7,7 @@ db.sqlite3
 #ignorar avariables del entorno
 .env
 #ignorar archivos generados automaticamente
-_pycache_/
-*._pycache_/
+__pycache__/
 *.pyc
 *.pyo
 

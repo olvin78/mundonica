@@ -1,6 +1,12 @@
 from typing import Any
-
+#importaciones para contactar
+from django.core.mail import EmailMultiAlternatives
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib import messages
+
+from django.conf import settings
+#impraciones para cpntactar
 from django.http import HttpResponse
 from .forms import ContactForm,AbogadoForm,EmpresaForm
 
@@ -17,6 +23,27 @@ from django.views.generic import (
     DetailView
 )
 
+
+#formulario para contactar
+
+def formulario_contactar(request):
+    print("Formulario de contactar")
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        message = "Nombre: " + name + " Email: " + " Mensaje: " + message
+        
+        print(name, email, message)
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = ['duarteolvin30@gmail.com','olvind78@gmail.com']
+        send_mail(email, message, from_email, recipient_list)
+        messages.add_message(request, messages.INFO, "Hemos recibido el email, en breve nos pondremos en contacto. | Emaila jaso dugu, laster harremanetan jarriko gara.")
+
+    return render(request, "home/index.html")
+
+#fin formulario contacar
+
 class HomePageView(ListView):
     template_name = "index.html"
     model = Blog
@@ -31,6 +58,12 @@ class HomePageView(ListView):
         context = super().get_context_data(**kwargs)
         # Añade el formulario al contexto
         context['form'] = ContactForm()  # Instancia del formulario
+
+        # Agrega los datos de otros modelos al contexto paa ver el mapa en el iindex
+        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
+        context['restaurantes'] = Empresa.objects.filter(tipo_empresa__nombre='Restaurante')
+        context['embajadas'] = Embajada.objects.all()
+        context['consulados'] = Consulado.objects.all()
         return context
 
 

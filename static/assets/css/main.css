@@ -101,6 +101,19 @@ h6 {
 
 /* Pulsating Play Button
 ------------------------------*/
+/*esto es para el boton de inicio donde dice crear empresa*/
+.btn-hover {
+  transition: all 0.3s ease;
+}
+
+.btn-hover:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+
+/*aca termina el boton de agregar enpresa del header*/
+
 .pulsating-play-btn {
   width: 94px;
   height: 94px;

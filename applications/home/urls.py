@@ -67,8 +67,7 @@ urlpatterns = [
         name='preguntas',
     ),
     
-
-    path('contact/', contact_view, name='contactar'),
+    path('formulario/', views.formulario_contactar, name='formulario_contactar'),
 
 #esta  url tiene que estar de ultimo para evitar conflictos con los anteriores
 #ya que si esta arriba puede tomarlo como una empresa y no como abogados

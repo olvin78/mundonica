@@ -1,5 +1,10 @@
 from django import forms
 from .models import Abogado,Empresa
+from django import forms
+from django_recaptcha.fields import ReCaptchaField
+
+class FormWithCaptcha(forms.Form):
+    captcha = ReCaptchaField()
 
 class ContactForm(forms.Form):
     name = forms.CharField(
@@ -156,3 +161,4 @@ class EmpresaForm(forms.ModelForm):
             'longitud': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Longitud'}),
             'tipo_empresa': forms.Select(attrs={'class': 'form-select'}),
         }
+
