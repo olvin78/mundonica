@@ -15,22 +15,40 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="{% static 'images/nicaraguaheader.webp' %}" alt="" data-aos="fade-in">
-
+      <!-- Imagen optimizada para SEO y accesibilidad -->
+      <img 
+        src="{% static 'images/nicaraguaheader.webp' %}" 
+        alt="MundoNica: Ayudando a los nicaragüenses a crear su presencia online" 
+        data-aos="fade-in" 
+        width="1200" height="600" loading="lazy">
+    
       <div class="container d-flex flex-column align-items-center text-center">
-        <h2 data-aos="fade-up" data-aos-delay="100">Bienvenido a MundoNica</h2>
-        <p data-aos="fade-up" data-aos-delay="200">¿Eres nicaragüense? Crea tu presencia online con tu propia web gratis.</p>
-
+        <!-- Título principal optimizado con etiqueta <h1> para SEO -->
+        <h1 data-aos="fade-up" data-aos-delay="100">Bienvenido a MundoNica</h1>
+        
+        <!-- Descripción breve y clara -->
+        <p data-aos="fade-up" data-aos-delay="200">
+          ¿Eres nicaragüense? Crea tu presencia online con tu propia web gratis y conecta con oportunidades globales.
+        </p>
+    
+        <!-- Enlace accesible con texto descriptivo -->
         <a href="{% url 'home_app:home' %}#mapacontainer">
-          <button class="btn btn-hover text-white bg-success">Crear Empresa</button>
+          <button class="btn btn-hover text-white bg-success" aria-label="Crear una empresa en MundoNica">Crear Empresa</button>
         </a>
-
+    
+        <!-- Botón de video accesible -->
         <div data-aos="fade-up" data-aos-delay="300">
-          <a href="{% static 'assets/img/presentacion.mp4' %}" class="glightbox pulsating-play-btn mt-5" type="video"></a>
+          <a 
+            href="{% static 'assets/img/presentacion.mp4' %}" 
+            class="glightbox pulsating-play-btn mt-5" 
+            type="video" 
+            aria-label="Ver video de presentación de MundoNica">
+          </a>
         </div>
       </div>
-
-    </section><!-- /Hero Section -->
+    
+    </section>
+    <!-- /Hero Section -->
 
     <!-- About Section -->
     <section id="about" class="about section">
@@ -378,7 +396,7 @@
           <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="{% static 'images/gueguense.JPG' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/gueguense.JPG' %}" class="img-fluid" alt="Desfile cultural nicaragüense con trajes típicos y coloridos, representando la tradición y el folklore del país.">
               <div class="portfolio-info">
                 <h4>Baile Tradicional</h4>
                 <p>El Güegüense, una expresión virulenta de protesta contra el dominio colonial, es un drama satírico bien conocido en Nicaragua</p>
@@ -388,7 +406,7 @@
             </div><!-- End Portfolio Item -->
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="{% static 'images/tabaco.jpg' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/tabaco.jpg' %}" class="img-fluid" alt="Detalle de un puro nicaragüense artesanal, reconocido por su calidad y tradición en la industria tabacalera.">
               <div class="portfolio-info">
                 <h4>El TABACO</h4>
                 <p>Los puros nicaragüenses se fuman en más de 90 países alrededor del mundo.</p>
@@ -398,7 +416,7 @@
             </div><!-- End Portfolio Item -->
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="{% static 'images/pinol.webp' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/pinol.webp' %}" class="img-fluid" alt="Mesa con maíz, atol y cuajada, destacando los ingredientes y sabores tradicionales de la gastronomía nicaragüense.">
               <div class="portfolio-info">
                 <h4>Pozol y el Pinol</h4>
                 <p>El pozol es una bebida fermentada a base de maíz, agua y cacao, muy popular en Nicaragua. <br> El pinol es un polvo fino obtenido de maíz tostado y molido. </p>
@@ -408,7 +426,7 @@
             </div><!-- End Portfolio Item -->
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-              <img src="{% static 'images/folklorenica.webp' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/folklorenica.webp' %}" class="img-fluid" alt="Grupo de bailarines nicaragüenses en trajes folclóricos, representando danzas tradicionales del país.">
               <div class="portfolio-info">
                 <h4>Folclore</h4>
                 <p> La tradición folclórica nicaragüense posee diversas manifestaciones culturales que incluyen la música, la danza, las leyendas y tradiciones, las canciones, los proverbios populares, las bombas y retahílas, los cuentos, los refranes, los romances, las adivinanzas, los instrumentos coloniales</p>
@@ -418,7 +436,7 @@
             </div><!-- End Portfolio Item -->
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-              <img src="{% static 'images/nacatamal.webp' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/nacatamal.webp' %}" class="img-fluid" alt="Nacatamales nicaragüenses en una olla, preparados con maíz, carne y especias, una comida típica y emblemática del país.">
               <div class="portfolio-info">
                 <h4>Nacatamal</h4>
                 <p>Nacatamal, es un plato Nicaragüense que se originó de los Nahua Nicaraos del oeste de Nicaragua, Consiste en una masa a base de carne, verduras y arroz, entre otros, dividida en porciones que se cuecen envueltos en hojas de plátano o banano.</p>
@@ -429,7 +447,7 @@
 
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item  filter-app">
-              <img src="{% static 'images/ciudadanos.webp' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/ciudadanos.webp' %}" class="img-fluid" alt="Familia campesina nicaragüense en un paisaje rural, representando la conexión con la agricultura y la tierra.">
               <div class="portfolio-info">
                 <h4>Pueblo Nicaraüense</h4>
                 <p>los nicaragüenses son personas alegres, creativas y hospitalarias, con un sentido del humor único que los distingue. Su capacidad para encontrar el lado positivo de las cosas, incluso en tiempos difíciles.</p>
@@ -440,7 +458,7 @@
 
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <img src="{% static 'images/islaometepe.jpeg' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/islaometepe.jpeg' %}" class="img-fluid" alt="Vista panorámica de un volcán nicaragüense rodeado de vegetación, destacando los impresionantes paisajes naturales del país.">
               <div class="portfolio-info">
                 <h4>Ometepe, un Edén Volcánico en el Corazón de Nicaragua</h4>
                 <p>La isla de Ometepe, ubicada en el gran Lago de Nicaragua, es una joya natural que cautiva a los viajeros con sus paisajes volcánicos, exuberante vegetación y rica biodiversidad.</p>
@@ -450,7 +468,7 @@
             </div><!-- End Portfolio Item -->
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-              <img src="{% static 'images/cornisland.jpeg' %}" class="img-fluid" alt="">
+              <img src="{% static 'images/cornisland.jpeg' %}" class="img-fluid" alt="Playa tropical de corn ssisland en Nicaragua con arena blanca y palmeras, un destino turístico paradisíaco del Pacífico nicaragüense.">
               <div class="portfolio-info">
                 <h4>Corn Island, Archipiélago</h4>
                 <p>Corn Island, también conocida como Islas del Maíz, es un archipiélago ubicado en el mar Caribe nicaragüense. Este destino turístico es famoso por sus playas de arena blanca, aguas cristalinas y una rica biodiversidad marina.</p>
@@ -471,25 +489,30 @@
 
 
     <!--esta es u apartado de prueba para  la ubicacion de comercios o negcios en la pagina principal-->
-
-    <div class="container-fluid" style="border-bottom: 1px solid grey; background-color: rgba(216, 214, 211, 0.788);" id="mapacontainer">
-      <div class="row">
+    <div class="container-fluid" style="border-bottom: 1px solid grey; background-color:lightblue;" id="mapacontainer">
+      <div class="row m-3">
         <!-- Contenedor central con marco elegante -->
-        <div class="col-4"></div>
-        <div class="col-4" style="height: 600px; background-color: lightblue; margin-top: 30px;" id="map"></div>
-        <div class="col-4"></div>
+        <div class="col-lg-2 col-md-0"></div>
+        <div class="col-lg-8 col-md-12" id="map" style="height: 500px; background-color: lightblue;margin-top: 30px;"></div>
+        <div class="col-lg-2 col-md-0"></div>
       </div>
-    <div class="boton text-center mt-5 mb-5">
-      {% if user.is_authenticated %}
-      <a href="{% url 'home_app:empresa_crear' %}">
-        <button class="btn bg-success mt-4 mb-5 text-white" style="margin: auto; display: flex; align-items: center;">Agregar Mi Empresa</button>
-      </a>
-
-      {% else %}
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar Mi Empresa</button>
-      {% endif %}
+    
+      <!-- Botón centrado -->
+      <div class="boton text-center mt-3 mb-4">
+        {% if user.is_authenticated %}
+        <a href="{% url 'home_app:empresa_crear' %}">
+          <button class="btn bg-success mt-4 mb-5 text-white" aria-label="Agregar Mi Empresa">
+            Agregar Mi Empresa
+          </button>
+        </a>
+        {% else %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Agregar Mi Empresa">
+          Agregar Mi Empresa
+        </button>
+        {% endif %}
+      </div>
     </div>
-  </div>
+    
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -768,49 +791,54 @@
       </div>
 
       <div class="col-lg-8">
-          <div class="card">
-            <div class="card-body">
-                <h1 class="card-title text-center">Contáctanos</h1>
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}">
-                  {% csrf_token %}
-                  <div class="mb-3">
-                      {{ form.name.label_tag }} 
-                      {{ form.name }}
-                  </div>
-                  <div class="mb-3">
-                      {{ form.email.label_tag }}
-                      {{ form.email }}
-                  </div>
-                  <div class="mb-3">
-                      {{ form.message.label_tag }}
-                      {{ form.message }}
-                  </div>
-                  <button type="submit" class="btn btn-success" style="
-                        width: 200px;
-                        display: flex;
-                        margin: auto;
-                        padding-right: 5px;
-                        justify-content: center;
-                        align-items: center;
-                        text-align: center;
-                        background: linear-gradient(80deg, #0067c6, #198754);
-                        color: white;
-                        font-size: 16px;
-                        font-weight: bold;
-                        border: none;
-                        border-radius: 5px;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                        "
-                    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.3)';"
-                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.2)';">
-                        <strong>Enviar</strong>
-                    </button>
-              </form>
+        <div>
+          <div class="card-body">
+            <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}">
+              {% csrf_token %}
               
-            </div>
+              <!-- Fila para Nombre y Correo -->
+              <div class="row">
+                <div class="mb-3 col-lg-6 col-md-12">
+                
+                  {{ form.name }}
+                </div>
+                <div class="mb-3 col-lg-6 col-md-12">
+                  {{ form.email }}
+                </div>
+              </div>
+              
+              <!-- Campo de Mensaje -->
+              <div class="mb-3">
+                {{ form.message }}
+              </div>
+              
+              <!-- Botón de Enviar -->
+              <button type="submit" class="btn btn-success" style="
+                    width: 200px;
+                    display: flex;
+                    margin: auto;
+                    padding-right: 5px;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    background: linear-gradient(80deg, #0067c6, #198754);
+                    color: white;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border: none;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                    "
+                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.3)';"
+                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.2)';">
+                <strong>Enviar</strong>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
+      
     </div>
   </div>
 </section>
@@ -828,39 +856,39 @@
 
 <script>
 
+
 //iconos en el mapa
 
 
-  var consuladoIcon = L.icon({
-      iconUrl: "{% static 'images/maps/consulado.webp' %}",
-      iconSize: [50, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
-  });
+var consuladoIcon = L.icon({
+        iconUrl: "{% static 'images/maps/iconos/consulado.png' %}",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
 
   var embajadaIcon = L.icon({
-      iconUrl: "{% static 'images/maps/embajada.webp' %}",
-      iconSize: [50, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
-  });
+        iconUrl: "{% static 'images/maps/iconos/embajada.png' %}",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
 
   var restauranteIcon = L.icon({
-      iconUrl: "{% static 'images/maps/restaurante.webp' %}",
-      iconSize: [50, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
-  });
+        iconUrl: "{% static 'images/maps/iconos/restaurante.png' %}",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
 
   var comercioIcon = L.icon({
-      iconUrl: "{% static 'images/maps/tienda.webp' %}",
-      iconSize: [50, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
-  });
+        iconUrl: "{% static 'images/maps/iconos/tienda.png' %}",
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    });
 
-///*fin de iconos en el mapa
-
+///*fin de iconos en el mapas
 
 const embajadas = L.layerGroup([
 {% for embajada in embajadas %}

@@ -77,5 +77,26 @@ urlpatterns = [
         
     ),
 
+    path('actualizar_abogado/<int:pk>/',
+        views.AbogadoUpdateView.as_view(),
+        name='abogado_actualizar',
+    ),
+    
+
+    path('aviso_legal',
+        views.AvisolegalView.as_view(),
+        name='aviso_legal',
+    ),
+
+    path('Politicas de cookies',
+        views.Politicas_de_cookiesView.as_view(),
+        name='politicas_de_cookies',
+    ),
+
+    path('Politicas de privacidad',
+        views.PoliticasdeprivacidadView.as_view(),
+        name='politicas_de_privacidad',
+    ),
+ 
 
 ]

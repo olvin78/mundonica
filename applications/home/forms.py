@@ -1,10 +1,8 @@
 from django import forms
 from .models import Abogado,Empresa
 from django import forms
-from django_recaptcha.fields import ReCaptchaField
 
-class FormWithCaptcha(forms.Form):
-    captcha = ReCaptchaField()
+
 
 class ContactForm(forms.Form):
     name = forms.CharField(
@@ -40,7 +38,7 @@ class AbogadoForm(forms.ModelForm):
         fields = [
             'nombre', 'apellido', 'imagen', 'pais', 'ciudad', 'direccion',
             'precio', 'titulo', 'telefono', 'email', 'latitud', 'longitud',
-            'descripcion', 'resumen', 'verificado', 'asesoriajuridicageneral',
+            'descripcion', 'resumen', 'asesoriajuridicageneral',
             'redaccionyrevisiondedocumentos', 'representacionlegal', 'mediacionyarbitraje',
             'tramitesdevisasypermisosdetrabajo', 'procesosdenaturalizacion',
             'defensaencasosdedeportacion', 'asesoriaenreagrupacionfamiliar',
@@ -66,7 +64,6 @@ class AbogadoForm(forms.ModelForm):
             'longitud': forms.TextInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'resumen': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'verificado': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'asesoriajuridicageneral': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'redaccionyrevisiondedocumentos': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'representacionlegal': forms.CheckboxInput(attrs={'class': 'form-check-input'}),

@@ -1,4 +1,9 @@
 from typing import Any
+#actualizar el campo de perfil de abogados 
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.views.generic.edit import UpdateView
+from .models import Abogado
 #importaciones para contactar
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail import send_mail
@@ -37,6 +42,7 @@ def formulario_contactar(request):
         print(name, email, message)
         from_email = settings.EMAIL_HOST_USER
         recipient_list = ['duarteolvin30@gmail.com','olvind78@gmail.com']
+        print(email, message, from_email, recipient_list)
         send_mail(email, message, from_email, recipient_list)
         messages.add_message(request, messages.INFO, "Hemos recibido el email, en breve nos pondremos en contacto. | Emaila jaso dugu, laster harremanetan jarriko gara.")
 
@@ -220,3 +226,27 @@ class EmpresaDetailView(DetailView):
     context_object_name = 'datos'
     slug_field = 'nombreUrl'
     slug_url_kwarg = 'nombreUrl'
+
+
+
+
+
+class AbogadoUpdateView(UpdateView):  # Actualizar el perfil de abogados
+    model = Abogado
+    form_class = AbogadoForm  # Especifica el formulario personalizado
+    template_name = "abogado_actualizar.html"
+
+    def get_success_url(self):
+        return reverse_lazy("home_app:abogado_detalle", kwargs={"pk": self.object.pk})
+
+
+class AvisolegalView(TemplateView):
+    template_name = "aviso_legal.html"
+
+
+class PoliticasdeprivacidadView(TemplateView):
+    template_name = "politicas_de_privacidad.html"
+
+
+class Politicas_de_cookiesView(TemplateView):
+    template_name = "politicas_de_cookies.html"

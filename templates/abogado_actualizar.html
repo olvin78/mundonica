@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title bg-success" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);">
+      <div class="container position-relative">
+        <h2>"Únete a Una Plataforma Profesional"</h2>
+        <p>
+            <strong>"Crea tu cuenta como abogado, Gestiona tus servicios y conecta con nuevos clientes de manera sencilla."</strong>
+        </p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li>
+                <a href="#" class="text-dark">Cuenta de Abogado</a>
+            </li>
+            <li class="current">¡Vamos a ello!</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+    <!-- Blog Posts Section -->
+
+    <div class="container">
+      <form method="post" enctype="multipart/form-data" class="container py-4">
+        {% csrf_token %}
+    
+        <!-- Información General -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Información General</div>
+            <div class="card-body">
+                <div class="form-group mb-3">
+                    {{ form.nombre.label_tag }} {{ form.nombre }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.apellido.label_tag }} {{ form.apellido }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.imagen.label_tag }} {{ form.imagen }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.pais.label_tag }} {{ form.pais }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.ciudad.label_tag }} {{ form.ciudad }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.direccion.label_tag }} {{ form.direccion }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.precio.label_tag }} {{ form.precio }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.titulo.label_tag }} {{ form.titulo }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.telefono.label_tag }} {{ form.telefono }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.email.label_tag }} {{ form.email }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.latitud.label_tag }} {{ form.latitud }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.longitud.label_tag }} {{ form.longitud }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.descripcion.label_tag }} {{ form.descripcion }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.resumen.label_tag }} {{ form.resumen }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Servicios Legales Generales -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Servicios Legales Generales</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.asesoriajuridicageneral }} {{ form.asesoriajuridicageneral.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.redaccionyrevisiondedocumentos }} {{ form.redaccionyrevisiondedocumentos.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.representacionlegal }} {{ form.representacionlegal.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.mediacionyarbitraje }} {{ form.mediacionyarbitraje.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Derecho Migratorio -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Derecho Migratorio</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.tramitesdevisasypermisosdetrabajo }} {{ form.tramitesdevisasypermisosdetrabajo.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.procesosdenaturalizacion }} {{ form.procesosdenaturalizacion.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.defensaencasosdedeportacion }} {{ form.defensaencasosdedeportacion.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.asesoriaenreagrupacionfamiliar }} {{ form.asesoriaenreagrupacionfamiliar.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Derecho Civil y Familiar -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Derecho Civil y Familiar</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.asesoriaencasosdedivorcioyseparacion }} {{ form.asesoriaencasosdedivorcioyseparacion.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.tramitesdepartidadenacimientoydefunciones }} {{ form.tramitesdepartidadenacimientoydefunciones.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.asesoriaenherenciasytestamentos }} {{ form.asesoriaenherenciasytestamentos.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Derecho Laboral -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Derecho Laboral</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.negocioacionyredacciondecontratos }} {{ form.negocioacionyredacciondecontratos.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.asistenciaencasosdedespidos }} {{ form.asistenciaencasosdedespidos.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Derecho Mercantil -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Derecho Mercantil</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.asesoramientoparaemprendedores }} {{ form.asesoramientoparaemprendedores.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.propiedadintelectual }} {{ form.propiedadintelectual.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.asesoriaparaexportaciondeproductos }} {{ form.asesoriaparaexportaciondeproductos.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Derecho Penal -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Derecho Penal</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.defenzaencasospenales }} {{ form.defenzaencasospenales.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.asesoriaencasosdeviolenciaoabusos }} {{ form.asesoriaencasosdeviolenciaoabusos.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Servicios Adicionales -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">Servicios Adicionales</div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    {{ form.traduccionylegalizaciondedocumentos }} {{ form.traduccionylegalizaciondedocumentos.label_tag }}
+                </div>
+                <div class="form-check mb-2">
+                    {{ form.capacitacionesytalleresjuridicos }} {{ form.capacitacionesytalleresjuridicos.label_tag }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Botón de envío -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg">Guardar</button>
+        </div>
+    </form>
+    
+    </div>
+
+
+  </main>
+
+  {% endblock %}

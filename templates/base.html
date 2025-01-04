@@ -6,7 +6,6 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>MundoNica</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -66,6 +65,7 @@
         <ul>
           <li><a href="{% url 'home_app:home' %}" class="active">Inicio</a></li>
           <li><a href="{% url 'home_app:blog' %}">Blog</a></li>
+          <li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>
           <li class="dropdown"><a href="#servicios"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="{% url 'home_app:preguntas' %}">Preguntas y respuestas</a></li>
@@ -119,6 +119,7 @@
         <a href="#settings">Configuración</a>
         {% if user.is_authenticated %}
         <a href="{% url 'home_app:abogado_crear' %}">Registrarme <br> como abogado</a>
+        <a href="{% url 'home_app:abogado_actualizar' user.id %}">Actualizar <br> abogado</a>
         
         <a href="{% url 'home_app:empresa_crear' %}">Crear Empresa</a>
         {% endif %}
@@ -161,7 +162,11 @@
       </div>
       <div class="container">
         <div class="copyright">
-          <span>Aviso legal | </span> <strong class="px-1 sitename"> Políticas de privacidad | </strong> <span> Cookies</span>
+          <a style="color: white;" href="{% url 'home_app:aviso_legal' %}"><span>Aviso legal | </span></a> 
+
+          <a style="color: white;"  href="{% url 'home_app:politicas_de_privacidad' %}"><strong class="px-1 sitename">Políticas de privacidad | 
+          </strong></a>
+          <a style="color: white;"  href="{% url 'home_app:politicas_de_cookies' %}"><<span> Política de Cookies</span></a>
         </div>
         <div class="credits">
           <!-- All the links in the footer should remain intact. -->
