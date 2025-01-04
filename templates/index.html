@@ -506,34 +506,68 @@
           </button>
         </a>
         {% else %}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Agregar Mi Empresa">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Agregar Mi Empresa">
           Agregar Mi Empresa
         </button>
         {% endif %}
       </div>
     </div>
     
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Te ha interesado, ¡Genial, me alegro mucho!</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-           <p>Para poder promocionar tu marca, tienes que registrarte primero o iniciar sesión
-            <br><br>Pero no te preocupes vamos a ello.
-           </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Iniciar sesión</button>
-            <button type="button" class="btn btn-success">Registrarme</button>
-          </div>
-        </div>
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
+      <!-- Encabezado -->
+      <div class="modal-header" style="background: linear-gradient(45deg, #198754, #0067c6); color: white;">
+        <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold; color: #fff; text-align: center; font-size: 1.5em;">
+          Te ha interesado, <span style="color: #3dc78d;">¡Genial, me alegro mucho!</span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: white;"></button>
+      </div>
+      
+      <!-- Cuerpo del Modal -->
+      <div class="modal-body">
+        <p style="font-size: 1.1em; color: #333;">
+          <span style="color: #0067c6; font-weight: bold;">Para</span> poder promocionar tu marca, necesitas <strong>registrarte</strong> o <strong>iniciar sesión</strong>. ¡No te preocupes, estamos aquí para ayudarte!
+        </p>
+        <p style="font-size: 0.95em; color: #666;">Elige una de las opciones a continuación para continuar:</p>
+      </div>
+      
+      <!-- Pie del Modal -->
+      <div class="modal-footer justify-content-center">
+        <!-- Botón de Cerrar -->
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="
+              padding: 10px 20px;
+              font-weight: bold;
+              border-radius: 25px;">
+          Cerrar
+        </button>
+        
+        <!-- Botón de Iniciar Sesión -->
+        <a href="{% url 'account_login' %}">
+          <button type="button" class="btn btn-outline-primary" style="
+                padding: 10px 20px;
+                font-weight: bold;
+                border-radius: 25px;">
+            Iniciar sesión
+          </button>
+        </a>
+        
+        <!-- Botón de Registrarme -->
+        <a href="{% url 'account_signup' %}">
+          <button type="button" class="btn btn-success" style="
+                padding: 10px 20px;
+                font-weight: bold;
+                border-radius: 25px;">
+            Registrarme
+          </button>
+        </a>
       </div>
     </div>
+  </div>
+</div>
+
  <!--este es el final de la prueba de el apartado de ubicasion de las empresas-->
 
 
@@ -769,7 +803,7 @@
           <i class="bi bi-geo-alt flex-shrink-0"></i>
           <div>
             <h3>Dirección</h3>
-            <p>Sin datos</p>
+            <p> Estámos desarrollando los credenciales para poder proveer información</p>
           </div>
         </div>
 
@@ -777,7 +811,7 @@
           <i class="bi bi-telephone flex-shrink-0"></i>
           <div>
             <h3>Teléfono</h3>
-            <p>+34 --- -- -- --</p>
+            <p> Estámos desarrollando los credenciales para poder contactar</p>
           </div>
         </div>
 
@@ -785,7 +819,7 @@
           <i class="bi bi-envelope flex-shrink-0"></i>
           <div>
             <h3>Email</h3>
-            <p>Sin datos</p>
+            <p> Estámos desarrollando los credenciales para poder contactar</p>
           </div>
         </div>
       </div>
