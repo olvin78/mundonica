@@ -11,39 +11,124 @@
   crossorigin=""
 />
 
-  <style>
 
-    #map {
-      height: 75vh;
-      width: 90vw;
+<style>
+  #map-container {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #map {
+    height: 75vh;
+    width: 90vw;
+    background-color: #e6f7ff; /* Fondo mientras carga */
+    border: 2px solid green; /* Borde azul */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra inicial */
+    transform: translateX(100%) scale(0.8); /* Inicia fuera de la pantalla a la derecha y más pequeño */
+    opacity: 0; /* Inicialmente oculto */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out, box-shadow 0.5s ease-out; /* Animaciones rápidas */
+  }
+
+  /* Clase para activar la animación */
+  #map.show {
+    transform: translateX(0) scale(1); /* Se despliega al centro y crece */
+    opacity: 1; /* Se hace visible */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más prominente */
+  }
+
+  /* Efecto de luz al desplegarse */
+  #map:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent 70%);
+    opacity: 0;
+    transform: scale(1.5);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Animación rápida */
+  }
+
+  #map.show:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+</style>
+<style>
+  /* Personalización del control de capas */
+  .leaflet-control-layers {
+    background-color: #f9f9f9;
+    border: 2px solid #0067c6;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    padding: 8px;
+  }
+
+  .leaflet-control-layers label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .leaflet-control-layers input {
+    accent-color: #0067c6;
+    margin-right: 5px;
+  }
+
+  .leaflet-control-layers-separator {
+    border-top: 1px solid #ccc;
+    margin: 8px 0;
+  }
+
+  .leaflet-control-layers-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .leaflet-control-layers label:hover {
+    color: #0067c6;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .leaflet-control-layers {
+      font-size: 12px;
+      padding: 6px;
     }
+  }
 
+</style>
     
-  </style>
    {% endblock %}
 
 
 {% block content %}
   <main class="main">
-      <!-- Page Title -->
-      <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: rgb(75, 112, 108);">
-        <div class="container position-relative">
-  
-          <h1>Mapa</h1>
-          <p>¡Haz zoom y explora! Nuestro mapa te lleva a los mejores negocios de Nicaragua.</p>
 
-          <!-- <nav class="breadcrumbs">
-            <ol>
-              <li><a href="index.html">Home</a></li>
-              <li class="current">Starter Page</li>
-            </ol>
-          </nav>-->
-        </div>
-      </div><!-- End Page Title -->
-  
+    
+    <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: #000; background-size: cover; background-position: center; color: white; text-align: center; padding: 80px 20px; box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);">
+      <div class="container position-relative">
+        <h1 id="animated-title" style="font-size: 2.5rem; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px; color: #0f6414; text-shadow: 2px 2px 5px #fff;">
+          <!-- El título se escribirá dinámicamente aquí -->
+        </h1>
+        <p id="animated-paragraph" style="font-size: 1.2rem; font-weight: 300; line-height: 1.6; color: #fff; text-shadow: 1px 1px 3px #000; max-width: 800px; margin: 0 auto;">
+          <!-- El párrafo se escribirá dinámicamente aquí -->
+        </p>
+      </div>
+    </div>
+    
+      
+
+
     <!--inicio del div para los mapas-->
     <section>
 <!-- Contenedor principal -->
+
       <div class="container" id="map"></div>
   </section>
      <!--fin del div para los mapas-->
@@ -51,9 +136,53 @@
   {% endblock %}
 
   {% block mapa %}
+
+  <!--efecto encabezado-->
+
+  <script>
+    // Animación de aparición letra por letra
+    function typeWriterEffect(element, text, delay) {
+      let i = 0;
+      element.innerHTML = ''; // Asegurarse de que el contenido inicial esté vacío
+      element.style.visibility = 'visible'; // Hacer visible el texto
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, delay);
+        }
+      }
+      type();
+    }
+  
+    window.addEventListener("load", () => {
+      const title = document.getElementById("animated-title");
+      const paragraph = document.getElementById("animated-paragraph");
+      typeWriterEffect(title, "Mapa", 100); // Animación para el título
+      setTimeout(() => {
+        typeWriterEffect(paragraph, "¡Haz zoom y explora! Nuestro mapa te lleva a los mejores negocios de Nicaragua.", 50); // Animación para el párrafo
+      }, 500); // Retraso antes de iniciar el párrafo
+    });
+  </script>
+
+  <!--termina el efecto de el encabezado-->
+
+
     <!-- Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+    <script>
+      // Activa la animación del mapa rápidamente
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          const mapElement = document.getElementById("map");
+          mapElement.classList.add("show"); // Activa la clase para desplegar el mapa
+        }, 500); // Retraso reducido a 0.5 segundos
+      });
+    </script>
+
 
 <script>
 
