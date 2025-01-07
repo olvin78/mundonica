@@ -33,7 +33,83 @@
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
 
+<!--esto son estilos para miestras se crea e apartado de ver y configurar el perfil de el usuario-->
+<style>
+  /* Estilos del modal */
+  .custom-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  }
 
+  .custom-modal-content {
+    background-color: #ffffff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid #0056a3; /* Azul oscuro */
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+
+  .custom-modal-content h2 {
+    color: green; /* Azul oscuro */
+    margin-top: 0;
+    font-size: 24px;
+  }
+
+  .custom-modal-content p {
+    font-size: 16px;
+    color: #0056a3;
+    margin: 20px 0;
+  }
+
+  /* Botón de cierre */
+  .custom-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0056a3; /* Azul oscuro */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .custom-close-btn:hover {
+    transform: scale(1.2);
+    color: green; /* Naranja vibrante */
+  }
+
+  /* Botón de aceptación */
+  .custom-accept-btn {
+    background-color: #0056a3; /* Azul brillante */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .custom-accept-btn:hover {
+    background-color: green; /* Azul oscuro */
+  }
+</style>
+<!--aca terminan los estilos para el apartado de lver perfil y configurar perfil-->
   <!-- =======================================================
   * Template Name: KnightOne
   * Template URL: https://bootstrapmade.com/knight-simple-one-page-bootstrap-template/
@@ -118,13 +194,29 @@
       
       <div class="dropdown-menu">
         {% if user.is_authenticated %}
-        <a href="{% url 'home_app:credencial_usuario' user.id %}">Ver Perfil</a>
+        <a href="#{% url 'home_app:credencial_usuario' user.id %}"  class="custom-dev-link">Ver Perfil</a>
         <div class="card-footer">
-          <a href="{% url 'home_app:actualizar_usuario' user.id %}">
+          <a href="#{% url 'home_app:actualizar_usuario' user.id %}"  class="custom-dev-link">
             Editar Perfil
           </a>
         </div>
+
         {% endif %}
+
+        <!--Modal Personalizado miestras se termina de desarrollar
+          el aparatado de ver perfil y configurar ya quqe no esta del todo bien-->
+          <div id="customModal" class="custom-modal">
+            <div class="custom-modal-content">
+              <button class="custom-close-btn">×</button>
+              <h2>¡Atención!</h2>
+              <p>Esta función está en desarrollo. ¡Gracias por tu comprensión y apoyo!</p>
+              <button class="custom-accept-btn">Entendido</button>
+            </div>
+          </div>
+          
+        <!-- Modal Personalizado miestras se termina de desarrollar
+          el aparatado de ver perfil y configurar ya quqe no esta del todo bien-->
+
         <!--<div class="dropdown">
           <a href="#">Configuración</a>
           <ul>
@@ -201,6 +293,50 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+
+    <!-- Script paramiestras se desarrolla los botones de perfil y editar perfil -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- Script JavaScript -->
+<script>
+  // Crear una función para mostrar el modal
+  function showCustomModal() {
+    const modal = document.getElementById("customModal");
+    modal.style.display = "block";
+  }
+
+  // Crear una función para cerrar el modal
+  function closeCustomModal() {
+    const modal = document.getElementById("customModal");
+    modal.style.display = "none";
+  }
+
+  // Agregar evento al botón de cierre
+  document.querySelector(".custom-close-btn").addEventListener("click", closeCustomModal);
+
+  // Evento para el botón "Entendido"
+  document.querySelector(".custom-accept-btn").addEventListener("click", closeCustomModal);
+
+  // Opcional: cerrar modal haciendo clic fuera de él
+  window.addEventListener("click", function (event) {
+    const modal = document.getElementById("customModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Agregar funcionalidad a los enlaces con clase específica
+  document.querySelectorAll(".custom-dev-link").forEach(link => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault(); // Evitar redirección
+      showCustomModal(); // Mostrar modal
+    });
+  });
+</script>
+    
+    <!-- Script paramiestras se desarrolla los botones de perfil y editar perfil -->
+
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
