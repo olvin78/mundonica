@@ -6,7 +6,7 @@
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title bg-success" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);">
+    <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);z-index: 99;">
       <div class="container position-relative">
         <h2>"Únete a Una Plataforma Profesional"</h2>
         <p>
@@ -69,10 +69,10 @@
                     {{ form.longitud.label_tag }} {{ form.longitud }}
                 </div>
                 <div class="form-group mb-3">
-                    {{ form.descripcion.label_tag }} {{ form.descripcion }}
+                    {{ form.descripcion.label_tag|safe }} {{ form.descripcion }}
                 </div>
                 <div class="form-group mb-3">
-                    {{ form.resumen.label_tag }} {{ form.resumen }}
+                    {{ form.resumen.label_tag|safe }} {{ form.resumen|safe }}
                 </div>
             </div>
         </div>

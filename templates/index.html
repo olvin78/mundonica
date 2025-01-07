@@ -353,36 +353,23 @@
 
         <div class="subheading">
           <h3>"Conversor de Divisas en Tiempo Real"</h3>
-          <p>"Las equivalencias mostradas corresponden al valor actual de 100 córdobas nicaragüenses en diferentes monedas."</p>
+          <span>"Las equivalencias mostradas corresponden al valor actual de  <b style="color:#4CAF50;">500</b> córdobas nicaragüenses en diferentes monedas."</span>
         </div>
 
+        <!--prueba cambio de divisas-->
         <div class="row gy-4">
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span 
-                data-purecounter-start="0" 
-                data-purecounter-end="2.71" 
-                data-purecounter-duration="1" 
-                data-purecounter-decimals="2" 
-                data-purecounter-separator="True" 
-                class="purecounter">
-              </span>
-              <p>Dólare</p>
+              <h1>{{ usd_rate }}</h1>
+              <p>Dólares</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span 
-                data-purecounter-start="0" 
-                data-purecounter-end="2.57" 
-                data-purecounter-duration="1" 
-                data-purecounter-decimals="2" 
-                data-purecounter-separator="True" 
-                class="purecounter">
-              </span>
-              <p>Euro</p>
+              <h1>{{ eur_rate }}</h1>
+              <p>Euros</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -390,29 +377,15 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span 
-                data-purecounter-start="0" 
-                data-purecounter-end="1377.4" 
-                data-purecounter-duration="1" 
-                data-purecounter-decimals="2" 
-                data-purecounter-separator="True" 
-                class="purecounter">
-              </span>
-              <p>Colón</p>
+              <h1>{{ crc_rate }}</h1>
+              <p>Colones</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span 
-                data-purecounter-start="0" 
-                data-purecounter-end="20.95" 
-                data-purecounter-duration="1" 
-                data-purecounter-decimals="2" 
-                data-purecounter-separator="True" 
-                class="purecounter">
-              </span>
-              <p>Quetzal</p>
+              <h1>{{ gtq_rate }}</h1>
+              <p>Quetzales</p>
             </div>
           </div><!-- End Stats Item -->
         </div>

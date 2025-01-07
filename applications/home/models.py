@@ -210,6 +210,37 @@ class Empresa(models.Model):
     def __str__(self):
         return f"{self.nombre} - {self.ciudad}, - {self.pais}"
 
+######################### modelo de empresa peluqueria #########################
+################################################################################
+
+
+class Peluqueria(models.Model):
+    #Nombre empresa header en el menu
+    nombre = models.CharField(max_length=100, verbose_name="Nombre de la Empresa")
+    #Header titulo en la página como texto principal h1
+    subtitulo = models.CharField(max_length=100, verbose_name="Subtitulo", null=True, blank=True)
+    #header subtitulo en la pagina debajo del texto principal como subtitulo
+    descripcion = models.CharField(max_length=100, verbose_name="descripcion", null=True, blank=True)
+    #imagen para el header a la par del subtitulo de presentacion
+    imagen_header = models.ImageField(upload_to='empresas/imagenes/header', null=True, blank=True)
+    
+
+
+    class Meta:
+        verbose_name = "Peluqueria"
+        verbose_name_plural = "Peluquerias"
+        ordering = ["nombre", "subtitulo"]
+
+
+    def __str__(self):
+        return f"{self.nombre} - {self.subtitulo}, - {self.descripcion}"
+
+
+
+
+
+######################## este es el modelo de tipo de empresa de peluqueria ###################################
+###############################################################################################################
 
 
 class Abogado(models.Model):
@@ -325,7 +356,7 @@ class Post(models.Model):
 
 class Perfil(models.Model):
     # Relación uno a uno con la tabla User de Django
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
 
     # Campos adicionales para extender la funcionalidadsss
     telefono = models.CharField(max_length=15, blank=True, null=True)
@@ -334,4 +365,4 @@ class Perfil(models.Model):
     avatar = models.ImageField(upload_to='usuario/avatars', blank=True, null=True)
 
     def __str__(self):
-        return f"Perfil de {self.usuario.username}"
+        return f"Perfil de {self.usuario}"

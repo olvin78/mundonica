@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credencial de Usuario</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+/* Contenedor Central */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Tarjeta de Perfil */
+.profile-card {
+  width: 95%; /* Ajuste más ancho */
+  max-width: 400px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative; /* Para posicionar el botón de salir */
+}
+
+/* Encabezado con Fondo y Avatar */
+.card-header {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  background: #f3f4f6;
+  color: #777;
+  font-size: 2rem;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar i {
+  display: none;
+}
+
+/* Cuerpo de la Tarjeta */
+.card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-body h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-body .role {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  font-size: 0.9rem;
+  color: #555;
+  padding: 5px 0;
+}
+
+/* Pie de Tarjeta */
+.card-footer {
+  padding: 15px;
+  text-align: center;
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+.btn-edit {
+  background: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-edit:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  .profile-card {
+    width: 95%; /* Más ancho para móviles */
+  }
+
+  .avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .card-body h2 {
+    font-size: 1.5rem;
+  }
+
+  .info-list li {
+    font-size: 0.8rem;
+  }
+}
+
+
+  </style>
+
+<style>
+/* Contenedor del botón de salir */
+.logout-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+/* Botón de salir */
+.btn-logout {
+  background:#43c0d1;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: #0b945f;
+  transform: scale(1.1);
+}
+
+</style>
+
+<style>
+  #user-status span {
+  font-weight: bold;
+}
+
+/* Estado Activo */
+#user-status span.active {
+  color: green;
+}
+
+/* Estado Desactivo */
+#user-status span.inactive {
+  color: red;
+}
+</style>
+
+
+</head>
+<body class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #eef2f7;">
+  <div class="profile-container">
+    <div class="profile-card">
+      <!-- Botón de Salir -->
+      <div class="logout-container">
+        <a href="{% url 'home_app:home' %}"><button class="btn btn-logout">Salir</button></a>
+      </div>
+          <!-- Encabezado con Foto de Fondo -->
+
+          <div class="card-header">
+            {% if request.user.is_authenticated %}
+            {% if request.user.perfil.avatar %}
+              <img src="{{ request.user.perfil.avatar.url }}" alt="Avatar de {{ request.user.username }}" class="avatar">
+            {% else %}
+              <img src="{% static 'assets/img/services.jpg' %}" alt="Avatar predeterminado" class="avatar">
+            {% endif %}
+            {% else %}
+              <p>No has iniciado sesión.</p>
+            {% endif %}
+              <div class="avatar">
+
+              <img src="{% static 'assets/img/apple-touch-icon1.png' %}" alt="Foto de perfil" onerror="this.style.display='none';">
+              <i class="bi bi-person-circle"></i>
+            </div>
+          </div>
+
+          <!-- Información del Usuario -->
+          <form method="post" class="card-body">
+            {% csrf_token %}
+            <h2>Actualizar Perfil</h2>
+
+            <div class="form-group mt-5 mb-5">
+              {{ form.avatar.label_tag }}
+              {{ form.avatar }}
+            </div>
+
+            <button type="submit" class="btn btn-edit">Guardar Cambios</button>
+          </form>
+        </div>
+      </div>
+    </body>
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const statusElement = document.querySelector("#user-status span");
+  const statusText = statusElement.textContent.trim().toLowerCase();
+
+  if (statusText === "activo") {
+    statusElement.classList.add("active");
+  } else if (statusText === "desactivo") {
+    statusElement.classList.add("inactive");
+  }
+});
+  </script>
+
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

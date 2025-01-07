@@ -57,6 +57,6 @@ admin.site.register(Post,PostAdmin )
 
 # comercios your models here.
 class PerfilAdmin(admin.ModelAdmin):
-    list_display = ("avatar","usuario","fecha_nacimiento",)
+    list_display = ("usuario","id","telefono","direccion","fecha_nacimiento",)
 
 admin.site.register(Perfil,PerfilAdmin)

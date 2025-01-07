@@ -27,6 +27,11 @@ urlpatterns = [
         name='mapa',
     ),
 
+    path('crear_empresa/peluqueria',
+        views.CrearPeluqueriaCreateView.as_view(),
+        name='peluqueria_crear',
+    ),
+
     path('registro_empresa/',
         views.CrearEmpresaCreateView.as_view(),
         name='empresa_crear',
@@ -70,6 +75,7 @@ urlpatterns = [
     path('formulario/', views.formulario_contactar, name='formulario_contactar'),
 
 #esta  url tiene que estar de ultimo para evitar conflictos con los anteriores
+
 #ya que si esta arriba puede tomarlo como una empresa y no como abogados
     path('<slug:nombreUrl>/',
         views.EmpresaDetailView.as_view(),
@@ -98,5 +104,16 @@ urlpatterns = [
         name='politicas_de_privacidad',
     ),
  
+    path('Credencial_usuario/<int:pk>/',
+        views.CredencialusuarioView.as_view(),
+        name='credencial_usuario',
+    ),
+ 
+    path('actualizar_usuario/<int:pk>/',
+        views.ActualizarperfilUpdateView.as_view(),
+        name='actualizar_usuario',
+    ),
+    
+
 
 ]

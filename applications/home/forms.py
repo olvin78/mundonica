@@ -1,6 +1,6 @@
 from django import forms
-from .models import Abogado,Empresa
-from django import forms
+from .models import Abogado,Empresa,Peluqueria
+from .models import Perfil
 
 
 
@@ -159,3 +159,30 @@ class EmpresaForm(forms.ModelForm):
             'tipo_empresa': forms.Select(attrs={'class': 'form-select'}),
         }
 
+
+
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = [
+            'avatar'
+        ]
+        widgets = {
+
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+
+
+class PeluqueriaForm(forms.ModelForm):
+    class Meta:
+        model = Peluqueria
+        fields = [
+            'nombre', 'subtitulo', 'descripcion', 'imagen_header'
+        ]
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre de la empresa'}),
+            'subtitulo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el subtítulo'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Descripción breve'}),
+            'imagen_header': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+
+        }
