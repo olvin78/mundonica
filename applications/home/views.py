@@ -2,7 +2,6 @@ from typing import Any
 #actualizar el campo de perfil de abogados 
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic.edit import UpdateView
 from .models import Abogado,Perfil
 #importaciones para contactar
 from django.core.mail import EmailMultiAlternatives
@@ -13,19 +12,23 @@ import requests
 from django.conf import settings
 #impraciones para cpntactar
 from django.http import HttpResponse
-from .forms import ContactForm,AbogadoForm,EmpresaForm,UsuarioForm,PeluqueriaForm
+from .forms import ContactForm,AbogadoForm,RestauranteForm,UsuarioForm,PeluqueriaForm,EmpresaForm,ComercioForm
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+
 
 from django.utils.text import slugify
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from applications.home.models import Consulado,Embajada,Abogado,Blog,Empresa,Post,Peluqueria
+from applications.home.models import Consulado,Embajada,Abogado,Blog,Empresa,Post
 from django.contrib.auth.models import User
 from django.views.generic import (
     TemplateView,
     ListView,
     CreateView,
-    DetailView
+    DetailView,
+    UpdateView
 )
 
 
@@ -70,16 +73,16 @@ class HomePageView(ListView):
         # Añade el formulario al contexto
         context['form'] = ContactForm()  # Instancia del formulario
 
-        # Agrega los datos de otros modelos al contexto paa ver el mapa en el iindex
-        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
-        context['restaurantes'] = Empresa.objects.filter(tipo_empresa__nombre='Restaurante')
+        # Agrega los datos de otros modelos al contexto paa ver el mapa en el index
+        context['empresas'] = Empresa.objects.all()
         context['embajadas'] = Embajada.objects.all()
         context['consulados'] = Consulado.objects.all()
+        context['peluquerias'] = Empresa.objects.filter(tipo_empresa__nombre='Peluquería')
+        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
+
         # Obtén el contexto predeterminado
         
 
-
-            
 
 
 
@@ -156,19 +159,6 @@ class HomePageView(ListView):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 class EmbajadasView(ListView):
     template_name = "generalmap.html"
 
@@ -240,10 +230,13 @@ class MapaListView(ListView):
         # Llama al método original para obtener el contexto base
         context = super().get_context_data(**kwargs)
         
-        # Agrega los datos de otros modelos al contexto
-        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
-        context['restaurantes'] = Empresa.objects.filter(tipo_empresa__nombre='Restaurante')
+        # Agrega los datos de otros modelos al contexto paa ver el mapa en el index
+        context['empresas'] = Empresa.objects.all()
         context['embajadas'] = Embajada.objects.all()
+        context['consulados'] = Consulado.objects.all()
+        context['peluquerias'] = Empresa.objects.filter(tipo_empresa__nombre='Peluquería')
+        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
+
         return context
 
 ################################### este es el apartad de los listView ###################################
@@ -253,20 +246,6 @@ class MapaListView(ListView):
 
 ################################### apartado de CreateView ###################################
 #############################################################################################################
-
-class CrearEmpresaCreateView(LoginRequiredMixin, CreateView):
-    model = Empresa
-    form_class = EmpresaForm
-    template_name = 'empresa_crear.html'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user  # Asigna el usuario actual
-        nombre_url = form.cleaned_data.get('nombreUrl', '')
-        nombre_url = nombre_url.lower()     #obtener el valor del campo nombreUrl ingresado por l usuario
-        slugify_url = slugify(nombre_url)                       #usa slugify para convertirlo en un slugy valido
-        form.instance.nombreUrl = slugify_url                   #asignar el valor trasformado al campo nombreUrl
-        return super().form_valid(form)
-
 
 
 class CrearAbogadoCreateView(LoginRequiredMixin, CreateView):
@@ -279,21 +258,41 @@ class CrearAbogadoCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class CrearPeluqueriaCreateView(LoginRequiredMixin, CreateView):
-    model = Peluqueria
-    template_name = 'empresa_crear.html'
-    form_class = PeluqueriaForm
+#prueba para adjuntar las vistas de empresa en una sola
 
-    def from_valid(self,form):
+class CrearTipodeEmpresaView(LoginRequiredMixin, CreateView):
+    model = Empresa
+    template_name = 'empresa_crear.html'
+    success_url = reverse_lazy('home_app:home')  # Cambia por la URL que necesites
+
+    # Sobrescribimos el método para elegir el formulario dinámicamente
+    def get_form_class(self):
+        tipo_empresa = self.kwargs.get('tipo_empresa')  # Corrección: 'kwargs' en lugar de 'kwards'
+        if tipo_empresa == 'peluqueria':
+            return PeluqueriaForm
+        elif tipo_empresa == 'restaurante':
+            return RestauranteForm
+
+        elif tipo_empresa == 'empresa':
+            return EmpresaForm
+
+        elif tipo_empresa == 'comercio':
+            return EmpresaForm
+
+
+        else:
+            raise Http404("Formulario no encontrado para este tipo de empresa")
+
+    # Sobrescribimos el método form_valid para asignar el usuario actual
+    def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-
-
-
-
 ################################### apartado de CreateView ###################################
 #############################################################################################################
+
+
+
 
 
 
@@ -319,6 +318,12 @@ class Politicas_de_cookiesView(TemplateView):
 
 class CredencialusuarioView(TemplateView):
     template_name = "credencial_usuario.html"
+
+class BrbermasterView(TemplateView):
+    template_name = "empresas/brber-master/index.html"
+
+class LeadmarckView(TemplateView):
+    template_name = "empresas/leadmark/index.html"
 
 
 
@@ -369,16 +374,29 @@ def contact_view(request):
     return render(request, 'index.html', {'form': form})
 
 
+#esta es la vista de empresa de restaurante
+#termina la vista de empresa de catalogo o para otras empresas
 
 
 class EmpresaDetailView(DetailView):
-    model = Empresa # Especifica el modelo Restaurante
-    template_name = 'empresas/yummy-red/index.html' # Define el template "articulo_completo.html"
+    model = Empresa  # Especifica el modelo
     context_object_name = 'datos'
     slug_field = 'nombreUrl'
     slug_url_kwarg = 'nombreUrl'
 
+    def get_template_names(self):
+        # Obtén el objeto actual basado en el slug
+        empresa = self.get_object()
 
+        # Verifica el tipo de empresa y asigna el template correspondiente
+        if empresa.tipo_empresa.nombre == 'Peluquería':  # Ajusta según el campo relacionado
+            return ['empresas/brber-master/index.html']
+        elif empresa.tipo_empresa.nombre == 'Restaurante':
+            return ['empresas/yummy-red/index.html']
+        elif empresa.tipo_empresa.nombre == 'Comercio':
+            return ['empresas/leadmark/index.html']
+        else:
+            return ['empresas/default_detail.html']  # Template por defecto
 
 ################################### detail este es el apartado de los DetailView ###################################
 #############################################################################################################
@@ -408,5 +426,33 @@ class AbogadoUpdateView(UpdateView):  # Actualizar el perfil de abogados
         return reverse_lazy("home_app:abogado_detalle", kwargs={"pk": self.object.pk})
 
 
+# este apartado es para crear la vista para poder modificar las empresas
+
+
+class ActualizartipoEmpresaView(LoginRequiredMixin, UpdateView):
+    model = Empresa
+    template_name = 'empresa_crear.html'
+    success_url = reverse_lazy('home_app:home')  # Cambia por la URL adecuada
+
+    def get_form_class(self):
+        # Obtener la instancia de la empresa usando el id (pk) proporcionado en la URL
+        empresa = get_object_or_404(Empresa, pk=self.kwargs['pk'])
+        print(empresa.tipo_empresa)
+        # Seleccionar el formulario basado en el tipo de empresa
+        if empresa.tipo_empresa.nombre == 'Peluquería':
+            return PeluqueriaForm
+        elif empresa.tipo_empresa.nombre == 'Restaurante':
+            return RestauranteForm
+        elif empresa.tipo_empresa.nombre == 'Empresa':
+            return EmpresaForm
+        elif empresa.tipo_empresa.nombre == 'Comercio':
+            return ComercioForm
+        else:
+            raise Http404("Formulario no encontrado para este tipo de empresa")
+
+    def form_valid(self, form):
+        # Asignar el usuario actual antes de guardar
+        form.instance.propietario_sitio_web = self.request.user
+        return super().form_valid(form)
 ################################### este es el apartado de los updateview ###################################
 #############################################################################################################

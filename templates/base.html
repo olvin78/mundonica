@@ -226,9 +226,11 @@
         {% if user.is_authenticated %}
         <a href="{% url 'home_app:abogado_crear' %}">Registrarme <br> como abogado</a>
         <a href="{% url 'home_app:abogado_actualizar' user.id %}">Actualizar <br> abogado</a>
-        
-        <a href="{% url 'home_app:empresa_crear' %}">Crear Empresa</a>
-        <a href="{% url 'home_app:peluqueria_crear' %}">Crear Peluqueria</a>
+        <a href="{% url 'home_app:crear_tipo_empresa' 'empresa' %}">Crear Empresa</a>
+        <a href="{% url 'home_app:crear_tipo_empresa' 'comercio' %}">Crear Comercio</a>
+        <a href="{% url 'home_app:crear_tipo_empresa' 'peluqueria' %}">Crear Peluqueria</a>
+        <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}">Crear Restaurante</a>
+
         {% endif %}
         {% if user.is_authenticated %}
         <a href="{% url 'account_logout' %}">Cerrar Sesión</a>

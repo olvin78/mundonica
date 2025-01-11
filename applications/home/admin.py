@@ -2,8 +2,12 @@ from django.contrib import admin
 from applications.home.models import (
     Consulado,
     Embajada,
-   Abogado,Blog,TipoEmpresa,
-    Empresa,Post,Perfil
+    Abogado,
+    Blog,
+    TipoEmpresa,
+    Post,
+    Perfil,
+    Empresa
 )
 
 # consulados your models here.
@@ -20,18 +24,18 @@ admin.site.register(Embajada,EmbajadaAdmin )
 
 
 # comercios your models here.
+
+
+class EmpresaAdmin(admin.ModelAdmin):
+    list_display = ("nombre_de_la_empresa", "id")
+
+admin.site.register(Empresa,EmpresaAdmin )
+
+
 class TipoEmpresaAdmin(admin.ModelAdmin):
     list_display = ("nombre", "descripcion", "id")
 
 admin.site.register(TipoEmpresa,TipoEmpresaAdmin )
-
-
-# comercios your models here.
-class EmpresaAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "pais", "tipo_empresa", "id")
-
-admin.site.register(Empresa,EmpresaAdmin )
-
 
 # abogados your models here.
 class AbogadoAdmin(admin.ModelAdmin):

@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,6 +59,11 @@
           <li><a href="#menu">Menu</a></li>
           <li><a href="#events">Eventos</a></li>
           <li><a href="#chefs">Chefs</a></li>
+          {% if datos.propietario_sitio_web ==  user %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home_app:actualizar_empresa' datos.id %}">Editar Web</a>
+            </li>
+          {% endif%}
           <li><a href="#gallery">Galería</a></li>
           <li class="dropdown"><a href="#"><span>Mundo Nica</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>

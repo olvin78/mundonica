@@ -1,0 +1,730 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with LeadMark landing page.">
+    <meta name="author" content="Devcrud">
+    <title>Nicaragüense por gracia de Dios.</title>
+        <!--leaflet-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <!--leaflet-->
+
+    </style>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{% static 'empresas/leadmarck/assets/vendors/themify-icons/css/themify-icons.css' %}">
+    <!-- Bootstrap + LeadMark main styles -->
+	<link rel="stylesheet" href="{% static 'empresas/leadmarck/assets/css/leadmark.css' %}">
+
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+    <!-- page Navigation -->
+    <nav class="navbar custom-navbar navbar-expand-md navbar-light fixed-top" data-spy="affix" data-offset-top="10">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                
+                {% if datos.imagen_logo_empresa %}
+                <img src="{% static 'empresas/leadmarck/assets/imgs/logo.svg' %}" alt="">
+                {% else %}
+                <img src="{% static 'empresas/leadmarck/assets/imgs/logo.svg' %}" alt="">
+                {% endif %}
+            </a>
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">                     
+                    <li class="nav-item">
+                        <a class="nav-link" href="#service">Nuestros Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Productos</a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="#blog">Blog</a>
+                    </li>-->
+                    
+                   {% if datos.propietario_sitio_web ==  user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home_app:actualizar_empresa' datos.id %}">Editar Web</a>
+                    </li>
+                    {% endif%}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#service" class="ml-4 nav-link btn btn-primary btn-sm rounded">Vamos a dar vistazo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Of Second Navigation -->
+    <!-- Page Header -->
+    {% if datos.imagen_fondo_header %}
+    <header class="header" style="background-image: url('{{ datos.imagen_fondo_header.url }}'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: cover;">
+    {% else %}
+    <header class="header" style="background-image: url('{% static "empresas/leadmarck/assets/imgs/header.jpg" %}'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: cover;">
+    {% endif %}
+    
+
+        <div class="overlay">
+            {% if datos.titulo_header %}
+            <h1 class="subtitle">{{ datos.titulo_header }}</h1>
+            {% else %}
+            <h1 class="subtitle">LeadMark Landing Page</h1>
+            {% endif %}
+
+            <h1 class="title">{{ datos.nombre_de_la_empresa|default:"Valor por defecto" }}</h1>
+        </div>  
+
+        <div class="shape">
+            <svg viewBox="0 0 1500 200">
+                <path d="m 0,240 h 1500.4828 v -71.92164 c 0,0 -286.2763,-81.79324 -743.19024,-81.79324 C 300.37862,86.28512 0,168.07836 0,168.07836 Z"/>
+            </svg>
+        </div>  
+        <div class="mouse-icon"><div class="wheel"></div></div>
+    </header>
+    <!-- End Of Page Header -->
+
+    <!-- Service Section -->
+    <section  id="service" class="section pt-0">
+        <div class="container">
+            <h6 class="section-title text-center">Nuestros Servicios</h6>
+            {% if datos.titulo_servicios %}
+            <h6 class="section-subtitle text-center mb-5 pb-3">{{ datos.titulo_servicios }}.</h6>
+           {% else %}
+           <h6 class="section-subtitle text-center mb-5 pb-3">Voluptates architecto provident deserunt.</h6>
+           {% endif %}
+            
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 mb-md-0">
+                        <div class="card-body">
+                            <small class="text-primary font-weight-bold">01</small>
+                            {% if datos.nombre_servicio1 %}
+                            <h5 class="card-title mt-3"> {{ datos.nombre_servicio1  }} <h5>
+                                {% else %}
+                                <h5 class="card-title mt-3"> Beatae quo <h5>
+                                {% endif %}
+
+                                {% if datos.parrafo_servicios1 %}
+                            <p class="mb-0">{{ datos.parrafo_servicios1 }}.</p>
+                            {% else %}
+                            <p class="mb-0">Lorem ipsum dolor sit amet, cquasi cupiditate voluptate debitis saepe dolorem totam dolor repudiandae quo nihil, repellendus nesciunt ab fuga quae, minima reprehenderit sequi fugit.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 mb-md-0">
+                        <div class="card-body">
+                            <small class="text-primary font-weight-bold">02</small>
+                            {% if datos.nombre_servicio2 %}
+                            <h5 class="card-title mt-3">{{ datos.nombre_servicio2 }}<h5>
+                                {% else %}
+                                <h5 class="card-title mt-3">Delectus Suscipit<h5>
+                                {% endif %}
+
+                                {% if datos.parrafo_servicios2 %}
+                            <p class="mb-0">{{ datos.parrafo_servicios2 }}.</p>
+                            {% else %}
+                            <p class="mb-0">Lorem ipsum dolor sit amet, cquasi cupiditate voluptate debitis saepe dolorem totam dolor repudiandae quo nihil, repellendus nesciunt ab fuga quae, minima reprehenderit sequi fugit.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-4 mb-md-0">
+                        <div class="card-body">
+                            <small class="text-primary font-weight-bold">03</small>
+                            {% if datos.nombre_servicio3 %}
+                            <h5 class="card-title mt-3">{{ datos.nombre_servicio3 }}<h5>
+                                {% else %}
+                                <h5 class="card-title mt-3">Itaque harum<h5>
+                                {% endif %}
+                                {% if datos.parrafo_servicios3 %}
+                            <p class="mb-0">{{ datos.parrafo_servicios3 }}.</p>
+                            {% else %}
+                            <p class="mb-0">Lorem ipsum dolor sit amet, cquasi cupiditate voluptate debitis saepe dolorem totam dolor repudiandae quo nihil, repellendus nesciunt ab fuga quae, minima reprehenderit sequi fugit.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>              
+            </div>
+        </div>
+    </section>
+    <!-- End OF Service Section -->
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-6 pr-md-5 mb-4 mb-md-0">
+                    <h6 class="section-title mb-0">Sobre Nosotros</h6>
+                    {% if datos.parrafo1_sobrenosotros %}
+                    <h6 class="section-subtitle mb-4">{{ datos.parrafo1_sobrenosotros }}</h6>
+                    {% else %}
+                    <h6 class="section-subtitle mb-4">Architecto provident deserunt</h6>
+                    {% endif %}
+
+                    {% if datos.parrafo2_sobrenosotros %}
+                    <p>{{ parrafo2_sobrenosotros }}</p>
+                    {% else %}
+                    <p >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate molestiae temporibus et tenetur unde quasi, cum nemo quo, molestias architecto alias voluptatibus corrupti corporis earum. Necessitatibus maxime modi ipsam, quod!</p>
+                    {% endif %}
+
+                    {% if datos.parrafo2_sobrenosotros %}
+                    <img src="{{ datos.imagen1_nosotros.url }}" alt="" class="w-100 mt-3 shadow-sm">
+                    {% else %}
+                    <img src="{% static 'empresas/leadmarck/assets/imgs/about.jpg' %}" alt="" class="w-100 mt-3 shadow-sm">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 pl-md-5">
+                    <div class="row">
+                        <div class="col-6">
+                            {% if datos.imagen2_nosotros_fondo %}
+                            <img src="{{ datos.imagen2_nosotros_fondo.url }}" alt="" class="w-100 shadow-sm">
+                            {% else %}
+                            <img src="{% static 'empresas/leadmarck/assets/imgs/about-1.jpg' %}" alt="" class="w-100 shadow-sm">
+                            {% endif %}
+                        </div>
+
+                        <div class="col-6">
+                            {% if datos.imagen3_nosotros %}
+                            <img src="{{ datos.imagen2_nosotros_fondo.url }}" alt="" class="w-100 shadow-sm">
+                            {% else %}
+                            <img src="{% static 'empresas/leadmarck/assets/imgs/about-2.jpg' %}" alt="" class="w-100 shadow-sm">
+                            {% endif %}
+                        </div>
+                        <div class="col-12 mt-4">
+                            {% if datos.parrafo3_sobrenosotros %}
+                                <p>{{ datos.parrafo3_sobrenosotros }}.</p>
+                            <br>{% else %}
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo iusto quidem laborum atque, sapiente ipsa excepturi fuga cum sed in assumenda eos quasi harum culpa laboriosam nulla, incidunt quae. Voluptatum.</p>
+                            {% endif %}
+
+                            {% if datos.parrafo4_sobrenosotros %}
+                                <p>{{ datos.parrafo4_sobrenosotros }}.
+                                </p>
+                            {% else %}
+                                <p>Aliquid fuga sunt velit, temporibus molestias ab. Ipsa nesciunt totam, aliquid dignissimos.
+                                </p>
+                            {% endif %}
+
+                            {% if datos.parrafo5_sobrenosotros %}
+                            <p>{{ datos.parrafo5_sobrenosotros }}</p>
+                            {% else %}
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt ut a dolorem, consectetur, eos suscipit consequatur magnam est dolore obcaecati adipisci expedita, vero, iste ducimus qui numquam animi facilis officia?</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>              
+        </div>
+    </section>
+    <!-- End OF About Section -->s
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section portfolio-section">
+        <div class="container">
+            <h6 class="section-title text-center">Nuestros Productos</h6>
+            <h6 class="section-subtitle mb-5 text-center">Explora nuestra selección de productos.</h6>
+            <div class="filters">
+                <a href="#"  class="active">
+                    Nuevos
+                </a>
+            </div>
+
+            <div class="portfolio-container"> 
+                <div class="col-md-6 col-lg-4 new">
+                    <div class="portfolio-item">
+                        {% if datos.imagen1_galeria %}
+                        <img src="{{ datos.imagen1_galeria.url }}" class="img-fluid" alt="">
+                        {% else %}
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/web-1.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/web-1.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio1_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio1_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 150 Córdobas.</h6>
+                                {% endif %}
+
+                                {% if datos.nombre_servicio1_tarifa%}
+                                <p class="subtitle">{{ datos.nombre_servicio1_tarifa }}!</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>   
+                    </div>             
+                </div>
+
+                <div class="col-md-6 col-lg-4 new">
+                    <div class="portfolio-item">
+
+                        {% if datos.imagen2_galeria %}
+                        <img src="{{ datos.imagen2_galeria.url }}" class="img-fluid" alt="">
+                        {% else %}
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/web-2.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}
+
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/web-2.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio2_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio2_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 180 Córdobas.</h6>
+                                {% endif %}
+                                {% if datos.nombre_servicio2_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio2_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div> 
+                    </div>                         
+                </div>
+
+                <div class="col-md-6 col-lg-4 new">
+                    <div class="portfolio-item">
+                        {% if datos.imagen3_galeria %}
+                        <img src="{{ datos.imagen3_galeria.url }}" class="img-fluid" alt="">
+                        {% else %} 
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/advertising-2.jpg' %}" class="img-fluid" alt=""> 
+                        {% endif %}                         
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/advertising-2.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio3_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio3_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 190 Córdobas.</h6>
+                                {% endif %}
+
+                                {% if datos.nombre_servicio3_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio3_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>    
+                    </div>              
+                </div> 
+
+                <div class="col-md-6 col-lg-4 new">
+                    <div class="portfolio-item">
+                        {% if datos.imagen4_galeria %}
+                        <img src="{{ datos.imagen4_galeria.url }}" class="img-fluid" alt=""> 
+                        {% else %} 
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/web-3.jpg' %}" class="img-fluid" alt="">  
+                        {% endif %}
+                       <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/web-3.jpg' %}"></a>
+                            <div class="content-holder">
+                                {% if datos.precio_servicio7_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio7_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 250 Córdobas.</h6>
+                                {% endif %}
+
+                                {% if datos.nombre_servicio7_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio7_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>                                                     
+                </div>
+
+                                
+                <div class="col-md-6 col-lg-4 new">
+                    <div class="portfolio-item">
+                        {% if datos.imagen5_galeria %}
+                        <img src="{{ datos.imagen5_galeria.url }}" class="img-fluid" alt=""> 
+                        {% else %} 
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/advertising-3.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}       
+                       <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/advertising-3.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio8_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio8_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 50 Córdobas.</h6>
+                                {% endif %}
+
+                                {% if datos.nombre_servicio8_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio8_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>                                                       
+                </div> 
+
+                <div class="col-md-6 col-lg-4 new"> 
+                    <div class="portfolio-item">
+                        {% if datos.imagen6_galeria %}
+                        <img src="{{ datos.imagen6_galeria.url }}" class="img-fluid" alt="">  
+                        {% else %}    
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/advertising-4.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}       
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/advertising-4.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio9_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio9_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 360 Córdobas.</h6>
+                                {% endif %}
+
+                                {% if datos.nombre_servicio9_tarifa%}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                            
+                </div> 
+
+                <div class="col-md-6 col-lg-4 new">
+                    <div class="portfolio-item">
+                        {% if datos.imagen7_galeria %}
+                        <img src="{{ datos.imagen7_galeria.url }}" class="img-fluid" alt="">
+                        {% else %}
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/branding-1.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/branding-1.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio4_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio4_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 210 Córdobas.</h6>
+                                {% endif %}
+                                {% if datos.nombre_servicio4_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio4_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>                                                     
+                </div>
+
+                <div class="col-md-6 col-lg-4 new"> 
+                    <div class="portfolio-item">
+                        {% if datos.imagen8_galeria %}
+                        <img src="{{ datos.imagen8_galeria.url }}" class="img-fluid" alt="">
+                        {% else %}
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/branding-3.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}                                 
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/branding-3.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio5_tarifa %}
+                                <h6 class="title">{{ datos.precio_servicio5_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title">Precio: 120 Córdobas.</h6>
+                                {% endif %}
+                                {% if datos.nombre_servicio5_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio5_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>                                                       
+                </div> 
+
+            </div>   
+        </div>            
+    </section>
+    <!-- End of portfolio section -->
+
+
+    <!-- Blog Section -->
+    <!--<section class="section" id="blog">
+        <div class="container">
+            <h6 class="section-title mb-0 text-center">Latest Articles</h6>
+            <h6 class="section-subtitle mb-5 text-center">Architecto provident deserunt eveniet libero</h6>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card border-0 mb-4">
+                        <img src="{% static 'empresas/leadmarck/asset/imgs/blog-1.jpg' %}" alt="" class="card-img-top w-100">
+                        <div class="card-body">                         
+                            <h6 class="card-title">Pariatur Omnis Harum quae sint.</h6>
+                            <p>Fuga quae ratione inventore Perferendis porro.</p>
+                            <a href="javascript:void(0)" class="small text-muted">Go To The Article</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 mb-4">
+                        <img src="{% static 'empresas/leadmarck/asset/imgs/blog-2.jpg' %}" alt="" class="card-img-top w-100">
+                        <div class="card-body">                         
+                            <h6 class="card-title"> Harum Quae Porro</h5>
+                            <p>Fuga quae ratione inventore Perferendis porro.</p>
+                            <a href="javascript:void(0)" class="small text-muted">Go To The Article</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 mb-4">
+                        <img src="{% static 'empresas/leadmarck/asset/imgs/blog-3.jpg' %}" alt="" class="card-img-top w-100">
+                        <div class="card-body">                         
+                            <h6 class="card-title">Qui optio neque alias</h6>
+                            <p>Fuga quae ratione inventore Perferendis porro.</p>
+                            <a href="javascript:void(0)" class="small text-muted">Go To The Article</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+    <!-- End of Blog Section -->
+
+    <!-- Testmonial Section -->
+    <section class="section" id="testmonial">
+        <div class="container">
+            <h6 class="section-title text-center mb-0">Testimonios</h6>
+            <h6 class="section-subtitle mb-5 text-center">Qué dicen nuestros Clientes</h6>
+            <div class="row">
+                <div class="col-md-4 my-3 my-md-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center mb-3">
+                                {% if datos.nombre1_comentario %}
+                                <img class="mr-3" src="{% static '{{ datos.imagen1_comentario }}' %}" alt="">
+                                {% else %}
+                                <img class="mr-3" src="{% static 'empresas/leadmarck/assets/imgs/avatar.jpg' %}" alt="">
+                                {% endif %}
+                                <div class="media-body">
+                                    {% if datos.nombre1_comentario %}
+                                    <h6 class="mt-1 mb-0">{{ nombre1_comentario }}</h6>
+                                    {% else %}
+                                    <h6 class="mt-1 mb-0">John Doe</h6>
+                                    {% endif %}
+   
+                                </div>
+                            </div>
+                            {% if datos.parrafo1_comentario %}
+                            <p class="mb-0">{{ datos.parrafo1_comentario }}.</p>
+                            {% else %}
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus enim modi, id dicta reiciendis itaque.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 my-3 my-md-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center mb-3">
+                                {% if datos.imagen2_comentario %}
+                                <img class="mr-3" src="{% static '{{ datos.imagen2_comentario }}' %}" alt="">
+                                {% else %}
+                                <img class="mr-3" src="{% static 'empresas/leadmarck/assets/imgs/avatar-1.jpg' %}" alt="">
+                                {% endif %}
+                                <div class="media-body">
+                                    {% if datos.nombre2_comentario %}
+                                    <h6 class="mt-1 mb-0">{{ nombre2_comentario }}.</h6>
+                                    {% else %}
+                                    <h6 class="mt-1 mb-0">Maria Garcia</h6>
+                                    {% endif %}  
+                                </div>
+                            </div>
+                            {% if datos.parrafo2_comentario %}
+                            <p class="mb-0">{{ datos.parrafo2_comentario }}.</p>
+                            {% else %}
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus enim modi, id dicta reiciendis itaque.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 my-3 my-md-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center mb-3">
+                                {% if datos.imagen3_comentario %}
+                                <img class="mr-3" src="{% static 'e{{ datos.imagen3_comentario }}' %}" alt="">
+                                {% else %}
+                                <img class="mr-3" src="{% static 'empresas/leadmarck/assets/imgs/avatar-2.jpg' %}" alt="">
+                                {% endif %}
+                                <div class="media-body">
+                                    {% if datos.nombre3_comentario %}
+                                    <h6 class="mt-1 mb-0">{{ datos.nombre3_comentario }}</h6>
+                                    {% else %}
+                                    <h6 class="mt-1 mb-0">Mason Miller</h6>
+                                    {% endif %}       
+                                </div>
+                            </div>
+                            {% if datos.parrafo3_comentario %}
+                            <p class="mb-0">{{ parrafo3_comentario }}.</p>
+                            {% else %}
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus enim modi, id dicta reiciendis itaque.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!--? Blog Area Start -->
+          <!-- Cut Details End -->
+          <section class="home-blog-area section-padding30 mb-5 mt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Título de la sección -->
+                    <div class="col-12 text-center mb-4">
+                        <h2>Nuestra Ubicación</h2>
+                        {% if datos.titulo_ubicacion_mapa %}
+                        <h5>{{ datos.titulo_ubicacion_mapa }}.</h5>
+                        {% else %}
+                        <h5>Haz zoom y encuentranos.</h5>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Espacio en los lados -->
+                    <div class="col-2"></div>
+        
+                    <!-- Contenedor principal del mapa -->
+                    <div class="col-8">
+                        <div style="height: 400px; border-radius: 8px; border: 1px solid #DAA45E;" id="map"></div>
+                    </div>
+        
+                    <!-- Espacio en los lados -->
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </section>
+        
+    
+    
+
+    <!-- Contact Section -->
+    <section id="contact" class="section has-img-bg pb-0">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5 my-3">
+                    <h6 class="mb-0">teléfono</h6>
+                    {% if datos.telefono %}
+                    <p class="mb-4">+ {{ datos.telefono }}</p>
+                    {% else %}
+                    <p class="mb-4">+ 123-456-7890</p>
+                    {% endif %}
+
+                    <h6 class="mb-0">Dirección</h6>
+                    {% if datos.direccion %}
+                    <p class="mb-4">{{ datos.direccion }}</p>
+                    {% else %}
+                    <p class="mb-4">12345 Estos credenciales se estan desarrollando</p>
+                    {% endif %}
+                    <h6 class="mb-0">Correo</h6>
+                    {% if datos.email %}
+                    <p class="mb-0">{{ datos.email }}</p>
+                    {% else %}
+                    <p class="mb-0">info@miweb.com</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-7">
+                    <form>
+                        <h4 class="mb-4">Déjanos tu Mensaje</h4>
+                        <div class="form-row">
+                            <div class="form-group col-sm-6">
+                                <input type="text" class="form-control text-white rounded-0 bg-transparent" name="name" placeholder="Nombre">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <input type="email" class="form-control text-white rounded-0 bg-transparent" name="Email" placeholder="Correo">
+                            </div>
+                            <div class="form-group col-12">
+                                <textarea name="message" id="" cols="30" rows="4" class="form-control text-white rounded-0 bg-transparent" placeholder="Mensaje"></textarea>
+
+                            </div>
+                            <div class="form-group col-12 mb-0 text-center">
+                                <button type="submit" class="btn btn-primary rounded w-md mt-3" style="width: 150px;">Send</button>
+                            </div>                          
+                        </div>                          
+                    </form>
+                </div>
+            </div>
+
+            <!-- Page Footer -->
+            <footer class="mt-5 py-4 border-top border-secondary">
+               <!--
+                <div class="d-flex justify-content-between align-items-center">
+                    Texto de Copyright -->
+                    
+                    <!-- Botones de Políticas -->
+                    <!-- <div class="d-flex" style="margin: auto;">
+                        <a href="#" class="btn btn-sm mx-2 text-white">Términos y Condiciones</a>
+                        <a href="#" class="btn btn-sm mx-2 text-white">Política de Privacidad</a>
+                        <a href="#" class="btn btn-sm mx-2 text-white">Política de Cookies</a>
+                    </div>
+                    
+                </div>
+                <br>--> 
+                <p class="text-center">
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+                    <img width="30" height="30" src="https://img.icons8.com/emoji/30/orange-heart.png" alt="orange-heart"/>
+                </p>
+            </footer>
+            
+            <!-- End of Page Footer -->  
+        </div>
+    </section>
+	
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-QvZo9R5hF1ymCWAM9M8qEvhU+FWo1oz7XLa1LfFgJq/pCGlKT0Llta9ENq+oWSGm" crossorigin="anonymous"></script>
+
+	<!-- core  -->
+    <script src="{% static 'empresas/leadmarck/assets/vendors/jquery/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'empresas/leadmarck/assets/vendors/bootstrap/bootstrap.bundle.js' %}"></script>
+
+    <!-- bootstrap 3 affix -->
+	<script src="{% static 'empresas/leadmarck/assets/vendors/bootstrap/bootstrap.affix.js' %}"></script>
+
+    <!-- Isotope -->
+    <script src="{% static 'empresas/leadmarck/assets/vendors/isotope/isotope.pkgd.js' %}"></script>
+
+    <!-- LeadMark js -->
+    <script src="{% static 'empresas/leadmarck/assets/js/leadmark.js' %}"></script>
+       <!-- Script Leaflet JS -->
+    <!--leaflet-->
+    <script>
+        // Initialize the Leaflet map
+        var map = L.map('map').setView([{{ datos.latitud|default:"12.136389" }}, {{ datos.longitud|default:"-86.251389"}}], 13); // Set the view to Managua, Nicaragua (or change coordinates)
+    
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+    
+        // Add a marker to the map (optional)
+        L.marker([{{ datos.latitud|default:"12.136389" }},{{ datos.longitud|default:"-86.251389" }}]).addTo(map)
+            .bindPopup("Bienvenido a {{ datos.ciudad|default:'Managua' }},{{ datos.pais|default:' Nicaragua!' }}")
+            .openPopup();
+
+    </script>
+</body>
+</html>
