@@ -327,7 +327,7 @@ class RestauranteForm(forms.ModelForm):
             'precio_servicio7_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 7'}),
             'precio_servicio8_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 8'}),
             'precio_servicio9_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 9'}),
-            'precio_servicio10_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 10'}),
+            'precio_servicio10_tarifa': forms.TextInput(attrs={'class':'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 10'}),
             
             'comentarios_activo': forms.Select(
             attrs={'class': 'form-select form-select-lg border-success'},
@@ -348,13 +348,6 @@ class RestauranteForm(forms.ModelForm):
             'imagen3_comentario': forms.ClearableFileInput(attrs={'class':'form-control form-control-lg border-success','placeholder':'Selecciona una imagen para el comentario 3'}),
 
 
-            'eventos_activo': forms.Select(
-            attrs={'class': 'form-select form-select-lg border-success'},
-            choices=[
-                ('SI', 'Sí'),
-                ('NO', 'No'),
-                ('DK', 'Desconocido')
-            ]),
 
             'chefs_activo': forms.Select(attrs={'class': 'form-select form-select-lg border-success'},choices=[('SI', 'Sí'),('NO', 'No'),('DK', 'Desconocido')]),
 
@@ -402,6 +395,7 @@ class RestauranteForm(forms.ModelForm):
                 ('DK', 'Desconocido')
             ]
         ),
+            'eventos_activo': forms.Select(attrs={'class': 'form-select form-select-lg border-success'},choices=[ ('SI', 'Sí'),('NO', 'No'),('DK', 'Desconocido')]),
 
             'titulo1_galeria': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Título para describir la galería'}),
             'imagen1_galeria': forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg border-success'}),
@@ -640,25 +634,12 @@ class EmpresaForm(forms.ModelForm):
             'video_nosotros': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'URL del Video Sobre Nosotros'}),
 
             #campo de los platos 
-            'menu_regalo_activo': forms.Select(
-                attrs={'class': 'form-select form-select-lg border-success'},
-                choices=[
-                    ('SI', 'Sí'),
-                    ('NO', 'No'),
-                    ('DK', 'Desconocido')
-                ]
-            ),
+            'menu_regalo_activo': forms.Select( attrs={'class': 'form-select form-select-lg border-success'},choices=[('SI', 'Sí'),('NO', 'No'), ('DK', 'Desconocido')]),
 
             'menu_oferta1': forms.Textarea(attrs={'class': 'form-control form-control-lg border-success', 'rows': 4, 'placeholder': 'Detalle de la oferta del menú 1'}),
             'menu_oferta2': forms.Textarea(attrs={'class': 'form-control form-control-lg border-success', 'rows': 4, 'placeholder': 'Detalle de la oferta del menú 2'}),
             'menu_oferta3': forms.Textarea(attrs={'class': 'form-control form-control-lg border-success', 'rows': 4, 'placeholder': 'Detalle de la oferta del menú 3'}),
-            'clientes_activo': forms.Select(
-            attrs={'class': 'form-select form-select-lg border-success'},
-            choices=[
-                ('SI', 'Sí'),
-                ('NO', 'No'),
-                ('DK', 'Desconocido')
-            ]),
+            'clientes_activo': forms.Select(attrs={'class': 'form-select form-select-lg border-success'},choices=[('SI', 'Sí'),('NO', 'No'),('DK', 'Desconocido')]),
 
             'platos_menu_activo': forms.Select(
             attrs={'class': 'form-select form-select-lg border-success'},
@@ -701,7 +682,7 @@ class EmpresaForm(forms.ModelForm):
             'nombre_servicio7_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre del servicio 7'}),
             'nombre_servicio8_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre del servicio 8'}),
             'nombre_servicio9_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre del servicio 9'}),
-            'nombre_servicio10_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre del servicio 10'}),
+            'nombre_servicio10_tarifa':forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre del servicio 10'}),
             'precio_servicio1_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 1'}),
             'precio_servicio2_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 2'}),
             'precio_servicio3_tarifa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Precio del servicio 3'}),
@@ -975,9 +956,6 @@ class ComercioForm(forms.ModelForm):
             'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Latitud'}),
             'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Longitud'}),
             'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Slug único'}),
-            
-
-
 
             
         }
