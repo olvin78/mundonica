@@ -27,13 +27,13 @@ admin.site.register(Embajada,EmbajadaAdmin )
 
 
 class EmpresaAdmin(admin.ModelAdmin):
-    list_display = ("nombre_de_la_empresa", "id")
+    list_display = ("nombre_de_la_empresa","tipo_empresa","id")
 
 admin.site.register(Empresa,EmpresaAdmin )
 
 
 class TipoEmpresaAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "descripcion", "id")
+    list_display = ("nombre","descripcion", "id")
 
 admin.site.register(TipoEmpresa,TipoEmpresaAdmin )
 

@@ -77,7 +77,8 @@ class TipoEmpresa(models.Model):
 class Empresa(models.Model):
 
         ##############   Header de empresa #############
-    propietario_sitio_web = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="Propietario")
+    propietario_sitio_web = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="Propietario", null=True, blank=True)
+    
     nombre_de_la_empresa = models.CharField(max_length=100, verbose_name="Nombre de la Empresa")
     #Header titulo en la página como texto principal h1
     titulo_header = models.CharField(max_length=100, verbose_name="titulo header", null=True, blank=True)
@@ -102,17 +103,17 @@ class Empresa(models.Model):
     #activar el aparatado de quienes somos, para poder agregarlo o que no aparezca
     quienes_somos_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección Sobre Nosotros")
     #titulo para describir sobre nosotros quienes somos como empresas
-    titulo_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo sobrenosotros 1", null=True, blank=True)
+    titulo_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 1", null=True, blank=True)
     #titulo sobre nosotros para descripcion
-    parrafo1_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo sobrenosotros 1", null=True, blank=True)
+    parrafo1_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 1", null=True, blank=True)
     #titulo sobre nosotros para descripcion
-    parrafo2_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo sobrenosotros 2", null=True, blank=True)
+    parrafo2_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 2", null=True, blank=True)
     #titulo sobre nosotros para descripcion
-    parrafo3_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo sobrenosotros 3", null=True, blank=True)
+    parrafo3_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 3", null=True, blank=True)
     #titulo sobre nosotros para descripcion
-    parrafo4_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo sobrenosotros 4", null=True, blank=True)
+    parrafo4_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 4", null=True, blank=True)
     #titulo sobre nosotros para descripcion
-    parrafo5_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo sobrenosotros 5", null=True, blank=True)
+    parrafo5_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 5", null=True, blank=True)
     #imagen para el apartado sobre nosotros  imagen mas grande
     imagen1_nosotros = models.ImageField(upload_to='empresas/imagenes/nosotros', null=True, blank=True)
     #imagen para el apartado sobre nosotros imagen de fondo del video pequeño
@@ -136,15 +137,7 @@ class Empresa(models.Model):
 
     #esto es el campo para incluir lo que ofrece el menu para una persona en el apartado de menu de regalo numero 1
     menu_oferta1 = HTMLField(blank=True,null=True)
-    #esto es el campo para incluir lo que ofrece el menu para una persona en el apartado de menu de regalo numero 2
-    #menu_regalo2 = models.CharField(max_length=500, verbose_name="menu_regalo2", null=True, blank=True)
-
-    #esto es el campo para incluir lo que ofrece el menu para una persona en el apartado de menu de regalo numero 2
     menu_oferta2= HTMLField(blank=True,null=True)
-    #esto es el campo para incluir lo que ofrece el menu para una persona en el apartado de menu de regalo numero 3
-    #menu_regalo3 = models.CharField(max_length=500, verbose_name="menu_regalo3", null=True, blank=True)
-    
-    #esto es el campo para incluir lo que ofrece el menu para una persona en el apartado de menu de regalo numero 3
     menu_oferta3 = HTMLField(blank=True,null=True)
 
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
@@ -153,18 +146,54 @@ class Empresa(models.Model):
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
     platos_menu_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de platos")
 
-    #imagen para el apartado de la galeria imagen numero 1
-    plato_menu1 = models.ImageField(upload_to='empresas/imagenes/platos-menu', null=True, blank=True)
-    #imagen para el apartado de la galeria imagen numero 1
-    plato_menu2 = models.ImageField(upload_to='empresas/imagenes/platos-menu', null=True, blank=True)
-    #imagen para el apartado de la galeria imagen numero 1
-    plato_menu3 = models.ImageField(upload_to='empresas/imagenes/platos-menu', null=True, blank=True)
-    #imagen para el apartado de la galeria imagen numero 1
-    plato_menu4 = models.ImageField(upload_to='empresas/imagenes/Platos-menu', null=True, blank=True)
-    #imagen para el apartado de la galeria imagen numero 1
-    plato_menu5 = models.ImageField(upload_to='empresas/imagenes/Platos-menu', null=True, blank=True)
-    #imagen para el apartado de la galeria imagen numero 1
-    plato_menu6 = models.ImageField(upload_to='empresas/imagenes/platos-menu', null=True, blank=True)
+
+    #apartado para la seccion de la exposixcino de platos , su descripciony su precio
+    nombre1_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 1", blank=True, null=True)
+    nombre2_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 2", blank=True, null=True)
+    nombre3_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 3", blank=True, null=True)
+    nombre4_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 4", blank=True, null=True)
+    nombre5_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 5", blank=True, null=True)
+    nombre6_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 6", blank=True, null=True)
+    nombre7_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 7", blank=True, null=True)
+    nombre8_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 8", blank=True, null=True)
+    nombre9_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 9", blank=True, null=True)
+    nombre10_plato_menu = models.CharField(max_length=255, verbose_name="Nombre Plato 10", blank=True, null=True)
+
+    # Imágenes de los platos
+    imagen1_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 1", blank=True, null=True)
+    imagen2_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 2", blank=True, null=True)
+    imagen3_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 3", blank=True, null=True)
+    imagen4_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 4", blank=True, null=True)
+    imagen5_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 5", blank=True, null=True)
+    imagen6_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 6", blank=True, null=True)
+    imagen7_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 7", blank=True, null=True)
+    imagen8_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 8", blank=True, null=True)
+    imagen9_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 9", blank=True, null=True)
+    imagen10_plato_menu = models.ImageField(upload_to="empresas/imagenes/platos/", verbose_name="Imagen Plato 10", blank=True, null=True)
+
+    # Descripciones de los platos
+    descriptcion1_plato_menu = models.TextField(verbose_name="Descripción Plato 1", blank=True, null=True)
+    descriptcion2_plato_menu = models.TextField(verbose_name="Descripción Plato 2", blank=True, null=True)
+    descriptcion3_plato_menu = models.TextField(verbose_name="Descripción Plato 3", blank=True, null=True)
+    descriptcion4_plato_menu = models.TextField(verbose_name="Descripción Plato 4", blank=True, null=True)
+    descriptcion5_plato_menu = models.TextField(verbose_name="Descripción Plato 5", blank=True, null=True)
+    descriptcion6_plato_menu = models.TextField(verbose_name="Descripción Plato 6", blank=True, null=True)
+    descriptcion7_plato_menu = models.TextField(verbose_name="Descripción Plato 7", blank=True, null=True)
+    descriptcion8_plato_menu = models.TextField(verbose_name="Descripción Plato 8", blank=True, null=True)
+    descriptcion9_plato_menu = models.TextField(verbose_name="Descripción Plato 9", blank=True, null=True)
+    descriptcion10_plato_menu = models.TextField(verbose_name="Descripción Plato 10", blank=True, null=True)
+
+    # Precios de los platos
+    precio1_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 1", blank=True, null=True)
+    precio2_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 2", blank=True, null=True)
+    precio3_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 3", blank=True, null=True)
+    precio4_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 4", blank=True, null=True)
+    precio5_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 5", blank=True, null=True)
+    precio6_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 6", blank=True, null=True)
+    precio7_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 7", blank=True, null=True)
+    precio8_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 8", blank=True, null=True)
+    precio9_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 9", blank=True, null=True)
+    precio10_plato_menu = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio Plato 10", blank=True, null=True)
 
 
         ##############  Sobre los Comentarios ################
@@ -176,30 +205,32 @@ class Empresa(models.Model):
     
     #parrafo para el apartado de los comentarios
     parrafo1_comentario = models.CharField(max_length=500, verbose_name="parrafo comentario 1", null=True, blank=True)
-    #parrafo para el apartado de los comentarios
     parrafo2_comentario = models.CharField(max_length=500, verbose_name="parrafo comentario 2", null=True, blank=True)
-    #parrafo para el apartado de los comentarios
     parrafo3_comentario = models.CharField(max_length=500, verbose_name="parrafo comentario 3", null=True, blank=True)
 
     #nombre de la paersona que comenta en el apartado de testimosnios o comentarios
     nombre1_comentario = models.CharField(max_length=100, verbose_name="Nombre de la persona que hace el comentario 1", null=True, blank=True)
-    #nombre de la paersona que comenta en el apartado de testimosnios o comentarios
     nombre2_comentario = models.CharField(max_length=100, verbose_name="Nombre de la persona que hace el comentario 2", null=True, blank=True)
-    #nombre de la paersona que comenta en el apartado de testimosnios o comentarios
     nombre3_comentario = models.CharField(max_length=100, verbose_name="Nombre de la persona que hace el comentario 3", null=True, blank=True)
 
     #imagen para el apartado de los comentarios 1
-    imagen1_comentario = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
-    #imagen para el apartado de los comentarios 2
-    imagen2_comentario = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
-    #imagen para el apartado de los comentarios 3
-    imagen3_comentario = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
+    imagen1_comentario = models.ImageField(upload_to='empresas/imagenes/comentarios', null=True, blank=True)
+    imagen2_comentario = models.ImageField(upload_to='empresas/imagenes/comentarios', null=True, blank=True)
+    imagen3_comentario = models.ImageField(upload_to='empresas/imagenes/comentarios', null=True, blank=True)
     
      #activar el aparatado de la galería, para poder agregarlo o que no aparezca
     eventos_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de enventos")
-    #activar el aparatado de la galería, para poder agregarlo o que no aparezca
+
     chefs_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de chefs")
-    #activar el aparatado de la galería, para poder agregarlo o que no aparezca
+
+    imagen_chef1 = models.ImageField(upload_to='empresas/imagenes/chefs/', verbose_name="Agregar imagen Chef 1", blank=True, null=True)
+    imagen_chef2 = models.ImageField(upload_to='empresas/imagenes/chefs/', verbose_name="Agregar imagen Chef 2", blank=True, null=True)
+    imagen_chef3 = models.ImageField(upload_to='empresas/imagenes/chefs/', verbose_name="Agregar imagen Chef 3", blank=True, null=True)
+    
+    nombre_chef1 = models.CharField(max_length=255, verbose_name="Introduzca el nombre del Chef 1", blank=True, null=True)
+    nombre_chef2 = models.CharField(max_length=255, verbose_name="Introduzca el nombre del Chef 2", blank=True, null=True)
+    nombre_chef3 = models.CharField(max_length=255, verbose_name="Introduzca el nombre del Chef 3", blank=True, null=True)
+
     reservar_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para reservas")
 
 
@@ -209,24 +240,24 @@ class Empresa(models.Model):
 
     #titulo para describir sobre los servicios
     titulo_servicios = models.CharField(max_length=500, verbose_name="titulo servicios", null=True, blank=True)
+
     #imagen para el apartado de los servicios numero 1
     imagen_servicio1 = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
-    #imagen para el apartado de los servicios numero 2
     imagen_servicio2 = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
-    #imagen para el apartado de los servicios numero 3
     imagen_servicio3 = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
+    imagen_servicio4 = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
+
     #nombre para describir sobre los servicios 1
-    nombre_servicio1 = models.CharField(max_length=500, verbose_name="parrafo servicio 1", null=True, blank=True)
-    #nombre para describir sobre los servicios 2
-    nombre_servicio2 = models.CharField(max_length=500, verbose_name="parrafo servicio 2", null=True, blank=True)
-    #nombre para describir sobre los servicios 3
-    nombre_servicio3 = models.CharField(max_length=500, verbose_name="parrafo servicio 3", null=True, blank=True)
+    nombre_servicio1 = models.CharField(max_length=500, verbose_name="desacribir parrafo servicio 1", null=True, blank=True)
+    nombre_servicio2 = models.CharField(max_length=500, verbose_name="desacribir parrafo servicio 2", null=True, blank=True)
+    nombre_servicio3 = models.CharField(max_length=500, verbose_name="desacribir parrafo servicio 3", null=True, blank=True)
+    nombre_servicio4 = models.CharField(max_length=500, verbose_name="desacribir parrafo servicio 4", null=True, blank=True)
+
     #titulo sobre nosotros para descripcion e servicios 1
-    parrafo_servicios1 = models.CharField(max_length=500, verbose_name="parrafo servicio 4", null=True, blank=True)
-    #titulo sobre nosotros para descripcion e servicios 2
-    parrafo_servicios2 = models.CharField(max_length=500, verbose_name="parrafo servicio 5", null=True, blank=True)
-    #titulo sobre nosotros para descripcion de servicios 3
-    parrafo_servicios3 = models.CharField(max_length=500, verbose_name="parrafo servicio 6", null=True, blank=True)
+    parrafo_servicios1 = models.CharField(max_length=500, verbose_name="describir el parrafo servicio 1", null=True, blank=True)
+    parrafo_servicios2 = models.CharField(max_length=500, verbose_name="describir el parrafo servicio 2", null=True, blank=True)
+    parrafo_servicios3 = models.CharField(max_length=500, verbose_name="describir el parrafo servicio 3", null=True, blank=True)
+    parrafo_servicios4 = models.CharField(max_length=500, verbose_name="describir el parrafo servicio 4", null=True, blank=True)
 
 
         ##############  Sobre el equipo de trabajo ################
@@ -235,17 +266,15 @@ class Empresa(models.Model):
 
      #titulo para describir sobre los servicios
     titulo_trabajadores = models.CharField(max_length=500, verbose_name="parrafo1", null=True, blank=True)
+
     #imagen para el apartado de de equipo de trabajo numero 1
     imagen_trabajador1 = models.ImageField(upload_to='empresas/imagenes/trabajadores', null=True, blank=True)
-    #imagen para el apartado de de equipo de trabajo numero 2
     imagen_trabajador2 = models.ImageField(upload_to='empresas/imagenes/trabajadores', null=True, blank=True)
-    #imagen para el apartado de equipo de trabajo numero 3
     imagen_trabajador3 = models.ImageField(upload_to='empresas/imagenes/trabajadores', null=True, blank=True)
+
     #nombre para describir sobre el equipo de trabajo numero 1
     nombre_trabajador1 = models.CharField(max_length=500, verbose_name="trabajador 1", null=True, blank=True)
-    #nombre para describir sobre el equipo de trabajo numero 2
     nombre_trabajador2 = models.CharField(max_length=500, verbose_name="trabajador 2", null=True, blank=True)
-    #nombre para describir sobre el equipo de trabajo numero 3
     nombre_trabajador3 = models.CharField(max_length=500, verbose_name="trabajador 3", null=True, blank=True)
 
 
@@ -255,50 +284,33 @@ class Empresa(models.Model):
 
     #titulo para describir las tarifas
     titulo_tarifa = models.CharField(max_length=500, verbose_name="Titulo sccion de tarifa", null=True, blank=True)
+
     #imagen para el apartado de las tarifas numero 1
     imagen_tarifa1 = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
-    #imagen para el apartado de las tarifas numero 2
     imagen_tarifa2 = models.ImageField(upload_to='empresas/imagenes/servicios', null=True, blank=True)
+
     #producto servicio y su tarifa 1
     nombre_servicio1_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 1", null=True, blank=True)
-    #producto servicio y su tarifa 2
     nombre_servicio2_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 2", null=True, blank=True)
-    #producto servicio y su tarifa 3
     nombre_servicio3_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 3", null=True, blank=True)
-    #producto servicio y su tarifa 4
     nombre_servicio4_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 4", null=True, blank=True)
-    #producto servicio y su tarifa 5
     nombre_servicio5_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 5", null=True, blank=True)
-    #producto servicio y su tarifa 6
     nombre_servicio6_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 6", null=True, blank=True)
-    #producto servicio y su tarifa 7
     nombre_servicio7_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 7", null=True, blank=True)
-    #producto servicio y su tarifa 8
     nombre_servicio8_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 8", null=True, blank=True)
-    #producto servicio y su tarifa 9
     nombre_servicio9_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 9", null=True, blank=True)
-    #producto servicio y su tarifa 10
     nombre_servicio10_tarifa = models.CharField(max_length=500, verbose_name="Titulo tarifa 10", null=True, blank=True)
     
     #tarifa del precio 1
     precio_servicio1_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 1", null=True, blank=True)
-    #tarifa del precio 2
     precio_servicio2_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 2", null=True, blank=True)
-    #tarifa del precio 3
     precio_servicio3_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 3", null=True, blank=True)
-    #tarifa del precio 4
     precio_servicio4_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 4", null=True, blank=True)
-    #tarifa del precio 5
     precio_servicio5_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 5", null=True, blank=True)
-    #tarifa del precio 6
     precio_servicio6_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 6", null=True, blank=True)
-    #tarifa del precio 7
     precio_servicio7_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 7", null=True, blank=True)
-    #tarifa del precio 8
     precio_servicio8_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 8", null=True, blank=True)
-    #tarifa del precio 9
     precio_servicio9_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 9", null=True, blank=True)
-    #tarifa del precio 10
     precio_servicio10_tarifa = models.CharField(max_length=500, verbose_name="precio tarifa 10", null=True, blank=True)
 
 
@@ -328,6 +340,7 @@ class Empresa(models.Model):
         ##############  Espacio para Contactar ################
         #######################################################
 
+    imagen_portada_reserva = models.ImageField(upload_to='reservas/',verbose_name="Imagen Portada Reserva",blank=True,null=True)
 
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
     contactar_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para contactar")

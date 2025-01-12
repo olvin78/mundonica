@@ -48,7 +48,11 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
+                    {% if datos.imagen_logo_empresa %}
+                    <img src="{{ datos.imagen_logo_empresa.url }}" alt="">
+                    {% else %}
                     <img src="{% static 'mpresas/brber-master/assets/img/logo/loder.png' %}" alt="">
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -75,12 +79,13 @@
                                             <li class="active"><a href="index.html">Inicio</a></li>
                                             <li><a href="about.html">Sobre</a></li>
                                             <li><a href="services.html">Servicios</a></li>
-                                            <li><a href="portfolio.html">Galería</a></li>              
+                                            <li><a href="portfolio.html">Galería</a></li>  
+
                                             {% if datos.propietario_sitio_web ==  user %}
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{% url 'home_app:actualizar_empresa' datos.id %}">Editar Web</a>
                                             </li>
-                                            {% endif%}
+                                            {% endif %}
                                             <li><a href="contact.html">Contacto</a></li>
                                         </ul>
                                     </nav>
@@ -110,8 +115,8 @@
                         <div class="row">
                             <div class="col-xl-8 col-lg-9 col-md-11 col-sm-10">
                                 <div class="hero__caption">
-                                    <span data-animation="fadeInUp" data-delay="0.2s">with patrick potter</span>
-                                    <h1 data-animation="fadeInUp" data-delay="0.5s">Our Hair Style make your look elegance</h1>
+                                    <span data-animation="fadeInUp" data-delay="0.2s">{{ datos.subtitulo1_header|default:"with patrick potter" }}</span>
+                                    <h1 data-animation="fadeInUp" data-delay="0.5s">{{ datos.titulo_header|default:"Our Hair Style make your look elegance" }}</h1>
                                 </div>
                             </div>
                         </div>
@@ -123,8 +128,8 @@
                         <div class="row">
                             <div class="col-xl-8 col-lg-9 col-md-11 col-sm-10">
                                 <div class="hero__caption">
-                                    <span data-animation="fadeInUp" data-delay="0.2s">with patrick potter</span>
-                                    <h1 data-animation="fadeInUp" data-delay="0.5s">Our Hair Style make your look elegance</h1>
+                                    <span data-animation="fadeInUp" data-delay="0.2s">{{ datos.subtitulo1_header|default:"with patrick potter" }}</span>
+                                    <h1 data-animation="fadeInUp" data-delay="0.5s">{{ datos.titulo_header|default:"Our Hair Style make your look elegance" }}</h1>
                                 </div>
                             </div>
                         </div>
@@ -133,8 +138,8 @@
             </div>
             <!-- stroke Text -->
             <div class="stock-text">
-                <h2>Get More confident</h2>
-                <h2>Get More confident</h2>
+                <h2>{{ datos.subtitulo2_header|default:"Get More confident" }}</h2>
+                <h2>{{ datos.subtitulo2_header|default:"Get More confident" }}</h2>
             </div>
              <!-- Arrow -->
              <div class="thumb-content-box">
@@ -152,7 +157,11 @@
                     <div class="col-lg-6 col-md-11">
                         <!-- about-img -->
                         <div class="about-img ">
+                            {% if datos.imagen_servicio1 %}
+                            <img src="{{ datos.imagen1_nosotros.url }}" alt="">
+                            {% else %}
                             <img src="{% static 'empresas/brber-master/assets/img/gallery/about.png' %}" alt="">
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
@@ -160,21 +169,31 @@
                             <!-- Section Tittle -->
                             <div class="section-tittle section-tittle3 mb-35">
                                 <span>Sobre Nosotros</span>
-                                <h2>52 Years Of Experience In Hair cut!</h2>
+                                <h2>{{ datos.titulo_sobrenosotros|default:"52 Years Of Experience In Hair cut!" }}</h2>
                             </div>
-                            <p class="mb-30 pera-bottom">Brook presents your services with flexible, convenient and cdpoe layouts. You can select your favorite layouts & elements for cular ts with unlimited ustomization possibilities. Pixel-perfreplication of the designers is intended.</p>
-                            <p class="pera-top mb-50">Brook presents your services with flexible, convefnient and ent anipurpose layouts. You can select your favorite.</p>
+                            <p class="mb-30 pera-bottom">{{ datos.parrafo1_sobrenosotros|default:'Brook presents your services with flexible, convenient and cdpoe layouts. You can select your favorite layouts & elements for cular ts with unlimited ustomization possibilities. Pixel-perfreplication of the designers is intended.' }}</p>
+
+                            <p class="pera-top mb-50">{{ datos.parrafo2_sobrenosotros|default:'Brook presents your services with flexible, convefnient and ent anipurpose layouts. You can select your favorite.' }}</p>
+                            {% if datos.imagen1_nosotros %}
+                            <img src="{{ datos.imagen2_nosotros_fondo.url }}" alt="">
+                            {% else %}
                             <img src="{% static 'empresas/brber-master/assets/img/gallery/signature.png' %}" alt="">
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
             <!-- About Shape -->
             <div class="about-shape">
+                {% if datos.%}
                 <img src="{% static 'empresas/brber-master/assets/img/gallery/about-shape.png' %}" alt="">
+                {% else %}
+                <img src="{% static 'empresas/brber-master/assets/img/gallery/about-shape.png' %}" alt="">
+                {% endif %}
             </div>
         </section>
         <!-- About-2 Area End -->
+
         <!--? Services Area Start -->
         <section class="service-area pb-170">
             <div class="container">
@@ -183,7 +202,7 @@
                     <div class="col-xl-7 col-lg-8 col-md-11 col-sm-11">
                         <div class="section-tittle text-center mb-90">
                             <span>Servicios Professionales</span>
-                            <h2>Our Best services that  we offering to you</h2>
+                            <h2>{{ datos.titulo_servicios|default:'Our Best services that  we offering to you' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -192,33 +211,45 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="services-caption text-center mb-30">
                             <div class="service-icon">
-                                <i class="flaticon-healthcare-and-medical"></i>
+                                {% if datos.%}
+                                <img src="imagen_servicio1" alt="">
+                                {% else %}
+                                <i class="flaticon-fitness"></i>
+                                {% endif %}
                             </div> 
                             <div class="service-cap">
-                                <h4><a href="#">Stylish Hair Cut</a></h4>
-                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                                <h4><a href="#">{{ datos.nombre_servicio1|default:'Stylish Hair Cut' }}</a></h4>
+                                <p>{{ datos.parrafo_servicios1|default:'Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.' }}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="services-caption active text-center mb-30">
                             <div class="service-icon">
+                                {% if datos.%}
+                                <img src="imagen_servicio2" alt="">
+                                {% else %}
                                 <i class="flaticon-fitness"></i>
+                                {% endif %}
                             </div> 
                             <div class="service-cap">
-                                <h4><a href="#">Body Massege</a></h4>
-                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                                <h4><a href="#">{{ datos.nombre_servicio2|default:'Body Massege' }}</a></h4>
+                                <p>{{ datos.parrafo_servicios2|default:'Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.' }}</p>
                             </div>
                         </div>
                     </div> 
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="services-caption text-center mb-30">
                             <div class="service-icon">
-                                <i class="flaticon-clock"></i>
+                                {% if datos.%}
+                                <img src="imagen_servicio3" alt="">
+                                {% else %}
+                                <i class="flaticon-fitness"></i>
+                                {% endif %}
                             </div> 
                             <div class="service-cap">
-                                <h4><a href="#">Breard Style</a></h4>
-                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                                <h4><a href="#">{{ datos.nombre_servicio3|default:'Breard Style' }}</a></h4>
+                                <p>{{ datos.parrafo_servicios3|default:'Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.' }}</p>
                             </div>
                         </div>
                     </div>
@@ -226,6 +257,7 @@
             </div>
         </section>
         <!-- Services Area End -->
+
         <!--? Team Start -->
         <div class="team-area pb-180">
             <div class="container">
@@ -234,7 +266,7 @@
                     <div class="col-xl-8 col-lg-8 col-md-11 col-sm-11">
                         <div class="section-tittle text-center mb-100">
                             <span>Nuestro Equipo</span>
-                            <h2>Our award winner hair cut exparts for you</h2>
+                            <h2>{{ datos.titulo_trabajadores|default:'Our award winner hair cut exparts for you' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -243,44 +275,42 @@
                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
                         <div class="single-team mb-80 text-center">
                             <div class="team-img">
+                                {% if datos.imagen_trabajador1 %}
+                                <img src="{{ datos.imagen_trabajador1 }}" alt="">
+                                {% else %}
                                 <img src="{% static 'empresas/brber-master/assets/img/gallery/team1.png' %}" alt="">
+                                {% endif %}
                             </div>
                             <div class="team-caption">
-                                <span>Master Barber</span>
-                                <h3><a href="#">Guy C. Pulido bks</a></h3>
+                                <h3><a href="#">{{ datos.nombre_trabajador1|default:'Guy C. Pulido bks' }}</a></h3>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
                         <div class="single-team mb-80 text-center">
                             <div class="team-img">
+                                {% if datos.imagen_trabajador1 %}
+                                <img src="{{ datos.imagen_trabajador2 }}" alt="">
+                                {% else %}
                                 <img src="{% static 'empresas/brber-master/assets/img/gallery/team2.png' %}" alt="">
+                                {% endif %}
                             </div>
                             <div class="team-caption">
-                                <span>Color Expart</span>
-                                <h3><a href="#">Steve L. Nolan</a></h3>
+                                <h3><a href="#">{{ datos.nombre_trabajador2|default:'Steve L. Nolan' }}</a></h3>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
                         <div class="single-team mb-80 text-center">
                             <div class="team-img">
+                                {% if datos.imagen_trabajador1 %}
+                                <img src="{{ datos.imagen_trabajador3 }}" alt="">
+                                {% else %}
                                 <img src="{% static 'empresas/brber-master/assets/img/gallery/team3.png' %}" alt="">
+                                {% endif %}
                             </div>
                             <div class="team-caption">
-                                <span>Master Barber</span>
-                                <h3><a href="#">Edgar P. Mathis</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
-                        <div class="single-team mb-80 text-center">
-                            <div class="team-img">
-                                <img src="{% static 'empresas/brber-master/assets/img/gallery/team2.png' %}" alt="">
-                            </div>
-                            <div class="team-caption">
-                                <span>Master Barber</span>
-                                <h3><a href="#">Edgar P. Mathis</a></h3>
+                                <h3><a href="#">{{ datos.nombre_trabajador3|default:'Edgar P. Mathis' }}</a></h3>
                             </div>
                         </div>
                     </div>
@@ -302,25 +332,22 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="pricing-list">
                                     <ul>
-                                        <li>Styling. . . . . . . . . . . . . . . . . . . . . . . . . . . . <span>$25</span></li>
-                                        <li>Styling + Color. . . . . . . . . . . . . . . . . . . <span>$65</span></li>
-                                        <li>Styling + Tint. . . . . . . . . . . . . . . . . . . . . .<span>$65</span></li>
-                                        <li>  Semi-permanent wave. . . . . . . . . . . . .<span>$65</span></li>
-                                        <li> Cut + Styling. . . . . . . . . . . . . . . . . . . . . .<span>$63</span></li>
-                                        <li> Cut + Styling + Color. . . . . . . . . . . . . <span>$100</span></li>
-                                        <li> Cut + Styling + Tint. . . . . . . . . . . . . . . .<span>$100</span></li>
+                                        <li> {{ datos.nombre_servicio1_tarifa|default:'Styling' }}. . . . . . . . . . . . . . . . . . . . . . . . . . . . <span>C${{ datos.precio_servicio1_tarifa|default:'25' }}</span></li>
+                                        <li> {{ datos.nombre_servicio2_tarifa|default:'Styling + Color' }}. . . . . . . . . . . . . . . . . . . <span>C${{ datos.precio_servicio2_tarifa|default:'65' }}</span></li>
+                                        <li> {{ datos.nombre_servicio3_tarifa|default:'Styling + Tint' }}. . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio3_tarifa|default:'65' }}</span></li>
+                                        <li> {{ datos.nombre_servicio4_tarifa|default:'Semi-permanent wave' }}. . . . . . . . . . . . .<span>C${{ datos.precio_servicio4_tarifa|default:'65' }}</span></li>
+                                        <li> {{ datos.nombre_servicio5_tarifa|default:'Cut + Styling' }}. . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio5_tarifa|default:'63' }}</span></li>
+                                        <li> {{ datos.nombre_servicio6_tarifa|default:'Cut + Styling + Color' }}. . . . . . . . . . . . . <span>C${{ datos.precio_servicio6_tarifa|default:'100' }}</span></li>
+                                        <li> {{ datos.nombre_servicio7_tarifa|default:'Cut + Styling + Tint' }}. . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio7_tarifa|default:'100' }}</span></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="pricing-list">
                                     <ul>
-                                        <li>Cut. . . . . . . . . . . . . . . . . . . . . . . . . . . . .<span>$25</span></li>
-                                        <li>Shave. . . . . . . . . . . . . . . . . . . . . . . . . . <span>$65</span></li>
-                                        <li>Beard trim. . . . . . . . . . . . . . . . . . . . . .  <span>$65</span></li>
-                                        <li>Cut + beard trim. . . . . . . . . . . . . . . . .  <span>$65</span></li>
-                                        <li>Cut + shave. . . . . . . . . . . . . . . . . . . . . . .<span>$63</span></li>
-                                        <li>Clean up. . . . . . . . . . . . . . . . . . . . . . . . .<span>$100</span></li>
+                                        <li>{{ datos.nombre_servicio8_tarifa|default:'Cut' }}. . . . . . . . . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio8_tarifa|default:'25' }}</span></li>
+                                        <li>{{ datos.nombre_servicio9_tarifa|default:'Shave' }}. . . . . . . . . . . . . . . . . . . . . . . . . . <span>C${{ datos.precio_servicio9_tarifa|default:'65' }}</span></li>
+                                        <li>{{ datos.nombre_servicio10_tarifa|default:'Beard trim' }}. . . . . . . . . . . . . . . . . . . . . .  <span>C${{ datos.precio_servicio10ss_tarifa|default:'65' }}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -330,8 +357,17 @@
             </div>
             <!-- pricing img -->
             <div class="pricing-img">
+                {% if dato. %}
                 <img class="pricing-img1" src="{% static 'empresas/brber-master/assets/img/gallery/pricing1.png' %}" alt="">
+                {% else %}
+                <img class="pricing-img1" src="{% static 'empresas/brber-master/assets/img/gallery/pricing1.png' %}" alt="">
+                {% endif %}
+
+                {% if dato. %}
                 <img class="pricing-img2" src="{% static 'empresas/brber-master/assets/img/gallery/pricing2.png' %}" alt="">
+                {% else %}
+                <img class="pricing-img2" src="{% static 'empresas/brber-master/assets/img/gallery/pricing2.png' %}" alt="">
+                {% endif %}
             </div>
         </div>
         <!-- Best Pricing Area End -->
@@ -343,32 +379,48 @@
                     <div class="col-xl-6 col-lg-7 col-md-9 col-sm-10">
                         <div class="section-tittle text-center mb-100">
                             <span>Nuestra Galería de Imagenes</span>
-                            <h2>some images from our barber shop</h2>
+                            <h2>{{ datos.titulo1_galeria|default:'some images from our barber shop' }}</h2>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="box snake mb-30">
+                            {% if datos.imagen1_galeria %}
+                            <div class="gallery-img " style="background-image: url({{ datos.imagen1_galeria.url }});"></div>
+                            {% else %}
                             <div class="gallery-img " style="background-image: url({% static 'empresas/brber-master/assets/img/gallery/gallery1.png' %});"></div>
+                            {% endif %}
                             <div class="overlay"></div>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-6 col-sm-6">
                         <div class="box snake mb-30">
+                            {% if datos.imagen2_galeria %}
+                            <div class="gallery-img " style="background-image: url({{ datos.imagen2_galeria.url }});"></div>
+                            {% else %}
                             <div class="gallery-img " style="background-image: url({% static 'empresas/brber-master/assets/img/gallery/gallery2.png' %});"></div>
+                            {% endif %}
                             <div class="overlay"></div>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-6 col-sm-6">
                         <div class="box snake mb-30">
+                            {% if datos.imagen3_galeria %}
+                            <div class="gallery-img " style="background-image: url({{ datos.imagen3_galeria.url }});"></div>
+                            {% else %}
                             <div class="gallery-img " style="background-image: url({% static 'empresas/brber-master/assets/img/gallery/gallery3.png' %});"></div>
+                            {% endif %}
                             <div class="overlay"></div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="box snake mb-30">
+                            {% if datos.imagen4_galeria %}
+                            <div class="gallery-img " style="background-image: url({{ datos.imagen4_galeria.url }});"></div>
+                            {% else %}
                             <div class="gallery-img " style="background-image: url({% static 'empresas/brber-master/assets/img/gallery/gallery4.png' %});"></div>
+                            {% endif %}
                             <div class="overlay"></div>
                         </div>
                     </div>
@@ -387,8 +439,8 @@
                         </svg>
                     </div>
                     <div class="cut-descriptions">
-                        <p>Vestibulum varius, velit sit amet tempor efficitur, ligula mi lacinia libero, vehicula dui nisi eget purus. Integer cursus nibh non risus maximus dictum. Suspendis.</p>
-                        <span>JONT NICOLIN KOOK</span>
+                        <p>{{ datos.titulo1_galeria|default:'Vestibulum varius, velit sit amet tempor efficitur, ligula mi lacinia libero, vehicula dui nisi eget purus. Integer cursus nibh non risus maximus dictum. Suspendis.' }}</p>
+                        <span>{{ datos.titulo1_galeria|default:'JONT NICOLIN KOOK' }}</span>
                     </div>
                 </div>
                 <div class="single-cut">
@@ -398,8 +450,8 @@
                         </svg>
                     </div>
                     <div class="cut-descriptions">
-                        <p>Vestibulum varius, velit sit amet tempor efficitur, ligula mi lacinia libero, vehicula dui nisi eget purus. Integer cursus nibh non risus maximus dictum. Suspendis.</p>
-                        <span>JONT NICOLIN KOOK</span>
+                        <p>{{ datos.titulo1_galeria|default:'Vestibulum varius, velit sit amet tempor efficitur, ligula mi lacinia libero, vehicula dui nisi eget purus. Integer cursus nibh non risus maximus dictum. Suspendis.' }}</p>
+                        <span>{{ datos.titulo1_galeria|default:'JONT NICOLIN KOOK' }}</span>
                     </div>
                 </div>
                 <div class="single-cut">
@@ -409,8 +461,8 @@
                         </svg>
                     </div>
                     <div class="cut-descriptions">
-                        <p>Vestibulum varius, velit sit amet tempor efficitur, ligula mi lacinia libero, vehicula dui nisi eget purus. Integer cursus nibh non risus maximus dictum. Suspendis.</p>
-                        <span>JONT NICOLIN KOOK</span>
+                        <p>{{ datos.titulo1_galeria|default:'Vestibulum varius, velit sit amet tempor efficitur, ligula mi lacinia libero, vehicula dui nisi eget purus. Integer cursus nibh non risus maximus dictum. Suspendis.' }}</p>
+                        <span>{{ datos.titulo1_galeria|default:'JONT NICOLIN KOOK' }}</span>
                     </div>
                 </div>
             </div>
@@ -425,7 +477,7 @@
                     <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
                         <div class="section-tittle text-center mb-90">
                             <span>Nuestra Ubicación</span>
-                            <h2>Hipos and tricks from recent blog</h2>
+                            <h2>{{ datos.titulo1_galeria|default:'Hipos and tricks from recent blog' }}</h2>
                         </div>
                     </div>
                 </div>
@@ -439,8 +491,8 @@
                                     <div id="map" style="height: 400px; border-radius: 4px;z-index: -5;border-color: rgb(218, 164, 94);"></div>
                                 </div>
                                 <div class="blog-cap">
-                                    <p>|   ubicación</p>
-                                    <h3><a href="blog_details.html">Footprints in Time is perfect House in Kurashiki</a></h3>
+                                    <p>|  ubicación</p>
+                                    <h3><a href="#">{{ datos.titulo1_galeria|default:'Footprints in Time is perfect House in Kurashiki' }}</a></h3>
                                 </div>
                             </div>
                         </div>
@@ -461,7 +513,12 @@
                             <div class="single-footer-caption mb-50">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="{% static 'empresas/brber-master/assets/img/logo/logo2_footer.png' %}" alt=""></a>
+                                    {% if datos.imagen_logo_empresa %}
+                                    <img src="{{ datos.imagen_logo_empresa.url }}" alt="">
+                                    {% else %}
+                                    <img src="{% static 'empresas/brber-master/assets/img/logo/logo.png' %}" alt="">
+                                    {% endif %}
+                                    <p></p>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
@@ -469,8 +526,8 @@
                                     </div>
                                 </div>
                                 <div class="footer-number">
-                                    <h4><span>+564 </span>7885 3222</h4>
-                                    <p>youremail@gmail.com</p>
+                                    <h4><span style="color: sandybrown;">{{ datos.telefono|default:'7885 3222' }}</h4>
+                                    <p>{{ datos.email|default:'youremail@gmail.com' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -515,21 +572,20 @@
                                 </p>
                             </div>
 
-                            <!-- Footer Policies -->
+                            <!-- Footer Policies
                             <div class="col-xl-4 col-lg-4 d-flex justify-content-center mb-2">
                                     <li><a href="#" class="text-muted">Aviso legal | </a></li>
                                     <li><a href="#" class="text-muted">Política de privacidad | </a></li>
                                     <li><a href="#" class="text-muted">Cookies</a></li>
-                            </div>
+                            </div> -->
 
-                            <!-- Footer Social -->
+                            <!-- Footer Social 
                             <div class="col-xl-4 col-lg-4 footer-social d-flex justify-content-center mb-2">
                                 <a href="#"><i class="fab fa-twitter"></i></a>
                                 <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#"><i class="fas fa-globe"></i></a>
                                 <a href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-
+                            </div>-->
 
                         </div>
                 </div>

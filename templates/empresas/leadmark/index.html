@@ -74,7 +74,6 @@
     <header class="header" style="background-image: url('{% static "empresas/leadmarck/assets/imgs/header.jpg" %}'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: cover;">
     {% endif %}
     
-
         <div class="overlay">
             {% if datos.titulo_header %}
             <h1 class="subtitle">{{ datos.titulo_header }}</h1>
@@ -91,6 +90,7 @@
             </svg>
         </div>  
         <div class="mouse-icon"><div class="wheel"></div></div>
+    
     </header>
     <!-- End Of Page Header -->
 
@@ -257,7 +257,7 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/web-1.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio1_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio1_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio1_tarifa }}</h6>
                                 {% else %}
                                 <h6 class="title">Precio: 150 Córdobas.</h6>
                                 {% endif %}
@@ -285,7 +285,7 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/web-2.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio2_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio2_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio2_tarifa }}</h6>
                                 {% else %}
                                 <h6 class="title">Precio: 180 Córdobas.</h6>
                                 {% endif %}
@@ -310,7 +310,7 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/advertising-2.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio3_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio3_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio3_tarifa }}</h6>
                                 {% else %}
                                 <h6 class="title">Precio: 190 Córdobas.</h6>
                                 {% endif %}
@@ -336,7 +336,7 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/web-3.jpg' %}"></a>
                             <div class="content-holder">
                                 {% if datos.precio_servicio7_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio7_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio7_tarifa }}</h6>
                                 {% else %}
                                 <h6 class="title">Precio: 250 Córdobas.</h6>
                                 {% endif %}
@@ -363,7 +363,7 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/advertising-3.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio8_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio8_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio8_tarifa }}</h6>
                                 {% else %}
                                 <h6 class="title">Precio: 50 Córdobas.</h6>
                                 {% endif %}
@@ -389,7 +389,7 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/advertising-4.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio9_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio9_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio9_tarifa }}</h6>
                                 {% else %}
                                 <h6 class="title">Precio: 360 Córdobas.</h6>
                                 {% endif %}
@@ -416,9 +416,9 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/branding-1.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio4_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio4_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio4_tarifa }}</h6>
                                 {% else %}
-                                <h6 class="title">Precio: 210 Córdobas.</h6>
+                                <h6 class="title">Precio:210 Córdobas.</h6>
                                 {% endif %}
                                 {% if datos.nombre_servicio4_tarifa %}
                                 <p class="subtitle">{{ datos.nombre_servicio4_tarifa }}</p>
@@ -441,9 +441,9 @@
                             <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/branding-3.jpg' %}"></a>
                             <div class="text-holder">
                                 {% if datos.precio_servicio5_tarifa %}
-                                <h6 class="title">{{ datos.precio_servicio5_tarifa }}</h6>
+                                <h6 class="title">Precio:{{ datos.precio_servicio5_tarifa }}</h6>
                                 {% else %}
-                                <h6 class="title">Precio: 120 Córdobas.</h6>
+                                <h6 class="title"> 120 Córdobas.</h6>
                                 {% endif %}
                                 {% if datos.nombre_servicio5_tarifa %}
                                 <p class="subtitle">{{ datos.nombre_servicio5_tarifa }}</p>
@@ -591,7 +591,7 @@
 
         <!--? Blog Area Start -->
           <!-- Cut Details End -->
-          <section class="home-blog-area section-padding30 mb-5 mt-5">
+        <section class="home-blog-area section-padding30 mb-5 mt-5">
             <div class="container">
                 <div class="row justify-content-center">
                     <!-- Título de la sección -->
@@ -724,7 +724,6 @@
         L.marker([{{ datos.latitud|default:"12.136389" }},{{ datos.longitud|default:"-86.251389" }}]).addTo(map)
             .bindPopup("Bienvenido a {{ datos.ciudad|default:'Managua' }},{{ datos.pais|default:' Nicaragua!' }}")
             .openPopup();
-
     </script>
 </body>
 </html>

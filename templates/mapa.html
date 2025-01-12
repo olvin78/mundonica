@@ -228,117 +228,147 @@
   
   ///*fin de iconos en el mapa
   
-  //este es el aparatdo para que aparezcan las fichass de embajadas en el mapa
-  const embajadas = L.layerGroup([
-    {% for embajada in embajadas %}
-      L.marker([{{ embajada.latitud }}, {{ embajada.longitud }}], {icon: embajadaIcon}) // Agrega el ícono
-        .bindPopup(`<strong>{{ embajada.nombre }}</strong> 
-        <br> {{ embajada.pais}}<br>  
-        <img class='w-100' src='/media/{{ embajada.imagen }}'>
-       <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-    {% endfor %}
-  
-  ]);
-  
-  //esto es el apartado para que aparezcan las fichas del aparatado de consulados en el mapa
-  const consulados = L.layerGroup([
-    {% for consulado in consulados %}
-      L.marker([{{ consulado.latitud }}, {{ consulado.longitud }}], {icon: consuladoIcon}) // Agrega el ícono
-        .bindPopup(`<strong>{{ consulado.nombre }}</strong> 
-        <br> {{ consulado.pais }}<br>  
-        <img class='w-100' src='/media/{{ consulado.imagen }}'>
-       <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-    {% endfor %}
-    
-  ]);
-  
-  //este es el apartado para qe aparezcan las ficaha de peluqueria en el mapa
-  const peluquerias = L.layerGroup([
-    {% for peluqueria in peluquerias %}
-      L.marker([{{ peluqueria.latitud }}, {{ peluqueria.longitud }}], {icon: peluqueriaIcon}) // Agrega el ícono
-        .bindPopup(`<strong>{{ peluqueria.nombre }}</strong> 
-        <br> {{ peluqueria.pais}}<br>  
-        <img class='w-100' src='/media/{{ peluqueria.imagen}}'>
-       <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-    {% endfor %}
-  
-  ]);
-  
-  //este es el for para que aparezcan las fichas de comercios en el mapa
-  const comercios = L.layerGroup([
-    {% for comercio in comercios %}
-      L.marker([{{ comercio.latitud }}, {{ comercio.longitud }}], {icon: comercioIcon}) // Agrega el ícono
-        .bindPopup(`<strong>{{ peluqueria.nombre }}</strong> 
-        <br> {{ peluqueria.pais}}<br>  
-        <img class='w-100' src='/media/{{ peluqueria.imagen}}'>
-       <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-    {% endfor %}
-  
-  ]);
-  
-  //este es el aparatdo para que apasrezacan las ficahs de restaurantes en el mapa
-  const restaurantes = L.layerGroup([
-    {% for restaurante in restaurantes %}
-      L.marker([{{ restaurante.latitud }}, {{ restaurante.longitud }}], {icon: restauranteIcon}) // Agrega el ícono
-        .bindPopup(`<strong>{{ restaurante.nombre }}</strong> 
-        <br> {{ restaurante.pais}}<br>  
-        <img class='w-100' src='/media/{{ restaurante.imagen }}'>
-        {% if restaurante.nombreUrl %}
-       <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-        {% endif %}
-      {% endfor %}
-  ]);
-  
-  
-  
-  // Capas base (mapas de fondo)
-  var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-  });
-  
-  var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
-  });
-  
-  var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-  });
-  
-  // Configuración del mapa
-  var map = L.map('map').setView([40.459391311992704, -3.65254964179598], 3);
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: ''
-      }).addTo(map);
-  
-  
-  // Configuración de capas base y superposiciones
-  var baseMaps = {
-    "OpenStreetMap": osm,
-    "OpenStreetMap.HOT": osmHOT,
-    "OpenTopoMap": openTopoMap
-  };
-  
-  var overlayMaps = {
-    "Consulados": consulados,
-    "Embajadas": embajadas,
-    "Restaurantes": restaurantes,
-    "Peluquerías": peluquerias,
-    "Comercios": comercios
-  };
-  
-  // Agregar el control de capas al mapa
-  L.control.layers(baseMaps, overlayMaps).addTo(map);
-  
-  // Opcional: Mostrar ciertas capas por defecto
-  consulados.addTo(map);
-  embajadas.addTo(map);
-  restaurantes.addTo(map);
-  peluquerias.addTo(map);
-  comercios.addTo(map);
-  </script>
+//este es el aparatdo para que aparezcan las fichass de embajadas en el mapa
+const embajadas = L.layerGroup([
+  {% for embajada in embajadas %}
+    L.marker([{{ embajada.latitud }}, {{ embajada.longitud }}], {icon: embajadaIcon}) // Agrega el ícono
+      .bindPopup(`<strong>{{ embajada.nombre }}</strong>
+      <br> {{ embajada.pais }}<br>
+      <img class='w-100' src='/media/{{ embajada.imagen }}'>
+     <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
+  {% endfor %}
 
+]);
+
+//esto es el apartado para que aparezcan las fichas del aparatado de consulados en el mapa
+const consulados = L.layerGroup([
+  {% for consulado in consulados %}
+    L.marker([{{ consulado.latitud }}, {{ consulado.longitud }}], {icon: consuladoIcon}) // Agrega el ícono
+      .bindPopup(`<strong>{{ consulado.nombre }}</strong>
+      <br> {{ consulado.pais }}<br>
+      <img class='w-100' src='/media/{{ consulado.imagen }}'>
+     <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
+  {% endfor %}
+
+]);
+
+//este es el apartado para qe aparezcan las ficaha de peluqueria en el mapa
+{% if peluquerias %}
+const peluquerias = L.layerGroup([
+  {% for peluqueria in peluquerias %}
+  {% if peluqueria.latitud and peluqueria.longitud %}
+    L.marker([{{ peluqueria.latitud }}, {{ peluqueria.longitud }}], {icon: peluqueriaIcon}) // Agrega el ícono
+      .bindPopup(`<strong>{{ peluqueria.nombre }}</strong>
+      <br> {{ peluqueria.pais }}<br>
+      <img class='w-100' src='/media/{{ peluqueria.imagen}}'>
+     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' peluqueria.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
+      {% endif %}
+     {% endfor %}
+
+]);
+
+{% endif %}
+//este es el for para que aparezcan las fichas de comercios en el mapa
+{% if comercios %}
+
+const comercios = L.layerGroup([
+  {% for comercio in comercios %}
+  {% if comercio.latitud and comercio.longitud %}
+    L.marker([{{ comercio.latitud }}, {{ comercio.longitud }}], {icon: comercioIcon}) // Agrega el ícono
+      .bindPopup(`<strong>{{ peluqueria.nombre }}</strong>
+      <br> {{ peluqueria.pais }}<br>
+      <img class='w-100' src='/media/{{ peluqueria.imagen}}'>
+     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' comercio.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
+  {% endif %}
+     {% endfor %}
+
+]);
+{% endif %}
+
+
+
+//este es el aparatdo para que apasrezacan las ficahs de restaurantes en el mapa
+{% if restaurantes %}
+
+const restaurantes = L.layerGroup([
+  {% for restaurante in restaurantes %}
+
+  {% if restaurante.latitud and restaurante.longitud %}
+    L.marker([{{ restaurante.latitud }}, {{ restaurante.longitud }}], {icon: restauranteIcon}) // Agrega el ícono
+      .bindPopup(`<strong>{{ restaurante.nombre }}</strong>
+      <br> {{ restaurante.pais }}<br>
+      <img class='w-100' src='/media/{{ restaurante.imagen }}'>
+      {% if restaurante.nombreUrl %}
+     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' restaurante.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div> {% endif %}`), // Popup para cada marcador
+     {% endif %}
+    {% endfor %}
+]);
+{% endif %}
+
+
+// Capas base (mapas de fondo)
+var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+});
+
+var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
+});
+
+var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+});
+
+// Configuración del mapa
+var map = L.map('map').setView([40.459391311992704, -3.65254964179598], 3);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: ''
+    }).addTo(map);
+
+
+// Configuración de capas base y superposiciones
+var baseMaps = {
+  "OpenStreetMap": osm,
+  "OpenStreetMap.HOT": osmHOT,
+  "OpenTopoMap": openTopoMap
+};
+
+var overlayMaps = {
+  "Consulados": consulados,
+  "Embajadas": embajadas,
+  {% if restaurantes %}
+  "Restaurantes": restaurantes,
+  {% endif %}
+  {% if peluquerias %}
+  "Peluquerías": peluquerias,
+  {% endif %}
+  {% if comercios %}
+  "Comercios": comercios
+  {% endif %}
+};
+
+// Agregar el control de capas al mapa
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+// Opcional: Mostrar ciertas capas por defecto
+consulados.addTo(map);
+embajadas.addTo(map);
+
+{% if restaurantes %}
+restaurantes.addTo(map);
+{% endif %}
+
+{% if peluquerias %}
+peluquerias.addTo(map);
+{% endif %}
+
+{% if comercios %}
+comercios.addTo(map);
+{% endif %}
+
+</script>
 
   <!--fin del javascript de bootstrap para leaflet-->
 {% endblock %}

@@ -74,7 +74,7 @@ class HomePageView(ListView):
         context['form'] = ContactForm()  # Instancia del formulario
 
         # Agrega los datos de otros modelos al contexto paa ver el mapa en el index
-        context['empresas'] = Empresa.objects.all()
+        context['empresas'] = Empresa.objects.filter(tipo_empresa__nombre='Empresa')
         context['embajadas'] = Embajada.objects.all()
         context['consulados'] = Consulado.objects.all()
         context['peluquerias'] = Empresa.objects.filter(tipo_empresa__nombre='Peluquería')
