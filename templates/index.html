@@ -350,7 +350,7 @@
       <img src="{% static 'assets/img/stats-bg.jpg' %}" alt="" data-aos="fade-in">
 
       <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-
+       
         <div class="subheading">
           <h3>"Conversor de Divisas en Tiempo Real"</h3>
           <span>"Las equivalencias mostradas corresponden al valor actual de  <b style="color:#4CAF50;">500</b> córdobas nicaragüenses en diferentes monedas."</span>
@@ -389,8 +389,15 @@
             </div>
           </div><!-- End Stats Item -->
         </div>
-
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <a href="{% url 'home_app:billetes' %}" 
+             style="display: inline-block; text-decoration: none; padding: 10px 20px; font-size: 18px; font-weight: bold; color: #ffffff; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); border: 2px solid #0056b3; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+             Ver Moneda Nicaragüense
+          </a>
       </div>
+      
+      </div>
+
 
     </section><!-- /Stats Section -->
 

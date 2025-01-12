@@ -38,7 +38,6 @@ urlpatterns = [
         
         ),
 
-
     path('crear_abogado/',
         views.CrearAbogadoCreateView.as_view(),
         name='abogado_crear',
@@ -62,7 +61,6 @@ urlpatterns = [
     ),
     
     path('formulario/', views.formulario_contactar, name='formulario_contactar'),
-
 
 
 #esta es la url para la empresa de catalogo la que solo es para mostrar productos
@@ -125,6 +123,12 @@ urlpatterns = [
     path('actualizar_empresa/<int:pk>/',
         views.ActualizartipoEmpresaView.as_view(),
         name='actualizar_empresa',
+    ),
+    
+
+    path('billetes/ver',
+        views.BilletesView.as_view(),
+        name='billetes',
     ),
     
 

@@ -326,6 +326,9 @@ class LeadmarckView(TemplateView):
     template_name = "empresas/leadmark/index.html"
 
 
+class BilletesView(TemplateView):
+    template_name = "billetes.html"
+
 
 ################################### este es el apartado de los templateview ###################################
 #############################################################################################################
