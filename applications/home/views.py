@@ -80,12 +80,14 @@ class HomePageView(ListView):
         context['consulados'] = Consulado.objects.all()
         context['peluquerias'] = Empresa.objects.filter(tipo_empresa__nombre='Peluquería')
         context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
-
+        # En tu vista filtrado de empresa por usuario
+        if self.request.user.is_authenticated:
+            context['empresasDeUsuario'] = Empresa.objects.filter(propietario_sitio_web=self.request.user)
+        else:
+            context['empresasDeUsuario'] = Empresa.objects.none()  # Devuelve un queryset vacío si no está autenticado
+    
         # Obtén el contexto predeterminado
         
-
-
-
 
             # URL de las APIs para obtener las tasas de cambio
         url = 'https://open.er-api.com/v6/latest/NIO'
@@ -475,5 +477,7 @@ class ActualizartipoEmpresaView(LoginRequiredMixin, UpdateView):
         # Asignar el usuario actual antes de guardar
         form.instance.propietario_sitio_web = self.request.user
         return super().form_valid(form)
+
+
 ################################### este es el apartado de los updateview ###################################
 #############################################################################################################
