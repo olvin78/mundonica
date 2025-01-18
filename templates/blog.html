@@ -14,43 +14,47 @@
       </div>
     </div><!-- End Page Title -->
     <!-- Blog Posts Section -->
-    <section id="blog-posts" class="blog-posts section">
+<!-- Blog Posts Section -->
+<section id="blog-posts" class="blog-posts section">
+  <div class="container">
+    <div class="row gy-4">
+      {% for dato in datos %}
+      <div class="col-lg-4">
+        <article>
+          <a href="{% url 'home_app:articulo' dato.id %}">
+            <div class="post-img">
+              <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
+            </div>
+          </a>
 
-      <div class="container">
-        <div class="row gy-4">
-          {% for dato in datos %}
-          
-          <a href="{% url 'home_app:articulo' dato.id %}"><div class="col-lg-4">
-            <article>
+          <p class="post-category">{{dato.categoria}}</p>
 
-              <div class="post-img">
-                <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
-              </div></a>
+          <h2 class="title">
+            <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
+          </h2>
 
-              <p class="post-category">{{dato.categoria}}</p>
+          <p class="post-category">{{dato.resumen|safe}}</p>
 
-              <h2 class="title">
-                <a href="blog-details.html">{{dato.titulo}}</a>
-              </h2>
-              <p class="post-category">{{dato.resumen|safe}}</p>
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">{{dato.autor}}</p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
+          <div class="d-flex align-items-center">
+            <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
+            <div class="post-meta">
+              <p class="post-author">{{dato.autor}}</p>
+              
+              <p class="post-date">
+                <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
+              </p>
+            </div>
           </div>
-        <!-- End post list item -->
-          {% endfor %}
-        </div>
+        </article>
       </div>
+      <!-- End post list item -->
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- /Blog Posts Section -->
 
-    </section><!-- /Blog Posts Section -->
+    <!-- /Blog Posts Section -->
 
     <!-- Blog Pagination Section -->
     <section id="blog-pagination" class="blog-pagination section">

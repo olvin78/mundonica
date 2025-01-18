@@ -65,7 +65,8 @@ class HomePageView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.all()
+        return queryset.order_by('-fecha_hora')[:3]
+
 
     def get_context_data(self, **kwargs):
         # Obtén el contexto predeterminado del ListView
@@ -212,9 +213,9 @@ class BlogView(ListView):
     model = Blog
     context_object_name = 'datos'
 
+    
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.all()
+        return super().get_queryset().order_by('-fecha_hora')  # Ordena por fecha descendente
 
 
 
@@ -361,7 +362,6 @@ class BlogDetailView(DetailView):
     model = Blog # Especifica el modelo Blog
     template_name = 'articulo_completo.html' # Define el template "articulo_completo.html"
     context_object_name = 'articulo'
-
 
 
 def contact_view(request):
