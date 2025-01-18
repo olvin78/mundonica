@@ -23,8 +23,15 @@
   <link rel="stylesheet" href="{% static 'css/style2.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <!-- Favicons -->
-  <link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="icon">
-  <link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="apple-touch-icon">
+<!-- Favicon estándar -->
+<link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="icon" type="image/png" sizes="32x32">
+<!-- Icono para dispositivos Apple -->
+<link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="apple-touch-icon" sizes="180x180">
+<!-- Icono para navegadores antiguos -->
+<link href="{% static 'assets/img/pubiocacioneslogo.ico' %}" rel="shortcut icon" type="image/x-icon">
+<!-- Archivo de manifiesto (opcional, recomendado para Google y PWA) -->
+<link rel="manifest" href="{% static 'manifest.json' %}">
+
   <!-- Google reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <!-- Fonts (Google Fonts) -->
