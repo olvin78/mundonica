@@ -81,7 +81,7 @@ class Empresa(models.Model):
     
     nombre_de_la_empresa = models.CharField(max_length=100, verbose_name="Nombre de la Empresa")
     tipo_empresa = models.ForeignKey(TipoEmpresa,on_delete=models.CASCADE,related_name="empresas",verbose_name="Elija el tipo de Empresa",null=True, blank=True,default=1)
-    nombreUrl = models.SlugField(max_length=150, unique=True, null=True, blank=True,verbose_name="Elija el tnombre de la URl sin espacios")
+    nombreUrl = models.SlugField(max_length=150, unique=True, null=True, blank=True,verbose_name="Elija el nombre de la URl sin espacios")
     #Header titulo en la página como texto principal h1
     titulo_header = models.CharField(max_length=100, verbose_name="titulo header", null=True, blank=True)
     #header subtitulo subtitulo numero uno

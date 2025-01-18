@@ -1072,15 +1072,17 @@ const comercios = L.layerGroup([
   {% for comercio in comercios %}
   {% if comercio.latitud and comercio.longitud %}
     L.marker([{{ comercio.latitud }}, {{ comercio.longitud }}], {icon: comercioIcon}) // Agrega el ícono
-      .bindPopup(`<strong>{{ comercio.nombre_de_la_empresa }}</strong>
-      <br> {{ comercio.pais }}<br>{% if comercio.imagen_logo_empresa %}
-      <img class='w-100' src='/media/{{ comercio.imagen_logo_empresa }}'>
-      <p>{{ comercio.telefono }}</p>
-      <p>{{ comercio.email }}</p>
-      {% endif %}
+      .bindPopup(`
+      <strong>{{ comercio.nombre_de_la_empresa }}</strong>
+      <br> {{ comercio.pais }}<br>
+      {% if comercio.imagen_logo_empresa %}
+      <img class='w-100' src='/media/{{ comercio.imagen_logo_empresa }}'>{% endif %}
+      {% if comercio.telefono %}<p>{{ comercio.telefono }}</p>{% endif %}
+       {% if comercio.email %}<p>{{ comercio.email }}</p>{% endif %}
+      
      <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' comercio.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Ver Web</button></a></div>`), // Popup para cada marcador
   {% endif %}
-     {% endfor %}
+  {% endfor %}
 
 ]);
 {% endif %}

@@ -29,6 +29,7 @@
       <div class="container position-relative">
         <h1>Crear empresa</h1>
         <p>Crea tu empresa para darlo a conocer y esté localizable.</p>
+        <h5><b>www.mundonica.org/<span id="vistaPrevia">aquí aparecerá tu URL</span></b></h5>
         <nav class="breadcrumbs">
          
         </nav>
@@ -40,10 +41,14 @@
 <div class="container mt-5 mb-5">
     <h2 class="text-center">¡Vamos  crear una empresa, Genial!</h2>
     <form method="post" enctype="multipart/form-data" class="needs-validation">
-        {% csrf_token %}
+      <br>
+      <h4>Selecciona tu ubicación</h4>
+      <div id="map"></div>
+      <button type="submit" class="btn btn-success w-100 mt-3 mb-5">Guardar datos y visualizar</button>
+      {% csrf_token %}
         {{ form.as_p }}
-        <h4>Selecciona una ubicación</h4>
-        <div id="map"></div>
+        
+        
         <button type="submit" class="btn btn-success w-100 mt-3 mb-5">Guardar Empresa</button>
     </form>
 </div>
@@ -78,5 +83,17 @@
             marker = L.marker(e.latlng).addTo(map);
         }
     });
+</script>
+
+<script>
+  // Seleccionamos el campo de entrada generado por el widget de Django
+  const nombreUrlInput = document.getElementById('{{ form.nombreUrl.id_for_label }}');
+  const vistaPrevia = document.getElementById('vistaPrevia');
+
+  // Escuchamos el evento 'input' para actualizar la vista previa en tiempo real
+  nombreUrlInput.addEventListener('input', () => {
+    // Mostramos el valor concatenado al final de la URL
+    vistaPrevia.textContent = nombreUrlInput.value || 'aquí aparecerá tu URL';
+  });
 </script>
   {% endblock %}

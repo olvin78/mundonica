@@ -133,13 +133,13 @@ urlpatterns = [
     
     path('recetas/ver',
         views.RecetasView.as_view(),
-        name='bresetas',
+        name='recetas',
     ),
     
 
     path('receta/<int:pk>/',
         views.RecetaDetailView.as_view(),
-        name='recetas',
+        name='recetas_detalle',
     ),
  
 ]

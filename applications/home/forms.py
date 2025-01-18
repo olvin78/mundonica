@@ -120,7 +120,7 @@ class RestauranteForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = [
-            'nombre_de_la_empresa','titulo_header','subtitulo1_header','subtitulo2_header', 
+            'nombre_de_la_empresa', 'nombreUrl','titulo_header','subtitulo1_header','subtitulo2_header', 
             'imagen_logo_empresa','imagen_fondo_header','imagen_header','video_header',
             'quienes_somos_activo','titulo_sobrenosotros','parrafo1_sobrenosotros', 
             'parrafo2_sobrenosotros','parrafo3_sobrenosotros','parrafo4_sobrenosotros', 
@@ -190,13 +190,16 @@ class RestauranteForm(forms.ModelForm):
             'telefono','email','latitud','longitud',
 
             # Empresa
-            'tipo_empresa', 'nombreUrl',
+            'tipo_empresa',
         ]
 
         widgets = {
 
             # Campos de texto
             'nombre_de_la_empresa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre de la empresa'}),
+            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'introduzca el nombre de la url sin espacios'}),
+            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
             'titulo_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Título del header'}),
             'subtitulo1_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Subtítulo 1 del header'}),
             'subtitulo2_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Subtítulo 2 del header'}),
@@ -428,7 +431,7 @@ class RestauranteForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Correo electrónico'}),
             'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Latitud'}),
             'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Longitud'}),
-            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-co    #producto servicio y su tarifa 5ntrol-lg border-success', 'placeholder': 'Slug único'}),
+            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-co    #producto servicio y su tarifa 5ntrol-lg border-success', 'placeholder': 'Escrib el nombre de la url sin espacios'}),
             
         }
 
@@ -450,7 +453,7 @@ class PeluqueriaForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = [
-            'nombre_de_la_empresa', 'titulo_header', 'subtitulo1_header', 'subtitulo2_header', 
+            'nombre_de_la_empresa', 'nombreUrl', 'titulo_header', 'subtitulo1_header', 'subtitulo2_header', 
             'imagen_logo_empresa', 'imagen_fondo_header','quienes_somos_activo', 'titulo_sobrenosotros', 'parrafo1_sobrenosotros', 
             'parrafo2_sobrenosotros', 'imagen1_nosotros', 'imagen2_nosotros_fondo',
             'comentarios_activo', 'parrafo1_comentario', 'parrafo2_comentario', 'parrafo3_comentario',
@@ -469,11 +472,14 @@ class PeluqueriaForm(forms.ModelForm):
             'galeria_activo', 'titulo1_galeria','imagen1_galeria','imagen2_galeria', 'imagen3_galeria', 
             'imagen4_galeria', 'contactar_activo', 'horario', 'pais', 
             'ciudad','direccion', 'telefono', 'email', 
-            'latitud', 'longitud', 'tipo_empresa', 'nombreUrl'
+            'latitud', 'longitud', 'tipo_empresa',
         ]
 
         widgets = {
             'nombre_de_la_empresa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre de la empresa'}),
+            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'introduzca el nombre de la url sin espacios'}),
+            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
             'imagen_logo_empresa': forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg border-success'}),
             'imagen_fondo_header': forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg border-success'}),
             'titulo_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Título del header'}),
@@ -605,8 +611,6 @@ class PeluqueriaForm(forms.ModelForm):
             'direccion': forms.Textarea(attrs={'class': 'form-control form-control-lg border-success', 'rows': 4, 'placeholder': 'Dirección completa'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Teléfono de contacto'}),
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Correo electrónico'}),
-            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Latitud'}),
-            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Longitud'}),
             'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Slug único'}),
 
 
@@ -618,7 +622,7 @@ class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = [
-                'nombre_de_la_empresa', 'titulo_header', 'subtitulo1_header', 'subtitulo2_header', 
+                'nombre_de_la_empresa', 'nombreUrl', 'titulo_header', 'subtitulo1_header', 'subtitulo2_header', 
                 'imagen_logo_empresa', 'imagen_fondo_header', 'imagen_header', 'video_header',
                 'quienes_somos_activo', 'titulo_sobrenosotros', 'parrafo1_sobrenosotros', 
                 'parrafo2_sobrenosotros', 'parrafo3_sobrenosotros', 'parrafo4_sobrenosotros', 
@@ -643,12 +647,16 @@ class EmpresaForm(forms.ModelForm):
                 'imagen4_galeria', 'imagen5_galeria', 'imagen6_galeria', 'imagen7_galeria', 
                 'imagen8_galeria', 'imagen9_galeria', 'contactar_activo', 'horario', 'pais', 
                 'ciudad','direccion', 'telefono', 'email', 
-                'latitud', 'longitud', 'tipo_empresa', 'nombreUrl'
+                'latitud', 'longitud', 'tipo_empresa',
             ]
         widgets = {
 
             # Campos de texto
             'nombre_de_la_empresa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre de la empresa'}),
+            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'introduzca el nombre de la url sin espacios'}),
+            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            
             'titulo_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Título del header'}),
             'subtitulo1_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Subtítulo 1 del header'}),
             'subtitulo2_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Subtítulo 2 del header'}),
@@ -657,9 +665,9 @@ class EmpresaForm(forms.ModelForm):
             'direccion': forms.Textarea(attrs={'class': 'form-control form-control-lg border-success', 'rows': 4, 'placeholder': 'Dirección completa'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Teléfono de contacto'}),
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Correo electrónico'}),
-            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Latitud'}),
-            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Longitud'}),
-            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Slug único'}),
+            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            
             
 
             'nombre_servicio1': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre del servicio 1'}),
@@ -858,7 +866,7 @@ class ComercioForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields = [
-                'nombre_de_la_empresa', 'titulo_header', 'imagen_logo_empresa', 'imagen_fondo_header',
+                'nombre_de_la_empresa', 'nombreUrl', 'titulo_header', 'imagen_logo_empresa', 'imagen_fondo_header',
                 'quienes_somos_activo', 'parrafo1_sobrenosotros', 'parrafo2_sobrenosotros', 
                 'parrafo3_sobrenosotros', 'parrafo4_sobrenosotros', 'parrafo5_sobrenosotros', 
                 'imagen1_nosotros', 'imagen2_nosotros_fondo', 'imagen3_nosotros',
@@ -875,13 +883,15 @@ class ComercioForm(forms.ModelForm):
                 'imagen3_galeria', 'imagen4_galeria', 'imagen5_galeria', 'imagen6_galeria', 
                 'imagen7_galeria', 'imagen8_galeria', 'imagen9_galeria', 'imagen10_galeria', 
                 'imagen11_galeria', 'contactar_activo', 'pais', 'ciudad', 'direccion',
-                'telefono', 'email', 'latitud', 'longitud', 'tipo_empresa', 'nombreUrl'
+                'telefono', 'email', 'latitud', 'longitud', 'tipo_empresa',
             ]
 
         widgets = {
 
             # Campos de texto
             'nombre_de_la_empresa': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Nombre de la empresa'}),
+            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Introduzca el nombre de url sin espacios'}),
+
             'titulo_header': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Título del header'}),
             # Campos de archivo (TODOS configurados de manera uniforme)
             'imagen_logo_empresa': forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg border-success'}),
@@ -1006,9 +1016,8 @@ class ComercioForm(forms.ModelForm):
             'direccion': forms.Textarea(attrs={'class': 'form-control form-control-lg border-success', 'rows': 4, 'placeholder': 'Dirección completa'}),
             'telefono': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Teléfono de contacto'}),
             'email': forms.EmailInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Correo electrónico'}),
-            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Latitud'}),
-            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Longitud'}),
-            'nombreUrl': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'Slug único'}),
-
+            'latitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+            'longitud': forms.TextInput(attrs={'class': 'form-control form-control-lg border-success', 'placeholder': 'este campos se rrellenan automáticamente al hacer click en el mapa'}),
+           
             
         }
