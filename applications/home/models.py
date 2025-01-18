@@ -80,6 +80,8 @@ class Empresa(models.Model):
     propietario_sitio_web = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="Propietario", null=True, blank=True)
     
     nombre_de_la_empresa = models.CharField(max_length=100, verbose_name="Nombre de la Empresa")
+    tipo_empresa = models.ForeignKey(TipoEmpresa,on_delete=models.CASCADE,related_name="empresas",verbose_name="Elija el tipo de Empresa",null=True, blank=True,default=1)
+    nombreUrl = models.SlugField(max_length=150, unique=True, null=True, blank=True,verbose_name="Elija el tnombre de la URl sin espacios")
     #Header titulo en la página como texto principal h1
     titulo_header = models.CharField(max_length=100, verbose_name="titulo header", null=True, blank=True)
     #header subtitulo subtitulo numero uno
@@ -356,8 +358,7 @@ class Empresa(models.Model):
     email = models.EmailField(verbose_name="Correo electronico", null=True, blank=True)
     latitud = models.CharField(max_length=100,  verbose_name="Latitud", null=True, blank=True)
     longitud = models.CharField(max_length=100,  verbose_name="Longitud", null=True, blank=True)
-    tipo_empresa = models.ForeignKey(TipoEmpresa,on_delete=models.CASCADE,related_name="empresas",verbose_name="Tipo de Empresa",null=True, blank=True)
-    nombreUrl = models.SlugField(max_length=150, unique=True, null=True, blank=True)
+  
 
     class Meta:
         verbose_name = "Empresa"

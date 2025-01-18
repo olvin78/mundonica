@@ -35,6 +35,8 @@ from django.views.generic import (
 ################################### formulario para contactar ###################################
 #############################################################################################################
 
+
+
 def formulario_contactar(request):
     print("Formulario de contactar")
     if request.method == "POST":
@@ -66,7 +68,8 @@ class HomePageView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.order_by('-fecha_hora')[:3]
-
+    def custom_404_view(request, exception):
+        return render(request, '404.html', {}, status=404)
 
     def get_context_data(self, **kwargs):
         # Obtén el contexto predeterminado del ListView
@@ -85,7 +88,7 @@ class HomePageView(ListView):
             context['empresasDeUsuario'] = Empresa.objects.filter(propietario_sitio_web=self.request.user)
         else:
             context['empresasDeUsuario'] = Empresa.objects.none()  # Devuelve un queryset vacío si no está autenticado
-    
+
         # Obtén el contexto predeterminado
         
 

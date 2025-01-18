@@ -33,6 +33,16 @@
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CVSRG00CRJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CVSRG00CRJ');
+</script>
+
 <!--esto son estilos para miestras se crea e apartado de ver y configurar el perfil de el usuario-->
 <style>
   /* Estilos del modal */
@@ -215,9 +225,13 @@
           </a>
         </div>
 
+        {% for empresa in empresasDeUsuario %}
+            <a href="{% url 'home_app:actualizar_empresa' empresa.id %}">Actualizar {{ empresa.nombre_de_la_empresa }}</a>
+        {% endfor %}
+
         {% endif %}
 
-        <!--Modal Personalizado miestras se termina de desarrollar
+        <!--Modal Personalizado miestras se termina de desarrollarss
           el aparatado de ver perfil y configurar ya quqe no esta del todo bien-->
           <div id="customModal" class="custom-modal">
             <div class="custom-modal-content">
