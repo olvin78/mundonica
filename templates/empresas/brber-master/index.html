@@ -322,7 +322,7 @@
         <div class="best-pricing section-padding2 position-relative">
             <div class="container">
                 <div class="row justify-content-end">
-                    <div class="col-xl-7 col-lg-7">
+                    <div class="col-xl-6 col-lg-6">
                         <div class="section-tittle mb-50">
                             <span>Nuestros Mejores Precios</span>
                             <h2>We provide best price<br> in the city!</h2>
@@ -332,22 +332,22 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="pricing-list">
                                     <ul>
-                                        <li> {{ datos.nombre_servicio1_tarifa|default:'Styling' }}. . . . . . . . . . . . . . . . . . . . . . . . . . . . <span>C${{ datos.precio_servicio1_tarifa|default:'25' }}</span></li>
-                                        <li> {{ datos.nombre_servicio2_tarifa|default:'Styling + Color' }}. . . . . . . . . . . . . . . . . . . <span>C${{ datos.precio_servicio2_tarifa|default:'65' }}</span></li>
-                                        <li> {{ datos.nombre_servicio3_tarifa|default:'Styling + Tint' }}. . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio3_tarifa|default:'65' }}</span></li>
-                                        <li> {{ datos.nombre_servicio4_tarifa|default:'Semi-permanent wave' }}. . . . . . . . . . . . .<span>C${{ datos.precio_servicio4_tarifa|default:'65' }}</span></li>
-                                        <li> {{ datos.nombre_servicio5_tarifa|default:'Cut + Styling' }}. . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio5_tarifa|default:'63' }}</span></li>
-                                        <li> {{ datos.nombre_servicio6_tarifa|default:'Cut + Styling + Color' }}. . . . . . . . . . . . . <span>C${{ datos.precio_servicio6_tarifa|default:'100' }}</span></li>
-                                        <li> {{ datos.nombre_servicio7_tarifa|default:'Cut + Styling + Tint' }}. . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio7_tarifa|default:'100' }}</span></li>
+                                        <li> {{ datos.nombre_servicio1_tarifa|default:'Styling' }}. . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio1_tarifa|default:'25' }}</span></li>
+                                        <li> {{ datos.nombre_servicio2_tarifa|default:'Styling + Color' }}. . . . . . . . . . .<span>C${{ datos.precio_servicio2_tarifa|default:'65' }}</span></li>
+                                        <li> {{ datos.nombre_servicio3_tarifa|default:'Styling + Tint' }}. . . . . . . . . . . . .<span>C${{ datos.precio_servicio3_tarifa|default:'65' }}</span></li>
+                                        <li> {{ datos.nombre_servicio4_tarifa|default:'Semi-permanent wave' }}. . . . . .<span>C${{ datos.precio_servicio4_tarifa|default:'65' }}</span></li>
+                                        <li> {{ datos.nombre_servicio5_tarifa|default:'Cut + Styling' }}. . . . . . . . . . . . . .<span>C${{ datos.precio_servicio5_tarifa|default:'63' }}</span></li>
+                                        <li> {{ datos.nombre_servicio6_tarifa|default:'Cut + Styling + Color' }}. . . . .<span>C${{ datos.precio_servicio6_tarifa|default:'100' }}</span></li>
+                                        <li> {{ datos.nombre_servicio7_tarifa|default:'Cut + Styling + Tint' }}. . . . . . .<span>C${{ datos.precio_servicio7_tarifa|default:'100' }}</span></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="pricing-list">
                                     <ul>
-                                        <li>{{ datos.nombre_servicio8_tarifa|default:'Cut' }}. . . . . . . . . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio8_tarifa|default:'25' }}</span></li>
-                                        <li>{{ datos.nombre_servicio9_tarifa|default:'Shave' }}. . . . . . . . . . . . . . . . . . . . . . . . . . <span>C${{ datos.precio_servicio9_tarifa|default:'65' }}</span></li>
-                                        <li>{{ datos.nombre_servicio10_tarifa|default:'Beard trim' }}. . . . . . . . . . . . . . . . . . . . . .  <span>C${{ datos.precio_servicio10ss_tarifa|default:'65' }}</span></li>
+                                        <li>{{ datos.nombre_servicio8_tarifa|default:'Cut' }}. . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio8_tarifa|default:'25' }}</span></li>
+                                        <li>{{ datos.nombre_servicio9_tarifa|default:'Shave' }}. . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio9_tarifa|default:'65' }}</span></li>
+                                        <li>{{ datos.nombre_servicio10_tarifa|default:'Beard trim' }}. . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio10ss_tarifa|default:'65' }}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -505,7 +505,7 @@
     </main>
     <footer>
         <!--? Footer Start-->
-        <div class="footer-area section-bg" data-background="{% static 'empresas/brber-master/assets/img/gallery/footer_bg.png' %}">
+        <div style="height:1000px;" class="footer-area section-bg" data-background="{% static 'empresas/brber-master/assets/img/gallery/footer_bg.png' %}">
             <div class="container">
                 <div class="footer-top footer-padding">
                     <div class="row d-flex justify-content-between">
@@ -514,7 +514,7 @@
                                 <!-- logo -->
                                 <div class="footer-logo">
                                     {% if datos.imagen_logo_empresa %}
-                                    <img src="{{ datos.imagen_logo_empresa.url }}" alt="">
+                                    <img  style="height: 90px;width: 90px;" src="{{ datos.imagen_logo_empresa.url }}" alt="">
                                     {% else %}
                                     <img src="{% static 'empresas/brber-master/assets/img/logo/logo.png' %}" alt="">
                                     {% endif %}

@@ -21,7 +21,7 @@ from django.utils.text import slugify
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from applications.home.models import Consulado,Embajada,Abogado,Blog,Empresa,Post
+from applications.home.models import Consulado,Embajada,Abogado,Blog,Empresa,Post,Receta
 from django.contrib.auth.models import User
 from django.views.generic import (
     TemplateView,
@@ -239,6 +239,16 @@ class MapaListView(ListView):
 
         return context
 
+class RecetasView(ListView):
+    template_name = "recetas.html"
+    context_object_name = 'datos'  # Vassriable principal para el primer modelo
+
+    def get_queryset(self):
+        # El queryset principal puede ser el modelo Empresa
+        return Receta.objects.all()
+
+       
+
 ################################### este es el apartad de los listView ###################################
 #############################################################################################################
 
@@ -286,6 +296,7 @@ class CrearTipodeEmpresaView(LoginRequiredMixin, CreateView):
     # Sobrescribimos el método form_valid para asignar el usuario actual
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.propietario_sitio_web = self.request.user
         return super().form_valid(form)
 
 ################################### apartado de CreateView ###################################
@@ -400,6 +411,13 @@ class EmpresaDetailView(DetailView):
             return ['empresas/leadmark/index.html']
         else:
             return ['empresas/default_detail.html']  # Template por defecto
+
+
+class RecetaDetailView(DetailView):
+    model = Receta # Especifica el modelo Blog
+    template_name = 'receta_detalle.html' # Define el template "articulo_completo.html"
+    context_object_name = 'datos'
+
 
 ################################### detail este es el apartado de los DetailView ###################################
 #############################################################################################################

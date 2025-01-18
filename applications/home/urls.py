@@ -131,5 +131,15 @@ urlpatterns = [
         name='billetes',
     ),
     
+    path('recetas/ver',
+        views.RecetasView.as_view(),
+        name='bresetas',
+    ),
+    
 
+    path('receta/<int:pk>/',
+        views.RecetaDetailView.as_view(),
+        name='recetas',
+    ),
+ 
 ]

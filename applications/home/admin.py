@@ -7,7 +7,8 @@ from applications.home.models import (
     TipoEmpresa,
     Post,
     Perfil,
-    Empresa
+    Empresa,
+    Receta
 )
 
 # consulados your models here.
@@ -64,3 +65,10 @@ class PerfilAdmin(admin.ModelAdmin):
     list_display = ("usuario","id","telefono","direccion","fecha_nacimiento",)
 
 admin.site.register(Perfil,PerfilAdmin)
+
+
+# blog your models here.
+class RecetaAdmin(admin.ModelAdmin):
+    list_display = ("titulo","id", "categoria", "imagen",)
+
+admin.site.register(Receta,RecetaAdmin )

@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  #map {
+      height: 400px;
+  }
+  h4{
+          text-align: center;
+  }
+  #id_latitud{
+    display: none;
+  }
+  #id_longitud{
+    display: none;
+  }
+</style>
 
+{% endblock %}
 {% block content %}
+
   <main class="main">
 
     <!-- Page Title -->
@@ -23,6 +42,8 @@
     <form method="post" enctype="multipart/form-data" class="needs-validation">
         {% csrf_token %}
         {{ form.as_p }}
+        <h4>Selecciona una ubicación</h4>
+        <div id="map"></div>
         <button type="submit" class="btn btn-success w-100 mt-3 mb-5">Guardar Empresa</button>
     </form>
 </div>
@@ -30,4 +51,32 @@
 
   </main>
 
+  <!--esta es la prueba para  agregar longitud y latitud en el mapa en vez de rellenar los campos con numeros-->
+  <script>
+    // Inicializa el mapa
+    const map = L.map('map').setView([12.1364, -86.2514], 13); // Coordenadas iniciales (Managua, Nicaragua)
+
+    // Capa base de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '<a href="https://www.openstreetmap.org/copyright"></a>'
+    }).addTo(map);
+
+    // Agregar marcador al hacer clic
+    let marker;
+    map.on('click', function (e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lon = e.latlng.lng.toFixed(6);
+
+        // Actualiza los campos del formulario
+        document.getElementById('id_latitud').value = lat;
+        document.getElementById('id_longitud').value = lon;
+
+        // Coloca o mueve el marcador
+        if (marker) {
+            marker.setLatLng(e.latlng);
+        } else {
+            marker = L.marker(e.latlng).addTo(map);
+        }
+    });
+</script>
   {% endblock %}

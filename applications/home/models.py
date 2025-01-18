@@ -494,3 +494,28 @@ class Perfil(models.Model):
 
     def __str__(self):
         return f"Perfil de {self.usuario}"
+
+
+
+
+class Receta(models.Model):
+    """Modelo para entradas de recetas."""
+
+    fecha_hora = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    titulo = models.CharField(max_length=255,blank=True,null=True)
+    categoria = models.CharField(max_length=255,blank=True,null=True)
+    imagen = models.ImageField(upload_to='assets/img/recetas', null=True, blank=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    cuerpo = HTMLField()
+    resumen = HTMLField( blank=True,null=True)
+
+
+
+    def __str__(self):
+        """Devuelve el título del post como representación en cadena."""
+        return self.titulo
+
+    def get_summary(self):
+        """Devuelve un resumen del cuerpo del post (primeras 200 palabras)."""
+        return self.cuerpo[:200]
+

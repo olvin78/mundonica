@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<style>
+.page-title {
+    height: auto;
+    padding: 50px 0; /* Espaciado para contenido */
+    text-align: center;
+    color: white;
+}
+
+.text-gray-500 {
+    font-size: 0.9rem;
+    color: gray;
+}
+@media print {
+    /* Ocultar todos los elementos innecesarios */
+    body > *, header, footer, nav, .menu, .navbar, .breadcrumb, .pagination, .bienvenido, .imprimir-btn, .logo, .recetas-titulo, .recetas-subtitulo {
+        display: none !important;
+    }
+
+    /* Mostrar solo el contenido de la receta */
+    .receta {
+        display: block !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+
+    /* Mostrar los elementos clave dentro de la receta */
+    #receta img, #receta h1, #receta #fecha, .receta p {
+        display: block !important;
+    }
+
+    /* Ajustar márgenes globales para impresión */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Asegurar que no haya bordes ni colores de fondo */
+    * {
+        background: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Si usas un contenedor general para la receta */
+    .container {
+        display: block !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+}
+@media print {
+    #no-imprimir {
+        display: none !important;
+    }
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<main class="main" id="no-imprimir">
+    <!-- Page Title -->
+    <div class="page-title text-center" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp); background-color: rgb(75, 112, 108); background-size: cover; background-position: center;">
+        <div class="container position-relative py-5">
+            <h2 class="section-heading text-uppercase text-white" style="text-shadow: 2px 2px 5px white;">
+                Recetas
+            </h2>
+            <h3 class="section-subheading text-muted text-white" style="text-shadow: 2px 2px 5px white;">
+                Recetas más Recientes!
+            </h3>
+        </div>
+    </div>
+</main>
+
+<div class="container text-center elemento-a-ocultar mt-5">
+    <!-- Botón para imprimir -->
+    <div class="mb-4" id="botones" style="display: flex;justify-content: space-between;">
+        <a href="{% url 'home_app:home' %}"><button type="button" class="btn btn-sm btn-outline-secondary">Voler</button></a>
+        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.print()">Imprimir</button>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8" id="receta">
+            <h1 class="text-center mt-5">{{ datos.titulo }}</h1>
+            <p class="text-gray-500 text-end" style="color: gray;">
+                {{ datos.fecha_hora|date:"d/m/y" }} | {{ datos.autor }}
+            </p>
+            <img src="{{ datos.imagen.url }}" class="img-fluid rounded mt-3 mb-3" alt="Imagen de la receta">
+            <p class="text-start">{{ datos.cuerpo|safe }}</p>
+        </div>
+    </div>
+</div>
+
+    <!--pruava para desaparecer contenido segun pantallas pequenas-->
+
+    {% endblock %}
