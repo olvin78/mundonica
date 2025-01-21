@@ -140,7 +140,7 @@
       
       <div class="dropdown-menu">
         {% if user.is_authenticated %}
-        <a href="#{% url 'home_app:credencial_usuario' user.id %}">Ver Perfil</a>
+        <a href="{% url 'home_app:credencial_usuario' user.id %}">Ver Perfil</a>
         <div class="card-footer">
           <a href="#{% url 'home_app:actualizar_usuario' user.id %}">
             Editar Perfil

@@ -110,7 +110,7 @@ urlpatterns = [
         name='tienda_template'),
  
  
-    path('Credencial_usuario/<int:pk>/',
+    path('credencial_usuario/<int:pk>/',
         views.CredencialusuarioView.as_view(),
         name='credencial_usuario',
     ),
