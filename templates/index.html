@@ -20,7 +20,7 @@
 {% block content %}
   <main class="main">
 
-    <!-- Hero Section -->
+    <!-- Seccion de Inicio y la portada -->
     <section id="hero" class="hero section dark-background">
 
       <!-- Imagen optimizada para SEO y accesibilidad -->
@@ -30,43 +30,41 @@
         data-aos="fade-in" 
         width="1200" height="600" loading="lazy">
 
+      <!-- Contenedor del mensaje de agradecimiento de donativo -->
+      <div id="donation-message" style="
+        display: none;
+        position: fixed;
+        top: 60px; /* Ajustado para no bloquear el menú */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%; /* Ancho del mensaje */
+        max-width: 800px;
+        height: 60px; /* Altura del rectángulo */
+        background: linear-gradient(45deg, rgba(25, 135, 84, 0.9), rgba(0, 103, 198, 0.9));
+        color: white;
+        text-align: center;
+        padding: 10px 20px;
+        font-size: 1em;
+        font-weight: bold;
+        z-index: 9999;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        animation: fadeInSlideDown 0.8s ease-out;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      ">
+        <!-- Brillo sobre el texto -->
+        <div class="shine"></div>
 
-      <!-- Contenedor del mensaje de para mencionar el ultimo donativo -->
-<!-- Contenedor del mensaje de agradecimiento -->
-<div id="donation-message" style="
-  display: none;
-  position: fixed;
-  top: 60px; /* Ajustado para no bloquear el menú */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%; /* Ancho del mensaje */
-  max-width: 800px;
-  height: 60px; /* Altura del rectángulo */
-  background: linear-gradient(45deg, rgba(25, 135, 84, 0.9), rgba(0, 103, 198, 0.9));
-  color: white;
-  text-align: center;
-  padding: 10px 20px;
-  font-size: 1em;
-  font-weight: bold;
-  z-index: 9999;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  animation: fadeInSlideDown 0.8s ease-out;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-">
-  <!-- Brillo sobre el texto -->
-  <div class="shine"></div>
+        <span id="donation-text">
+          ¡Gracias, <span style="color: #FFD700;">[Nombre del donante]</span>! Tu apoyo ayuda a construir el futuro de MundoNica.
+        </span>
 
-  <span id="donation-text">
-    ¡Gracias, <span style="color: #FFD700;">[Nombre del donante]</span>! Tu apoyo ayuda a construir el futuro de MundoNica.
-  </span>
-
-  <!-- Contenedor de chispas -->
-  <div id="sparks"></div>
-</div>
+        <!-- Contenedor de chispas -->
+        <div id="sparks"></div>
+      </div>
 
       <!--este es el apartado para mencionar los donativos-->
 
@@ -96,9 +94,9 @@
       </div>
     
     </section>
-    <!-- /Hero Section -->
+    <!-- /Seccion de Inicio y la portada -->
 
-    <!-- About Section -->
+    <!-- Seccion sobre Nosotros -->
     <section id="about" class="about section">
 
       <!-- Section Title -->
@@ -129,9 +127,10 @@
 
       </div>
 
-    </section><!-- /About Section -->
+    </section>
+    <!-- /Seccion sobre Nosotros -->
 
-    <!-- Services Section -->
+    <!-- Seccion de los Services -->
     <section id="services" class="services section">
 
       <!-- Section Title -->
@@ -227,9 +226,10 @@
       </div>
       
 
-    </section><!-- /Services Section -->
+    </section>
+    <!-- /Seccion de los Services -->
 
-    <!-- Call To Action Section -->
+    <!-- Seccion de Donativos -->
     <section id="call-to-action" class="call-to-action section dark-background">
 
       <img src="{% static 'images/donacion.webp' %}" alt="">
@@ -248,9 +248,10 @@
 
       </div>
 
-    </section><!-- /Call To Action Section -->
+    </section>
+    <!-- /Seccion de Donativos -->
 
-    <!-- Features Section -->
+    <!-- Vision del Proyecto  -->
     <section id="features" class="features section">
 
       <div class="container">
@@ -307,11 +308,10 @@
       </div>
     
     </section>
-    
-    <!-- /Features Section -->
+    <!-- /Vision del Proyecto -->
 
 
-    <!-- Stats Section -->
+    <!-- Conversor de divisas en tiempo real -->
     <section id="stats" class="stats section dark-background">
 
       <img src="{% static 'assets/img/stats-bg.jpg' %}" alt="" data-aos="fade-in">
@@ -366,10 +366,11 @@
       </div>
 
 
-    </section><!-- /Stats Section -->
+    </section>
+    <!-- /Conversor de divisas en tiempo real -->
 
 
-    <!-- Clients Section -->
+    <!-- Promocion de marcas -->
     <section id="clients" class="clients section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -412,11 +413,11 @@
 
       </div>
 
-    </section><!-- /Clients Section -->
+    </section>
+    <!-- /Promocion de marcas -->
 
-      <!-- Este es un apartado de prueba para la ubicación de comercios o negocios en la página principal -->
-
-
+    <!-- Este es un apartado de prueba para la ubicación mediante una fot de comercios o negocios en la página principal -->
+    <section>
     <div class="container-fluid" style="border-bottom: 1px solid grey; background-color: lightblue;" id="mapacontainer">
       <div class="row m-3">
         <!-- Encabezado persuasivo -->
@@ -438,72 +439,76 @@
           </button>
           {% endif %}
         </div>
-        <div class="col-lg-2 col-md-0"></div>
-        <div class="col-lg-8 col-md-12" id="map" style="height: 500px; background-color: lightblue; margin-bottom: 50px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"></div>
-        <div class="col-lg-2 col-md-0"></div>
-      </div>
-
-    </div>
-
-    <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
-      <!-- Encabezado -->
-      <div class="modal-header" style="background: linear-gradient(45deg, #198754, #0067c6); color: white;">
-        <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold; color: #fff; text-align: center; font-size: 1.5em;">
-          Te ha interesado, <span style="color: #3dc78d;">¡Genial, me alegro mucho!</span>
-        </h5>
-      </div>
-      
-      <!-- Cuerpo del Modal -->
-      <div class="modal-body">
-        <p style="font-size: 1.1em; color: #333;">
-          <span style="color: #0067c6; font-weight: bold;">Para</span> poder promocionar tu marca, necesitas <strong>registrarte</strong> o <strong>iniciar sesión</strong>. ¡No te preocupes, estamos aquí para ayudarte!
-        </p>
-        <p style="font-size: 0.95em; color: #666;">Elige una de las opciones a continuación para continuar:</p>
-      </div>
-      
-      <!-- Pie del Modal -->
-      <div class="modal-footer justify-content-center" style="gap: 10px;">
-        <!-- Botón de Cerrar -->
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="
-              padding: 8px 15px;
-              font-size: 0.9em;
-              font-weight: bold;
-              border-radius: 20px;">
-          Cerrar
-        </button>
-        
-        <!-- Botón de Iniciar Sesión -->
-        <a href="{% url 'account_login' %}">
-          <button type="button" class="btn btn-outline-primary" style="
-                padding: 8px 15px;
-                font-size: 0.9em;
-                font-weight: bold;
-                border-radius: 20px;">
-            Iniciar sesión
-          </button>
-        </a>
-        
-        <!-- Botón de Registrarme -->
-        <a href="{% url 'account_signup' %}">
-          <button type="button" class="btn btn-success" style="
-                padding: 8px 15px;
-                font-size: 0.9em;
-                font-weight: bold;
-                border-radius: 20px;">
-            Registrarme
-          </button>
-        </a>
+        <div class="col-lg-2 d-none d-lg-block"></div>
+        <div class="col-lg-8 col-md-12">
+          <div class="mb-4 rounded shadow" style="height: 500px; background-color: lightblue; overflow: hidden;">
+            <a href="{% url 'home_app:mapa' %}"><img src="{% static 'assets/img/mapamundonica.png' %}" alt="Mapa Mundonica" class="img-fluid w-100 h-100" style="object-fit: cover;"></a>
+          </div>
+        </div>
+        <div class="col-lg-2 d-none d-lg-block"></div>
       </div>
     </div>
-  </div>
-</div>
- <!--este es el final de la prueba de el apartado de ubicasion de las empresas-->
+    <!-- /Este es un apartado de prueba para la ubicación mediante una fot de comercios o negocios en la página principal  -->
 
+    <section>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
+          <!-- Encabezado -->
+          <div class="modal-header" style="background: linear-gradient(45deg, #198754, #0067c6); color: white;">
+            <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold; color: #fff; text-align: center; font-size: 1.5em;">
+              Te ha interesado, <span style="color: #3dc78d;">¡Genial, me alegro mucho!</span>
+            </h5>
+          </div>
+          
+          <!-- Cuerpo del Modal -->
+          <div class="modal-body">
+            <p style="font-size: 1.1em; color: #333;">
+              <span style="color: #0067c6; font-weight: bold;">Para</span> poder promocionar tu marca, necesitas <strong>registrarte</strong> o <strong>iniciar sesión</strong>. ¡No te preocupes, estamos aquí para ayudarte!
+            </p>
+            <p style="font-size: 0.95em; color: #666;">Elige una de las opciones a continuación para continuar:</p>
+          </div>
+          
+          <!-- Pie del Modal -->
+          <div class="modal-footer justify-content-center" style="gap: 10px;">
+            <!-- Botón de Cerrar -->
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="
+                  padding: 8px 15px;
+                  font-size: 0.9em;
+                  font-weight: bold;
+                  border-radius: 20px;">
+              Cerrar
+            </button>
+            
+            <!-- Botón de Iniciar Sesión -->
+            <a href="{% url 'account_login' %}">
+              <button type="button" class="btn btn-outline-primary" style="
+                    padding: 8px 15px;
+                    font-size: 0.9em;
+                    font-weight: bold;
+                    border-radius: 20px;">
+                Iniciar sesión
+              </button>
+            </a>
+            
+            <!-- Botón de Registrarme -->
+            <a href="{% url 'account_signup' %}">
+              <button type="button" class="btn btn-success" style="
+                    padding: 8px 15px;
+                    font-size: 0.9em;
+                    font-weight: bold;
+                    border-radius: 20px;">
+                Registrarme
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    <!--este es el final de la prueba de el apartado de ubicasion de las empresas-->
 
-    <!-- Pricing Section -->
+    <!-- Seccion para elegir la cantidad del donativo -->
     <section id="pricing" class="pricing section light-background">
 
       <!-- Section Title -->
@@ -575,13 +580,14 @@
             <img alt="" border="0" src="https://www.paypal.com/en_ES/i/scr/pixel.gif" width="2" height="2" />
             </form>
             
-      </div>
+        </div>
       
 
       </div>
-    </section><!-- /Pricing Section -->
+    </section>
+    <!-- /Seccion para elegir la cantidad del donativo -->
 
-    <!-- Faq Section -->
+    <!-- Seccion de preguntas frecuentes -->
     <section id="faq" class="faq section">
 
       <div class="container-fluid">
@@ -673,394 +679,149 @@
 
       </div>
 
-    </section><!-- /Faq Section -->
+    </section>
+    <!-- /Seccion de preguntas frecuentes -->
 <hr>
-  <!-- Recent Posts Section -->
-<section id="recent-posts" class="recent-posts section">
+    <!-- Seccion de ultimos articulos de albun compartidos -->
+    <section id="recent-posts" class="recent-posts section">
 
-  <!-- Section Title -->
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Últimas publicaciones.</h2>
-    <h5 style="color: grey;">¿Quieres estar al día con nuestras últimas publicaciones?</h5>
-  </div><!-- End Section Title -->
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Últimas publicaciones.</h2>
+        <h5 style="color: grey;">¿Quieres estar al día con nuestras últimas publicaciones?</h5>
+      </div><!-- End Section Title -->
 
-  <div class="container">
+      <div class="container">
 
-    <div class="row gy-4">
-      {% for dato in datos|slice:"-3:" %}
-      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-        <article>
-          <a href="{% url 'home_app:articulo' dato.id %}">
-            <div class="post-img">
-              <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
-            </div>
-          </a>
-
-          <p class="post-category">{{dato.categoria}}</p>
-
-          <h2 class="title">
-            <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
-          </h2>
-
-          <p class="post-summary">{{dato.resumen|safe}}</p>
-          <div class="d-flex align-items-center">
-            <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-            <div class="post-meta">
-              <p class="post-author">{{dato.autor}}</p>
-              <p class="post-date">
-                <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-      {% endfor %}
-    </div><!-- End recent posts list -->
-
-  </div>
-
-</section><!-- /Recent Posts Section -->
-
-
-<section id="contact" class="contact section light-background">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Contáctanos</h2>
-    <h5 style="color: grey;">¿Necesitas más información?</h5>
-
-  </div>
-
-  <div class="container" data-aos="fade" data-aos-delay="100">
-    <div class="row gy-4">
-      <div class="col-lg-4">
-        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-          <i class="bi bi-geo-alt flex-shrink-0"></i>
-          <div>
-            <h3>Dirección</h3>
-            <p>Alderdi-Eder, 1, 20004 San Sebastián, Guipúzcoa.</p>
-          </div>
-        </div>
-
-        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-          <i class="bi bi-telephone flex-shrink-0"></i>
-          <div>
-            <h3>Teléfono</h3>
-            <p> Estámos desarrollando los credenciales para poder contactar</p>
-          </div>
-        </div>
-
-        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-          <i class="bi bi-envelope flex-shrink-0"></i>
-          <div>
-            <h3>Email</h3>
-            <p> Estámos desarrollando los credenciales para poder contactar</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-8">
-        <div>
-          <div class="card-body">
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}">
-              {% csrf_token %}
-              
-              <!-- Fila para Nombre y Correo -->
-              <div class="row">
-                <div class="mb-3 col-lg-6 col-md-12">
-                
-                  {{ form.name }}
+        <div class="row gy-4">
+          {% for dato in datos|slice:"-3:" %}
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <article>
+              <a href="{% url 'home_app:articulo' dato.id %}">
+                <div class="post-img">
+                  <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
                 </div>
-                <div class="mb-3 col-lg-6 col-md-12">
-                  {{ form.email }}
+              </a>
+
+              <p class="post-category">{{dato.categoria}}</p>
+
+              <h2 class="title">
+                <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
+              </h2>
+
+              <p class="post-summary">{{dato.resumen|safe}}</p>
+              <div class="d-flex align-items-center">
+                <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                <div class="post-meta">
+                  <p class="post-author">{{dato.autor}}</p>
+                  <p class="post-date">
+                    <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
+                  </p>
                 </div>
               </div>
-              
-              <!-- Campo de Mensaje -->
-              <div class="mb-3">
-                {{ form.message }}
-              </div>
-              
-              <!-- Botón de Enviar -->
-              <button type="submit" class="btn btn-success" style="
-                    width: 200px;
-                    display: flex;
-                    margin: auto;
-                    padding-right: 5px;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center;
-                    background: linear-gradient(80deg, #0067c6, #198754);
-                    color: white;
-                    font-size: 16px;
-                    font-weight: bold;
-                    border: none;
-                    border-radius: 5px;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                    "
-                onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.3)';"
-                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.2)';">
-                <strong>Enviar</strong>
-              </button>
-            </form>
+            </article>
           </div>
+          {% endfor %}
+        </div><!-- End recent posts list -->
+
+      </div>
+
+    </section>
+    <!-- /Seccion de ultimos articulos de albun compartidos -->
+
+    <!-- Seccion de Contactar -->
+    <section id="contact" class="contact section light-background">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contáctanos</h2>
+        <h5 style="color: grey;">¿Necesitas más información?</h5>
+
+      </div>
+
+      <div class="container" data-aos="fade" data-aos-delay="100">
+        <div class="row gy-4">
+          <div class="col-lg-4">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h3>Dirección</h3>
+                <p>Alderdi-Eder, 1, 20004 San Sebastián, Guipúzcoa.</p>
+              </div>
+            </div>
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Teléfono</h3>
+                <p> Estámos desarrollando los credenciales para poder contactar</p>
+              </div>
+            </div>
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Email</h3>
+                <p> Estámos desarrollando los credenciales para poder contactar</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div>
+              <div class="card-body">
+                <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}">
+                  {% csrf_token %}
+                  
+                  <!-- Fila para Nombre y Correo -->
+                  <div class="row">
+                    <div class="mb-3 col-lg-6 col-md-12">
+                    
+                      {{ form.name }}
+                    </div>
+                    <div class="mb-3 col-lg-6 col-md-12">
+                      {{ form.email }}
+                    </div>
+                  </div>
+                  
+                  <!-- Campo de Mensaje -->
+                  <div class="mb-3">
+                    {{ form.message }}
+                  </div>
+                  
+                  <!-- Botón de Enviar -->
+                  <button type="submit" class="btn btn-success" style="
+                        width: 200px;
+                        display: flex;
+                        margin: auto;
+                        padding-right: 5px;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        background: linear-gradient(80deg, #0067c6, #198754);
+                        color: white;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border: none;
+                        border-radius: 5px;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                        "
+                    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.3)';"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.2)';">
+                    <strong>Enviar</strong>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
-      
-    </div>
-  </div>
-</section>
+    </section>
+        <!-- Seccion de Contactar -->
 
 
   </main>
 
-  <!-- Contenedor del mensaje de para mencionar el ultimo donativo -->
- 
-
-  <script>
-    // Función para mostrar el mensaje
-    function showDonationMessage(donorName) {
-      const messageElement = document.getElementById('donation-message');
-      const textElement = document.getElementById('donation-text');
-  
-      // Reemplazar el marcador de texto con el nombre del donante
-      textElement.innerHTML = `¡Gracias, <span style="color: #FFD700;">${donorName}</span>! Tu donativo ayuda a construir el futuro de MundoNica.`;
-  
-      // Mostrar el mensaje
-      messageElement.style.display = 'flex';
-  
-      // Crear efecto de chispas
-      generateSparks();
-  
-      // Ocultar el mensaje automáticamente después de 6 segundos
-      setTimeout(() => {
-        messageElement.style.animation = 'fadeOutSlideUp 0.8s ease-out';
-        setTimeout(() => {
-          messageElement.style.display = 'none';
-        }, 800); // Tiempo de la animación fadeOut
-      }, 6000);
-    }
-  
-    // Función para generar chispas
-    function generateSparks() {
-      const sparksContainer = document.getElementById('sparks');
-      sparksContainer.innerHTML = ''; // Limpiar chispas anteriores
-  
-      for (let i = 0; i < 30; i++) {
-        const spark = document.createElement('div');
-        spark.className = 'spark';
-        spark.style.left = `${Math.random() * 100}%`;
-        spark.style.animationDelay = `${Math.random() * 2}s`;
-        sparksContainer.appendChild(spark);
-      }
-    }
-  
-    // Ejemplo de uso
-    showDonationMessage('Juan Pérez');
-  </script>
-    <!-- Contenedor del mensaje de para mencionar el ultimo donativo -->
-
-
-<!--prueba para mostrar el mapa en la página principals-->
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-<script>
-
-  //iconos en el mapa
-  
-  
-  var consuladoIcon = L.icon({
-          iconUrl: "{% static 'images/maps/iconos/consulado.png' %}",
-          iconSize: [50, 50],
-          iconAnchor: [25, 50],
-          popupAnchor: [0, -50]
-      });
-  
-      var embajadaIcon = L.icon({
-          iconUrl: "{% static 'images/maps/iconos/embajada.png' %}",
-          iconSize: [50, 50],
-          iconAnchor: [25, 50],
-          popupAnchor: [0, -50]
-      });
-  
-      var restauranteIcon = L.icon({
-          iconUrl: "{% static 'images/maps/iconos/restaurante.png' %}",
-          iconSize: [50, 50],
-          iconAnchor: [25, 50],
-          popupAnchor: [0, -50]
-      });
-  
-      var peluqueriaIcon = L.icon({
-          iconUrl: "{% static 'images/maps/iconos/peluqueria.png' %}",
-          iconSize: [50, 50],
-          iconAnchor: [25, 50],
-          popupAnchor: [0, -50]
-      });
-  
-      var comercioIcon = L.icon({
-          iconUrl: "{% static 'images/maps/iconos/tienda.png' %}",
-          iconSize: [50, 50],
-          iconAnchor: [25, 50],
-          popupAnchor: [0, -50]
-      });
-  
-  
-  ///*fin de iconos en el mapa
-  
-//este es el aparatdo para que aparezcan las fichass de embajadas en el mapa
-const embajadas = L.layerGroup([
-  {% for embajada in embajadas %}
-    L.marker([{{ embajada.latitud }}, {{ embajada.longitud }}], {icon: embajadaIcon}) // Agrega el ícono
-      .bindPopup(`<strong>{{ embajada.nombre }}</strong>
-      <br> {{ embajada.pais }}<br>
-      <img class='w-100' src='/media/{{ embajada.imagen }}'>
-     <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-  {% endfor %}
-
-]);
-
-//esto es el apartado para que aparezcan las fichas del aparatado de consulados en el mapa
-const consulados = L.layerGroup([
-  {% for consulado in consulados %}
-    L.marker([{{ consulado.latitud }}, {{ consulado.longitud }}], {icon: consuladoIcon}) // Agrega el ícono
-      .bindPopup(`<strong>{{ consulado.nombre }}</strong>
-      <br> {{ consulado.pais }}<br>
-      <img class='w-100' src='/media/{{ consulado.imagen }}'>
-     <div class="text-center mt-2 w-100"><a href="#"><button class='btn btn-sm bg-success text-white'>Detalles</button></a></div>`), // Popup para cada marcador
-  {% endfor %}
-
-]);
-
-//este es el apartado para qe aparezcan las ficaha de peluqueria en el mapa
-{% if peluquerias %}
-const peluquerias = L.layerGroup([
-  {% for peluqueria in peluquerias %}
-  {% if peluqueria.latitud and peluqueria.longitud %}
-    L.marker([{{ peluqueria.latitud }}, {{ peluqueria.longitud }}], {icon: peluqueriaIcon}) // Agrega el ícono
-      .bindPopup(`<strong>{{ peluqueria.nombre_de_la_empresa }}</strong>
-      <br> {{ peluqueria.pais }}<br>{% if peluqueria.imagen_logo_empresa %}
-      <img class='w-100' src='/media/{{ peluqueria.imagen}}'>
-      <p>{{ peluqueria.telefono }}</p>
-      <p>{{ peluqueria.email }}</p>
-      {% endif %}
-     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' peluqueria.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Ver Web</button></a></div>`), // Popup para cada marcador
-      {% endif %}
-     {% endfor %}
-
-]);
-
-{% endif %}
-//este es el for para que aparezcan las fichas de comercios en el mapa
-{% if comercios %}
-
-const comercios = L.layerGroup([
-  {% for comercio in comercios %}
-  {% if comercio.latitud and comercio.longitud %}
-    L.marker([{{ comercio.latitud }}, {{ comercio.longitud }}], {icon: comercioIcon}) // Agrega el ícono
-      .bindPopup(`
-      <strong>{{ comercio.nombre_de_la_empresa }}</strong>
-      <br> {{ comercio.pais }}<br>
-      {% if comercio.imagen_logo_empresa %}
-      <img class='w-100' src='/media/{{ comercio.imagen_logo_empresa }}'>{% endif %}
-      {% if comercio.telefono %}<p>{{ comercio.telefono }}</p>{% endif %}
-       {% if comercio.email %}<p>{{ comercio.email }}</p>{% endif %}
-      
-     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' comercio.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Ver Web</button></a></div>`), // Popup para cada marcador
-  {% endif %}
-  {% endfor %}
-
-]);
-{% endif %}
-
-
-
-//este es el aparatdo para que apasrezacan las ficahs de restaurantes en el mapa
-{% if restaurantes %}
-
-const restaurantes = L.layerGroup([
-  {% for restaurante in restaurantes %}
-
-  {% if restaurante.latitud and restaurante.longitud %}
-    L.marker([{{ restaurante.latitud }}, {{ restaurante.longitud }}], {icon: restauranteIcon}) // Agrega el ícono
-      .bindPopup(`<strong>{{ restaurante.nombre_de_la_empresa }}</strong>
-      <br> {{ restaurante.pais }}<br>{% if restaurante.imagen_logo_empresa %}
-       <img class='w-100' src='/media/{{ restaurante.imagen }}'>
-      <p>{{ restaurante.telefono }}</p>
-      <p>{{ restaurante.email }}</p>
-      {% endif %}
-      {% if restaurante.nombreUrl %}
-     <div class="text-center mt-2 w-100"><a href="{% url 'home_app:empresa_detalle' restaurante.nombreUrl %}"><button class='btn btn-sm bg-success text-white'>Ver Web</button></a></div> {% endif %}`), // Popup para cada marcador
-     {% endif %}
-    {% endfor %}
-]);
-{% endif %}
-
-
-// Capas base (mapas de fondo)
-var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-});
-
-var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'
-});
-
-var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-});
-
-// Configuración del mapa
-var map = L.map('map').setView([40.459391311992704, -3.65254964179598], 3);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: ''
-    }).addTo(map);
-
-
-// Configuración de capas base y superposiciones
-var baseMaps = {
-  "OpenStreetMap": osm,
-  "OpenStreetMap.HOT": osmHOT,
-  "OpenTopoMap": openTopoMap
-};
-
-var overlayMaps = {
-  "Consulados": consulados,
-  "Embajadas": embajadas,
-  {% if restaurantes %}
-  "Restaurantes": restaurantes,
-  {% endif %}
-  {% if peluquerias %}
-  "Peluquerías": peluquerias,
-  {% endif %}
-  {% if comercios %}
-  "Comercios": comercios
-  {% endif %}
-};
-
-// Agregar el control de capas al mapa
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-// Opcional: Mostrar ciertas capas por defecto
-consulados.addTo(map);
-embajadas.addTo(map);
-
-{% if restaurantes %}
-restaurantes.addTo(map);
-{% endif %}
-
-{% if peluquerias %}
-peluquerias.addTo(map);
-{% endif %}
-
-{% if comercios %}
-comercios.addTo(map);
-{% endif %}
-
-</script>
-
+<script src="{% static 'assets/js/donativo.js' %}"></script>
 {% endblock %}
