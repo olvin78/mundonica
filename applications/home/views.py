@@ -437,7 +437,7 @@ class RecetaDetailView(DetailView):
 #############################################################################################################
 
 class ActualizarperfilUpdateView(UpdateView):  # Actualizar el perfil de abogados
-    model = User
+    model = Perfil
     form_class = UsuarioForm  # Especifica el formulario personalizado
     template_name = "actualizar_usuario.html"
 
