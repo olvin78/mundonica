@@ -141,5 +141,9 @@ urlpatterns = [
         views.RecetaDetailView.as_view(),
         name='recetas_detalle',
     ),
- 
+    path('galeria',
+        views.GaleriaView.as_view(),
+        name='galeria',
+    ),
+
 ]

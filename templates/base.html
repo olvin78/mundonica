@@ -24,11 +24,7 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <!-- Favicons -->
 <!-- Favicon estándar -->
-<link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="icon" type="image/png" sizes="32x32">
-<!-- Icono para dispositivos Apple -->
-<link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="apple-touch-icon" sizes="180x180">
-<!-- Icono para navegadores antiguos -->
-<link href="{% static 'assets/img/pubiocacioneslogo.ico' %}" rel="shortcut icon" type="image/x-icon">
+<link href="{% static 'assets/img/favicon.png' %}" rel="icon" type="image/png" sizes="32x32">
 <!-- Archivo de manifiesto (opcional, recomendado para Google y PWA) -->
 <link rel="manifest" href="{% static 'manifest.json' %}">
 
@@ -158,6 +154,7 @@
           <li><a href="{% url 'home_app:home' %}" class="active">Inicio</a></li>
           <li><a href="{% url 'home_app:blog' %}">Blog</a></li>
           <li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>
+          <li><a href="{% url 'home_app:galeria' %}">Galería</a></li>
           <li><a href="{% url 'home_app:recetas' %}">Recetas</a></li>
           <li class="dropdown"><a href="#servicios"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>

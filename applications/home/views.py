@@ -346,6 +346,9 @@ class LeadmarckView(TemplateView):
 class BilletesView(TemplateView):
     template_name = "billetes.html"
 
+class GaleriaView(TemplateView):
+    template_name = "galeria.html"
+
 
 ################################### este es el apartado de los templateview ###################################
 #############################################################################################################
