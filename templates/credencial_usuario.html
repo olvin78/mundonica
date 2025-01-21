@@ -30,7 +30,6 @@
 /* Encabezado con Fondo y Avatar */
 .card-header {
   position: relative;
-  height: 220px;
   overflow: hidden;
 }
 
@@ -207,7 +206,7 @@
           </div>
           <!-- Encabezado con Foto de Fondo -->
           <div class="card-header">
-            {% if user.perfil %}
+            {% if user.perfil.avatar %}
               <img src="{{ user.perfil.avatar.url }}" alt="Avatar de {{ request.user.username }}" class="w-100">
             {% else %}
               <img src="{% static 'assets/img/services.jpg' %}" alt="Avatar predeterminado" class="avatar">

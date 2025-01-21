@@ -216,7 +216,7 @@
           </div>
 
           <!-- Información del Usuario -->
-          <form method="post" enctype="multipart/form-data" class="">
+          <form method="post" enctype="multipart/form-data" class="card-body">
             {% csrf_token %}
             <h2>Actualizar Perfil</h2>
 
@@ -233,6 +233,18 @@
 
 
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const statusElement = document.querySelector("#user-status span");
+  const statusText = statusElement.textContent.trim().toLowerCase();
+
+  if (statusText === "activo") {
+    statusElement.classList.add("active");
+  } else if (statusText === "desactivo") {
+    statusElement.classList.add("inactive");
+  }
+});
+  </script>
 
   
 

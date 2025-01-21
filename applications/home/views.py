@@ -16,7 +16,7 @@ from .forms import ContactForm,AbogadoForm,RestauranteForm,UsuarioForm,Peluqueri
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.text import slugify
 from django.db.models.query import QuerySet
 from django.shortcuts import render
@@ -436,13 +436,51 @@ class RecetaDetailView(DetailView):
 ################################### este es el apartado de los updateview ###################################
 #############################################################################################################
 
-class ActualizarperfilUpdateView(UpdateView):  # Actualizar el perfil de abogados
+
+class ActualizarperfilUpdateView(LoginRequiredMixin, UpdateView):
     model = Perfil
-    form_class = UsuarioForm  # Especifica el formulario personalizado
+    fields = ['telefono','avatar']
     template_name = "actualizar_usuario.html"
 
+    def get_object(self, queryset=None):
+        """
+        Sobrescribe el método para asegurarse de que el usuario solo pueda editar su propio perfil.
+        """
+        return self.request.user.perfil  # Obtiene el perfil asociado al usuario logueado
+
+    def form_valid(self, form):
+        """
+        Maneja la subida de archivos y elimina el avatar anterior solo después de guardar el nuevo.
+        """
+        # Obtén el nuevo archivo subido
+        new_avatar = self.request.FILES.get('avatar')
+
+        # Si hay un nuevo archivo subido, procesa
+        if new_avatar:
+            # Almacena temporalmente el avatar actual antes de sobrescribirlo
+            old_avatar = self.object.avatar
+
+            # Asocia el nuevo archivo al objeto
+            self.object.avatar = new_avatar
+
+            # Guarda el nuevo avatar y procesa la respuesta
+            response = super().form_valid(form)
+
+            # Elimina el avatar anterior después de guardar el nuevo
+            if old_avatar:
+                old_avatar.delete(save=False)
+
+            return response
+
+            # Si no hay archivo nuevo, procede normalmente
+        return super().form_valid(form)
+
+
     def get_success_url(self):
-        return reverse_lazy("home_app:credencial_usuario", kwargs={"pk": self.object.pk})
+        """
+        Redirige a la página de perfil del usuario tras guardar los cambios.
+        """
+        return reverse_lazy('home_app:credencial_usuario', kwargs={'pk': self.object.pk})
 
 
 
