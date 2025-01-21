@@ -310,6 +310,50 @@
     
     <!-- /Features Section -->
 
+    <!-- Clients Section -->
+    <section id="clients" class="clients section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0 clients-wrap">
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/Lala.jpg' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/flordecaña2.jpg' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/parmalat2.svg' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'assets/img/clients/client-4.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/pali.png' %}"class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'images/sasalogo.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'assets/img/clients/client-7.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+          <div class="col-xl-3 col-md-4 client-logo">
+            <img src="{% static 'assets/img/clients/client-8.png' %}" class="img-fluid" alt="">
+          </div><!-- End Client Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Clients Section -->
 
     <!-- Stats Section -->
     <section id="stats" class="stats section dark-background">
@@ -368,51 +412,119 @@
 
     </section><!-- /Stats Section -->
 
+    <!-- Portfolio Section -->
+    <section id="galeria" class="portfolio section">
 
-    <!-- Clients Section -->
-    <section id="clients" class="clients section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Galería</h2>
+        <h4 style="color: grey;text-align: center;">"Cada imagen, una historia por contar."</h4>
+      </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container">
 
-        <div class="row g-0 clients-wrap">
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/Lala.jpg' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">Todas</li>
+            <li data-filter=".filter-app">Cultura</li>
+            <li data-filter=".filter-product">Tradición</li>
+            <li data-filter=".filter-branding">Naturaleza</li>
+          </ul><!-- End Portfolio Filters -->
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/flordecaña2.jpg' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/parmalat2.svg' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="{% static 'images/gueguense.JPG' %}" class="img-fluid" alt="Desfile cultural nicaragüense con trajes típicos y coloridos, representando la tradición y el folklore del país.">
+              <div class="portfolio-info">
+                <h4>Baile Tradicional</h4>
+                <p>El Güegüense, una expresión virulenta de protesta contra el dominio colonial, es un drama satírico bien conocido en Nicaragua</p>
+                <a href="{% static 'images/gueguense.JPG' %}" title="Tradición" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Tradición" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'assets/img/clients/client-4.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="{% static 'images/tabaco.jpg' %}" class="img-fluid" alt="Detalle de un puro nicaragüense artesanal, reconocido por su calidad y tradición en la industria tabacalera.">
+              <div class="portfolio-info">
+                <h4>El TABACO</h4>
+                <p>Los puros nicaragüenses se fuman en más de 90 países alrededor del mundo.</p>
+                <a href="{% static 'images/tabaco.jpg' %}" title="TABACO" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="TABACO" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/pali.png' %}"class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="{% static 'images/pinol.webp' %}" class="img-fluid" alt="Mesa con maíz, atol y cuajada, destacando los ingredientes y sabores tradicionales de la gastronomía nicaragüense.">
+              <div class="portfolio-info">
+                <h4>Pozol y el Pinol</h4>
+                <p>El pozol es una bebida fermentada a base de maíz, agua y cacao, muy popular en Nicaragua. <br> El pinol es un polvo fino obtenido de maíz tostado y molido. </p>
+                <a href="{% static 'images/pinol.webp'' %}" title="Tradición" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Tradición" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/sasalogo.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="{% static 'images/folklorenica.webp' %}" class="img-fluid" alt="Grupo de bailarines nicaragüenses en trajes folclóricos, representando danzas tradicionales del país.">
+              <div class="portfolio-info">
+                <h4>Folclore</h4>
+                <p> La tradición folclórica nicaragüense posee diversas manifestaciones culturales que incluyen la música, la danza, las leyendas y tradiciones, las canciones, los proverbios populares, las bombas y retahílas, los cuentos, los refranes, los romances, las adivinanzas, los instrumentos coloniales</p>
+                <a href="{% static 'images/folklorenica.webp' %}" title="Folclore" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="More Details" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'assets/img/clients/client-7.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <img src="{% static 'images/nacatamal.webp' %}" class="img-fluid" alt="Nacatamales nicaragüenses en una olla, preparados con maíz, carne y especias, una comida típica y emblemática del país.">
+              <div class="portfolio-info">
+                <h4>Nacatamal</h4>
+                <p>Nacatamal, es un plato Nicaragüense que se originó de los Nahua Nicaraos del oeste de Nicaragua, Consiste en una masa a base de carne, verduras y arroz, entre otros, dividida en porciones que se cuecen envueltos en hojas de plátano o banano.</p>
+                <a href="{% static 'images/nacatamal.webp' %}" title="Nacatamal" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Nacatamal" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
 
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'assets/img/clients/client-8.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item  filter-app">
+              <img src="{% static 'images/ciudadanos.webp' %}" class="img-fluid" alt="Familia campesina nicaragüense en un paisaje rural, representando la conexión con la agricultura y la tierra.">
+              <div class="portfolio-info">
+                <h4>Pueblo Nicaraüense</h4>
+                <p>los nicaragüenses son personas alegres, creativas y hospitalarias, con un sentido del humor único que los distingue. Su capacidad para encontrar el lado positivo de las cosas, incluso en tiempos difíciles.</p>
+                <a href="{% static 'images/ciudadanos.webp' %}" title="Pueblo Nicaragüense" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Pueblo Nicaragüense" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="{% static 'images/islaometepe.jpeg' %}" class="img-fluid" alt="Vista panorámica de un volcán nicaragüense rodeado de vegetación, destacando los impresionantes paisajes naturales del país.">
+              <div class="portfolio-info">
+                <h4>Ometepe, un Edén Volcánico en el Corazón de Nicaragua</h4>
+                <p>La isla de Ometepe, ubicada en el gran Lago de Nicaragua, es una joya natural que cautiva a los viajeros con sus paisajes volcánicos, exuberante vegetación y rica biodiversidad.</p>
+                <a href="{% static 'images/islaometepe.jpeg' %}" title="Naturaleza" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Naturaleza" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <img src="{% static 'images/cornisland.jpeg' %}" class="img-fluid" alt="Playa tropical de corn ssisland en Nicaragua con arena blanca y palmeras, un destino turístico paradisíaco del Pacífico nicaragüense.">
+              <div class="portfolio-info">
+                <h4>Corn Island, Archipiélago</h4>
+                <p>Corn Island, también conocida como Islas del Maíz, es un archipiélago ubicado en el mar Caribe nicaragüense. Este destino turístico es famoso por sus playas de arena blanca, aguas cristalinas y una rica biodiversidad marina.</p>
+                <a href="{% static 'images/cornisland.jpeg' %}" title="Naturaleza" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                <a href="portfolio-details.html" title="Naturaleza" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+          </div><!-- End Portfolio Container -->
 
         </div>
 
       </div>
 
-    </section><!-- /Clients Section -->
+    </section><!-- /Portfolio Section -->
+   
+
 
       <!-- Este es un apartado de prueba para la ubicación de comercios o negocios en la página principal -->
 

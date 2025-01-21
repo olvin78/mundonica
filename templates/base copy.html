@@ -1,0 +1,379 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Descripción del sitio -->
+  <meta name="description" content="Mundonica: Descubre la naturaleza, cultura y riqueza de Nicaragua. Encuentra información sobre destinos turísticos, servicios y más.">
+  <!-- Palabras clave relevantes -->
+  <meta name="keywords" content="Nicaragua, turismo, cultura, naturaleza, servicios, embajadas, consulados, empresas locales, Mundonica">
+  <!-- Información adicional -->
+  <meta name="author" content="Mundonica Team">
+  <meta name="robots" content="index, follow">
+  <!-- Meta etiquetas para dispositivos móviles y redes sociales -->
+  <meta property="og:title" content="Mundonica - Descubre Nicaragua">
+  <meta property="og:description" content="Explora la naturaleza, cultura y servicios de Nicaragua con Mundonica.">
+  <meta property="og:image" content="{% static 'assets/img/og-image.jpg' %}">
+  <meta property="og:url" content="https://www.mundonica.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- CSS de estilos personalizados -->
+  <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Favicons -->
+<!-- Favicon estándar -->
+<link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="icon" type="image/png" sizes="32x32">
+<!-- Icono para dispositivos Apple -->
+<link href="{% static 'assets/img/pubiocacioneslogo.png' %}" rel="apple-touch-icon" sizes="180x180">
+<!-- Icono para navegadores antiguos -->
+<link href="{% static 'assets/img/pubiocacioneslogo.ico' %}" rel="shortcut icon" type="image/x-icon">
+<!-- Archivo de manifiesto (opcional, recomendado para Google y PWA) -->
+<link rel="manifest" href="{% static 'manifest.json' %}">
+
+  <!-- Google reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- Fonts (Google Fonts) -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DBYVGSZZ6F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DBYVGSZZ6F');
+  </script>
+
+  <!-- Estilos personalizados para el modal -->
+  <style>
+    .custom-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .custom-modal-content {
+      background-color: #ffffff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 2px solid #0056a3;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .custom-modal-content h2 {
+      color: green;
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .custom-modal-content p {
+      font-size: 16px;
+      color: #0056a3;
+      margin: 20px 0;
+    }
+
+    .custom-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: #0056a3;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .custom-close-btn:hover {
+      transform: scale(1.2);
+      color: green;
+    }
+
+    .custom-accept-btn {
+      background-color: #0056a3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .custom-accept-btn:hover {
+      background-color: green;
+    }
+  </style>
+
+  <!-- Información del template -->
+  <!-- =======================================================
+  * Template Name: KnightOne
+  * Template URL: https://bootstrapmade.com/knight-simple-one-page-bootstrap-template/
+  * Updated: Oct 16 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  {% block head %}
+  {% endblock %}
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'home_app:home' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+
+        <h1 class="sitename">MundoNica</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'home_app:home' %}" class="active">Inicio</a></li>
+          <li><a href="{% url 'home_app:blog' %}">Blog</a></li>
+          <li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>
+          <li><a href="{% url 'home_app:recetas' %}">Recetas</a></li>
+          <li class="dropdown"><a href="#servicios"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{% url 'home_app:preguntas' %}">Preguntas y respuestas</a></li>
+            </ul>
+          </li>
+          <li><a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E"><strong style="color: #0067c6;">Donativos</strong></a></li>
+          <li class="dropdown"><a href="#"><span>Empresas</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="{% url 'home_app:mapa' %}">Empresas</a></li>
+              {% if user.is_authenticated %}
+                  <a href="{% url 'home_app:abogado_crear' %}">Registrarme como abogado</a>
+                  <a href="{% url 'home_app:abogado_actualizar' user.id %}">Actualizar abogado</a>
+                  <a href="{% url 'home_app:crear_tipo_empresa' 'empresa' %}">Crear Empresa</a>
+                  <a href="{% url 'home_app:crear_tipo_empresa' 'comercio' %}">Crear Comercio</a>
+                  <a href="{% url 'home_app:crear_tipo_empresa' 'peluqueria' %}">Crear Peluqueria</a>
+                  <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}">Crear Restaurante</a>
+
+                  {% for empresa in empresasDeUsuario %}
+                    <a href="{% url 'home_app:actualizar_empresa' empresa.id %}">Actualizar {{ empresa.nombre_de_la_empresa }}</a>
+                  {% endfor %}
+
+          
+                  {% endif %}
+              <li class="dropdown"><a href="#"><span>Importaciones</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Empresas de ixportación</a></li>
+                  <li><a href="#">Empresas de exportacón</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>Extranjeros</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <!--<li><a href="#">Cultura</a></li>-->
+              <li><a href="{% url 'home_app:mapa' %}">Consulados</a></li>
+              <li><a href="{% url 'home_app:mapa' %}">Embajadas</a></li>
+              <li><a href="#">Migración</a></li>
+              <li class="dropdown"><a href="#"><span>Otros Trámites</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="{% url 'home_app:abogados' %}">Abogados</a></li>
+                  <!--<li><a href="#">Deep Dropdown 4</a></li>-->
+                </ul>
+              </li>
+              <!--<li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>-->
+            </ul>
+          </li>
+          <li><a href="{% url 'home_app:home' %}#contact">Contacto</a></li>
+          <li><a href="{% url 'home_app:home' %}#galeria">Galería</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <!--esta es la prueba del boton de inicio de sesion-->
+      <a class="cta-btn">
+        {% if user.is_authenticated and user.profile.picture %}
+          <img id="profile-image" class="profile-icon" src="{{ user.profile.picture.url }}" alt="Perfil">
+        {% else %}
+          <i class="bi bi-person-circle profile-icon"></i>
+        {% endif %}
+        <span class="welcome-message">¡Bienvenido  {{ user.first_name }}!</span>
+      </a>
+      
+      <div class="dropdown-menu">
+        {% if user.is_authenticated %}
+        <a href="#{% url 'home_app:credencial_usuario' user.id %}"  class="custom-dev-link">Ver Perfil</a>
+        <div class="card-footer">
+          <a href="#{% url 'home_app:actualizar_usuario' user.id %}"  class="custom-dev-link">
+            Editar Perfil
+          </a>
+        </div>
+
+        {% for empresa in empresasDeUsuario %}
+            <a href="{% url 'home_app:actualizar_empresa' empresa.id %}">Actualizar {{ empresa.nombre_de_la_empresa }}</a>
+        {% endfor %}
+
+        {% endif %}
+
+        <!--Modal Personalizado miestras se termina de desarrollarss
+          el aparatado de ver perfil y configurar ya quqe no esta del todo bien-->
+          <div id="customModal" class="custom-modal">
+            <div class="custom-modal-content">
+              <button class="custom-close-btn">×</button>
+              <h2>¡Atención!</h2>
+              <p>Esta función está en desarrollo. ¡Gracias por tu comprensión y apoyo!</p>
+              <button class="custom-accept-btn">Entendido</button>
+            </div>
+          </div>
+          
+        <!-- Modal Personalizado miestras se termina de desarrollar
+          el aparatado de ver perfil y configurar ya quqe no esta del todo bien-->
+
+        <!--<div class="dropdown">
+          <a href="#">Configuración</a>
+          <ul>
+              <li><a href="#">Recuperar Contraseña</a></li>
+          </ul>
+        </div>-->
+       
+        {% if user.is_authenticated %}
+        <a href="{% url 'account_logout' %}">Cerrar Sesión</a>
+
+        {% else %}
+
+        <a href="{% url 'account_login' %}">Iniciar Sesión</a>
+
+        <a href="{% url 'account_signup' %}">Registrarse</a>
+        {% endif %}
+      </div>
+
+      <!--este es fin de la prueba del boton de inicio de sesion-->
+    </div>
+  </header>
+
+
+      {% block content %}
+
+
+
+
+
+
+      {% endblock %}
+
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">MundoNica</h3>
+      <p>"Un espacio para crecer juntos, compartir experiencias y encontrar soluciones."</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href=""><i class="bi bi-facebook"></i></a>
+        <a href=""><i class="bi bi-instagram"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <a style="color: white;" href="{% url 'home_app:aviso_legal' %}"><span>Aviso legal | </span></a> 
+
+          <a style="color: white;"  href="{% url 'home_app:politicas_de_privacidad' %}"><strong class="px-1 sitename">Políticas de privacidad | 
+          </strong></a>
+          <a style="color: white;"  href="{% url 'home_app:politicas_de_cookies' %}"><span> Política de Cookies</span></a>
+        </div>
+        <div class="credits">
+          Designed by <a href="https://www.euskodev.eus/es/">Euskodev</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  {% block mapa %}
+  
+  {% endblock %}
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+
+    <!-- Script paramiestras se desarrolla los botones de perfil y editar perfil -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- Script JavaScript -->
+<script>
+  // Crear una función para mostrar el modal
+  function showCustomModal() {
+    const modal = document.getElementById("customModal");
+    modal.style.display = "block";
+  }
+
+  // Crear una función para cerrar el modal
+  function closeCustomModal() {
+    const modal = document.getElementById("customModal");
+    modal.style.display = "none";
+  }
+
+  // Agregar evento al botón de cierre
+  document.querySelector(".custom-close-btn").addEventListener("click", closeCustomModal);
+
+  // Evento para el botón "Entendido"
+  document.querySelector(".custom-accept-btn").addEventListener("click", closeCustomModal);
+
+  // Opcional: cerrar modal haciendo clic fuera de él
+  window.addEventListener("click", function (event) {
+    const modal = document.getElementById("customModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Agregar funcionalidad a los enlaces con clase específica
+  document.querySelectorAll(".custom-dev-link").forEach(link => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault(); // Evitar redirección
+      showCustomModal(); // Mostrar modal
+    });
+  });
+</script>
+    
+    <!-- Script paramiestras se desarrolla los botones de perfil y editar perfil -->
+
+<!-- Vendor JS Files -->
+<script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}" defer></script>
+<script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+<script src="{% static 'assets/vendor/aos/aos.js' %}" defer></script>
+<script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}" defer></script>
+<script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}" defer></script>
+<script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}" defer></script>
+<script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}" defer></script>
+<script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}" defer></script>
+
+<!-- Prueba para el botón del usuario y registro -->
+<script src="{% static 'css/registro.js' %}" defer></script>
+
+<!-- Main JS File -->
+<script src="{% static 'assets/js/main.js' %}" defer></script>
+
+</body>
+
+</html>
