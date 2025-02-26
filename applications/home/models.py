@@ -1,6 +1,7 @@
 from django.db import models
 from tinymce.models import HTMLField
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 #stes es el molde de los consulados
@@ -515,7 +516,7 @@ class Receta(models.Model):
     resumen = models.TextField()
     cuerpo = models.TextField()
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
-    fecha_hora = models.DateTimeField(auto_now_add=True)  # ✅ Fecha automática al crear
-    
+    fecha_hora = models.DateTimeField(default=timezone.now, null=False)  # ✅ Fecha automática al crear
+
     def __str__(self):
         return self.titulo
