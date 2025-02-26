@@ -52,8 +52,35 @@
     gtag('config', 'G-DBYVGSZZ6F');
   </script>
 
-  </style>
+<style>
+  /* Estilo para el botón flotante */
+.floating-button {
+    position: fixed; /* Posiciona el botón de manera fija en la pantalla */
+    bottom: 70px; /* Distancia desde el borde inferior */
+    right: 20px; /* Distancia desde el borde derecho */
+    z-index: 9999; /* Asegura que el botón quede por encima de otros elementos */
+}
 
+.floating-button .btn {
+    background-color: #0f8383; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    font-size: 20px; /* Tamaño de fuente */
+    padding: 15px 20px; /* Espaciado interno */
+    border-radius: 50%; /* Bordes redondeados para un estilo circular */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle efecto de flotante */
+    text-align: center; /* Centra el contenido dentro del botón */
+    text-decoration: none; /* Elimina el subrayado */
+    display: flex; /* Usado para alinear el icono dentro */
+    justify-content: center; /* Alinea el contenido horizontalmente */
+    align-items: center; /* Alinea el contenido verticalmente */
+    transition: background-color 0.3s ease; /* Transición suave para el color */
+}
+
+.floating-button .btn:hover {
+    background-color: #4b8d7f; /* Cambio de color cuando el ratón pasa sobre el botón */
+}
+
+</style>
   {% block head %}
 
   {% endblock %}
@@ -178,6 +205,11 @@
     </div>
   </header>
 
+
+  <!-- Botón flotante -->
+<div class="floating-button">
+  <a href="https://www.tuasistenteinteligente.com/Mundonica_bot/" class="btn btn-floating">💬</a>
+</div>
 
       {% block content %}
 

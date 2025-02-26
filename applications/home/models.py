@@ -2,6 +2,8 @@ from django.db import models
 from tinymce.models import HTMLField
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # Create your models here.
 #stes es el molde de los consulados
@@ -488,7 +490,7 @@ class Perfil(models.Model):
     # Relación uno a uno con la tabla User de Django
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
 
-    # Campos adicionales para extender la funcionalidadsss
+    # Campos adicionales para extender la funcionalidad
     telefono = models.CharField(max_length=15, blank=True, null=True)
     direccion = models.TextField(blank=True, null=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
@@ -497,7 +499,16 @@ class Perfil(models.Model):
     def __str__(self):
         return f"Perfil de {self.usuario}"
 
+# Crear un perfil automáticamente cuando se crea un usuario
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(usuario=instance)
 
+# Guardar el perfil automáticamente cuando el usuario se guarda
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.perfil.save()
 
 
 

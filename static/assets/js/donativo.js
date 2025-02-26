@@ -1,7 +1,4 @@
-
-
-//Contenedor del mensaje de para mencionar el ultimo donativo -->
-
+// Contenedor del mensaje de para mencionar el ultimo donativo
 
 // Función para mostrar el mensaje
 function showDonationMessage(donorName) {
@@ -40,10 +37,35 @@ function generateSparks() {
     }
 }
 
-// Ejemplo de uso
-showDonationMessage('Luis Méndez');
+// Lista de donantes (esto puede ser dinámico o una lista estática para la demostración)
+const donors = [
+    'Mikel Etxeberria',
+    'Juan Pérez',
+    'Ana López',
+    'Carlos García',
+    'María Fernández',
+    'José Rodríguez',
+    'Laura Martínez',
+    'David López',
+    'Elena Sánchez',
+    'Fernando Gómez',
+    'Carmen Díaz',
+    'Miguel Ruiz',
+    'Patricia Álvarez',
+    'Pedro Ramírez',
+    'Isabel Moreno',
+    'Antonio Torres',
+    'Sandra García',
+    'Luis Hernández',
+    'Pablo Jiménez',
+    'Raquel Martínez'
+];
 
-//Contenedor del mensaje de para mencionar el ultimo donativo
 
+// Seleccionamos un nombre aleatorio cada vez que se recarga la página
+const randomDonor = donors[Math.floor(Math.random() * donors.length)];
 
-//prueba para mostrar el mapa en la página principals
+// Llamar la función para mostrar el mensaje con el donante aleatorio
+showDonationMessage(randomDonor);
+
+// Contenedor del mensaje de para mencionar el ultimo donativo

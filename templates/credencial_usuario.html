@@ -199,7 +199,7 @@
 </head>
     <body class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #eef2f7;">
       <div class="profile-container">
-        <div class="profile-card">
+        <div class="profile-card" style="width: 350px;">
           <!-- Botón de Salir -->
           <div class="logout-container">
             <a href="{% url 'home_app:home' %}"><button class="btn btn-logout" onclick="logoutUser()">Salir</button></a>
@@ -207,7 +207,7 @@
           <!-- Encabezado con Foto de Fondo -->
           <div class="card-header">
             {% if user.perfil.avatar %}
-              <img src="{{ user.perfil.avatar.url }}" alt="Avatar de {{ request.user.username }}" class="w-100">
+              <img src="{{ user.perfil.avatar.url }}" alt="Avatar de {{ request.user.username }}" class="w-100" style="height: 350px;width: 350px;">
             {% else %}
               <img src="{% static 'assets/img/services.jpg' %}" alt="Avatar predeterminado" class="avatar">
             {% endif %}

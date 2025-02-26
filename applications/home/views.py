@@ -505,14 +505,17 @@ class RecetaDetailView(DetailView):
 
 class ActualizarperfilUpdateView(LoginRequiredMixin, UpdateView):
     model = Perfil
-    fields = ['telefono','avatar']
+    fields = ['telefono', 'avatar']
     template_name = "actualizar_usuario.html"
 
     def get_object(self, queryset=None):
         """
         Sobrescribe el método para asegurarse de que el usuario solo pueda editar su propio perfil.
         """
-        return self.request.user.perfil  # Obtiene el perfil asociado al usuario logueado
+        try:
+            return self.request.user.perfil  # Obtiene el perfil asociado al usuario logueado
+        except Perfil.DoesNotExist:
+            raise Http404("Perfil no encontrado")  # Si no existe, lanza una excepción 404
 
     def form_valid(self, form):
         """
@@ -538,9 +541,8 @@ class ActualizarperfilUpdateView(LoginRequiredMixin, UpdateView):
 
             return response
 
-            # Si no hay archivo nuevo, procede normalmente
+        # Si no hay archivo nuevo, procede normalmente
         return super().form_valid(form)
-
 
     def get_success_url(self):
         """
@@ -550,6 +552,7 @@ class ActualizarperfilUpdateView(LoginRequiredMixin, UpdateView):
 
 
 
+        
 class AbogadoUpdateView(UpdateView):  # Actualizar el perfil de abogados
     model = Abogado
     form_class = AbogadoForm  # Especifica el formulario personalizado

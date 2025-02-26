@@ -440,12 +440,13 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Perfil
         fields = [
+            'telefono',  # Incluye el campo telefono en el formulario
             'avatar'
         ]
 
         widgets = {
-
             'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'})  # Asegúrate de tener el estilo adecuado
         }
 
 
@@ -1021,6 +1022,7 @@ class ComercioForm(forms.ModelForm):
            
             
         }
+
 
 
 class RecetaForm(forms.ModelForm):
