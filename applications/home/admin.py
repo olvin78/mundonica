@@ -23,15 +23,12 @@ class EmbajadaAdmin(admin.ModelAdmin):
 
 admin.site.register(Embajada,EmbajadaAdmin )
 
-
 # comercios your models here.
-
 
 class EmpresaAdmin(admin.ModelAdmin):
     list_display = ("nombre_de_la_empresa","tipo_empresa","id")
 
 admin.site.register(Empresa,EmpresaAdmin )
-
 
 class TipoEmpresaAdmin(admin.ModelAdmin):
     list_display = ("nombre","descripcion", "id")
@@ -69,6 +66,13 @@ admin.site.register(Perfil,PerfilAdmin)
 
 # blog your models here.
 class RecetaAdmin(admin.ModelAdmin):
-    list_display = ("titulo","id", "categoria", "imagen",)
+    list_display = ('titulo', 'id', 'autor', 'categoria', 'fecha_hora')
 
-admin.site.register(Receta,RecetaAdmin )
+    def get_queryset(self, request):
+        """Restringe que los usuarios solo vean y editen sus propias recetas"""
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:  # Los superusuarios pueden ver todo
+            return qs
+        return qs.filter(autor=request.user)
+
+admin.site.register(Receta, RecetaAdmin)

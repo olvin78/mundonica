@@ -12,11 +12,12 @@ import requests
 from django.conf import settings
 #impraciones para cpntactar
 from django.http import HttpResponse
-from .forms import ContactForm,AbogadoForm,RestauranteForm,UsuarioForm,PeluqueriaForm,EmpresaForm,ComercioForm
+from .forms import ContactForm,AbogadoForm,RestauranteForm,UsuarioForm,PeluqueriaForm,EmpresaForm,ComercioForm,RecetaForm
+from django.views.generic.edit import UpdateView
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.utils.text import slugify
 from django.db.models.query import QuerySet
 from django.shortcuts import render
@@ -28,9 +29,9 @@ from django.views.generic import (
     ListView,
     CreateView,
     DetailView,
-    UpdateView
+    UpdateView,
+    DeleteView
 )
-
 
 ################################### formulario para contactar ###################################
 #############################################################################################################
@@ -245,16 +246,6 @@ class MapaListView(ListView):
 
         return context
 
-class RecetasView(ListView):
-    template_name = "recetas.html"
-    context_object_name = 'datos'  # Vassriable principal para el primer modelo
-
-    def get_queryset(self):
-        # El queryset principal puede ser el modelo Empresa
-        return Receta.objects.all()
-
-       
-
 ################################### este es el apartad de los listView ###################################
 #############################################################################################################
 
@@ -304,6 +295,81 @@ class CrearTipodeEmpresaView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.propietario_sitio_web = self.request.user
         return super().form_valid(form)
+
+
+
+
+
+
+
+class CrearRecetaCreateView(LoginRequiredMixin, CreateView):
+    model = Receta
+    form_class = RecetaForm
+    template_name = "crear_receta.html"
+    success_url = reverse_lazy('home_app:recetas')  # 🔹 Usa reverse_lazy aquí
+
+    def form_valid(self, form):
+        form.instance.autor = self.request.user  # Asigna el usuario autenticado
+        return super().form_valid(form)
+
+
+
+class RecetasView(ListView):
+    model = Receta
+    template_name = "recetas.html"
+    context_object_name = "recetas"
+
+    def get_queryset(self):
+        queryset = Receta.objects.all().order_by('-id')  # Ordena de más reciente a más antigua
+        categoria = self.request.GET.get('categoria')  # Obtiene la categoría de la URL
+        
+        if categoria:  # Si hay una categoría en la URL, filtra
+            queryset = queryset.filter(categoria=categoria)
+        
+        return queryset
+
+# Vista para Editar Receta (Solo el Autor Puede Editar)
+class EditarRecetaView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Receta
+    fields = ['titulo', 'categoria', 'imagen', 'resumen', 'cuerpo']
+    template_name = "editar_receta.html"
+
+    def get_success_url(self):
+        return reverse_lazy('home_app:recetas_detalle', kwargs={'pk': self.object.pk})
+
+    def test_func(self):
+        """Solo el autor de la receta puede editarla"""
+        receta = self.get_object()
+        return self.request.user == receta.autor
+
+
+# Vista para Eliminar Receta (Solo el Autor Puede Eliminar)
+
+class EliminarRecetaView(DeleteView):
+    model = Receta
+    template_name = "confirmar_eliminar.html"  # Puedes crear una plantilla de confirmación
+    success_url = reverse_lazy('home_app:recetas')  # Redirige a la lista de recetas
+
+    def get_queryset(self):
+        """Asegura que solo el autor pueda eliminar su propia receta"""
+        return Receta.objects.filter(autor=self.request.user)
+
+class MisRecetasView(ListView):
+    model = Receta
+    template_name = "recetas.html"
+    context_object_name = "recetas"
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            queryset = Receta.objects.filter(autor=self.request.user).order_by('-id')
+            return queryset
+        return Receta.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if not context['recetas']:  # Si no hay recetas del usuario
+            context['no_recetas_message'] = "Lo siento, aún no has creado recetas."
+        return context
 
 ################################### apartado de CreateView ###################################
 #############################################################################################################
@@ -521,6 +587,17 @@ class ActualizartipoEmpresaView(LoginRequiredMixin, UpdateView):
         # Asignar el usuario actual antes de guardar
         form.instance.propietario_sitio_web = self.request.user
         return super().form_valid(form)
+
+
+
+class editar_recetaView(UpdateView):
+    model = Receta  # Especifica el modelo Receta
+    form_class = RecetaForm  # Usa el formulario RecetaForm
+    template_name = "editar_receta.html"  # Plantilla para editar la receta
+
+    def get_success_url(self):
+        # Asegúrate de usar "pk" en lugar de "id"
+        return reverse_lazy("home_app:recetas_detalle", kwargs={"pk": self.object.pk})
 
 
 ################################### este es el apartado de los updateview ###################################

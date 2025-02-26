@@ -499,24 +499,23 @@ class Perfil(models.Model):
 
 
 
+
 class Receta(models.Model):
-    """Modelo para entradas de recetas."""
+    CATEGORIAS = [
+        ('entradas', 'Entradas'),
+        ('platos_principales', 'Platos Principales'),
+        ('postres', 'Postres'),
+        ('bebidas', 'Bebidas'),
+        ('otros', 'Otros'),
+    ]
 
-    fecha_hora = models.DateTimeField(auto_now_add=True,blank=True,null=True)
-    titulo = models.CharField(max_length=255,blank=True,null=True)
-    categoria = models.CharField(max_length=255,blank=True,null=True)
-    imagen = models.ImageField(upload_to='assets/img/recetas', null=True, blank=True)
+    titulo = models.CharField(max_length=255)
+    categoria = models.CharField(max_length=50, choices=CATEGORIAS, default='otros')  # 🔹 Convertido a desplegable
+    imagen = models.ImageField(upload_to='recetas/', null=True, blank=True)
+    resumen = models.TextField()
+    cuerpo = models.TextField()
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
-    cuerpo = HTMLField()
-    resumen = HTMLField( blank=True,null=True)
-
-
-
+    fecha_hora = models.DateTimeField(auto_now_add=True)  # ✅ Fecha automática al crear
+    
     def __str__(self):
-        """Devuelve el título del post como representación en cadena."""
         return self.titulo
-
-    def get_summary(self):
-        """Devuelve un resumen del cuerpo del post (primeras 200 palabras)."""
-        return self.cuerpo[:200]
-

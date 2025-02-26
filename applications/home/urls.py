@@ -4,6 +4,7 @@ from . import views
 from django.conf.urls import handler404
 
 from .views import contact_view
+from .views import editar_recetaView,EliminarRecetaView,MisRecetasView
 """
 {% url 'home_app:aviso_legal' %}
 {% url 'home_app:politica_de_privacidad' %}
@@ -84,7 +85,8 @@ urlpatterns = [
         views.AbogadoUpdateView.as_view(),
         name='abogado_actualizar',
     ),
-    
+
+    path('editar-receta/<int:pk>/', editar_recetaView.as_view(), name='editar_receta'),
 
     path('aviso_legal',
         views.AvisolegalView.as_view(),
@@ -136,14 +138,26 @@ urlpatterns = [
         name='recetas',
     ),
     
-
     path('receta/<int:pk>/',
-        views.RecetaDetailView.as_view(),
-        name='recetas_detalle',
-    ),
+     views.RecetaDetailView.as_view(),
+     name='recetas_detalle'),
+
+
     path('galeria',
         views.GaleriaView.as_view(),
         name='galeria',
     ),
+
+    path('crear_receta',
+        views.CrearRecetaCreateView.as_view(),
+        name='crear_receta',
+    ),
+
+  path('receta/eliminar/<int:pk>/', EliminarRecetaView.as_view(), name='eliminar_receta'),
+
+  path('recetas/mis_recetas', MisRecetasView.as_view(), name='mis_recetas'),
+
+
+
 
 ]

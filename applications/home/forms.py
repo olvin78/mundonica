@@ -1,7 +1,7 @@
 from django import forms
-from .models import Abogado,Empresa
+from .models import Abogado,Empresa,Receta
 from .models import Perfil
-
+from django.utils.html import strip_tags
 
 
 class ContactForm(forms.Form):
@@ -1021,3 +1021,24 @@ class ComercioForm(forms.ModelForm):
            
             
         }
+
+
+class RecetaForm(forms.ModelForm):
+    class Meta:
+        model = Receta
+        fields = ['titulo', 'categoria', 'imagen', 'resumen', 'cuerpo']
+        widgets = {
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),  # 🔹 Se convierte en <select>
+            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'resumen': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'cuerpo': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+        }
+
+    def clean_resumen(self):
+        resumen = self.cleaned_data.get('resumen', '')
+        return strip_tags(resumen)  # Elimina etiquetas HTML antes de guardar
+
+    def clean_cuerpo(self):
+        cuerpo = self.cleaned_data.get('cuerpo', '')
+        return strip_tags(cuerpo)  # Elimina etiquetas HTML antes de guardar

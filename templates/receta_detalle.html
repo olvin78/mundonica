@@ -81,21 +81,26 @@
 <div class="container text-center elemento-a-ocultar mt-5">
     <!-- Botón para imprimir -->
     <div class="mb-4" id="botones" style="display: flex;justify-content: space-between;">
-        <a href="{% url 'home_app:home' %}"><button type="button" class="btn btn-sm btn-outline-secondary">Voler</button></a>
+        <a href="{% url 'home_app:recetas' %}"><button type="button" class="btn btn-sm btn-outline-secondary">Voler</button></a>
         <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.print()">Imprimir</button>
     </div>
 
-    <!-- Contenido principal -->
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8" id="receta">
-            <h1 class="text-center mt-5">{{ datos.titulo }}</h1>
-            <p class="text-gray-500 text-end" style="color: gray;">
-                {{ datos.fecha_hora|date:"d/m/y" }} | {{ datos.autor }}
-            </p>
-            <img src="{{ datos.imagen.url }}" class="img-fluid rounded mt-3 mb-3" alt="Imagen de la receta">
-            <p class="text-start">{{ datos.cuerpo|safe }}</p>
-        </div>
+<!-- Contenido principal -->
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8" id="receta">
+        <h1 class="text-center mt-5">{{ datos.titulo }}</h1>
+        
+        <!-- Mostrar fecha, autor y categoría -->
+        <p class="text-gray-500 text-end" style="color: gray;">
+            {{ datos.fecha_hora|date:"d/m/y" }} | {{ datos.autor }} | 
+            <span class="badge bg-primary">{{ datos.get_categoria_display }}</span> <!-- Muestra el nombre legible de la categoría -->
+        </p>
+
+        <img src="{{ datos.imagen.url }}" class="img-fluid rounded mt-3 mb-3" alt="Imagen de la receta">
+        <p class="text-start">{{ datos.cuerpo|safe }}</p>
     </div>
+</div>
+
 </div>
 
     <!--pruava para desaparecer contenido segun pantallas pequenas-->
