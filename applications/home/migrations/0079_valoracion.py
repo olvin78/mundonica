@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0078_alter_empresa_nombreurl_alter_empresa_tipo_empresa_and_more'),
+        ('home', '0078_sync_empresa_receta_fields'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
