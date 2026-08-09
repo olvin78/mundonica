@@ -50,7 +50,7 @@
                         <a class="nav-link" href="#blog">Blog</a>
                     </li>-->
                     
-                   {% if datos.propietario_sitio_web ==  user %}
+                   {% if datos.propietario_sitio_web ==  user and datos %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home_app:actualizar_empresa' datos.id %}">Editar Web</a>
                     </li>
@@ -68,6 +68,7 @@
     </nav>
     <!-- End Of Second Navigation -->
     <!-- Page Header -->
+    {% if datos.header_activo %}
     {% if datos.imagen_fondo_header %}
     <header class="header" style="background-image: url('{{ datos.imagen_fondo_header.url }}'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: cover;">
     {% else %}
@@ -82,6 +83,8 @@
             {% endif %}
 
             <h1 class="title">{{ datos.nombre_de_la_empresa|default:"Valor por defecto" }}</h1>
+            <p class="header-subtitulo1">{{ datos.subtitulo1_header|default:"" }}</p>
+            <p class="header-subtitulo2">{{ datos.subtitulo2_header|default:"" }}</p>
         </div>  
 
         <div class="shape">
@@ -92,9 +95,11 @@
         <div class="mouse-icon"><div class="wheel"></div></div>
     
     </header>
+    {% endif %}
     <!-- End Of Page Header -->
 
     <!-- Service Section -->
+    {% if datos.servicios_activo %}
     <section  id="service" class="section pt-0">
         <div class="container">
             <h6 class="section-title text-center">Nuestros Servicios</h6>
@@ -163,14 +168,17 @@
             </div>
         </div>
     </section>
+    {% endif %}
     <!-- End OF Service Section -->
 
     <!-- About Section -->
+    {% if datos.quienes_somos_activo %}
     <section class="section" id="about">
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-md-6 pr-md-5 mb-4 mb-md-0">
                     <h6 class="section-title mb-0">Sobre Nosotros</h6>
+                    <h6 class="about-titulo section-subtitle">{{ datos.titulo_sobrenosotros|default:"" }}</h6>
                     {% if datos.parrafo1_sobrenosotros %}
                     <h6 class="section-subtitle mb-4">{{ datos.parrafo1_sobrenosotros }}</h6>
                     {% else %}
@@ -178,7 +186,7 @@
                     {% endif %}
 
                     {% if datos.parrafo2_sobrenosotros %}
-                    <p>{{ parrafo2_sobrenosotros }}</p>
+                    <p>{{ datos.parrafo2_sobrenosotros }}</p>
                     {% else %}
                     <p >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate molestiae temporibus et tenetur unde quasi, cum nemo quo, molestias architecto alias voluptatibus corrupti corporis earum. Necessitatibus maxime modi ipsam, quod!</p>
                     {% endif %}
@@ -232,12 +240,14 @@
             </div>              
         </div>
     </section>
+    {% endif %}
     <!-- End OF About Section -->s
 
     <!-- Portfolio Section -->
+    {% if datos.tarifa_activo %}
     <section id="portfolio" class="section portfolio-section">
         <div class="container">
-            <h6 class="section-title text-center">Nuestros Productos</h6>
+            <h6 class="section-title text-center">{{ datos.titulo1_galeria|default:"Nuestros Productos" }}</h6>
             <h6 class="section-subtitle mb-5 text-center">Explora nuestra selección de productos.</h6>
             <div class="filters">
                 <a href="#"  class="active">
@@ -452,12 +462,38 @@
                                 {% endif %}
                             </div>
                         </div>
-                    </div>                                                       
+                    </div>                                                     
+                </div> 
+
+                <div class="col-md-6 col-lg-4 new"> 
+                    <div class="portfolio-item">
+                        {% if datos.imagen8_galeria %}
+                        <img src="{{ datos.imagen8_galeria.url }}" class="img-fluid" alt="">
+                        {% else %}
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/branding-3.jpg' %}" class="img-fluid" alt="">
+                        {% endif %}                                 
+                        <div class="content-holder">
+                            <a class="img-popup" href="{% static 'empresas/leadmarck/assets/imgs/branding-3.jpg' %}"></a>
+                            <div class="text-holder">
+                                {% if datos.precio_servicio10_tarifa %}
+                                <h6 class="title">Precio:{{ datos.precio_servicio10_tarifa }}</h6>
+                                {% else %}
+                                <h6 class="title"> 130 Córdobas.</h6>
+                                {% endif %}
+                                {% if datos.nombre_servicio10_tarifa %}
+                                <p class="subtitle">{{ datos.nombre_servicio10_tarifa }}</p>
+                                {% else %}
+                                <p class="subtitle">Expedita corporis doloremque velit in totam!</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>                                                     
                 </div> 
 
             </div>   
         </div>            
     </section>
+    {% endif %}
     <!-- End of portfolio section -->
 
 
@@ -470,7 +506,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="card border-0 mb-4">
-                        <img src="{% static 'empresas/leadmarck/asset/imgs/blog-1.jpg' %}" alt="" class="card-img-top w-100">
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/blog-1.jpg' %}" alt="" class="card-img-top w-100">
                         <div class="card-body">                         
                             <h6 class="card-title">Pariatur Omnis Harum quae sint.</h6>
                             <p>Fuga quae ratione inventore Perferendis porro.</p>
@@ -480,7 +516,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card border-0 mb-4">
-                        <img src="{% static 'empresas/leadmarck/asset/imgs/blog-2.jpg' %}" alt="" class="card-img-top w-100">
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/blog-2.jpg' %}" alt="" class="card-img-top w-100">
                         <div class="card-body">                         
                             <h6 class="card-title"> Harum Quae Porro</h5>
                             <p>Fuga quae ratione inventore Perferendis porro.</p>
@@ -490,7 +526,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card border-0 mb-4">
-                        <img src="{% static 'empresas/leadmarck/asset/imgs/blog-3.jpg' %}" alt="" class="card-img-top w-100">
+                        <img src="{% static 'empresas/leadmarck/assets/imgs/blog-3.jpg' %}" alt="" class="card-img-top w-100">
                         <div class="card-body">                         
                             <h6 class="card-title">Qui optio neque alias</h6>
                             <p>Fuga quae ratione inventore Perferendis porro.</p>
@@ -504,6 +540,7 @@
     <!-- End of Blog Section -->
 
     <!-- Testmonial Section -->
+    {% if datos.comentarios_activo %}
     <section class="section" id="testmonial">
         <div class="container">
             <h6 class="section-title text-center mb-0">Testimonios</h6>
@@ -520,7 +557,7 @@
                                 {% endif %}
                                 <div class="media-body">
                                     {% if datos.nombre1_comentario %}
-                                    <h6 class="mt-1 mb-0">{{ nombre1_comentario }}</h6>
+                                    <h6 class="mt-1 mb-0">{{ datos.nombre1_comentario }}</h6>
                                     {% else %}
                                     <h6 class="mt-1 mb-0">John Doe</h6>
                                     {% endif %}
@@ -546,7 +583,7 @@
                                 {% endif %}
                                 <div class="media-body">
                                     {% if datos.nombre2_comentario %}
-                                    <h6 class="mt-1 mb-0">{{ nombre2_comentario }}.</h6>
+                                    <h6 class="mt-1 mb-0">{{ datos.nombre2_comentario }}.</h6>
                                     {% else %}
                                     <h6 class="mt-1 mb-0">Maria Garcia</h6>
                                     {% endif %}  
@@ -578,7 +615,7 @@
                                 </div>
                             </div>
                             {% if datos.parrafo3_comentario %}
-                            <p class="mb-0">{{ parrafo3_comentario }}.</p>
+                            <p class="mb-0">{{ datos.parrafo3_comentario }}.</p>
                             {% else %}
                             <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus enim modi, id dicta reiciendis itaque.</p>
                             {% endif %}
@@ -588,6 +625,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
         <!--? Blog Area Start -->
           <!-- Cut Details End -->
@@ -623,15 +661,16 @@
     
 
     <!-- Contact Section -->
+    {% if datos.contactar_activo %}
     <section id="contact" class="section has-img-bg pb-0">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-5 my-3">
                     <h6 class="mb-0">teléfono</h6>
                     {% if datos.telefono %}
-                    <p class="mb-4">+ {{ datos.telefono }}</p>
+                    <p class="mb-4">{{ datos.telefono }}</p>
                     {% else %}
-                    <p class="mb-4">+ 123-456-7890</p>
+                    <p class="mb-4">+123-456-7890</p>
                     {% endif %}
 
                     <h6 class="mb-0">Dirección</h6>
@@ -640,6 +679,10 @@
                     {% else %}
                     <p class="mb-4">12345 Estos credenciales se estan desarrollando</p>
                     {% endif %}
+                    <h6 class="mb-0">Ciudad / País</h6>
+                    <p class="mb-4"><span class="contact-ciudad">{{ datos.ciudad|default:"" }}</span><span class="contact-sep">, </span><span class="contact-pais">{{ datos.pais|default:"" }}</span></p>
+                    <h6 class="mb-0">Horario</h6>
+                    <p class="mb-4">{{ datos.horario|default:"9AM - 20PM" }}</p>
                     <h6 class="mb-0">Correo</h6>
                     {% if datos.email %}
                     <p class="mb-0">{{ datos.email }}</p>
@@ -648,6 +691,7 @@
                     {% endif %}
                 </div>
                 <div class="col-md-7">
+                    <!-- Formulario de correo desactivado: ahora solo se muestra información de contacto
                     <form>
                         <h4 class="mb-4">Déjanos tu Mensaje</h4>
                         <div class="form-row">
@@ -666,6 +710,13 @@
                             </div>                          
                         </div>                          
                     </form>
+                    -->
+                    <div class="contact-info-extras">
+                        <h4 class="mb-4">Contáctanos</h4>
+                        <p class="mb-3"><i class="bi bi-telephone"></i> {{ datos.telefono|default:'+123-456-7890' }}</p>
+                        <p class="mb-3"><i class="bi bi-envelope"></i> {{ datos.email|default:'info@miweb.com' }}</p>
+                        <p class="mb-0"><i class="bi bi-geo-alt"></i> {{ datos.direccion|default:'12345 Dirección' }}</p>
+                    </div>
                 </div>
             </div>
 
@@ -693,6 +744,7 @@
             <!-- End of Page Footer -->  
         </div>
     </section>
+    {% endif %}
 	
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha384-QvZo9R5hF1ymCWAM9M8qEvhU+FWo1oz7XLa1LfFgJq/pCGlKT0Llta9ENq+oWSGm" crossorigin="anonymous"></script>

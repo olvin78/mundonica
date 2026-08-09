@@ -1,0 +1,109 @@
+<c-vars empresa="" card_class="w-60 flex-shrink-0 snap-start sm:w-64" /><article
+  class="group relative flex h-full {{ card_class }} flex-col overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lift"
+>
+  <div class="relative h-56 w-full overflow-hidden bg-gradient-to-br from-nica-ocean to-nica-emerald">
+    {% if empresa.imagen_header %}
+      <img src="{{ empresa.imagen_header.url }}" alt="{{ empresa.nombre_de_la_empresa }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+    {% elif empresa.imagen %}
+      <img src="{{ empresa.imagen.url }}" alt="{{ empresa.nombre_de_la_empresa }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+    {% elif empresa.imagen_portada %}
+      <img src="{{ empresa.imagen_portada.url }}" alt="{{ empresa.nombre_de_la_empresa }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+    {% else %}
+      <div class="relative flex h-full w-full items-center justify-center bg-gradient-to-br from-nica-ocean to-nica-emerald">
+        <span class="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(255,255,255,0.28),_transparent_60%)]"></span>
+        <span class="absolute inset-0 bg-[radial-gradient(circle_at_85%_85%,_rgba(255,255,255,0.14),_transparent_55%)]"></span>
+        <span class="relative flex h-20 w-20 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/40 backdrop-blur-sm">
+          <i class="bi
+            {% if empresa.tipo_empresa.nombre == 'Restaurante' %}bi-cup-hot
+            {% elif empresa.tipo_empresa.nombre == 'Peluquería' %}bi-scissors
+            {% elif empresa.tipo_empresa.nombre == 'Comercio' %}bi-bag
+            {% else %}bi-shop{% endif %}
+            text-3xl text-white"></i>
+        </span>
+      </div>
+    {% endif %}
+
+    {% if empresa.id in ids_nuevos %}
+      {# "Nuevo" se basa en el orden real (-id) del queryset, no en una fecha inventada #}
+      <span class="absolute left-2 top-2 rounded-full bg-nica-emerald px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-white shadow">
+        Nuevo
+      </span>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+      <form action="{% url 'home_app:toggle_favorito' empresa.pk %}" method="post" class="absolute right-2 top-2" data-favorito-form>
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-red-500 shadow transition-transform duration-200 hover:scale-110"
+          aria-label="{% if empresa.id in favoritos_ids %}Quitar de mis favoritos{% else %}Guardar en mis favoritos{% endif %}"
+          data-favorito-btn
+        >
+          <i class="bi {% if empresa.id in favoritos_ids %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+        </button>
+      </form>
+    {% else %}
+      <button
+        type="button"
+        class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-nica-ocean shadow transition-transform duration-200 hover:scale-110"
+        data-bs-toggle="modal" data-bs-target="#exampleModal"
+        aria-label="Inicia sesión para guardar en favoritos"
+      >
+        <i class="bi bi-heart"></i>
+      </button>
+    {% endif %}
+  </div>
+
+  <div class="flex flex-1 flex-col p-3.5">
+    <h3 class="font-heading text-sm font-bold leading-snug text-nica-ink line-clamp-1">{{ empresa.nombre_de_la_empresa }}</h3>
+    <p class="mt-1 flex items-center gap-1 text-xs text-slate-500">
+      <i class="bi bi-geo-alt"></i>
+      <span class="line-clamp-1">{% if empresa.ciudad %}{{ empresa.ciudad }}{% else %}España{% endif %}</span>
+    </p>
+    <div class="mt-auto flex items-start justify-between gap-2 pt-3">
+      {% if empresa.nombreUrl %}
+        <a href="{% url 'home_app:empresa_detalle' empresa.nombreUrl %}" class="inline-flex items-center gap-1 whitespace-nowrap pt-1 text-xs font-bold text-nica-ocean hover:text-nica-emerald">
+          Ver perfil <i class="bi bi-arrow-right"></i>
+        </a>
+      {% else %}
+        <span></span>
+      {% endif %}
+
+      {# Valoración estilo TripAdvisor: estrellas individuales en esmeralda (color de marca), llenas según la nota #}
+      {% load rating_filters %}
+      <div class="flex shrink-0 items-center gap-1.5" data-rating-widget data-rate-url="{% url 'home_app:valorar_empresa' empresa.pk %}" data-rating-value="{{ empresa.rating_avg }}">
+        <div class="relative flex items-center text-sm leading-none">
+          {% for star_type in empresa.rating_avg|rating_stars_list %}
+            <i class="bi {% if star_type == 'fill' %}bi-star-fill text-nica-emerald{% elif star_type == 'half' %}bi-star-half text-nica-emerald{% else %}bi-star text-slate-300{% endif %}" data-rating-star></i>
+          {% endfor %}
+
+          {% if request.user.is_authenticated %}
+            <div class="absolute inset-0 flex bg-transparent">
+              {% for n in "12345" %}
+                <button
+                  type="button"
+                  data-rate="{{ forloop.counter }}"
+                  class="flex-1 bg-transparent border-0 p-0 m-0 cursor-pointer focus:outline-none focus:ring-0 opacity-0"
+                  style="background: transparent; border: none; padding: 0; margin: 0; outline: none; box-shadow: none; opacity: 0;"
+                  aria-label="Valorar {{ empresa.nombre_de_la_empresa }} con {{ forloop.counter }} estrella{{ forloop.counter|pluralize }}"
+                ></button>
+              {% endfor %}
+            </div>
+            {% csrf_token %}
+          {% else %}
+            <button
+              type="button"
+              class="absolute inset-0 h-full w-full bg-transparent border-0 p-0 m-0 cursor-pointer focus:outline-none focus:ring-0 opacity-0"
+              style="background: transparent; border: none; padding: 0; margin: 0; outline: none; box-shadow: none; opacity: 0;"
+              data-bs-toggle="modal" data-bs-target="#exampleModal"
+              aria-label="Inicia sesión para valorar {{ empresa.nombre_de_la_empresa }}"
+            ></button>
+          {% endif %}
+        </div>
+        <span class="text-xs font-bold leading-none text-nica-ink" data-rating-label>
+          {% if empresa.rating_avg %}{{ empresa.rating_avg|floatformat:1 }}{% else %}-{% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</article>

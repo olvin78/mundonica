@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Utilidades de apoyo específicas de la portada nueva (Tailwind + Cotton) */
+@layer components {
+  .nica-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .nica-btn {
+    /* Ojo: solo animamos fondo/sombra/posición, nunca "color". Si el color del
+       texto se anima a la vez que el fondo (transition-all), en botones donde
+       ambos cruzan tonos parecidos a mitad de la transición el texto se vuelve
+       ilegible un instante ("las letras desaparecen"). Así el color cambia al
+       instante y el resto se anima suave. */
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-[background-color,box-shadow,transform] duration-300 ease-out;
+  }
+
+  .nica-btn-primary {
+    @apply nica-btn bg-nica-emerald text-white shadow-soft hover:-translate-y-0.5 hover:shadow-lift hover:bg-emerald-600;
+  }
+
+  .nica-btn-secondary {
+    @apply nica-btn bg-white/10 text-white ring-1 ring-inset ring-white/40 backdrop-blur hover:bg-white/20 hover:-translate-y-0.5;
+  }
+
+  .nica-btn-outline {
+    @apply nica-btn bg-transparent text-nica-ocean ring-1 ring-inset ring-nica-ocean/30 hover:bg-nica-ocean hover:text-white;
+  }
+}
+
+/*
+ * main.css trae una regla global "a:hover { color: color-mix(...var(--accent-color)...) }"
+ * (un verde translúcido) con más especificidad (selector "a:hover") que un simple
+ * ".text-white" plano. Nuestros botones fijan el color de texto una sola vez (no
+ * cambia entre estado normal/hover), así que sin este refuerzo, al hacer hover
+ * ese verde global "gana" y el texto queda casi invisible sobre fondos verdes u
+ * oscuros. Fijamos aquí explícitamente el color en :hover/:focus con selectores
+ * igual de específicos para que no dependa de quién cargó después en el <head>.
+ */
+.nica-btn-primary:hover,
+.nica-btn-primary:focus {
+  color: #ffffff;
+}
+
+.nica-btn-secondary:hover,
+.nica-btn-secondary:focus {
+  color: #ffffff;
+}
+
+.nica-btn-outline:hover,
+.nica-btn-outline:focus {
+  color: #ffffff;
+}
+
+@layer components {
+
+  .nica-eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full bg-nica-emerald/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-nica-emerald;
+  }
+
+  /* Oculta la barra de scroll del carrusel horizontal mantiendo el scroll táctil/con rueda */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Menú móvil: el template base trae un mega-menú genérico (varios niveles de
+ * submenú) pensado para pocos enlaces. Con todo el contenido de MundoNica el
+ * panel salía enorme y desordenado. Aquí lo convertimos en un cajón lateral
+ * limpio, sin tocar el JS existente (sigue alternando las mismas clases
+ * .mobile-nav-active / .dropdown-active), solo mejoramos su aspecto.
+ */
+@media (max-width: 1199px) {
+  .mobile-nav-active .navmenu {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+  }
+
+  /* El icono de cerrar (la "X") heredaba color blanco del diseño original,
+     pensado para un fondo oscuro detrás. Nuestro cajón ahora es blanco, así
+     que la X blanca-sobre-blanco quedaba invisible y no había forma de saber
+     cómo cerrar el menú. La convertimos en un chip circular propio, siempre
+     visible sin importar qué haya detrás. */
+  .mobile-nav-active .mobile-nav-toggle {
+    top: 22px;
+    right: 24px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #0f172a;
+    background-color: #ffffff;
+    border-radius: 9999px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+  }
+
+  /* Panel raíz: cajón anclado a la derecha, con transición suave propia
+     (visibility/opacity/transform) en vez del salto brusco de display:none. */
+  .navmenu > ul {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    inset: 0;
+    left: auto;
+    width: min(86vw, 380px);
+    margin: 0;
+    padding: 96px 0 32px;
+    border-radius: 0;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: -24px 0 60px rgba(15, 23, 42, 0.35);
+    transform: translateX(16px);
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+  }
+
+  .mobile-nav-active .navmenu > ul {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .navmenu > ul > li {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  }
+
+  .navmenu > ul > li:last-child {
+    border-bottom: none;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    background-color: rgba(25, 135, 84, 0.08);
+  }
+
+  .navmenu .active i,
+  .navmenu .active:focus i {
+    background-color: #198754;
+  }
+
+  /* Submenús anidados: tarjeta suave dentro del cajón, en vez de la franja
+     gris oscura semitransparente original. */
+  .navmenu .dropdown ul {
+    margin: 4px 20px 10px;
+    padding: 4px 0;
+    background-color: rgba(15, 23, 42, 0.03);
+    border-radius: 12px;
+  }
+
+  .navmenu .dropdown ul a {
+    padding: 10px 16px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .navmenu .dropdown ul ul {
+    background-color: rgba(15, 23, 42, 0.05);
+    margin: 4px 12px 8px;
+  }
+}
+
+/*
+ * Cabecera / header: una pasada de pulido. El logo, la barra y el botón de
+ * perfil venían del template genérico original; les damos un poco más de
+ * cuerpo sin tocar la estructura ni el JS.
+ */
+.header {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.header .sitename {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.header .cta-btn {
+  box-shadow: 0 6px 16px rgba(25, 135, 84, 0.28);
+}
+
+.header .cta-btn:hover {
+  box-shadow: 0 8px 20px rgba(25, 135, 84, 0.38);
+  transform: translateY(-1px);
+}
+
+.header .profile-icon {
+  font-size: 18px;
+  vertical-align: -3px;
+}
+
+/*
+ * Menú del perfil (icono de usuario, arriba a la derecha): antes era un
+ * recuadro gris plano (#c4c3c3, sin sombra) que no tenía nada que ver con
+ * el resto del sitio. Mismas clases que ya usa registro.js para mostrar/
+ * ocultar (.dropdown-menu / .active) — solo se rediseña el aspecto.
+ */
+.dropdown-menu {
+  /* El original alternaba display:none/block, que no anima bien junto con
+     una transición de opacidad (no hay fotograma intermedio que interpolar).
+     Aquí queda SIEMPRE display:block y todo el show/hide corre por
+     opacity/visibility/pointer-events, así la transición sí es suave. */
+  display: block !important;
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  min-width: 260px;
+  background: #ffffff;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18), 0 4px 14px rgba(15, 23, 42, 0.08);
+  padding: 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 1000;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.dropdown-menu-header {
+  padding: 10px 14px 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.dropdown-menu-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+}
+
+.dropdown-menu-name {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-menu a i {
+  width: 18px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 16px;
+  color: #0b4f6c;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0fdf9;
+  color: #0b4f6c;
+}
+
+.dropdown-menu-icon-accent {
+  color: #e11d48 !important;
+}
+
+.dropdown-menu-divider {
+  height: 1px;
+  margin: 6px 8px;
+  background-color: rgba(15, 23, 42, 0.07);
+}
+
+.dropdown-menu-danger,
+.dropdown-menu-danger i {
+  color: #dc2626;
+}
+
+.dropdown-menu-danger:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* Acordeón de Proyectos/Empresas del usuario */
+.dropdown-projects-details {
+  margin: 4px 6px;
+}
+
+.dropdown-projects-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-projects-summary::-webkit-details-marker {
+  display: none; /* Oculta la flecha por defecto de Safari/Chrome */
+}
+
+.dropdown-projects-summary:hover {
+  background-color: #f8fafc;
+  color: #0b4f6c;
+}
+
+.dropdown-projects-summary span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-projects-summary i {
+  font-size: 16px;
+  color: #0b4f6c;
+}
+
+.dropdown-projects-summary .arrow-icon {
+  font-size: 11px;
+  color: #64748b;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-projects-details[open] .dropdown-projects-summary .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-projects-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(15, 23, 42, 0.06);
+  max-h: 180px;
+  overflow-y: auto;
+}
+
+.dropdown-projects-content a {
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.dropdown-projects-content a i {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.dropdown-projects-content a:hover {
+  background-color: #f0fdf9;
+  color: #0b4f6c;
+}
+

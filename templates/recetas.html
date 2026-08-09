@@ -1,76 +1,207 @@
 {% extends 'base.html' %}
 
+{% block head %}
+  <style>
+    :root {
+      --brand-emerald: #198754;
+      --brand-ocean: #0b4f6c;
+      --brand-ink: #0f172a;
+      --brand-slate: #475569;
+      --brand-white: #ffffff;
+    }
+
+    .recetas-page {
+      background: #f8fafc;
+      min-height: 77vh;
+    }
+
+    .recetas-hero {
+      background: linear-gradient(135deg, rgba(11, 79, 108, 0.95), rgba(25, 135, 84, 0.9));
+      color: var(--brand-white);
+      padding: 110px 0 70px;
+    }
+
+    .recetas-hero h1 {
+      color: var(--brand-white);
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+
+    .recetas-hero p {
+      color: rgba(248, 250, 252, 0.9);
+      max-width: 680px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(242, 193, 78, 0.2);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .recetas-toolbar {
+      background: #ffffff;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .recetas-toolbar .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar-group,
+    .toolbar-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .toolbar-group .btn {
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      color: var(--brand-ink);
+    }
+
+    .toolbar-group .btn:hover {
+      border-color: var(--brand-ocean);
+      color: var(--brand-ocean);
+    }
+
+    .recetas-grid {
+      padding: 40px 0 80px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .receta-card {
+      background: #ffffff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .receta-media {
+      height: 160px;
+      overflow: hidden;
+    }
+
+    .receta-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .receta-body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .receta-date {
+      font-size: 0.85rem;
+      color: var(--brand-slate);
+    }
+
+    .receta-body h3 {
+      margin: 0;
+      color: var(--brand-ink);
+      font-size: 1.05rem;
+    }
+
+    .receta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
-<main style="min-height: 77vh;">
-    <section class="py-5 text-center container-fluid" style="color: #ffffff; background: linear-gradient(130deg, #007bff, #00c6ff);">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto mt-4 mb-3">
-                <h1 class="fw-light">Recetas de Nicaragua.</h1>
-                <p style="font-size: 25px;color: rgb(248, 248, 248); text-shadow: 1px 3px 1px black;">
-                    Donde la tradición y el sabor se encuentran.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <div class="container text-center mb-4">
-        <a href="{% url 'home_app:recetas' %}" class="btn btn-secondary my-2">Todas</a>
-        <a href="{% url 'home_app:recetas' %}?categoria=platos_principales" class="btn btn-primary my-2">Platos</a>
-        <a href="{% url 'home_app:recetas' %}?categoria=bebidas" class="btn btn-success my-2">Bebidas</a>
-        <a href="{% url 'home_app:recetas' %}?categoria=postres" class="btn btn-danger my-2">Postres</a>
-        <a href="{% url 'home_app:mis_recetas' %}" class="btn btn-info my-2">Mis Recetas</a>
-        {% if user.is_authenticated %}
-          <a href="{% url 'home_app:crear_receta' %}" class="btn btn-dark my-2">Agregar Receta</a>
-        {% else %}
-          <a href="{% url 'account_login' %}" class="btn btn-dark my-2">Iniciar Sesión para Agregar Receta</a>
-        {% endif %}
+<main class="recetas-page">
+  <section class="recetas-hero">
+    <div class="container">
+      <span class="hero-pill">Sabores nicaragüenses</span>
+      <h1>Recetas de Nicaragua</h1>
+      <p>Descubre platos tradicionales, bebidas y postres que cuentan nuestra historia.</p>
     </div>
+  </section>
 
-   
-    {% if no_recetas_message %}
-        <div class="alert alert-warning text-center" role="alert" style="margin-top: 200px;height: 80px;">
-            <p>{{ no_recetas_message }}</p>
-        </div>
-    {% else %}
-        <div class="album py-5 bg-body-tertiary">
-            <div class="container mt-5">
-                <h2 class="mb-4">Recetas</h2>
-                <div class="row">
-                    {% for receta in recetas %}
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-3 mb-4 text-center"> <!-- 4 columnas en pantallas grandes -->
-                        <small class="text-body-secondary">{{ receta.fecha_hora|date:"d/m/Y" }}</small>
-                        <div class="card" style="margin: 5px;max-width: 300px;margin: auto;">
-                            <img style="min-height: 230px;max-height: 230px;" src="{{ receta.imagen.url }}" class="card-img-top img-fluid" alt="{{ receta.titulo }}">
+  <section class="recetas-toolbar">
+    <div class="container">
+      <div class="toolbar-group">
+        <a href="{% url 'home_app:recetas' %}" class="btn btn-light">Todas</a>
+        <a href="{% url 'home_app:recetas' %}?categoria=platos_principales" class="btn btn-light">Platos</a>
+        <a href="{% url 'home_app:recetas' %}?categoria=bebidas" class="btn btn-light">Bebidas</a>
+        <a href="{% url 'home_app:recetas' %}?categoria=postres" class="btn btn-light">Postres</a>
+        <a href="{% url 'home_app:mis_recetas' %}" class="btn btn-light">Mis recetas</a>
+      </div>
+      <div class="toolbar-cta">
+        {% if user.is_authenticated %}
+          <a href="{% url 'home_app:crear_receta' %}" class="btn btn-success">Agregar receta</a>
+        {% else %}
+          <a href="{% url 'account_login' %}" class="btn btn-success">Iniciar sesión para agregar</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
 
-                            <div class="card-body d-flex flex-column justify-content-between">
-                                {% if request.path == '/recetas/mis_recetas' %}
-                                    <div class="d-flex flex-column justify-content-center mb-3">
-                                        <a href="{% url 'home_app:editar_receta' receta.id %}" class="mb-2">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary w-100">Editar</button>
-                                        </a>
-                                        <form action="{% url 'home_app:eliminar_receta' receta.id %}" method="post" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-sm btn-outline-danger w-100"
-                                                    onclick="return confirm('¿Seguro que quieres eliminar esta receta?');">
-                                                Eliminar
-                                            </button>
-                                        </form>
-                                    </div>
-                                {% endif %}
-
-                                <!-- Botón "Ver" siempre centrado -->
-                                <div class="text-center w-100">
-                                    <a href="{% url 'home_app:recetas_detalle' receta.id %}">
-                                        <button type="button" class="btn btn-success w-100">Ver</button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+  {% if no_recetas_message %}
+    <div class="container">
+      <div class="alert alert-warning text-center" role="alert">
+        <p>{{ no_recetas_message }}</p>
+      </div>
+    </div>
+  {% else %}
+    <section class="recetas-grid">
+      <div class="container">
+        <div class="grid">
+          {% for receta in recetas %}
+          <article class="receta-card">
+            <div class="receta-media">
+              <img src="{{ receta.imagen.url }}" alt="{{ receta.titulo }}">
             </div>
+            <div class="receta-body">
+              <div class="receta-date">{{ receta.fecha_hora|date:"d/m/Y" }}</div>
+              <h3>{{ receta.titulo }}</h3>
+              <div class="receta-actions">
+                {% if request.path == '/recetas/mis_recetas' %}
+                  <a href="{% url 'home_app:editar_receta' receta.id %}" class="btn btn-outline-secondary btn-sm">Editar</a>
+                  <form action="{% url 'home_app:eliminar_receta' receta.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Seguro que quieres eliminar esta receta?');">
+                      Eliminar
+                    </button>
+                  </form>
+                {% endif %}
+              </div>
+              <a href="{% url 'home_app:recetas_detalle' receta.id %}" class="btn btn-success w-100">Ver receta</a>
+            </div>
+          </article>
+          {% endfor %}
         </div>
-    {% endif %}
+      </div>
+    </section>
+  {% endif %}
 </main>
 {% endblock %}

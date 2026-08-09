@@ -7,228 +7,193 @@
   <title>Credencial de Usuario -- Mundonica</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-/* Contenedor Central */
-.profile-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
+    :root {
+      --brand-emerald: #198754;
+      --brand-ocean: #0b4f6c;
+      --brand-ink: #0f172a;
+      --brand-slate: #475569;
+      --brand-mist: #e2e8f0;
+      --brand-white: #ffffff;
+    }
 
-/* Tarjeta de Perfil */
-.profile-card {
-  width: 95%; /* Ajuste más ancho */
-  max-width: 400px;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  position: relative; /* Para posicionar el botón de salir */
-}
+    body.profile-page {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #eef2f7 0%, #f8fafc 60%, #eef2f7 100%);
+      font-family: "Poppins", sans-serif;
+    }
 
-/* Encabezado con Fondo y Avatar */
-.card-header {
-  position: relative;
-  overflow: hidden;
-}
+    .profile-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
 
-.background-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .profile-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--brand-white);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2);
+    }
 
-.avatar {
-  position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  border: 4px solid #fff;
-  border-radius: 50%;
-  background: #f3f4f6;
-  color: #777;
-  font-size: 2rem;
-  overflow: hidden;
-}
+    .profile-cover {
+      position: relative;
+      height: 180px;
+      background: var(--brand-ocean);
+    }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    .profile-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.avatar i {
-  display: none;
-}
+    .btn-logout {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--brand-white);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: none;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
 
-/* Cuerpo de la Tarjeta */
-.card-body {
-  padding: 20px;
-  text-align: center;
-}
+    .btn-logout:hover {
+      background: rgba(11, 79, 108, 0.85);
+      transform: translateY(-2px);
+      color: var(--brand-white);
+    }
 
-.card-body h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #333;
-}
+    .avatar {
+      position: absolute;
+      left: 50%;
+      bottom: -45px;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 4px solid var(--brand-white);
+      background: var(--brand-mist);
+      overflow: hidden;
+    }
 
-.card-body .role {
-  font-size: 1rem;
-  color: #777;
-  margin-bottom: 15px;
-}
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.info-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+    .profile-body {
+      padding: 60px 24px 26px;
+      text-align: center;
+    }
 
-.info-list li {
-  font-size: 0.9rem;
-  color: #555;
-  padding: 5px 0;
-}
+    .profile-body h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--brand-ink);
+      margin-bottom: 4px;
+    }
 
-/* Pie de Tarjeta */
-.card-footer {
-  padding: 15px;
-  text-align: center;
-  background: #f9f9f9;
-  border-top: 1px solid #eee;
-}
+    .profile-body .role {
+      font-size: 0.95rem;
+      color: var(--brand-slate);
+      margin-bottom: 18px;
+    }
 
-.btn-edit {
-  background: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
+    .info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+      text-align: left;
+    }
 
-.btn-edit:hover {
-  background: #43c0d1;
-  color: white;
-  transform: scale(1.05);
-}
+    .info-list li {
+      font-size: 0.9rem;
+      color: var(--brand-ink);
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
 
-/* Responsivo para móviles */
-@media (max-width: 768px) {
-  .profile-card {
-    width: 95%; /* Más ancho para móviles */
-  }
+    #user-status span {
+      font-weight: 700;
+    }
 
-  .avatar {
-    height: 70px;
-  }
+    .profile-actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+    }
 
-  .card-body h2 {
-    font-size: 1.5rem;
-  }
+    .btn-edit {
+      background: var(--brand-emerald);
+      color: var(--brand-white);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: none;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 24px rgba(25, 135, 84, 0.35);
+    }
 
-  .info-list li {
-    font-size: 0.8rem;
-  }
-}
+    .btn-edit:hover {
+      transform: translateY(-2px);
+      color: var(--brand-white);
+    }
 
+    @media (max-width: 576px) {
+      .profile-card {
+        max-width: 100%;
+      }
 
+      .profile-body {
+        padding: 60px 18px 22px;
+      }
+    }
   </style>
-
-<style>
-/* Contenedor del botón de salir */
-.logout-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
-}
-
-/* Botón de salir */
-.btn-logout {
-  background:#43c0d1;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.btn-logout:hover {
-  background: #0b945f;
-  transform: scale(1.1);
-  color: #eee;
-}
-
-</style>
-
-<style>
-  #user-status span {
-  font-weight: bold;
-}
-
-/* Estado Activo */
-#user-status span.active {
-  color: green;
-}
-
-/* Estado Desactivo */
-#user-status span.inactive {
-  color: red;
-}
-
-/*avatar tamaño*/
-.avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-</style>
 
 
 </head>
-    <body class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background-color: #eef2f7;">
-      <div class="profile-container">
-        <div class="profile-card" style="width: 350px;">
-          <!-- Botón de Salir -->
-          <div class="logout-container">
-            <a href="{% url 'home_app:home' %}"><button class="btn btn-logout" onclick="logoutUser()">Salir</button></a>
-          </div>
-          <!-- Encabezado con Foto de Fondo -->
-          <div class="card-header">
-            {% if user.perfil.avatar %}
-              <img src="{{ user.perfil.avatar.url }}" alt="Avatar de {{ request.user.username }}" class="w-100" style="height: 350px;width: 350px;">
-            {% else %}
-              <img src="{% static 'assets/img/services.jpg' %}" alt="Avatar predeterminado" class="avatar">
-            {% endif %}
+    <body class="profile-page">
+      <div class="profile-shell">
+        <div class="profile-card">
+          <div class="profile-cover">
+            <img src="{% static 'images/nicaraguaheader.webp' %}" alt="Portada MundoNica">
+            <a class="btn-logout" href="{% url 'home_app:home' %}">Volver</a>
             <div class="avatar">
-
-              <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="Foto de perfil" onerror="this.style.display='none';">
-              <i class="bi bi-person-circle"></i>
+              {% if user.perfil.avatar %}
+                <img src="{{ user.perfil.avatar.url }}" alt="Avatar de {{ request.user.username }}">
+              {% else %}
+                <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="Avatar predeterminado">
+              {% endif %}
             </div>
           </div>
 
-          <!-- Información del Usuario -->
-          <div class="card-body">
-            <h3>{{ request.user }}</h3>
-            <p class="role">Usuario de Mundonica</p>
+          <div class="profile-body">
+            <h2>{{ request.user }}</h2>
+            <p class="role">Usuario de MundoNica</p>
             <ul class="info-list">
               {% if request.user.is_authenticated %}
               <li><strong>Correo: </strong>{{ user.email }}</li>
-                {% else %}
-                <li><strong>Correo: </strong>No definido</li>
-                {% endif %}
-                <li><strong>Teléfono: </strong>{{ user.perfil.telefono }}</li>
+              {% else %}
+              <li><strong>Correo: </strong>No definido</li>
+              {% endif %}
+              <li><strong>Teléfono: </strong>{{ user.perfil.telefono }}</li>
               <li id="user-status">
                 <strong>Estado: </strong>
                 {% if request.user.is_authenticated %}
@@ -240,11 +205,9 @@
                 {% endif %}
               </li>
             </ul>
-          </div>
-
-          <!-- Botón para Editar Perfil -->
-          <div class="card-footer">
-            <a href="{% url 'home_app:actualizar_usuario' user.id %}"><button class="btn btn-edit">Editar Perfil</button></a>
+            <div class="profile-actions">
+              <a class="btn-edit" href="{% url 'home_app:actualizar_usuario' user.id %}">Editar perfil</a>
+            </div>
           </div>
         </div>
       </div>

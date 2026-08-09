@@ -1,99 +1,1501 @@
 {% extends 'base.html' %}
-
 {% load static %}
+
 {% block head %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-  #map {
-      height: 400px;
+  /* ── Premium Header ── */
+  .crear-hero {
+    position: relative;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    overflow: hidden;
+    padding: 100px 0 60px;
   }
-  h4{
-          text-align: center;
+  .crear-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(99,102,241,.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(14,165,233,.12) 0%, transparent 50%);
+    pointer-events: none;
   }
-  #id_latitud{
+  .crear-hero .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,.15);
+    border: 1px solid rgba(99,102,241,.25);
+    color: #a5b4fc;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .crear-hero h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .crear-hero h1 span {
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .crear-hero p.hero-desc {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    max-width: 540px;
+  }
+  .crear-hero .url-preview {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 10px 20px;
+    gap: 6px;
+    font-family: 'Fira Code', 'SF Mono', monospace;
+    font-size: 0.9rem;
+  }
+  .crear-hero .url-preview .url-base { color: #64748b; }
+  .crear-hero .url-preview .url-slug { color: #6366f1; font-weight: 600; }
+
+  /* ── Floating Shapes ── */
+  .crear-hero .shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .12;
+    pointer-events: none;
+  }
+  .crear-hero .shape-1 { width: 300px; height: 300px; background: #6366f1; top: -80px; right: 10%; }
+  .crear-hero .shape-2 { width: 200px; height: 200px; background: #06b6d4; bottom: -40px; left: 5%; }
+
+  /* ── Phone Preview Frame ── */
+  .phone-frame {
+    position: relative;
+    width: 320px;
+    height: 620px;
+    border-radius: 40px;
+    border: 3px solid rgba(255,255,255,.15);
+    background: #000;
+    box-shadow:
+      0 0 0 2px rgba(0,0,0,.3),
+      0 30px 60px rgba(0,0,0,.5),
+      inset 0 0 0 2px rgba(255,255,255,.05);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .phone-frame .phone-notch {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 28px;
+    background: #000;
+    border-radius: 0 0 18px 18px;
+    z-index: 10;
+  }
+  .phone-frame .phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 37px;
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-frame .phone-screen iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 430px;
+    height: 870px;
+    border: none;
+    transform: scale(0.7437);
+    transform-origin: top left;
+  }
+  .phone-frame .phone-screen-footer {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    height: 44px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 0.65rem;
+    font-weight: 500;
+    border-top: 1px solid #e2e8f0;
+    z-index: 10;
+  }
+
+  /* ── Layout ── */
+  .editor-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 40px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .editor-layout > div:first-child {
+    min-width: 0;
+  }
+  @media (max-width: 968px) {
+    .editor-layout { grid-template-columns: 1fr; }
+    .phone-sticky-col { display: none; }
+  }
+  .phone-sticky-col {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .phone-sticky-col .preview-label {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Form Sections ── */
+  .form-section {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    transition: box-shadow .2s;
+  }
+  .form-section:hover { box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+  .form-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+  }
+  .form-section-title .icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.9rem;
+  }
+
+  
+  /* ── Tabs Styling ── */
+  .wizard-tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+  }
+  .wizard-tabs::-webkit-scrollbar {
+    height: 6px;
+  }
+  .wizard-tabs::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover {
+    background: #f8fafc;
+    color: #334155;
+  }
+  .tab-btn.active {
+    background: #6366f1;
+    color: #fff;
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99,102,241,0.25);
+  }
+
+  /* ── Tab Content ── */
+  .tab-pane {
     display: none;
+    animation: fadeIn 0.3s ease-in-out;
   }
-  #id_longitud{
-    display: none;
+  .tab-pane.active {
+    display: block;
   }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Grid/Row layouts for Fields ── */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: start;
+  }
+  @media(min-width: 768px) {
+    .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  
+  .compact-group {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .compact-group-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  
+  .field-wrapper {
+    margin-bottom: 16px;
+  }
+
+  /* Override Django form default <p> styles */
+  .styled-form p {
+    margin-bottom: 16px;
+  }
+  .styled-form label {
+    display: block;
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+  .styled-form input[type="text"],
+  .styled-form input[type="email"],
+  .styled-form input[type="url"],
+  .styled-form input[type="number"],
+  .styled-form textarea,
+  .styled-form select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    transition: border-color .2s, box-shadow .2s;
+    background: #f8fafc;
+  }
+  .styled-form input:focus,
+  .styled-form textarea:focus,
+  .styled-form select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,.1);
+    background: #fff;
+  }
+  .styled-form input[type="file"] {
+    padding: 8px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  /* Publish button */
+  .btn-publish {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .2s;
+    box-shadow: 0 4px 16px rgba(99,102,241,.3);
+  }
+  .btn-publish:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99,102,241,.4);
+  }
+
+  /* Map */
+  #map { height: 300px; border-radius: 12px; }
+  #id_latitud, #id_longitud { display: none; }
 </style>
-
 {% endblock %}
+
 {% block content %}
+<main class="main">
 
-  <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);background-color: #0067c6;">
-      <div class="container position-relative">
-        <h1>Crear empresa</h1>
-        <p>Crea tu empresa para darlo a conocer y esté localizable.</p>
-        <h5><b>www.mundonica.org/<span id="vistaPrevia">aquí aparecerá tu URL</span></b></h5>
-        <nav class="breadcrumbs">
-         
-        </nav>
+  <!-- ═══════ PREMIUM HEADER ═══════ -->
+  <section class="crear-hero">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="container mx-auto px-4" style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem;">
+      <div style="max-width: 640px;">
+        <div class="hero-badge">
+          <i class="bi bi-stars"></i> Nuevo negocio
+        </div>
+        <h1>Crea tu <span>sitio web</span> profesional en minutos</h1>
+        <p class="hero-desc">Rellena los campos del formulario y observa cómo tu página cobra vida en tiempo real dentro del móvil. Sin complicaciones, sin código — solo tu marca, tu estilo.</p>
       </div>
-    </div><!-- End Page Title -->
-    <!-- Blog Posts Section -->
+      
+      <div class="url-preview-container" style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: flex-end; padding-right: 2rem;">
+        <div id="urlPreviewBox" class="url-preview" style="position: relative; font-size: 1.6rem; background: rgba(255,255,255,0.15); padding: 1.2rem 2.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.15); backdrop-filter: blur(10px); display: inline-flex; align-items: center; transition: all 0.3s ease;">
+          <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #fff; font-weight: bold; background: #6366f1; padding: 4px 12px; border-radius: 20px; white-space: nowrap; box-shadow: 0 4px 10px rgba(99,102,241,0.4);">
+            <i class="bi bi-globe" style="margin-right: 5px;"></i>Tu enlace público
+          </div>
+          <span class="url-base" style="opacity: 0.9; font-weight: 400; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">mundonica.org/</span>
+          <span class="url-slug" id="vistaPrevia" style="font-weight: 900; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); letter-spacing: -0.5px; transition: color 0.3s ease;">tu-negocio</span>
+        </div>
+        <div id="urlErrorNote" style="display: none; color: #f59e0b; font-size: 0.85rem; margin-top: 12px; font-weight: bold; background: rgba(255,255,255,0.95); padding: 6px 12px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-left: 4px solid #fbbf24;">
+          <i class="bi bi-magic" style="margin-right: 4px;"></i> Formato de URL automático (sin espacios ni acentos).
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ═══════ EDITOR + PHONE PREVIEW ═══════ -->
+  <div class="editor-layout">
 
-<div class="container mt-5 mb-5">
-    <h2 class="text-center">¡Vamos  crear una empresa, Genial!</h2>
-    <form method="post" enctype="multipart/form-data" class="needs-validation">
-      <br>
-      <h4>Selecciona tu ubicación</h4>
-      <div id="map"></div>
-      <button type="submit" class="btn btn-success w-100 mt-3 mb-5">Guardar datos y visualizar</button>
-      {% csrf_token %}
-        {{ form.as_p }}
-        
-        
-        <button type="submit" class="btn btn-success w-100 mt-3 mb-5">Guardar Empresa</button>
-    </form>
-</div>
+    <!-- ── Left: Form ── -->
+    <div>
+      <form method="post" enctype="multipart/form-data" id="empresaForm" class="styled-form">
+        {% csrf_token %}
 
+        <!-- All form fields -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <div class="icon"><i class="bi bi-building"></i></div>
+            Configura tu negocio
+          </div>
+          
+          <!-- Wizard Tabs -->
+          <div class="wizard-tabs" id="wizardTabs"></div>
+          
+          <!-- Wizard Content -->
+          <div class="wizard-content" id="wizardContent"></div>
 
-  </main>
+          <!-- Hidden Form Dump -->
+          <div id="original-form-fields" style="display: none;">
+            {% for field in form %}
+              <div class="field-wrapper" data-name="{{ field.name }}">
+                <label class="form-label fw-semibold text-secondary" style="font-size: 0.85rem; margin-bottom: 6px; display: block;">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                  <div class="text-danger mt-1" style="font-size: 0.8rem;">{{ field.errors }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
 
-  <!--esta es la prueba para  agregar longitud y latitud en el mapa en vez de rellenar los campos con numeros-->
-  <script>
-    // Inicializa el mapa
-    const map = L.map('map').setView([12.1364, -86.2514], 13); // Coordenadas iniciales (Managua, Nicaragua)
+        </div>
 
-    // Capa base de OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '<a href="https://www.openstreetmap.org/copyright"></a>'
-    }).addTo(map);
+        <!-- Map -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <div class="icon"><i class="bi bi-geo-alt"></i></div>
+            Ubicación en el mapa
+          </div>
+          <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 12px;">Haz clic en el mapa para marcar la ubicación de tu negocio.</p>
+          <div id="map"></div>
+        </div>
 
-    // Agregar marcador al hacer clic
-    let marker;
-    map.on('click', function (e) {
-        const lat = e.latlng.lat.toFixed(6);
-        const lon = e.latlng.lng.toFixed(6);
+        <!-- Publish -->
+        <div style="text-align: center; margin-top: 12px;">
+          <button type="submit" class="btn-publish">
+            <i class="bi bi-rocket-takeoff"></i> Publicar negocio
+          </button>
+        </div>
+      </form>
+    </div>
 
-        // Actualiza los campos del formulario
-        document.getElementById('id_latitud').value = lat;
-        document.getElementById('id_longitud').value = lon;
+    <!-- ── Right: Phone Preview (sticky) with REAL template via iframe ── -->
+    <div class="phone-sticky-col">
+      <span class="preview-label">📱 Vista previa en tiempo real</span>
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <iframe id="previewIframe" src="{% url 'home_app:preview_plantilla' tipo_empresa %}"></iframe>
+          <div class="phone-screen-footer">
+            Copyright &copy; 2026 Todos los derechos reservados
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // Coloca o mueve el marcador
-        if (marker) {
-            marker.setLatLng(e.latlng);
-        } else {
-            marker = L.marker(e.latlng).addTo(map);
-        }
-    });
-</script>
+  </div>
 
+</main>
+
+<!-- ═══════ LIVE PREVIEW JAVASCRIPT ═══════ -->
 <script>
-  // Seleccionamos el campo de entrada generado por el widget de Django
-  const nombreUrlInput = document.getElementById('{{ form.nombreUrl.id_for_label }}');
-  const vistaPrevia = document.getElementById('vistaPrevia');
+document.addEventListener('DOMContentLoaded', function() {
 
-  // Escuchamos el evento 'input' para actualizar la vista previa en tiempo real
-  nombreUrlInput.addEventListener('input', () => {
-    // Mostramos el valor concatenado al final de la URL
-    vistaPrevia.textContent = nombreUrlInput.value || 'aquí aparecerá tu URL';
+  // ── Placeholders = valor actual de cada campo (modo edición) ──
+  // Así, en vez de repetir la etiqueta ("Nombre de la empresa"), el campo
+  // muestra como placeholder el dato que ya está guardado, para saber qué
+  // se está modificando en cada sección.
+  const empresaForm = document.getElementById('empresaForm');
+  if (empresaForm) {
+    empresaForm.querySelectorAll(
+      'input[type="text"], input[type="email"], input[type="url"], ' +
+      'input[type="number"], textarea'
+    ).forEach(function (el) {
+      if (el.value && el.value.trim()) {
+        el.setAttribute('placeholder', el.value);
+      }
+    });
+  }
+
+  // ── URL Preview & Validation ──
+  const slugInput = document.getElementById('id_nombreUrl');
+  const vistaPrevia = document.getElementById('vistaPrevia');
+  const urlPreviewBox = document.getElementById('urlPreviewBox');
+  const urlErrorNote = document.getElementById('urlErrorNote');
+  
+  if (slugInput) {
+    slugInput.addEventListener('input', () => {
+      let val = slugInput.value;
+      
+      // Auto-correct: remove tildes, convert to lowercase, replace spaces with hyphen, allow underscores
+      let sanitizedVal = val.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove tildes
+                            .toLowerCase()
+                            .replace(/\s+/g, '-') // replace spaces with hyphen
+                            .replace(/[^a-z0-9\-_]/g, ''); // allow lowercase, numbers, hyphens, and underscores
+      
+      let wasCorrected = false;
+      if (val !== sanitizedVal) {
+        slugInput.value = sanitizedVal;
+        val = sanitizedVal;
+        wasCorrected = true;
+      }
+      
+      vistaPrevia.textContent = val || 'tu-negocio';
+      
+      if (val.length > 0) {
+        // Success state: Typed and valid
+        urlPreviewBox.style.background = 'rgba(76, 175, 80, 0.2)';
+        urlPreviewBox.style.borderColor = '#4caf50';
+        vistaPrevia.style.color = '#c8e6c9';
+        
+        if (wasCorrected) {
+          urlErrorNote.style.display = 'block';
+          setTimeout(() => { urlErrorNote.style.display = 'none'; }, 3000);
+        }
+      } else {
+        // Default state: Empty
+        urlPreviewBox.style.background = 'rgba(255,255,255,0.15)';
+        urlPreviewBox.style.borderColor = 'rgba(255,255,255,0.3)';
+        vistaPrevia.style.color = '#fff';
+        urlErrorNote.style.display = 'none';
+      }
+    });
+    
+    // Trigger on load to catch pre-filled values
+    slugInput.dispatchEvent(new Event('input'));
+  }
+
+  // ── Wait for iframe to load, then bind live updates ──
+  const iframe = document.getElementById('previewIframe');
+  let bound = false;
+
+  function bindPreview() {
+    if (bound) return;
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    // El iframe debe tener contenido real antes de bindear
+    if (!doc || !doc.body || !doc.body.innerHTML) return;
+
+    // ── Helper: bind form field → element(s) inside the iframe ──
+    // Además de actualizar el móvil en vivo, el placeholder de cada campo
+    // muestra el texto que aparece AHORA en la vista previa (el default de la
+    // plantilla o el valor guardado), para saber qué sección se está editando.
+    function setPlaceholderFromPreview(field, selector, prefix, suffix) {
+      if (!field || field.value.trim()) return;
+      const firstEl = doc.querySelector(selector);
+      if (firstEl) {
+        field.setAttribute(
+          'placeholder',
+          (prefix || '') + firstEl.textContent.trim() + (suffix || '')
+        );
+      }
+    }
+    
+    function bindCheckbox(fieldId, selector) {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+      field.addEventListener('change', () => {
+        const els = Array.from(doc.querySelectorAll(selector));
+        els.forEach(el => {
+          el.style.display = field.checked ? '' : 'none';
+        });
+      });
+      // Set initial state based on checkbox
+      const els = Array.from(doc.querySelectorAll(selector));
+      els.forEach(el => {
+        el.style.display = field.checked ? '' : 'none';
+      });
+    }
+    function bind(fieldId, selector, prefix, suffix) {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+      setPlaceholderFromPreview(field, selector, prefix, suffix);
+      const els = Array.from(doc.querySelectorAll(selector));
+      const originals = els.map(el => el.textContent);
+      field.addEventListener('input', () => {
+        const val = field.value.trim();
+        els.forEach((el, i) => {
+          el.textContent = val
+            ? (prefix || '') + val + (suffix || '')
+            : originals[i];
+        });
+      });
+    }
+
+    // ── Bindings por tipo de plantilla ──
+    // Cada plantilla usa clases distintas, así que los selectores del preview
+    // se eligen según el tipo de negocio. Esto permite que el placeholder de
+    // cada campo muestre el texto que aparece AHORA en la web.
+    const TIPO = "{{ tipo_empresa }}";
+    const esRestaurante = (TIPO === 'restaurante');
+    const esComercio   = (TIPO === 'comercio' || TIPO === 'empresa');
+    const esPeluqueria = !esRestaurante && !esComercio;
+
+    // ── Nombre de la empresa (logo + menú móvil) ──
+    if (esRestaurante) {
+      bind('id_nombre_de_la_empresa', '.logo h1');
+      bind('id_nombre_de_la_empresa', '.menu-brand span');
+    } else if (esPeluqueria) {
+      bind('id_nombre_de_la_empresa', '.empresa-nombre');
+    } else {
+      bind('id_nombre_de_la_empresa', '.header .title');
+    }
+
+    // ── Videos (href) ──
+    function bindHref(fieldId, selector, defaultVal) {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+      const els = Array.from(doc.querySelectorAll(selector));
+      if (!els.length) return;
+      const originals = els.map(el => el.getAttribute('href'));
+      field.addEventListener('input', () => {
+        const val = field.value.trim();
+        els.forEach((el, i) => {
+          if (val) el.setAttribute('href', val);
+          else el.setAttribute('href', originals[i] || defaultVal || '');
+        });
+      });
+    }
+    if (esRestaurante) {
+      bindHref('id_video_header', '.btn-watch-video');
+      bindHref('id_video_nosotros', '.pulsating-play-btn');
+    }
+
+    // ── Header ──
+    if (esPeluqueria) {
+      bind('id_titulo_header', '.hero__caption h1');
+      bind('id_subtitulo1_header', '.hero__caption span');
+      bind('id_subtitulo2_header', '.stock-text h2');
+    } else if (esRestaurante) {
+      bind('id_titulo_header', '.hero h1');
+      bind('id_subtitulo1_header', '.hero p');
+      bind('id_subtitulo2_header', '.hero-subtitulo2');
+    } else {
+      bind('id_titulo_header', '.subtitle');
+      bind('id_subtitulo1_header', '.header-subtitulo1');
+      bind('id_subtitulo2_header', '.header-subtitulo2');
+    }
+
+    // ── About ──
+    if (esPeluqueria) {
+      bind('id_titulo_sobrenosotros', '.about-caption .section-tittle3 h2');
+      bind('id_parrafo1_sobrenosotros', '.pera-bottom');
+      bind('id_parrafo2_sobrenosotros', '.pera-top');
+    } else if (esRestaurante) {
+      bind('id_titulo_sobrenosotros', '.about-titulo');
+      bind('id_parrafo1_sobrenosotros', '.content .fst-italic');
+      bind('id_parrafo2_sobrenosotros', '.content ul li:nth-child(1) span');
+      bind('id_parrafo3_sobrenosotros', '.content ul li:nth-child(2) span');
+      bind('id_parrafo4_sobrenosotros', '.content ul li:nth-child(3) span');
+      bind('id_parrafo5_sobrenosotros', '.content > p');
+    } else {
+      bind('id_titulo_sobrenosotros', '.about-titulo');
+      bind('id_parrafo1_sobrenosotros', '#about .section-subtitle.mb-4');
+      bind('id_parrafo2_sobrenosotros', '#about .col-md-6.pr-md-5 > p');
+      bind('id_parrafo3_sobrenosotros', '#about .col-12.mt-4 p:nth-of-type(1)');
+      bind('id_parrafo4_sobrenosotros', '#about .col-12.mt-4 p:nth-of-type(2)');
+      bind('id_parrafo5_sobrenosotros', '#about .col-12.mt-4 p:nth-of-type(3)');
+    }
+
+    // ── Services (nombre + párrafo, 3 tarjetas) ──
+    function bindCardPair(nameFieldId, textFieldId, index, containerSel, nameSel, textSel) {
+      const nameField = document.getElementById(nameFieldId);
+      const textField = document.getElementById(textFieldId);
+      const card = doc.querySelectorAll(containerSel)[index];
+      if (!card) return;
+      const bindOne = (field, sel, prefix, suffix) => {
+        if (!field) return;
+        const el = sel ? card.querySelector(sel) : null;
+        const original = el ? el.textContent : '';
+        if (el && !field.value.trim()) {
+          field.setAttribute('placeholder', (prefix||'') + el.textContent.trim() + (suffix||''));
+        }
+        field.addEventListener('input', () => {
+          if (el) el.textContent = field.value.trim() ? (prefix||'') + field.value.trim() + (suffix||'') : original;
+        });
+      };
+      bindOne(nameField, nameSel);
+      bindOne(textField, textSel);
+    }
+    if (esPeluqueria) {
+      for (let i = 0; i < 3; i++) {
+        bindCardPair('id_nombre_servicio' + (i+1), 'id_parrafo_servicios' + (i+1), i, '.service-cap', 'h4 a', 'p');
+      }
+    } else if (esRestaurante) {
+      for (let i = 0; i < 4; i++) {
+        bindCardPair('id_nombre_servicio' + (i+1), 'id_parrafo_servicios' + (i+1), i, '.event-item', 'h3', '.description');
+      }
+    } else {
+      for (let i = 0; i < 3; i++) {
+        bindCardPair('id_nombre_servicio' + (i+1), 'id_parrafo_servicios' + (i+1), i, '.card', '.card-title', '.mb-0');
+      }
+    }
+
+    // ── Team (3 miembros) ──
+    function bindTeam(i) {
+      const field = document.getElementById(
+        esRestaurante ? 'id_nombre_chef' + (i+1) : 'id_nombre_trabajador' + (i+1)
+      );
+      if (!field) return;
+      let a = null;
+      if (esPeluqueria) {
+        const card = doc.querySelectorAll('.team-caption')[i];
+        a = card ? card.querySelector('h3 a') : null;
+      } else if (esRestaurante) {
+        const card = doc.querySelectorAll('.member-info')[i];
+        a = card ? card.querySelector('h4') : null;
+      }
+      if (!a) return;
+      if (!field.value.trim()) {
+        field.setAttribute('placeholder', a.textContent.trim());
+      }
+      const original = a.textContent;
+      field.addEventListener('input', () => {
+        a.textContent = field.value.trim() || original;
+      });
+    }
+    for (let i = 0; i < 3; i++) bindTeam(i);
+
+    // ── Pricing / Menú (precios) ──
+    if (esPeluqueria) {
+      const pricingItems = doc.querySelectorAll('.pricing-list li');
+      for (let i = 0; i < 10; i++) {
+        const num = i + 1;
+        const nameField = document.getElementById('id_nombre_servicio' + num + '_tarifa');
+        const priceField = document.getElementById('id_precio_servicio' + num + '_tarifa');
+        if (pricingItems[i]) {
+          const span = pricingItems[i].querySelector('span');
+          const originalName = pricingItems[i].childNodes[0].textContent;
+          const originalPrice = span ? span.textContent : '';
+          if (nameField) {
+            if (!nameField.value.trim()) {
+              let name = originalName.replace(/\./g, '').trim();
+              if (name) nameField.setAttribute('placeholder', name);
+            }
+            nameField.addEventListener('input', () => {
+              const dots = '. . . . . . . ';
+              pricingItems[i].childNodes[0].textContent =
+                nameField.value.trim() ? ' ' + nameField.value.trim() + dots : originalName;
+            });
+          }
+          if (priceField) {
+            if (!priceField.value.trim()) {
+              if (span) {
+                priceField.setAttribute('placeholder', span.textContent.replace(/C\$/, ''));
+              }
+            }
+            priceField.addEventListener('input', () => {
+              if (span) {
+                span.textContent = priceField.value.trim() ? 'C$' + priceField.value.trim() : originalPrice;
+              }
+            });
+          }
+        }
+      }
+    } else if (esRestaurante) {
+      const menuItems = doc.querySelectorAll('.menu-item');
+      for (let i = 0; i < 10; i++) {
+        const num = i + 1;
+        const nameField = document.getElementById('id_nombre' + num + '_plato_menu');
+        const descField = document.getElementById('id_descriptcion' + num + '_plato_menu');
+        const priceField = document.getElementById('id_precio' + num + '_plato_menu');
+        if (menuItems[i]) {
+          const nameEl = menuItems[i].querySelector('h4');
+          const descEl = menuItems[i].querySelector('.ingredients');
+          const priceEl = menuItems[i].querySelector('.price');
+          const bindPlato = (field, el, prefix, suffix) => {
+            if (!field) return;
+            const original = el ? el.textContent : '';
+            if (!field.value.trim() && el) {
+              let txt = el.textContent.trim();
+              if (prefix && txt.startsWith(prefix)) txt = txt.slice(prefix.length).trim();
+              field.setAttribute('placeholder', (prefix||'') + txt + (suffix||''));
+            }
+            field.addEventListener('input', () => {
+              if (el) el.textContent = field.value.trim() ? (prefix||'') + field.value.trim() + (suffix||'') : original;
+            });
+          };
+          bindPlato(nameField, nameEl);
+          bindPlato(descField, descEl);
+          bindPlato(priceField, priceEl, 'C$');
+        }
+      }
+      // Pricing / tarifas (10 servicios con su precio)
+      const pricingItems = doc.querySelectorAll('.pricing-list li');
+      for (let i = 0; i < 10; i++) {
+        const num = i + 1;
+        const nameField = document.getElementById('id_nombre_servicio' + num + '_tarifa');
+        const priceField = document.getElementById('id_precio_servicio' + num + '_tarifa');
+        if (pricingItems[i]) {
+          const span = pricingItems[i].querySelector('span');
+          const originalName = pricingItems[i].childNodes[0].textContent;
+          const originalPrice = span ? span.textContent : '';
+          if (nameField) {
+            if (!nameField.value.trim()) {
+              let name = originalName.replace(/\./g, '').trim();
+              if (name) nameField.setAttribute('placeholder', name);
+            }
+            nameField.addEventListener('input', () => {
+              const dots = '. . . . . . . ';
+              pricingItems[i].childNodes[0].textContent =
+                nameField.value.trim() ? ' ' + nameField.value.trim() + dots : originalName;
+            });
+          }
+          if (priceField) {
+            if (!priceField.value.trim()) {
+              if (span) {
+                priceField.setAttribute('placeholder', span.textContent.replace(/C\$/, ''));
+              }
+            }
+            priceField.addEventListener('input', () => {
+              if (span) {
+                span.textContent = priceField.value.trim() ? 'C$' + priceField.value.trim() : originalPrice;
+              }
+            });
+          }
+        }
+      }
+    } else {
+      const priceItems = doc.querySelectorAll('.content-holder');
+      for (let i = 0; i < 10; i++) {
+        const num = i + 1;
+        const nameField = document.getElementById('id_nombre_servicio' + num + '_tarifa');
+        const priceField = document.getElementById('id_precio_servicio' + num + '_tarifa');
+        if (priceItems[i]) {
+          const nameEl = priceItems[i].querySelector('.subtitle');
+          const priceEl = priceItems[i].querySelector('.title');
+          if (nameField) {
+            if (!nameField.value.trim() && nameEl) {
+              nameField.setAttribute('placeholder', nameEl.textContent.replace(/!/g, '').trim());
+            }
+            const originalName = nameEl ? nameEl.textContent : '';
+            nameField.addEventListener('input', () => {
+              if (nameEl) nameEl.textContent = nameField.value.trim() ? nameField.value.trim() + '!' : originalName;
+            });
+          }
+          if (priceField) {
+            if (!priceField.value.trim() && priceEl) {
+              priceField.setAttribute('placeholder', priceEl.textContent.replace('Precio:', '').trim());
+            }
+            const originalPrice = priceEl ? priceEl.textContent : '';
+            priceField.addEventListener('input', () => {
+              if (priceEl) priceEl.textContent = priceField.value.trim() ? 'Precio:' + priceField.value.trim() : originalPrice;
+            });
+          }
+        }
+      }
+    }
+
+    // ── Contact / Footer ──
+    if (esPeluqueria) {
+      bind('id_telefono', '.footer-phone');
+      bind('id_email', '.footer-email');
+      bind('id_horario', '.footer-horario');
+      bind('id_direccion', '.footer-direccion');
+      bind('id_ciudad', '.footer-ciudad');
+      bind('id_pais', '.footer-pais');
+    } else if (esRestaurante) {
+      bind('id_telefono', '.footer-phone');
+      bind('id_email', '.footer-email');
+      bind('id_horario', '.footer-schedule');
+      bind('id_horario', '.contact-schedule span');
+      bind('id_direccion', '.address p:first-of-type');
+      bind('id_ciudad', '.footer-ciudad');
+      bind('id_pais', '.footer-pais');
+    } else {
+      bind('id_telefono', '#contact .col-md-5 p:nth-of-type(1)');
+      bind('id_direccion', '#contact .col-md-5 p:nth-of-type(2)');
+      bind('id_ciudad', '.contact-ciudad');
+      bind('id_pais', '.contact-pais');
+      bind('id_horario', '#contact .col-md-5 p:nth-of-type(4)');
+      bind('id_email', '#contact .col-md-5 p:nth-of-type(5)');
+    }
+
+    // ── Comentarios (3 testimonios: párrafo + nombre) ──
+    function bindComment(parrafoId, nombreId, index, containerSel, parrafoSel, nombreSel) {
+      const parrafoField = document.getElementById(parrafoId);
+      const nombreField = document.getElementById(nombreId);
+      const items = doc.querySelectorAll(containerSel);
+      const item = items[index];
+      if (!item) return;
+      const pEl = item.querySelector(parrafoSel);
+      const nEl = item.querySelector(nombreSel);
+      const bindCommentField = (field, el) => {
+        if (!field || !el) return;
+        const original = el.textContent;
+        if (!field.value.trim()) {
+          field.setAttribute('placeholder', original.replace(/\.\s*$/, '').trim());
+        }
+        field.addEventListener('input', () => {
+          el.textContent = field.value.trim() ? field.value.trim() + '.' : original;
+        });
+      };
+      bindCommentField(parrafoField, pEl);
+      bindCommentField(nombreField, nEl);
+    }
+    if (esPeluqueria) {
+      for (let i = 0; i < 3; i++) {
+        bindComment(
+          'id_parrafo' + (i+1) + '_comentario', 'id_nombre' + (i+1) + '_comentario',
+          i, '.testimonial-card', '.testimonial-parrafo', '.testimonial-nombre'
+        );
+      }
+    } else if (esRestaurante) {
+      for (let i = 0; i < 3; i++) {
+        bindComment(
+          'id_parrafo' + (i+1) + '_comentario', 'id_nombre' + (i+1) + '_comentario',
+          i, '.testimonial-content', 'span', 'h3'
+        );
+      }
+    } else if (esComercio) {
+      for (let i = 0; i < 3; i++) {
+        bindComment(
+          'id_parrafo' + (i+1) + '_comentario', 'id_nombre' + (i+1) + '_comentario',
+          i, '#testmonial .card', 'p.mb-0', 'h6'
+        );
+      }
+    }
+
+    // ── Menú de regalo (detalles de los modales, restaurante) ──
+    if (esRestaurante) {
+      const modalSels = ['#modalDetalles #modalContenido', '#modalDetalles2 #modalContenido', '#modalDetalles3 #modalContenido'];
+      for (let i = 0; i < 3; i++) {
+        const field = document.getElementById('id_menu_oferta' + (i+1));
+        const el = doc.querySelector(modalSels[i]);
+        if (!field || !el) continue;
+        const original = el.innerHTML;
+        if (!field.value.trim()) {
+          field.setAttribute('placeholder', el.textContent.trim());
+        }
+        field.addEventListener('input', () => {
+          el.innerHTML = field.value.trim() ? '<p>' + field.value.trim() + '</p>' : original;
+        });
+      }
+    }
+
+    // ── Gallery title ──
+    if (esPeluqueria) {
+      bind('id_titulo1_galeria', '.gallery-area .section-tittle h2');
+    } else if (esRestaurante) {
+      bind('id_titulo1_galeria', '#gallery .section-title h2');
+    } else if (esComercio) {
+      bind('id_titulo1_galeria', '#portfolio .section-title');
+    }
+
+    // ── Services title ──
+    if (esPeluqueria) {
+      bind('id_titulo_servicios', '.service-area .section-tittle h2');
+    } else if (esRestaurante) {
+      bind('id_titulo_servicios', '.events-titulo');
+    } else if (esComercio) {
+      bind('id_titulo_servicios', '.section-subtitle.text-center');
+    }
+
+    // ── Pricing title ──
+    if (esPeluqueria || esRestaurante) {
+      bind('id_titulo_tarifa', '.pricing-title');
+    }
+
+    // ── Team title ──
+    if (esPeluqueria) {
+      bind('id_titulo_trabajadores', '.team-area .section-tittle h2');
+    } else if (esRestaurante) {
+      bind('id_titulo_trabajadores', '#chefs .section-title h2');
+    }
+
+    // ── Logo image live preview ──
+    const logoInput = document.getElementById('id_imagen_logo_empresa');
+    if (logoInput) {
+      logoInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const url = URL.createObjectURL(this.files[0]);
+          const logos = doc.querySelectorAll('.logo img, .footer-logo img, .preloader-img img, .navbar-brand img');
+          logos.forEach(img => img.src = url);
+        }
+      });
+    }
+
+    // ── Background header image preview ──
+    const bgInput = document.getElementById('id_imagen_fondo_header');
+    if (bgInput) {
+      bgInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+          const url = URL.createObjectURL(this.files[0]);
+          const headers = doc.querySelectorAll('.header, .hero, .slider-area');
+          headers.forEach(header => {
+            header.style.backgroundImage = `url(${url})`;
+          });
+        }
+      });
+    }
+
+    if (esRestaurante) {
+      bindCheckbox('id_header_activo', '#hero');
+      bindCheckbox('id_quienes_somos_activo', '#about');
+      bindCheckbox('id_menu_regalo_activo', '#why-us');
+      bindCheckbox('id_clientes_activo', '#stats');
+      bindCheckbox('id_platos_menu_activo', '#menu');
+      bindCheckbox('id_comentarios_activo', '#testimonials');
+      bindCheckbox('id_eventos_activo', '#events');
+      bindCheckbox('id_chefs_activo', '#chefs');
+      bindCheckbox('id_reservar_activo', '#book-a-table');
+      bindCheckbox('id_galeria_activo', '#gallery');
+      bindCheckbox('id_contactar_activo', '#contact');
+    } else if (esPeluqueria) {
+      bindCheckbox('id_header_activo', '.slider-area');
+      bindCheckbox('id_quienes_somos_activo', '.about-area');
+      bindCheckbox('id_servicios_activo', '.service-area');
+      bindCheckbox('id_trabajadores_activo', '.team-area');
+      bindCheckbox('id_tarifa_activo', '.best-pricing');
+      bindCheckbox('id_galeria_activo', '.gallery-area');
+    } else if (esComercio) {
+      bindCheckbox('id_header_activo', '.header');
+      bindCheckbox('id_quienes_somos_activo', '#about');
+      bindCheckbox('id_servicios_activo', '#service');
+      bindCheckbox('id_tarifa_activo', '#pricing');
+      bindCheckbox('id_comentarios_activo', '#testmonial');
+      bindCheckbox('id_contactar_activo', '#contact');
+    }
+
+    bound = true;
+  }
+
+  // Registrar el bindeo en cada carga del iframe y también si ya cargó antes
+  // de que este script se ejecutara (caso real: el iframe termina antes que el JS).
+  iframe.addEventListener('load', bindPreview);
+  if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.innerHTML) {
+    bindPreview();
+  }
+
+  // ── Leaflet Map ──
+  const map = L.map('map').setView([40.4168, -3.7038], 6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>'
+  }).addTo(map);
+
+  let marker;
+  map.on('click', function(e) {
+    const lat = e.latlng.lat.toFixed(6);
+    const lon = e.latlng.lng.toFixed(6);
+    document.getElementById('id_latitud').value = lat;
+    document.getElementById('id_longitud').value = lon;
+    if (marker) { marker.setLatLng(e.latlng); }
+    else { marker = L.marker(e.latlng).addTo(map); }
   });
+
+});
+
+// ── WIZARD TABS LOGIC ── //
+const wizardConfig = [
+  {
+    id: "tab-header", title: "Cabecera", icon: "bi-layout-text-window-reverse",
+    groups: [
+      { type: "grid", cols: 2, fields: ["nombre_de_la_empresa", "nombreUrl"] },
+      { type: "grid", cols: 2, fields: ["header_activo", "titulo_header"] },
+      { type: "grid", cols: 2, fields: ["subtitulo1_header", "subtitulo2_header"] },
+      { type: "grid", cols: 2, fields: ["imagen_logo_empresa", "imagen_fondo_header"] },
+      { type: "grid", cols: 2, fields: ["imagen_header", "video_header"] }
+    ]
+  },
+  {
+    id: "tab-nosotros", title: "Nosotros", icon: "bi-people",
+    groups: [
+      { type: "grid", cols: 2, fields: ["quienes_somos_activo", "titulo_sobrenosotros"] },
+      { type: "grid", cols: 1, fields: ["parrafo1_sobrenosotros", "parrafo2_sobrenosotros", "parrafo3_sobrenosotros", "parrafo4_sobrenosotros", "parrafo5_sobrenosotros"] },
+      { type: "grid", cols: 3, fields: ["imagen1_nosotros", "imagen2_nosotros_fondo", "imagen3_nosotros"] },
+      { type: "grid", cols: 1, fields: ["video_nosotros"] }
+    ]
+  },
+  {
+    id: "tab-servicios", title: "Servicios", icon: "bi-briefcase",
+    groups: [
+      { type: "grid", cols: 2, fields: ["servicios_activo", "titulo_servicios"] },
+      { type: "row", title: "Servicio 1", fields: ["nombre_servicio1", "parrafo_servicios1", "imagen_servicio1"] },
+      { type: "row", title: "Servicio 2", fields: ["nombre_servicio2", "parrafo_servicios2", "imagen_servicio2"] },
+      { type: "row", title: "Servicio 3", fields: ["nombre_servicio3", "parrafo_servicios3", "imagen_servicio3"] },
+      { type: "row", title: "Servicio 4", fields: ["nombre_servicio4", "parrafo_servicios4", "imagen_servicio4"] },
+    ]
+  },
+  {
+    id: "tab-catalogo", title: "Catálogo", icon: "bi-tags",
+    groups: [
+      { type: "grid", cols: 2, fields: ["tarifa_activo", "titulo_tarifa"] },
+      { type: "grid", cols: 2, fields: ["platos_menu_activo", "menu_regalo_activo"] },
+      { type: "row", title: "Ítem 1", fields: ["nombre_servicio1_tarifa", "precio_servicio1_tarifa", "imagen_tarifa1", "menu_oferta1", "nombre1_plato_menu", "descriptcion1_plato_menu", "precio1_plato_menu", "imagen1_plato_menu"] },
+      { type: "row", title: "Ítem 2", fields: ["nombre_servicio2_tarifa", "precio_servicio2_tarifa", "imagen_tarifa2", "menu_oferta2", "nombre2_plato_menu", "descriptcion2_plato_menu", "precio2_plato_menu", "imagen2_plato_menu"] },
+      { type: "row", title: "Ítem 3", fields: ["nombre_servicio3_tarifa", "precio_servicio3_tarifa", "imagen_tarifa3", "menu_oferta3", "nombre3_plato_menu", "descriptcion3_plato_menu", "precio3_plato_menu", "imagen3_plato_menu"] },
+      { type: "row", title: "Ítem 4", fields: ["nombre_servicio4_tarifa", "precio_servicio4_tarifa", "imagen_tarifa4", "menu_oferta4", "nombre4_plato_menu", "descriptcion4_plato_menu", "precio4_plato_menu", "imagen4_plato_menu"] },
+      { type: "row", title: "Ítem 5", fields: ["nombre_servicio5_tarifa", "precio_servicio5_tarifa", "imagen_tarifa5", "menu_oferta5", "nombre5_plato_menu", "descriptcion5_plato_menu", "precio5_plato_menu", "imagen5_plato_menu"] },
+      { type: "row", title: "Ítem 6", fields: ["nombre_servicio6_tarifa", "precio_servicio6_tarifa", "imagen_tarifa6", "menu_oferta6", "nombre6_plato_menu", "descriptcion6_plato_menu", "precio6_plato_menu", "imagen6_plato_menu"] },
+      { type: "row", title: "Ítem 7", fields: ["nombre_servicio7_tarifa", "precio_servicio7_tarifa", "imagen_tarifa7", "menu_oferta7", "nombre7_plato_menu", "descriptcion7_plato_menu", "precio7_plato_menu", "imagen7_plato_menu"] },
+      { type: "row", title: "Ítem 8", fields: ["nombre_servicio8_tarifa", "precio_servicio8_tarifa", "imagen_tarifa8", "menu_oferta8", "nombre8_plato_menu", "descriptcion8_plato_menu", "precio8_plato_menu", "imagen8_plato_menu"] },
+      { type: "row", title: "Ítem 9", fields: ["nombre_servicio9_tarifa", "precio_servicio9_tarifa", "imagen_tarifa9", "menu_oferta9", "nombre9_plato_menu", "descriptcion9_plato_menu", "precio9_plato_menu", "imagen9_plato_menu"] },
+      { type: "row", title: "Ítem 10", fields: ["nombre_servicio10_tarifa", "precio_servicio10_tarifa", "imagen_tarifa10", "menu_oferta10", "nombre10_plato_menu", "descriptcion10_plato_menu", "precio10_plato_menu", "imagen10_plato_menu"] },
+    ]
+  },
+  {
+    id: "tab-equipo", title: "Equipo", icon: "bi-person-badge",
+    groups: [
+      { type: "grid", cols: 3, fields: ["chefs_activo", "trabajadores_activo", "titulo_trabajadores"] },
+      { type: "row", title: "Miembro 1", fields: ["nombre_trabajador1", "imagen_trabajador1", "nombre_chef1", "imagen_chef1"] },
+      { type: "row", title: "Miembro 2", fields: ["nombre_trabajador2", "imagen_trabajador2", "nombre_chef2", "imagen_chef2"] },
+      { type: "row", title: "Miembro 3", fields: ["nombre_trabajador3", "imagen_trabajador3", "nombre_chef3", "imagen_chef3"] },
+    ]
+  },
+  {
+    id: "tab-galeria", title: "Galería", icon: "bi-images",
+    groups: [
+      { type: "grid", cols: 2, fields: ["galeria_activo", "titulo1_galeria"] },
+      { type: "grid", cols: 3, fields: ["imagen1_galeria", "imagen2_galeria", "imagen3_galeria", "imagen4_galeria", "imagen5_galeria", "imagen6_galeria", "imagen7_galeria", "imagen8_galeria", "imagen9_galeria", "imagen10_galeria", "imagen11_galeria"] }
+    ]
+  },
+  {
+    id: "tab-testimonios", title: "Reseñas", icon: "bi-chat-quote",
+    groups: [
+      { type: "grid", cols: 1, fields: ["comentarios_activo"] },
+      { type: "row", title: "Reseña 1", fields: ["nombre1_comentario", "parrafo1_comentario", "imagen1_comentario"] },
+      { type: "row", title: "Reseña 2", fields: ["nombre2_comentario", "parrafo2_comentario", "imagen2_comentario"] },
+      { type: "row", title: "Reseña 3", fields: ["nombre3_comentario", "parrafo3_comentario", "imagen3_comentario"] },
+    ]
+  },
+  {
+    id: "tab-contacto", title: "Contacto", icon: "bi-geo-alt",
+    groups: [
+      { type: "grid", cols: 2, fields: ["contactar_activo", "reservar_activo", "clientes_activo", "eventos_activo"] },
+      { type: "grid", cols: 2, fields: ["telefono", "email", "direccion", "ciudad", "pais", "horario"] },
+      { type: "grid", cols: 2, fields: ["latitud", "longitud", "imagen_portada", "imagen_portada_reserva"] }
+    ]
+  }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tabsContainer = document.getElementById('wizardTabs');
+  const contentContainer = document.getElementById('wizardContent');
+  const originalFields = document.getElementById('original-form-fields');
+  
+  if(!tabsContainer || !originalFields) return;
+
+  const getFieldNode = (name) => originalFields.querySelector(`[data-name="${name}"]`);
+  
+
+  const TIPO_UI = "{{ tipo_empresa }}";
+  let allowedFields = [];
+  if (TIPO_UI === 'restaurante') {
+    allowedFields = [
+      "nombre_de_la_empresa", "nombreUrl", "header_activo", "titulo_header", "subtitulo1_header", "subtitulo2_header", "video_header", "imagen_logo_empresa", "imagen_fondo_header", "imagen_header",
+      "quienes_somos_activo", "titulo_sobrenosotros", "parrafo1_sobrenosotros", "parrafo2_sobrenosotros", "parrafo3_sobrenosotros", "parrafo4_sobrenosotros", "parrafo5_sobrenosotros", "video_nosotros", "imagen1_nosotros", "imagen2_nosotros_fondo", "imagen3_nosotros",
+      "menu_regalo_activo", "clientes_activo", "platos_menu_activo", "titulo_tarifa", 
+      "nombre1_plato_menu", "descriptcion1_plato_menu", "precio1_plato_menu", "imagen1_plato_menu", 
+      "nombre2_plato_menu", "descriptcion2_plato_menu", "precio2_plato_menu", "imagen2_plato_menu", 
+      "nombre3_plato_menu", "descriptcion3_plato_menu", "precio3_plato_menu", "imagen3_plato_menu", 
+      "nombre4_plato_menu", "descriptcion4_plato_menu", "precio4_plato_menu", "imagen4_plato_menu", 
+      "nombre5_plato_menu", "descriptcion5_plato_menu", "precio5_plato_menu", "imagen5_plato_menu", 
+      "nombre6_plato_menu", "descriptcion6_plato_menu", "precio6_plato_menu", "imagen6_plato_menu", 
+      "nombre7_plato_menu", "descriptcion7_plato_menu", "precio7_plato_menu", "imagen7_plato_menu", 
+      "nombre8_plato_menu", "descriptcion8_plato_menu", "precio8_plato_menu", "imagen8_plato_menu", 
+      "nombre9_plato_menu", "descriptcion9_plato_menu", "precio9_plato_menu", "imagen9_plato_menu", 
+      "nombre10_plato_menu", "descriptcion10_plato_menu", "precio10_plato_menu", "imagen10_plato_menu",
+      "eventos_activo", "chefs_activo", "titulo_trabajadores", "nombre_chef1", "imagen_chef1", "nombre_chef2", "imagen_chef2", "nombre_chef3", "imagen_chef3",
+      "reservar_activo", "imagen_portada_reserva",
+      "galeria_activo", "titulo1_galeria", "imagen1_galeria", "imagen2_galeria", "imagen3_galeria", "imagen4_galeria", "imagen5_galeria", "imagen6_galeria", "imagen7_galeria", "imagen8_galeria",
+      "comentarios_activo", "nombre1_comentario", "parrafo1_comentario", "imagen1_comentario", "nombre2_comentario", "parrafo2_comentario", "imagen2_comentario", "nombre3_comentario", "parrafo3_comentario", "imagen3_comentario",
+      "contactar_activo", "telefono", "email", "direccion", "ciudad", "pais", "horario", "latitud", "longitud", "imagen_portada"
+    ];
+  } else if (TIPO_UI === 'comercio' || TIPO_UI === 'empresa') {
+    allowedFields = [
+      "nombre_de_la_empresa", "nombreUrl", "header_activo", "titulo_header", "subtitulo1_header", "subtitulo2_header", "imagen_logo_empresa", "imagen_fondo_header", "imagen_header",
+      "quienes_somos_activo", "titulo_sobrenosotros", "parrafo1_sobrenosotros", "parrafo2_sobrenosotros", "parrafo3_sobrenosotros", "parrafo4_sobrenosotros", "parrafo5_sobrenosotros", "imagen1_nosotros",
+      "servicios_activo", "titulo_servicios", "nombre_servicio1", "parrafo_servicios1", "imagen_servicio1", "nombre_servicio2", "parrafo_servicios2", "imagen_servicio2", "nombre_servicio3", "parrafo_servicios3", "imagen_servicio3", "nombre_servicio4", "parrafo_servicios4", "imagen_servicio4",
+      "tarifa_activo", "titulo_tarifa", "nombre_servicio1_tarifa", "precio_servicio1_tarifa", "imagen_tarifa1", "nombre_servicio2_tarifa", "precio_servicio2_tarifa", "imagen_tarifa2", "nombre_servicio3_tarifa", "precio_servicio3_tarifa", "imagen_tarifa3", "nombre_servicio4_tarifa", "precio_servicio4_tarifa", "imagen_tarifa4",
+      "comentarios_activo", "nombre1_comentario", "parrafo1_comentario", "imagen1_comentario", "nombre2_comentario", "parrafo2_comentario", "imagen2_comentario", "nombre3_comentario", "parrafo3_comentario", "imagen3_comentario",
+      "contactar_activo", "telefono", "email", "direccion", "ciudad", "pais", "horario", "latitud", "longitud", "imagen_portada"
+    ];
+  } else {
+    // Peluqueria
+    allowedFields = [
+      "nombre_de_la_empresa", "nombreUrl", "header_activo", "titulo_header", "subtitulo1_header", "subtitulo2_header", "imagen_logo_empresa", "imagen_fondo_header", "imagen_header",
+      "quienes_somos_activo", "titulo_sobrenosotros", "parrafo1_sobrenosotros", "parrafo2_sobrenosotros", "parrafo3_sobrenosotros", "parrafo4_sobrenosotros", "parrafo5_sobrenosotros", "imagen1_nosotros", "imagen2_nosotros_fondo", "imagen3_nosotros",
+      "servicios_activo", "titulo_servicios", "nombre_servicio1", "parrafo_servicios1", "imagen_servicio1", "nombre_servicio2", "parrafo_servicios2", "imagen_servicio2", "nombre_servicio3", "parrafo_servicios3", "imagen_servicio3", "nombre_servicio4", "parrafo_servicios4", "imagen_servicio4",
+      "trabajadores_activo", "titulo_trabajadores", "nombre_trabajador1", "imagen_trabajador1", "nombre_trabajador2", "imagen_trabajador2", "nombre_trabajador3", "imagen_trabajador3",
+      "tarifa_activo", "titulo_tarifa", "nombre_servicio1_tarifa", "precio_servicio1_tarifa", "imagen_tarifa1", "nombre_servicio2_tarifa", "precio_servicio2_tarifa", "imagen_tarifa2", "nombre_servicio3_tarifa", "precio_servicio3_tarifa", "imagen_tarifa3", "nombre_servicio4_tarifa", "precio_servicio4_tarifa", "imagen_tarifa4", "nombre_servicio5_tarifa", "precio_servicio5_tarifa", "imagen_tarifa5", "nombre_servicio6_tarifa", "precio_servicio6_tarifa", "imagen_tarifa6", "nombre_servicio7_tarifa", "precio_servicio7_tarifa", "imagen_tarifa7", "nombre_servicio8_tarifa", "precio_servicio8_tarifa", "imagen_tarifa8", "nombre_servicio9_tarifa", "precio_servicio9_tarifa", "imagen_tarifa9", "nombre_servicio10_tarifa", "precio_servicio10_tarifa", "imagen_tarifa10",
+      "galeria_activo", "titulo1_galeria", "imagen1_galeria", "imagen2_galeria", "imagen3_galeria", "imagen4_galeria", "imagen5_galeria", "imagen6_galeria", "imagen7_galeria", "imagen8_galeria", "imagen9_galeria", "imagen10_galeria", "imagen11_galeria",
+      "telefono", "email", "direccion", "ciudad", "pais", "horario"
+    ];
+  }
+
+  // Filter wizardConfig
+  const activeTabs = [];
+  wizardConfig.forEach(tab => {
+    const filteredGroups = [];
+    tab.groups.forEach(group => {
+      group.fields = group.fields.filter(f => allowedFields.includes(f));
+      if (group.fields.length > 0) {
+        filteredGroups.push(group);
+      }
+    });
+    if (filteredGroups.length > 0) {
+      tab.groups = filteredGroups;
+      activeTabs.push(tab);
+    }
+  });
+  
+  // Use activeTabs for rendering
+
+  activeTabs.forEach((tab, index) => {
+    // 1. Create Tab Button
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
+    btn.innerHTML = `<i class="${tab.icon}"></i> ${tab.title}`;
+    btn.onclick = () => activateTab(tab.id, btn);
+    tabsContainer.appendChild(btn);
+    
+    // 2. Create Tab Pane
+    const pane = document.createElement('div');
+    pane.id = tab.id;
+    pane.className = `tab-pane ${index === 0 ? 'active' : ''}`;
+    
+    let hasFieldsInPane = false;
+
+    // 3. Populate Pane
+    tab.groups.forEach(group => {
+      let groupNode = null;
+      let activeFieldsInGroup = 0;
+      
+      if (group.type === 'grid') {
+         groupNode = document.createElement('div');
+         groupNode.className = `field-row cols-${group.cols}`;
+      } else if (group.type === 'row') {
+         groupNode = document.createElement('div');
+         groupNode.className = 'compact-group';
+         if(group.title) {
+            const titleNode = document.createElement('div');
+            titleNode.className = 'compact-group-title';
+            titleNode.textContent = group.title;
+            groupNode.appendChild(titleNode);
+         }
+         const rowGrid = document.createElement('div');
+         // We will set cols based on how many fields actually exist
+         rowGrid.className = 'field-row';
+         groupNode.appendChild(rowGrid);
+         groupNode._grid = rowGrid;
+      }
+      
+      const targetContainer = group.type === 'row' ? groupNode._grid : groupNode;
+
+      group.fields.forEach(fName => {
+         const node = getFieldNode(fName);
+         if (node) {
+            // Add a visibility toggle to text inputs and textareas
+            const inputEl = node.querySelector('input:not([type="checkbox"]):not([type="file"]):not([type="hidden"]), textarea');
+            if(inputEl) {
+                const labelEl = node.querySelector('label');
+                if(labelEl && !node.querySelector('.hide-field-btn')) {
+                    // Wrap label text to prevent awkward wrapping
+                    const textSpan = document.createElement('span');
+                    textSpan.innerHTML = labelEl.innerHTML;
+                    textSpan.style.flex = '1';
+                    textSpan.style.paddingRight = '8px';
+                    
+                    labelEl.innerHTML = '';
+                    labelEl.appendChild(textSpan);
+                    
+                    labelEl.style.display = 'flex';
+                    labelEl.style.justifyContent = 'space-between';
+                    labelEl.style.alignItems = 'center';
+                    
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'hide-field-btn';
+                    // Premium pill styling
+                    btn.style.padding = '3px 8px';
+                    btn.style.fontSize = '10px';
+                    btn.style.borderRadius = '12px';
+                    btn.style.border = 'none';
+                    btn.style.fontWeight = '600';
+                    btn.style.display = 'inline-flex';
+                    btn.style.alignItems = 'center';
+                    btn.style.gap = '4px';
+                    btn.style.cursor = 'pointer';
+                    btn.style.transition = 'all 0.2s ease';
+                    btn.style.outline = 'none';
+                    
+                    const setVisible = () => {
+                        btn.innerHTML = '<i class="bi bi-eye"></i> Visible';
+                        btn.style.background = '#e2e8f0';
+                        btn.style.color = '#475569';
+                    };
+                    
+                    const setHidden = () => {
+                        btn.innerHTML = '<i class="bi bi-eye-slash-fill"></i> Oculto';
+                        btn.style.background = '#fee2e2';
+                        btn.style.color = '#ef4444';
+                    };
+                    
+                    // State initialization
+                    if (inputEl.value === ' ') {
+                        setHidden();
+                        inputEl.readOnly = true;
+                        inputEl.style.opacity = '0.5';
+                    } else {
+                        setVisible();
+                        inputEl._savedValue = inputEl.value;
+                    }
+                    
+                    btn.onclick = function() {
+                        if (inputEl.readOnly) {
+                            // Turn ON
+                            inputEl.readOnly = false;
+                            inputEl.style.opacity = '1';
+                            inputEl.value = inputEl._savedValue || '';
+                            setVisible();
+                        } else {
+                            // Turn OFF
+                            inputEl._savedValue = inputEl.value;
+                            inputEl.value = ' ';
+                            inputEl.readOnly = true;
+                            inputEl.style.opacity = '0.5';
+                            setHidden();
+                        }
+                    };
+                    labelEl.appendChild(btn);
+                }
+            }
+            targetContainer.appendChild(node);
+            activeFieldsInGroup++;
+            hasFieldsInPane = true;
+         }
+      });
+      
+      if (activeFieldsInGroup > 0) {
+         if(group.type === 'row') {
+            targetContainer.classList.add(`cols-${Math.min(activeFieldsInGroup, 3)}`);
+         }
+         pane.appendChild(groupNode);
+      }
+    });
+
+    if (hasFieldsInPane) {
+      contentContainer.appendChild(pane);
+    } else {
+      // If pane has no fields (e.g. they don't apply to this template), hide the tab!
+      btn.style.display = 'none';
+    }
+  });
+  
+  // Any fields left in original container? Move them to an 'Otros' tab to be safe.
+  if (originalFields.children.length > 0) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tab-btn';
+      btn.innerHTML = `<i class="bi bi-three-dots"></i> Otros`;
+      btn.onclick = () => activateTab('tab-otros', btn);
+      tabsContainer.appendChild(btn);
+      
+      const pane = document.createElement('div');
+      pane.id = 'tab-otros';
+      pane.className = 'tab-pane';
+      
+      const grid = document.createElement('div');
+      grid.className = 'field-row cols-2';
+      
+      while(originalFields.firstChild) {
+          grid.appendChild(originalFields.firstChild);
+      }
+      pane.appendChild(grid);
+      contentContainer.appendChild(pane);
+  }
+
+  function activateTab(tabId, btnElement) {
+    // Deactivate all
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    
+    // Activate target
+    btnElement.classList.add('active');
+    const pane = document.getElementById(tabId);
+    if(pane) pane.classList.add('active');
+    
+    // Attempt to scroll the iframe to matching section
+    scrollIframeTo(tabId);
+  }
+  
+  function scrollIframeTo(tabId) {
+     const iframe = document.getElementById('previewIframe');
+     if(!iframe || !iframe.contentWindow) return;
+     
+     const map = {
+        'tab-header': 'header',
+        'tab-nosotros': '#about, .about-area',
+        'tab-servicios': '#service, .service-area',
+        'tab-catalogo': '#portfolio, .pricing-area, .menu-area',
+        'tab-equipo': '#team, .team-area, #chefs',
+        'tab-galeria': '#gallery, .gallery-area',
+        'tab-testimonios': '#testmonial, .testimonial-area',
+        'tab-contacto': '#contact, .footer-area'
+     };
+     
+     const selector = map[tabId];
+     if(selector) {
+        try {
+           const doc = iframe.contentWindow.document;
+           const el = doc.querySelector(selector);
+           if(el) {
+              el.scrollIntoView({behavior: 'smooth', block: 'start'});
+           }
+        } catch(e) { } // Cross-origin might block if not loaded yet
+     }
+    }
+  }
+  
+  // ── Form Submission Interception for SweetAlert ──
+  const formElement = document.getElementById('empresaForm');
+  if (formElement) {
+      formElement.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const submitBtn = formElement.querySelector('button[type="submit"]');
+          const originalText = submitBtn ? submitBtn.innerHTML : 'Guardar';
+          if (submitBtn) {
+              submitBtn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation: spin 1s linear infinite;"></i> Guardando...';
+              submitBtn.disabled = true;
+          }
+          
+          const formData = new FormData(formElement);
+          const slug = document.getElementById('id_nombreUrl') ? document.getElementById('id_nombreUrl').value : '';
+          const fullUrl = 'mundonica.org/' + slug;
+          
+          fetch(formElement.action, {
+              method: 'POST',
+              body: formData,
+              headers: { 'X-Requested-With': 'XMLHttpRequest' }
+          })
+          .then(response => {
+              if (response.redirected) {
+                  // Success! Form valid and redirected
+                  Swal.fire({
+                      title: '¡Sitio Web Creado!',
+                      html: `
+                          <div style="font-size: 1.05rem; margin-bottom: 20px; color: #475569;">
+                              Tu negocio ya está online y configurado con éxito.
+                          </div>
+                          <div style="background: #f8fafc; padding: 12px 16px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; border: 1px dashed #cbd5e1; margin-bottom: 10px;">
+                              <span id="swalCopyText" style="font-weight: 700; color: #334155; font-size: 1.1rem; user-select: all; letter-spacing: 0.5px;">${fullUrl}</span>
+                              <button id="swalCopyBtn" type="button" style="background: #6366f1; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                                  <i class="bi bi-copy"></i> Copiar
+                              </button>
+                          </div>
+                      `,
+                      icon: 'success',
+                      confirmButtonText: 'Ir a mi panel',
+                      confirmButtonColor: '#10b981',
+                      allowOutsideClick: false,
+                      didOpen: () => {
+                          document.getElementById('swalCopyBtn').addEventListener('click', () => {
+                              navigator.clipboard.writeText(fullUrl).then(() => {
+                                  const btn = document.getElementById('swalCopyBtn');
+                                  btn.innerHTML = '<i class="bi bi-check2"></i> ¡Copiado!';
+                                  btn.style.background = '#10b981';
+                                  setTimeout(() => {
+                                      btn.innerHTML = '<i class="bi bi-copy"></i> Copiar';
+                                      btn.style.background = '#6366f1';
+                                  }, 2000);
+                              });
+                          });
+                      }
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          window.location.href = response.url;
+                      }
+                  });
+              } else {
+                  // If it didn't redirect, there are form validation errors. We render the HTML returned.
+                  response.text().then(html => {
+                      document.open();
+                      document.write(html);
+                      document.close();
+                  });
+              }
+          })
+          .catch(err => {
+              console.error(err);
+              if (submitBtn) {
+                  submitBtn.innerHTML = originalText;
+                  submitBtn.disabled = false;
+              }
+          });
+      });
+  }
+});
+
 </script>
-  {% endblock %}
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
+{% endblock %}

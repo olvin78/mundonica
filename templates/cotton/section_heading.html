@@ -1,0 +1,17 @@
+<c-vars eyebrow="" title="" subtitle="" align="center" theme="dark" />
+<div
+  class="nica-container mb-10 md:mb-14 {% if align == 'center' %}text-center{% else %}text-left{% endif %}"
+  data-reveal
+>
+  {% if eyebrow %}
+    <span class="nica-eyebrow {% if theme == 'light' %}bg-white/15 text-white{% endif %}">{{ eyebrow }}</span>
+  {% endif %}
+  <h2 class="mt-4 font-heading text-3xl md:text-4xl font-bold leading-tight {% if theme == 'light' %}text-white{% else %}text-nica-ink{% endif %}">
+    {{ title }}
+  </h2>
+  {% if subtitle %}
+    <p class="mt-3 max-w-2xl text-base md:text-lg {% if align == 'center' %}mx-auto{% endif %} {% if theme == 'light' %}text-white/80{% else %}text-slate-600{% endif %}">
+      {{ subtitle }}
+    </p>
+  {% endif %}
+</div>

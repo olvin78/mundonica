@@ -43,6 +43,8 @@
   <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <!-- Tailwind CSS (utilidades para las secciones rediseñadas; preflight desactivado para no chocar con Bootstrap) -->
+  <link href="{% static 'css/tailwind.css' %}?v=1.1.4" rel="stylesheet">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DBYVGSZZ6F"></script>
   <script>
@@ -99,59 +101,65 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="{% url 'home_app:home' %}" class="active">Inicio</a></li>
-          <li><a href="{% url 'home_app:blog' %}">Blog</a></li>
-          <li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>
-          <li><a href="{% url 'home_app:galeria' %}">Galería</a></li>
-          <li><a href="{% url 'home_app:recetas' %}">Recetas</a></li>
-          <li class="dropdown"><a href="#servicios"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="{% url 'home_app:preguntas' %}">Preguntas y respuestas</a></li>
-            </ul>
-          </li>
-          <li><a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E"><strong style="color: #0067c6;">Donativos</strong></a></li>
-          <li class="dropdown"><a href="#"><span>Empresas</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="{% url 'home_app:mapa' %}">Empresas</a></li>
-              {% if user.is_authenticated %}
-                  <a href="{% url 'home_app:abogado_crear' %}">Registrarme como abogado</a>
-                  <a href="{% url 'home_app:abogado_actualizar' user.id %}">Actualizar abogado</a>
-                  <a href="{% url 'home_app:crear_tipo_empresa' 'empresa' %}">Crear Empresa</a>
-                  <a href="{% url 'home_app:crear_tipo_empresa' 'comercio' %}">Crear Comercio</a>
-                  <a href="{% url 'home_app:crear_tipo_empresa' 'peluqueria' %}">Crear Peluqueria</a>
-                  <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}">Crear Restaurante</a>
-
-                  {% for empresa in empresasDeUsuario %}
-                    <a href="{% url 'home_app:actualizar_empresa' empresa.id %}">Actualizar {{ empresa.nombre_de_la_empresa }}</a>
-                  {% endfor %}
-
-          
-                  {% endif %}
-              <li class="dropdown"><a href="#"><span>Importaciones</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Empresas de ixportación</a></li>
-                  <li><a href="#">Empresas de exportacón</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="#"><span>Extranjeros</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <!--<li><a href="#">Cultura</a></li>-->
-              <li><a href="{% url 'home_app:mapa' %}">Consulados</a></li>
-              <li><a href="{% url 'home_app:mapa' %}">Embajadas</a></li>
-              <li><a href="#">Migración</a></li>
-              <li class="dropdown"><a href="#"><span>Otros Trámites</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="{% url 'home_app:abogados' %}">Abogados</a></li>
-                  <!--<li><a href="#">Deep Dropdown 4</a></li>-->
-                </ul>
-              </li>
-              <!--<li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>-->
-            </ul>
-          </li>
-          <li><a href="{% url 'home_app:home' %}#contact">Contacto</a></li>
+          {% comment %}
+          Qué enlaces se muestran aquí se controla desde el admin de Django:
+          Inicio > Secciones del menú. Desactivar una ahí la oculta en todo el sitio.
+          {% endcomment %}
+          {% if 'inicio' in menu_activo %}
+            <li><a href="{% url 'home_app:home' %}" class="active">Inicio</a></li>
+          {% endif %}
+          {% if 'blog' in menu_activo %}
+            <li><a href="{% url 'home_app:blog' %}">Blog</a></li>
+          {% endif %}
+          {% if 'mapa' in menu_activo %}
+            <li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>
+          {% endif %}
+          {% if 'galeria' in menu_activo %}
+            <li><a href="{% url 'home_app:galeria' %}">Galería</a></li>
+          {% endif %}
+          {% if 'recetas' in menu_activo %}
+            <li><a href="{% url 'home_app:recetas' %}">Recetas</a></li>
+          {% endif %}
+          {% if 'servicios' in menu_activo %}
+            <li class="dropdown"><a href="#servicios"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a href="{% url 'home_app:preguntas' %}">Preguntas y respuestas</a></li>
+                <li class="dropdown"><a href="#"><span>Moneda</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                  <ul>
+                    <li><a href="{% url 'home_app:billetes' %}">Moneda nicaragüense</a></li>
+                    <li><a href="{% url 'home_app:billetes' %}">Cambio de moneda</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          {% endif %}
+          {% if 'donativos' in menu_activo %}
+            <li><a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E"><strong style="color: #0067c6;">Donativos</strong></a></li>
+          {% endif %}
+          {% if 'empresas' in menu_activo %}
+            <li><a href="{% url 'home_app:explorar_negocios' %}">Descubre</a></li>
+          {% endif %}
+          {% if 'extranjeros' in menu_activo %}
+            <li class="dropdown"><a href="#"><span>Extranjeros</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <!--<li><a href="#">Cultura</a></li>-->
+                <li><a href="{% url 'home_app:mapa' %}">Consulados</a></li>
+                <li><a href="{% url 'home_app:mapa' %}">Embajadas</a></li>
+                <li><a href="#">Migración</a></li>
+                <li class="dropdown"><a href="#"><span>Otros Trámites</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                  <ul>
+                    <li><a href="{% url 'home_app:abogados' %}">Abogados</a></li>
+                    <!--<li><a href="#">Deep Dropdown 4</a></li>-->
+                  </ul>
+                </li>
+                <!--<li><a href="#">Dropdown 3</a></li>
+                <li><a href="#">Dropdown 4</a></li>-->
+              </ul>
+            </li>
+          {% endif %}
+          {% if 'contacto' in menu_activo %}
+            <li><a href="{% url 'home_app:home' %}#contact">Contacto</a></li>
+          {% endif %}
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -167,37 +175,40 @@
       
       <div class="dropdown-menu">
         {% if user.is_authenticated %}
-        <a href="{% url 'home_app:credencial_usuario' user.id %}">Ver Perfil</a>
-        <div class="card-footer">
-          <a href="{% url 'home_app:actualizar_usuario' user.id %}">
-            Editar Perfil
-          </a>
+        <div class="dropdown-menu-header">
+          <span class="dropdown-menu-eyebrow">Mi cuenta</span>
+          <strong class="dropdown-menu-name">{{ user.first_name|default:user.username }}</strong>
         </div>
+        <a href="{% url 'home_app:credencial_usuario' user.id %}"><i class="bi bi-person-circle"></i> Ver perfil</a>
+        <a href="{% url 'home_app:mis_favoritos' %}"><i class="bi bi-heart-fill dropdown-menu-icon-accent"></i> Mis favoritos</a>
+        <a href="{% url 'home_app:actualizar_usuario' user.id %}"><i class="bi bi-pencil-square"></i> Editar perfil</a>
 
-        {% for empresa in empresasDeUsuario %}
-            <a href="{% url 'home_app:actualizar_empresa' empresa.id %}">Actualizar {{ empresa.nombre_de_la_empresa }}</a>
-        {% endfor %}
+        <div class="dropdown-menu-divider"></div>
+        <a href="{% url 'home_app:publicar_nuevo' %}"><i class="bi bi-plus-circle"></i> Publicar nuevo</a>
 
+        {% if empresasDeUsuario %}
+        <details class="dropdown-projects-details mt-1">
+          <summary class="dropdown-projects-summary">
+            <span><i class="bi bi-folder2-open"></i> Proyectos actuales</span>
+            <i class="bi bi-chevron-down arrow-icon"></i>
+          </summary>
+          <div class="dropdown-projects-content">
+            {% for empresa in empresasDeUsuario %}
+              <a href="{% url 'home_app:actualizar_empresa' empresa.id %}">
+                <i class="bi bi-shop"></i> {{ empresa.nombre_de_la_empresa }}
+              </a>
+            {% endfor %}
+          </div>
+        </details>
         {% endif %}
-          
-        <!-- Modal Personalizado miestras se termina de desarrollar
-          el aparatado de ver perfil y configurar ya quqe no esta del todo bien-->
 
-        <!--<div class="dropdown">
-          <a href="#">Configuración</a>
-          <ul>
-              <li><a href="#">Recuperar Contraseña</a></li>
-          </ul>
-        </div>-->
-       
-        {% if user.is_authenticated %}
-        <a href="{% url 'account_logout' %}">Cerrar Sesión</a>
+        <div class="dropdown-menu-divider"></div>
+        <a href="{% url 'account_logout' %}" class="dropdown-menu-danger"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
 
         {% else %}
 
-        <a href="{% url 'account_login' %}">Iniciar Sesión</a>
-
-        <a href="{% url 'account_signup' %}">Registrarse</a>
+        <a href="{% url 'account_login' %}"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a>
+        <a href="{% url 'account_signup' %}"><i class="bi bi-person-plus"></i> Registrarme</a>
         {% endif %}
       </div>
 
@@ -256,6 +267,7 @@
 
     <!-- Script paramiestras se desarrolla los botones de perfil y editar perfil -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <!-- Script JavaScript -->
 <script>

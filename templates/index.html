@@ -8,38 +8,38 @@
   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
   crossorigin=""
 />
-  <!--esto es para extender los estilos de la parte de los donativos-->
-
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-  <!--esto es para extender los estilos de la parte de los donativos-->
-
-  {% endblock %}
+{% endblock %}
 
 
 {% block content %}
   <main class="main">
 
-    <!-- Seccion de Inicio y la portada -->
-    <section id="hero" class="hero section dark-background">
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="relative isolate flex min-h-[640px] items-center overflow-hidden md:min-h-[88vh]" data-hero-section>
 
-      <!-- Imagen optimizada para SEO y accesibilidad -->
-      <img 
-        src="{% static 'images/nicaraguaheader.webp' %}" 
-        alt="MundoNica: Ayudando a los nicaragüenses a crear su presencia online" 
-        data-aos="fade-in" 
-        width="1200" height="600" loading="lazy">
+      <!-- Imagen grande de portada, optimizada para SEO y accesibilidad -->
+      <img
+        src="{% static 'images/nicaraguaheader.webp' %}"
+        alt="Paisaje y comunidad de Nicaragua, símbolo de MundoNica"
+        data-hero-bg
+        class="absolute inset-0 -z-20 h-[125%] w-full object-cover object-center"
+        width="1792" height="1024" loading="eager">
 
-      <!-- Contenedor del mensaje de agradecimiento de donativo -->
+      <!-- Overlays de color para legibilidad y marca -->
+      <div class="absolute inset-0 -z-10 bg-gradient-to-br from-nica-ocean/92 via-nica-ocean/75 to-nica-emerald/70"></div>
+      <div class="absolute inset-0 -z-10 bg-gradient-to-t from-nica-ink/85 via-nica-ink/10 to-transparent"></div>
+
+      <!-- Contenedor del mensaje de agradecimiento de donativo (no tocar: lo maneja donativo.js) -->
       <div id="donation-message" style="
         display: none;
         position: fixed;
-        top: 60px; /* Ajustado para no bloquear el menú */
+        top: 60px;
         left: 50%;
         transform: translateX(-50%);
-        width: 90%; /* Ancho del mensaje */
+        width: 90%;
         max-width: 800px;
-        height: 60px; /* Altura del rectángulo */
+        height: 60px;
         background: linear-gradient(45deg, rgba(25, 135, 84, 0.9), rgba(0, 103, 198, 0.9));
         color: white;
         text-align: center;
@@ -55,773 +55,589 @@
         justify-content: center;
         align-items: center;
       ">
-        <!-- Brillo sobre el texto -->
         <div class="shine"></div>
-
         <span id="donation-text">
           ¡Gracias, <span style="color: #FFD700;">[Nombre del donante]</span>! Tu apoyo ayuda a construir el futuro de MundoNica.
         </span>
-
-        <!-- Contenedor de chispas -->
         <div id="sparks"></div>
       </div>
 
-      <!--este es el apartado para mencionar los donativos-->
+      <div class="nica-container relative py-24 md:py-0">
+        <div class="max-w-2xl">
+          <span data-hero-el class="nica-eyebrow bg-white/15 text-white">
+            <i class="bi bi-geo-alt-fill"></i> Comunidad nicaragüense en España
+          </span>
 
-      <div class="container d-flex flex-column align-items-center text-center">
-        <!-- Título principal optimizado con etiqueta <h1> para SEO -->
-        <h1 data-aos="fade-up" data-aos-delay="100">Bienvenido a MundoNica</h1>
-        
-        <!-- Descripción breve y clara -->
-        <p data-aos="fade-up" data-aos-delay="200">
-          ¿Eres nicaragüense? Crea tu presencia online con tu propia web gratis y conecta con oportunidades globales.
-        </p>
-    
-        <!-- Enlace accesible con texto descriptivo -->
-        <a href="{% url 'home_app:home' %}#mapacontainer">
-          <button class="btn btn-hover text-white bg-success" aria-label="Crear una empresa en MundoNica">Crear Empresa</button>
-        </a>
-    
-        <!-- Botón de video accesible -->
-        <div data-aos="fade-up" data-aos-delay="300">
-          <a 
-            href="{% static 'assets/img/presentacion.mp4' %}" 
-            class="glightbox pulsating-play-btn mt-5" 
-            type="video" 
-            aria-label="Ver video de presentación de MundoNica">
-          </a>
-        </div>
-      </div>
-    
-    </section>
-    <!-- /Seccion de Inicio y la portada -->
+          <h1 data-hero-el class="mt-6 font-heading text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl lg:text-[3.4rem]">
+            El punto de encuentro de los negocios y proyectos nicas en España
+          </h1>
 
-    <!-- Seccion sobre Nosotros -->
-    <section id="about" class="about section">
+          <p data-hero-el class="mt-5 max-w-xl text-lg leading-relaxed text-white/85">
+            Descubre restaurantes, comercios y profesionales nicaragüenses cerca de ti en el mapa de la comunidad,
+            o publica tu negocio y gana visibilidad real. Crear tu perfil es gratis y toma solo unos minutos.
+          </p>
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Sobre</h2>
-        <h6 style="color: #2c612d;">
-         <b>"Información clave y práctica para facilitar tu camino, conectar con recursos esenciales y aprovechar al máximo las oportunidades disponibles."</b></h6>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
-            <p>"Aquí te presentamos una selección de temas con datos útiles para que te ubiques de forma simple y práctica."
-            </p>
-            <ul>
-              <li><i class="bi bi-check2-circle"></i> <span>Ubicar y facilitar información clave sobre trámites de extranjería, legales, recursos culturales, y servicios esenciales.</span></li>
-              <li><i class="bi bi-check2-circle"></i> <span>Impulsar el aprendizaje y el desarrollo en tecnología y desarrollo web, fomentando la innovación.</span></li>
-              <li><i class="bi bi-check2-circle"></i> <span>Promover la conexión entre personas, la economía local y el acceso a oportunidades de crecimiento.</span></li>
-            </ul>
+          <div data-hero-el class="mt-8 flex flex-col gap-3 sm:flex-row">
+            {% if user.is_authenticated %}
+              <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}" aria-label="Publicar mi negocio en el mapa de MundoNica" class="nica-btn-primary">
+                Publicar mi negocio gratis <i class="bi bi-arrow-right"></i>
+              </a>
+            {% else %}
+              <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Publicar mi negocio en el mapa de MundoNica" class="nica-btn-primary">
+                Publicar mi negocio gratis <i class="bi bi-arrow-right"></i>
+              </button>
+            {% endif %}
+            <a href="{% url 'home_app:mapa' %}" aria-label="Explorar el mapa de MundoNica" class="nica-btn-secondary">
+              Explorar el mapa
+            </a>
           </div>
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <p>"En esta web somos conscientes de lo difícil que puede ser encontrar información centralizada. Por eso, nos hemos dedicado a investigar y organizar datos clave para facilitar el acceso a información confiable y útil."</p>
-            <a href="{% url 'home_app:home' %}#services" class="read-morem"><span>Vamos a ello</span><i class="bi bi-arrow-right"></i></a>
+          <div data-hero-el class="mt-6">
+            <a
+              href="{% static 'assets/img/presentacion.mp4' %}"
+              class="glightbox group inline-flex items-center gap-3 text-sm font-semibold text-white/90 transition-colors hover:text-white"
+              type="video"
+              aria-label="Ver video de presentación de MundoNica">
+              <span class="relative flex h-12 w-12 flex-shrink-0 items-center justify-center">
+                <span class="absolute inset-0 animate-ping rounded-full bg-white/30 group-hover:bg-nica-emerald/40"></span>
+                <span class="relative flex h-12 w-12 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/50 backdrop-blur transition-all duration-300 group-hover:scale-110 group-hover:bg-nica-emerald group-hover:ring-nica-emerald">
+                  <i class="bi bi-play-fill translate-x-0.5 text-xl text-white"></i>
+                </span>
+              </span>
+              Ver vídeo de presentación
+            </a>
           </div>
 
+          <p data-hero-el class="mt-7 text-xs font-bold uppercase tracking-[0.16em] text-white/65">
+            Gratis · Sin comisiones · Comunidad activa en toda España
+          </p>
         </div>
-
       </div>
 
+      <a href="#stats-band" aria-label="Bajar a la siguiente sección" class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-white/70 transition-colors hover:text-white md:flex">
+        <i class="bi bi-chevron-down animate-bounce text-2xl"></i>
+      </a>
     </section>
-    <!-- /Seccion sobre Nosotros -->
+    <!-- /HERO -->
 
-    <!-- Seccion de los Services -->
-    <section id="services" class="services section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Servicios</h2>
-        <p>Necesitas información, aquí te dejamos información de diferentes sectores en una misma web.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-      
-          <!-- Trámites Migratorios -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-globe-americas" aria-hidden="true"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Trámites Migratorios</h3>
-              </a>
-              <p>Encuentra información clave sobre cómo gestionar visas, residencias temporales o permanentes, permisos de trabajo y otros procedimientos migratorios necesarios para moverte o establecerte legalmente en cualquier país.</p>
-            </div>
-          </div><!-- End Service Item -->
-      
-          <!-- Trámites Legales -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-person-bounding-box" aria-hidden="true"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Trámites Legales</h3>
-              </a>
-              <p>Accede a guías prácticas para realizar trámites legales, como certificación de documentos, poderes notariales, antecedentes penales, registros de nacimiento y procesos de nacionalización o ciudadanía.</p>
-            </div>
-          </div><!-- End Service Item -->
-      
-          <!-- Culturales -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-person-arms-up" aria-hidden="true"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Culturales</h3>
-              </a>
-              <p>Conoce sobre actividades, festivales, tradiciones y recursos culturales que conectan a los nicaragüenses con su identidad, tanto dentro como fuera del país. Una ventana a nuestras raíces y patrimonio.</p>
-            </div>
-          </div><!-- End Service Item -->
-      
-          <!-- Gastronomía -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-cup-hot" aria-hidden="true"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Gastronomía</h3>
-              </a>
-              <p>Explora lo mejor de la cocina nicaragüense, desde recetas tradicionales hasta eventos gastronómicos. Una oportunidad para disfrutar y compartir nuestra cultura a través de los sabores.</p>
-            </div>
-          </div><!-- End Service Item -->
-      
-          <!-- Económicos -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-currency-exchange" aria-hidden="true"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Económicos</h3>
-              </a>
-              <p>Infórmate sobre oportunidades económicas, desde envío de remesas hasta emprendimientos y negocios internacionales. Encuentra recursos para aprovechar al máximo las ventajas financieras disponibles.</p>
-            </div>
-          </div><!-- End Service Item -->
-      
-          <!-- Exportación -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-            <div class="service-item position-relative">
-              <div class="icon">
-                <i class="bi bi-arrows-angle-expand" aria-hidden="true"></i>
-              </div>
-              <a href="#" class="stretched-link">
-                <h3>Exportación</h3>
-              </a>
-              <p>Aprende sobre los procedimientos necesarios para exportar productos nicaragüenses al extranjero, incluyendo requisitos legales, certificaciones y estrategias para expandir tus mercados.</p>
-            </div>
-          </div><!-- End Service Item -->
-      
+    <!-- ============ PROBLEMA → SOLUCIÓN (arco psicológico: aquí se nombra el dolor antes de pedir nada) ============ -->
+    <!-- ============ BANDA DE ESTADÍSTICAS (datos reales, no cifras de marketing) ============ -->
+    <section id="stats-band" class="bg-gradient-to-r from-nica-ocean to-nica-emerald py-10 md:py-14">
+      <div class="nica-container">
+        <div class="mb-6 text-center" data-reveal>
+          <p class="mx-auto max-w-2xl text-sm font-semibold text-white/70 md:text-base">
+            Cuesta encontrar negocios nicas de confianza en España — y si tienes uno, es aún más difícil que la comunidad te encuentre a ti.
+          </p>
+          <span class="nica-eyebrow mt-3 bg-white/15 text-white">Por eso existe MundoNica</span>
+          <p class="mx-auto mt-3 max-w-xl font-semibold text-white/90">
+            Sé parte de los primeros negocios y perfiles nicas en España. Cada uno que se une ayuda a construir el mapa para toda la comunidad.
+          </p>
         </div>
-      
-      </div>
-      
 
-    </section>
-    <!-- /Seccion de los Services -->
-
-    <!-- Seccion de Donativos -->
-    <section id="call-to-action" class="call-to-action section dark-background">
-
-      <img src="{% static 'images/donacion.webp' %}" alt="">
-
-      <div class="container">
-
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
-          <div class="col-xl-9 text-center text-xl-start">
-            <h2><b>"Tu Apoyo es Nuestra Fuerza"</b></h2>
-            <h4><b>"Haz que este recurso siga creciendo. Tu donación nos permite mantener la web gratuita para todos."</b></h4>
+        {% if total_negocios >= 20 %}
+          {# Con tracción real, los números YA presumen solos: aquí sí tiene sentido enseñarlos grandes. #}
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <c-stat_card counter="{{ total_negocios }}" label="Negocios y perfiles publicados" />
+            <c-stat_card counter="{{ total_ciudades }}" label="Ciudades españolas representadas" />
+            <c-stat_card number="100%" label="Gratis, siempre" />
           </div>
-          <div class="col-xl-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E">Donativos</a>
+        {% else %}
+          <div class="mx-auto max-w-md" data-reveal>
+            <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-wide text-white/70">
+              <span>Negocios fundadores</span>
+              <span>{{ total_negocios }} / {{ meta_fundadores }}</span>
+            </div>
+            <div class="h-3 w-full overflow-hidden rounded-full bg-white/20">
+              <div class="h-full rounded-full bg-white transition-all duration-700" style="width: {% widthratio total_negocios meta_fundadores 100 %}%"></div>
+            </div>
           </div>
-        </div>
 
-      </div>
-
-    </section>
-    <!-- /Seccion de Donativos -->
-
-    <!-- Vision del Proyecto  -->
-    <section id="features" class="features section">
-
-      <div class="container">
-    
-        <div class="row gy-4">
-    
-          <!-- Imagen optimizada -->
-          <div class="features-image col-lg-6 order-lg-2" data-aos="fade-up" data-aos-delay="200">
-            <img src="{% static 'images/digitalizacion-2.webp' %}" alt="Digitalización empresarial con Mundonica" loading="lazy">
+          <div class="mx-auto mt-7 flex max-w-lg flex-wrap items-center justify-center gap-x-8 gap-y-3" data-reveal>
+            <div class="flex items-center gap-2">
+              <i class="bi bi-patch-check-fill text-white"></i>
+              <span class="text-sm font-bold text-white">100% gratis, siempre</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="bi bi-cash-coin text-white"></i>
+              <span class="text-sm font-bold text-white">Sin comisiones</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="bi bi-lightning-charge-fill text-white"></i>
+              <span class="text-sm font-bold text-white">Perfil listo en minutos</span>
+            </div>
           </div>
-    
-          <div class="col-lg-6 order-lg-1">
-    
-            <!-- Feature Item -->
-            <div class="features-item d-flex ps-lg-3 pt-4 pt-lg-0" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-shop flex-shrink-0" aria-hidden="true"></i>
-              <div>
-                <h4>Fortalecimiento del Comercio Local</h4>
-                <p>Proporcionamos a pequeños y grandes comercios un espacio digital para mostrar sus productos y servicios, permitiéndoles competir en el mercado en línea y expandir su alcance.</p>
-              </div>
-            </div>
-    
-            <!-- Feature Item -->
-            <div class="features-item d-flex mt-5 ps-lg-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="bi bi-geo-alt flex-shrink-0" aria-hidden="true"></i>
-              <div>
-                <h4>Conexión con la Comunidad</h4>
-                <p>Nuestra plataforma facilita la localización de negocios, restaurantes, abogados, consulados y embajadas en un mapa interactivo, conectando a las personas con los recursos que necesitan.</p>
-              </div>
-            </div>
-    
-            <!-- Feature Item -->
-            <div class="features-item d-flex mt-5 ps-lg-3" data-aos="fade-up" data-aos-delay="500">
-              <i class="bi bi-cpu flex-shrink-0" aria-hidden="true"></i>
-              <div>
-                <h4>Transformación Digital Integral</h4>
-                <p>Con herramientas como reservas, ventas en línea y exportación, ayudamos a modernizar procesos y a digitalizar los negocios, promoviendo la eficiencia y el crecimiento.</p>
-              </div>
-            </div>
-    
-            <!-- Feature Item -->
-            <div class="features-item d-flex mt-5 ps-lg-3" data-aos="fade-up" data-aos-delay="600">
-              <i class="bi bi-people flex-shrink-0" aria-hidden="true"></i>
-              <div>
-                <h4>Inclusión y Acceso Simplificado</h4>
-                <p>Bajo un único dominio, los usuarios y negocios pueden acceder a una plataforma centralizada que fomenta la inclusión digital y facilita la transición hacia una economía conectada.</p>
-              </div>
-            </div>
-    
-          </div>
-    
-        </div>
-    
+        {% endif %}
       </div>
-    
     </section>
-    <!-- /Vision del Proyecto -->
+    <!-- /BANDA DE ESTADÍSTICAS -->
 
-
-    <!-- Conversor de divisas en tiempo real -->
-    <section id="stats" class="stats section dark-background">
-
-      <img src="{% static 'assets/img/stats-bg.jpg' %}" alt="" data-aos="fade-in">
-
-      <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
-       
-        <div class="subheading">
-          <h3>"Conversor de Divisas en Tiempo Real"</h3>
-          <span>"Las equivalencias mostradas corresponden al valor actual de  <b style="color:#4CAF50;">500</b> córdobas nicaragüenses en diferentes monedas."</span>
+    <!-- ============ NEGOCIOS DESTACADOS (carrusel horizontal) ============ -->
+    <section id="destacados" class="bg-nica-sand py-20 md:py-28">
+      <div class="nica-container mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-12">
+        <div data-reveal>
+          <span class="nica-eyebrow">Comunidad activa</span>
+          <h2 class="mt-4 font-heading text-3xl font-bold text-nica-ink md:text-4xl">Negocios destacados</h2>
+          <p class="mt-2 max-w-xl text-slate-600">Descubre los negocios y proyectos nicas que ya forman parte de la comunidad.</p>
         </div>
-
-        <!--prueba cambio de divisas-->
-        <div class="row gy-4">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <h1>{{ usd_rate }}</h1>
-              <p>Dólares</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <h1>{{ eur_rate }}</h1>
-              <p>Euros</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <h1>{{ crc_rate }}</h1>
-              <p>Colones</p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item text-center w-100 h-100">
-              <h1>{{ gtq_rate }}</h1>
-              <p>Quetzales</p>
-            </div>
-          </div><!-- End Stats Item -->
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <a href="{% url 'home_app:billetes' %}" 
-             style="display: inline-block; text-decoration: none; padding: 10px 20px; font-size: 18px; font-weight: bold; color: #ffffff; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); border: 2px solid #0056b3; transition: transform 0.2s ease, box-shadow 0.2s ease;">
-             Ver Moneda Nicaragüense
-          </a>
-      </div>
-      
-      </div>
-
-
-    </section>
-    <!-- /Conversor de divisas en tiempo real -->
-
-
-    <!-- Promocion de marcas -->
-    <section id="clients" class="clients section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row g-0 clients-wrap">
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/Lala.jpg' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/flordecaña2.jpg' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/parmalat2.svg' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'assets/img/clients/client-4.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/pali.png' %}"class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'images/sasalogo.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'assets/img/clients/client-7.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-          <div class="col-xl-3 col-md-4 client-logo">
-            <img src="{% static 'assets/img/clients/client-8.png' %}" class="img-fluid" alt="">
-          </div><!-- End Client Item -->
-
-        </div>
-
-      </div>
-
-    </section>
-    <!-- /Promocion de marcas -->
-
-    <!-- Este es un apartado de prueba para la ubicación mediante una fot de comercios o negocios en la página principal -->
-    <section>
-    <div class="container-fluid" style="border-bottom: 1px solid grey; background-color: lightblue;" id="mapacontainer">
-      <div class="row m-3">
-        <!-- Encabezado persuasivo -->
-        <h3 class="mt-3" style="color: #004d66; text-align: center; font-weight: bold; font-size: 1.8em;">
-          No importa si es un <span style="color: green;">proyecto</span> o un <span style="color: #055a85;">negocio</span>, 
-          aquí todos tienen su espacio. <span style="color: green;">¡Y es gratis!</span>
-        </h3>
-              <!-- Botón centrado -->
-        <div class="boton text-center mt-3 mb-4">
-          {% if user.is_authenticated %}
-          <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}">
-            <button class="btn bg-success mt-4 text-white" aria-label="Agregar Mi Empresa" style="padding: 10px 20px; font-size: 1.1em; font-weight: bold; border-radius: 8px;">
-              Agregar Mi Empresa
-            </button>
-          </a>
-          {% else %}
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Agregar Mi Restaurante" style="padding: 10px 20px; font-size: 1.1em; font-weight: bold; border-radius: 8px;">
-            Agregar Mi Empresa
+        {% if empresas_destacadas %}
+        <div class="hidden items-center gap-2 sm:flex" data-carousel-controls="negocios">
+          <button type="button" data-carousel-prev="negocios" aria-label="Ver negocios anteriores" class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-nica-ocean shadow-soft ring-1 ring-slate-900/5 transition-[background-color,color] duration-300 hover:bg-nica-ocean hover:text-white">
+            <i class="bi bi-chevron-left"></i>
           </button>
-          {% endif %}
+          <button type="button" data-carousel-next="negocios" aria-label="Ver más negocios" class="flex h-11 w-11 items-center justify-center rounded-full bg-white text-nica-ocean shadow-soft ring-1 ring-slate-900/5 transition-[background-color,color] duration-300 hover:bg-nica-ocean hover:text-white">
+            <i class="bi bi-chevron-right"></i>
+          </button>
         </div>
-        <div class="col-lg-2 d-none d-lg-block"></div>
-        <div class="col-lg-8 col-md-12">
-          <div class="mb-4 rounded shadow" style="height: 500px; background-color: lightblue; overflow: hidden;">
-            <a href="{% url 'home_app:mapa' %}"><img src="{% static 'assets/img/mapamundonica.png' %}" alt="Mapa Mundonica" class="img-fluid w-100 h-100" style="object-fit: cover;"></a>
-          </div>
-        </div>
-        <div class="col-lg-2 d-none d-lg-block"></div>
+        {% endif %}
       </div>
-    </div>
-    <!-- /Este es un apartado de prueba para la ubicación mediante una fot de comercios o negocios en la página principal  -->
 
-    <section>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
-          <!-- Encabezado -->
-          <div class="modal-header" style="background: linear-gradient(45deg, #198754, #0067c6); color: white;">
-            <h5 class="modal-title" id="exampleModalLabel" style="font-weight: bold; color: #fff; text-align: center; font-size: 1.5em;">
-              Te ha interesado, <span style="color: #3dc78d;">¡Genial, me alegro mucho!</span>
-            </h5>
+      {% if empresas_destacadas %}
+        <div class="nica-container">
+          <div data-carousel="negocios" class="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4" data-reveal>
+            {% for empresa in empresas_destacadas %}
+              <c-business_card :empresa="empresa" />
+            {% endfor %}
+            <a href="{% url 'home_app:explorar_negocios' %}" class="group flex w-52 flex-shrink-0 snap-start flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-nica-ocean/25 bg-white p-5 text-center transition-colors duration-300 hover:border-nica-ocean hover:bg-nica-ocean/5 sm:w-56">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-nica-ocean shadow-soft transition-transform duration-300 group-hover:scale-110">
+                <i class="bi bi-arrow-right text-lg"></i>
+              </span>
+              <span class="font-heading text-sm font-bold text-nica-ocean">Ver todos los negocios</span>
+            </a>
           </div>
-          
-          <!-- Cuerpo del Modal -->
-          <div class="modal-body">
-            <p style="font-size: 1.1em; color: #333;">
-              <span style="color: #0067c6; font-weight: bold;">Para</span> poder promocionar tu marca, necesitas <strong>registrarte</strong> o <strong>iniciar sesión</strong>. ¡No te preocupes, estamos aquí para ayudarte!
+        </div>
+      {% else %}
+        <div class="nica-container">
+          <div class="flex flex-col items-center gap-4 rounded-xl2 border-2 border-dashed border-nica-ocean/25 bg-white px-6 py-14 text-center" data-reveal>
+            <i class="bi bi-shop text-4xl text-nica-ocean"></i>
+            <p class="max-w-md font-semibold text-nica-ink">Todavía no hay negocios publicados. ¡Sé el primero en aparecer aquí!</p>
+            {% if user.is_authenticated %}
+              <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}" class="nica-btn-primary">Publicar mi negocio <i class="bi bi-arrow-right"></i></a>
+            {% else %}
+              <button type="button" class="nica-btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Publicar mi negocio <i class="bi bi-arrow-right"></i></button>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </section>
+    <!-- /NEGOCIOS DESTACADOS -->
+
+    <!-- ============ CATEGORÍAS DEL MARKETPLACE ============ -->
+    <section id="categorias" class="py-20 md:py-28">
+      <div class="nica-container">
+        <c-section_heading eyebrow="Explora" title="Encuentra lo que buscas por categoría" subtitle="Todo lo esencial para la comunidad nica, organizado con claridad." />
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <c-service_card icon="bi-shop" title="Restaurantes y gastronomía" text="Nacatamal, gallo pinto y los sabores de casa, cerca de ti." href="{% url 'home_app:explorar_negocios' %}?tipo=Restaurante" />
+          <c-service_card icon="bi-scissors" title="Peluquerías y estética" text="Profesionales nicas del cuidado personal en tu ciudad." href="{% url 'home_app:explorar_negocios' %}?tipo=Peluquería" />
+          <c-service_card icon="bi-bag" title="Comercios y tiendas" text="Productos y servicios de emprendedores nicaragüenses." href="{% url 'home_app:explorar_negocios' %}?tipo=Comercio" />
+          <c-service_card icon="bi-briefcase" title="Abogados y asesoría legal" text="Migración, trámites y asesoría con profesionales de confianza." href="{% url 'home_app:abogados' %}" />
+          <c-service_card icon="bi-globe-americas" title="Embajadas y consulados" text="Ubica el consulado o embajada más cercano en el mapa." href="{% url 'home_app:mapa' %}" />
+          <c-service_card icon="bi-question-circle" title="Trámites y preguntas frecuentes" text="Respuestas claras para empezar con seguridad." href="{% url 'home_app:preguntas' %}" />
+        </div>
+      </div>
+    </section>
+    <!-- /CATEGORÍAS -->
+
+    <!-- ============ CÓMO FUNCIONA ============ -->
+    <section id="como-funciona" class="py-20 md:py-28">
+      <div class="nica-container">
+        <c-section_heading eyebrow="Empieza hoy" title="Cómo funciona" subtitle="Un proceso simple y rápido para que tu negocio o proyecto aparezca en MundoNica." />
+        <div class="grid gap-6 md:grid-cols-3">
+          <c-step_card step="1" icon="bi-person-badge" title="Crea tu perfil" text="Regístrate en minutos y personaliza la página de tu negocio o proyecto." />
+          <c-step_card step="2" icon="bi-geo-alt" title="Aparece en el mapa" text="Tu ubicación y tus servicios quedan visibles para toda la comunidad nica en España." />
+          <c-step_card step="3" icon="bi-graph-up-arrow" title="Gana visibilidad y clientes" text="Recibe contactos reales y haz crecer tu negocio dentro de la comunidad." />
+        </div>
+      </div>
+    </section>
+    <!-- /CÓMO FUNCIONA -->
+
+    <!-- ============ MARKETPLACE / MAPA (CTA principal) ============ -->
+    <section id="mapacontainer" class="bg-nica-sand py-20 md:py-28">
+      <div class="nica-container">
+        <c-section_heading
+          eyebrow="Marketplace nica"
+          title="Tu negocio, visible en el mapa de la comunidad"
+          subtitle="Restaurantes, peluquerías, comercios, abogados y mucho más. Publica el tuyo y que la comunidad nica en España te encuentre."
+          theme="dark"
+        />
+
+        <div class="mx-auto max-w-4xl">
+          <a href="{% url 'home_app:mapa' %}" class="group relative block overflow-hidden rounded-xl2 shadow-lift ring-1 ring-slate-900/10" data-reveal>
+            <img src="{% static 'assets/img/mapamundonica.png' %}" alt="Mapa de negocios y comunidad nica en España" class="h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-[420px]">
+            <span class="absolute inset-0 bg-gradient-to-t from-nica-ink/70 via-nica-ink/5 to-transparent"></span>
+            <span class="absolute bottom-5 left-5 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-nica-ocean shadow">
+              Ver el mapa completo <i class="bi bi-arrow-up-right"></i>
+            </span>
+          </a>
+
+          <div class="mt-8 flex flex-col items-center gap-4 text-center" data-reveal>
+            <p class="max-w-xl font-semibold text-nica-ink">
+              No importa si es un proyecto que recién empieza o un negocio consolidado: aquí todos tienen su espacio,
+              <span class="text-nica-emerald">y es gratis</span>.
             </p>
-            <p style="font-size: 0.95em; color: #666;">Elige una de las opciones a continuación para continuar:</p>
+            {% if user.is_authenticated %}
+              <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}" class="nica-btn-primary" aria-label="Agregar Mi Empresa">
+                Publicar mi negocio <i class="bi bi-arrow-right"></i>
+              </a>
+            {% else %}
+              <button type="button" class="nica-btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Agregar Mi Empresa">
+                Publicar mi negocio <i class="bi bi-arrow-right"></i>
+              </button>
+            {% endif %}
           </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content overflow-hidden border-0 bg-white/95 shadow-lift backdrop-blur-md rounded-xl2" style="border: none;">
           
-          <!-- Pie del Modal -->
-          <div class="modal-footer justify-content-center" style="gap: 10px;">
-            <!-- Botón de Cerrar -->
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="
-                  padding: 8px 15px;
-                  font-size: 0.9em;
-                  font-weight: bold;
-                  border-radius: 20px;">
-              Cerrar
-            </button>
-            
-            <!-- Botón de Iniciar Sesión -->
-            <a href="{% url 'account_login' %}">
-              <button type="button" class="btn btn-outline-primary" style="
-                    padding: 8px 15px;
-                    font-size: 0.9em;
-                    font-weight: bold;
-                    border-radius: 20px;">
-                Iniciar sesión
-              </button>
-            </a>
-            
-            <!-- Botón de Registrarme -->
-            <a href="{% url 'account_signup' %}">
-              <button type="button" class="btn btn-success" style="
-                    padding: 8px 15px;
-                    font-size: 0.9em;
-                    font-weight: bold;
-                    border-radius: 20px;">
-                Registrarme
-              </button>
-            </a>
+          <!-- Decoración de fondo premium -->
+          <div class="absolute -right-16 -top-16 h-36 w-36 rounded-full bg-nica-ocean/10 blur-2xl pointer-events-none"></div>
+          <div class="absolute -left-16 -bottom-16 h-36 w-36 rounded-full bg-nica-emerald/10 blur-2xl pointer-events-none"></div>
+          
+          <!-- Encabezado con Icono -->
+          <div class="relative px-6 pt-10 text-center">
+            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-tr from-nica-ocean/10 to-nica-emerald/10 text-nica-ocean ring-8 ring-nica-ocean/5">
+              <i class="bi bi-person-plus-fill text-3xl text-nica-ocean"></i>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-nica-ink" id="exampleModalLabel">
+              ¡Únete a la comunidad!
+            </h3>
+            <p class="mt-1 text-[10px] font-bold uppercase tracking-widest text-nica-emerald">MundoNica España</p>
           </div>
-        </div>
-      </div>
-    </div>
-    </section>
-    <!--este es el final de la prueba de el apartado de ubicasion de las empresas-->
 
-    <!-- Seccion para elegir la cantidad del donativo -->
-    <section id="pricing" class="pricing section light-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Donativos</h2>
-        <h5 style="color: #4a804b;">"Contribuye al Desarrollo de Este Espacio"</h5>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="pricing-item">
-              <h3>Colaborar Con</h3>
-              <h4><sup>$</sup>5<!--<span> / month</span>--></h4>
-              <ul>
-                <li>Soporte técnico esencial.</li>
-                <li>Ayuda a mantener el dominio web activo.</li>
-                <li>Contribuye al mantenimiento del servidor.</li>
-                <li class="na">Web de pago</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E" class="btn-buy">Colaborar</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="pricing-item recommended">
-              <!--<span class="recommended-badge">Recommended</span>-->
-              <h3>Colaborar Con</h3>
-              <h4><sup>$</sup>10<!--<span> / month</span>--></h4>
-              <ul>
-                <li>Mejora la experiencia del usuario en la web.</li>
-                <li>Permite la investigación y validación de datos.</li>
-                <li>Asegura la actualización constante de la información.</li>
-                <li class="na">Web de pago</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E" class="btn-buy">Colaborar</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="pricing-item">
-              <h3>Colaborar Con</h3>
-              <h4><sup>$</sup>25<!--<span> / month</span>--></h4>
-              <ul>
-                <li>Facilita el desarrollo de nuevas funcionalidades.</li>
-                <li>Cubre costos de diseño y optimización de la web.</li>
-                <li>Apoya la creación de contenido educativo y relevante.</li>
-                
-                <li class="na">Web de pago</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E" class="btn-buy">Colaborar</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-        </div>
-
-        <div class="donativo" style="text-align: center; margin: 20px;">
-          <form action="https://www.paypal.com/donate" method="post" target="_top">
-            <input type="hidden" name="hosted_button_id" value="B826RUSWYUF5E" />
-            <input type="image" src="https://www.paypalobjects.com/es_ES/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - La manera segura y fácil de pagar en línea!" alt="Donate with PayPal button" />
-            <img alt="" border="0" src="https://www.paypal.com/en_ES/i/scr/pixel.gif" width="2" height="2" />
-            </form>
-            
-        </div>
-      
-
-      </div>
-    </section>
-    <!-- /Seccion para elegir la cantidad del donativo -->
-
-    <!-- Seccion de preguntas frecuentes -->
-    <section id="faq" class="faq section">
-
-      <div class="container-fluid">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
-
-            <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
-              <h3>
-                <span>Preguntas más </span>
-                <strong>frecuentes</strong>
-              </h3>
-              <p>
-                "Encuentra respuestas claras y rápidas a las dudas más comunes sobre nuestros servicios."
+          <!-- Cuerpo del Modal -->
+          <div class="relative px-6 py-4 text-center">
+            <p class="text-sm leading-relaxed text-slate-600">
+              Para poder <span class="font-bold text-nica-ocean">valorar negocios</span>, guardar tus favoritos o <span class="font-bold text-nica-emerald">promocionar tu propio negocio</span> gratis, necesitas formar parte de la comunidad.
+            </p>
+            <div class="mt-4 rounded-xl bg-slate-50 p-3 border border-slate-100">
+              <p class="m-0 text-xs font-semibold text-slate-500">
+                ⚡ ¡El registro toma menos de 1 minuto y es 100% gratuito!
               </p>
             </div>
-
-            <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
-
-              <div class="faq-item faq-active" >
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>¿Cuáles son los beneficios?</h3>
-                <div class="faq-content">
-                  <p><b>Comodidad y Ahorro de Tiempo:</b><br>
-                      1.Todo en un solo lugar: Enfatiza que los usuarios encontrarán toda la información que necesitan sin tener que navegar por múltiples sitios web. <br>
-                      2.Eliminación de búsquedas dispersas: Resalta cómo se evita que los usuarios pierdan tiempo buscando datos en diferentes fuentes. <br>
-                      3.Acceso rápido y fácil: Destaca la interfaz intuitiva y la facilidad de navegación de la web.
-                      </ul>
-                  </p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>Por qué esta web?</h3>
-                <div class="faq-content">
-                  <p>Fuentes confiables. <br>
-                      Equipo especializado. <br>
-                      Proceso de verificación. <br>
-                  </p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-
-              <div class="faq-item">
-                <i class="faq-icon bi bi-question-circle"></i>
-                <h3>¿Es de pago?</h3>
-                <div class="faq-content">
-                  <p>"No" <br><br>Esta web es completamente gratuita para todos. Nos mantenemos gracias a la generosidad de nuestros usuarios, que pueden hacer donaciones voluntarias para ayudarnos a seguir ofreciendo este servicio."</p>
-                </div>
-                <i class="faq-toggle bi bi-chevron-right"></i>
-              </div><!-- End Faq item-->
-              <div class="w-100 preguntas text-center">
-                <a href="{% url  'home_app:preguntas' %}"><button 
-                  style="
-                    position: relative;
-                    display: inline-block;
-                    padding: 10px 20px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    color: white;
-                    background-color: #4CAF50; 
-                    border: none;
-                    border-radius: 8px;
-                    transition: all 0.3s ease-in-out;
-                    overflow: hidden;
-                    cursor: pointer;
-                    outline: none;
-                  "
-                  onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 8px 15px rgba(40, 167, 69, 0.3)';"
-                  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';"
-                  onmousedown="this.style.transform='scale(0.95)'; this.style.backgroundColor='#218838';"
-                  onmouseup="this.style.transform='scale(1.05)'; this.style.backgroundColor='#28a745';"
-                >
-                  Más preguntas
-                </button></a>
-              </div>
-             
-            </div>
-
           </div>
 
-          <div class="col-lg-5 order-1 order-lg-2">
-            <img src="{% static 'images/logopregunta2.webp' %}" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100" style="border-radius: 10px;">
+          <!-- Pie del Modal / Acciones -->
+          <div class="relative px-6 pb-8 flex flex-col gap-3">
+            <div class="grid grid-cols-2 gap-3">
+              <a href="{% url 'account_login' %}" class="flex items-center justify-center gap-2 rounded-full py-2.5 text-xs font-bold text-nica-ocean bg-white border border-nica-ocean/30 hover:bg-nica-ocean/5 hover:border-nica-ocean/60 transition-all duration-300 no-underline">
+                <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+              </a>
+              <a href="{% url 'account_signup' %}" class="flex items-center justify-center gap-2 rounded-full py-2.5 text-xs font-bold text-white bg-gradient-to-r from-nica-ocean to-nica-emerald hover:brightness-110 shadow-md shadow-nica-ocean/10 hover:shadow-lg transition-all duration-300 no-underline">
+                <i class="bi bi-rocket-takeoff-fill"></i> Registrarme
+              </a>
+            </div>
+            <button type="button" class="w-full bg-transparent border-0 rounded-full py-2 text-xs font-bold text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors duration-300 cursor-pointer" data-bs-dismiss="modal">
+              Volver atrás
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- /MARKETPLACE / MAPA -->
+
+    <!-- ============ SOBRE NOSOTROS ============ -->
+    <section id="about" class="py-20 md:py-28">
+      <div class="nica-container">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div data-reveal>
+            <span class="nica-eyebrow">Nuestro propósito</span>
+            <h2 class="mt-4 font-heading text-3xl font-bold text-nica-ink md:text-4xl">
+              Unir a la comunidad nica con información clara, visibilidad real y oportunidades que se sienten
+            </h2>
+            <p class="mt-4 text-slate-600">
+              Un solo lugar para encontrar recursos confiables, negocios nicas y personas con las mismas metas.
+            </p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex items-start gap-3">
+                <i class="bi bi-check2-circle mt-1 text-nica-emerald"></i>
+                <span class="text-slate-700">Información práctica para migración, trámites y servicios esenciales.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="bi bi-check2-circle mt-1 text-nica-emerald"></i>
+                <span class="text-slate-700">Visibilidad para negocios, profesionales y proyectos con identidad nica.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="bi bi-check2-circle mt-1 text-nica-emerald"></i>
+                <span class="text-slate-700">Conexiones reales para crecer dentro y fuera del país.</span>
+              </li>
+            </ul>
+            <a href="{% url 'home_app:home' %}#categorias" class="mt-6 inline-flex items-center gap-2 font-bold text-nica-ocean hover:text-nica-emerald">
+              Ver categorías <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+          <div class="relative" data-reveal>
+            <div class="overflow-hidden rounded-xl2 shadow-lift">
+              <img src="{% static 'images/folklorenica.webp' %}" alt="Cultura y tradición nicaragüense" class="h-full w-full object-cover">
+            </div>
+            <div class="absolute -bottom-6 -left-6 hidden rounded-xl2 bg-white px-6 py-4 shadow-lift ring-1 ring-slate-900/5 sm:block">
+              <p class="font-heading text-2xl font-extrabold text-nica-ocean">+30</p>
+              <p class="text-xs font-semibold text-slate-500">ciudades españolas conectadas</p>
+            </div>
           </div>
         </div>
-
       </div>
-
     </section>
-    <!-- /Seccion de preguntas frecuentes -->
-<hr>
-    <!-- Seccion de ultimos articulos de albun compartidos -->
-    <section id="recent-posts" class="recent-posts section">
+    <!-- /SOBRE NOSOTROS -->
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Últimas publicaciones.</h2>
-        <h5 style="color: grey;">¿Quieres estar al día con nuestras últimas publicaciones?</h5>
-      </div><!-- End Section Title -->
+    <!-- ============ PREGUNTAS FRECUENTES ============ -->
+    <section id="faq" class="faq py-20 md:py-28">
+      <div class="nica-container">
+        <c-section_heading eyebrow="¿Dudas?" title="Preguntas frecuentes" subtitle="Respuestas rápidas para que empieces con seguridad." />
 
-      <div class="container">
-
-        <div class="row gy-4">
-          {% for dato in datos|slice:"-3:" %}
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <article>
-              <a href="{% url 'home_app:articulo' dato.id %}">
-                <div class="post-img">
-                  <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
+        <div class="grid gap-8 lg:grid-cols-2">
+          <div data-reveal>
+            <div class="faq-container overflow-hidden rounded-xl2 shadow-soft">
+              <div class="faq-item faq-active">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Es gratis crear mi perfil?</h3>
+                <div class="faq-content">
+                  <p>Sí. Crear perfil es gratuito y siempre podrás actualizar tu información.</p>
                 </div>
-              </a>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+              <div class="faq-item">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Cómo aparezco en el mapa?</h3>
+                <div class="faq-content">
+                  <p>Al crear tu perfil o negocio, aparece automáticamente en el mapa.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+              <div class="faq-item">
+                <i class="faq-icon bi bi-question-circle"></i>
+                <h3>¿Quién valida la información?</h3>
+                <div class="faq-content">
+                  <p>Trabajamos con un proceso de revisión para mantener datos claros y útiles.</p>
+                </div>
+                <i class="faq-toggle bi bi-chevron-right"></i>
+              </div>
+            </div>
+          </div>
 
-              <p class="post-category">{{dato.categoria}}</p>
+          <div class="flex flex-col justify-center rounded-xl2 bg-gradient-to-br from-nica-ocean to-nica-emerald p-8 text-white shadow-lift md:p-10" data-reveal>
+            <i class="bi bi-chat-left-heart-fill text-3xl text-white"></i>
+            <h3 class="mt-4 font-heading text-2xl font-bold">¿Sigues con dudas?</h3>
+            <p class="mt-2 text-white/85">
+              Revisa la guía completa de preguntas y respuestas, pensada para que publiques tu negocio o encuentres lo que necesitas sin complicaciones.
+            </p>
+            <a href="{% url 'home_app:preguntas' %}" class="nica-btn-secondary mt-6 self-start">
+              Más preguntas <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /PREGUNTAS FRECUENTES -->
 
-              <h2 class="title">
-                <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
+    <!-- ============ ÚLTIMAS PUBLICACIONES ============ -->
+    <section id="recent-posts" class="bg-nica-sand py-20 md:py-28">
+      <div class="nica-container">
+        <c-section_heading eyebrow="Blog" title="Últimas publicaciones" subtitle="¿Quieres estar al día con nuestras últimas publicaciones?" />
+
+        <div class="grid gap-6 md:grid-cols-3">
+          {% for dato in datos|slice:"-3:" %}
+          <article class="group flex h-full flex-col overflow-hidden rounded-xl2 bg-white shadow-soft ring-1 ring-slate-900/5 transition-transform duration-300 hover:-translate-y-1.5 hover:shadow-lift" data-reveal>
+            <a href="{% url 'home_app:articulo' dato.id %}" class="block overflow-hidden">
+              <img src="/media/{{dato.imagen}}" alt="" class="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+            </a>
+            <div class="flex flex-1 flex-col p-6">
+              <p class="text-xs font-bold uppercase tracking-wide text-nica-emerald">{{dato.categoria}}</p>
+              <h2 class="mt-2 font-heading text-lg font-bold text-nica-ink">
+                <a href="{% url 'home_app:articulo' dato.id %}" class="hover:text-nica-ocean">{{dato.titulo}}</a>
               </h2>
-
-              <p class="post-summary">{{dato.resumen|safe}}</p>
-              <div class="d-flex align-items-center">
-                <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author">{{dato.autor}}</p>
-                  <p class="post-date">
+              {% comment %}
+                dato.resumen es HTMLField (TinyMCE): siempre trae su propio <p>.
+                Renderizarlo con |safe dentro de otro <p> anida <p><p>...</p></p>,
+                HTML inválido que el navegador corrige cerrando el <p> exterior
+                antes de tiempo y rompe el recorte de texto (line-clamp).
+                striptags quita las etiquetas (ya no hay riesgo de HTML sin
+                escapar); el |safe final solo evita que las entidades que
+                deja TinyMCE (& iacute;, & nbsp;, etc.) se re-escapen y se
+                muestren como texto crudo en vez de la letra acentuada.
+              {% endcomment %}
+              <p class="mt-2 line-clamp-2 text-sm text-slate-600">{{dato.resumen|striptags|truncatewords:22|safe}}</p>
+              <div class="mt-auto flex items-center gap-3 border-t border-slate-100 pt-4">
+                <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="h-8 w-8 flex-shrink-0 rounded-full object-cover">
+                <div>
+                  <p class="text-sm font-semibold text-nica-ink">{{dato.autor}}</p>
+                  <p class="text-xs text-slate-500">
                     <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
                   </p>
                 </div>
               </div>
-            </article>
-          </div>
+            </div>
+          </article>
           {% endfor %}
-        </div><!-- End recent posts list -->
-
-      </div>
-
-    </section>
-    <!-- /Seccion de ultimos articulos de albun compartidos -->
-
-    <!-- Seccion de Contactar -->
-    <section id="contact" class="contact section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contáctanos</h2>
-        <h5 style="color: grey;">¿Necesitas más información?</h5>
-
-      </div>
-
-      <div class="container" data-aos="fade" data-aos-delay="100">
-        <div class="row gy-4">
-          <div class="col-lg-4">
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-              <i class="bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Dirección</h3>
-                <p>Alderdi-Eder, 1, 20004 San Sebastián, Guipúzcoa.</p>
-              </div>
-            </div>
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Teléfono</h3>
-                <p>+34 747 478 842</p>
-              </div>
-            </div>
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-              <i class="bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email</h3>
-                <p> Estámos desarrollando los credenciales para poder contactar</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-8">
-            <div>
-              <div class="card-body">
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}">
-                  {% csrf_token %}
-                  
-                  <!-- Fila para Nombre y Correo -->
-                  <div class="row">
-                    <div class="mb-3 col-lg-6 col-md-12">
-                    
-                      {{ form.name }}
-                    </div>
-                    <div class="mb-3 col-lg-6 col-md-12">
-                      {{ form.email }}
-                    </div>
-                  </div>
-                  
-                  <!-- Campo de Mensaje -->
-                  <div class="mb-3">
-                    {{ form.message }}
-                  </div>
-                  
-                  <!-- Botón de Enviar -->
-                  <button type="submit" class="btn btn-success" style="
-                        width: 200px;
-                        display: flex;
-                        margin: auto;
-                        padding-right: 5px;
-                        justify-content: center;
-                        align-items: center;
-                        text-align: center;
-                        background: linear-gradient(80deg, #0067c6, #198754);
-                        color: white;
-                        font-size: 16px;
-                        font-weight: bold;
-                        border: none;
-                        border-radius: 5px;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                        "
-                    onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.3)';"
-                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.2)';">
-                    <strong>Enviar</strong>
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-          
         </div>
       </div>
     </section>
-        <!-- Seccion de Contactar -->
+    <!-- /ÚLTIMAS PUBLICACIONES -->
 
+    <!-- ============ CONVERSOR DE DIVISAS (utilidad extra, fuera del flujo principal) ============ -->
+    <section id="stats" class="border-y border-slate-900/5 bg-slate-100 py-16 md:py-20">
+      <div class="nica-container">
+        <c-section_heading eyebrow="Utilidad diaria" title="Conversor de divisas" subtitle="Introduce una cantidad en córdobas nicaragüenses (NIO) para ver su equivalencia al instante." />
+        
+        <!-- Input interactivo -->
+        <div class="mx-auto mb-8 max-w-xs text-center" data-reveal>
+          <label for="nio-input" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Cantidad en Córdobas (NIO)</label>
+          <div class="relative flex items-center justify-center rounded-xl bg-white shadow-soft ring-1 ring-slate-900/5 focus-within:ring-nica-ocean/40 transition-shadow">
+            <span class="pl-4 text-lg font-bold text-slate-400">C$</span>
+            <input type="number" id="nio-input" value="500" min="0" step="any" class="w-full border-0 bg-transparent px-3 py-3 text-lg font-bold text-nica-ink outline-none" placeholder="0" style="box-shadow: none;">
+          </div>
+        </div>
+
+        <div class="mx-auto grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-xl2 bg-slate-200 shadow-soft sm:grid-cols-4" data-reveal>
+          <div class="bg-white px-4 py-6 text-center">
+            <h1 class="font-heading text-2xl font-bold text-nica-ocean" id="usd-output" data-rate="{{ usd_rate }}">{{ usd_rate }}</h1>
+            <p class="mt-1 text-sm font-semibold text-slate-500">Dólares (USD)</p>
+          </div>
+          <div class="bg-white px-4 py-6 text-center">
+            <h1 class="font-heading text-2xl font-bold text-nica-ocean" id="eur-output" data-rate="{{ eur_rate }}">{{ eur_rate }}</h1>
+            <p class="mt-1 text-sm font-semibold text-slate-500">Euros (EUR)</p>
+          </div>
+          <div class="bg-white px-4 py-6 text-center">
+            <h1 class="font-heading text-2xl font-bold text-nica-ocean" id="crc-output" data-rate="{{ crc_rate }}">{{ crc_rate }}</h1>
+            <p class="mt-1 text-sm font-semibold text-slate-500">Colones (CRC)</p>
+          </div>
+          <div class="bg-white px-4 py-6 text-center">
+            <h1 class="font-heading text-2xl font-bold text-nica-ocean" id="gtq-output" data-rate="{{ gtq_rate }}">{{ gtq_rate }}</h1>
+            <p class="mt-1 text-sm font-semibold text-slate-500">Quetzales (GTQ)</p>
+          </div>
+        </div>
+        <div class="mt-6 flex justify-center">
+          <a href="{% url 'home_app:billetes' %}" class="nica-btn-outline">Ver moneda nicaragüense</a>
+        </div>
+      </div>
+    </section>
+    <!-- /CONVERSOR DE DIVISAS -->
+    <!-- /CONVERSOR DE DIVISAS -->
+
+    <!-- ============ CONTACTO ============ -->
+    <section id="contact" class="py-20 md:py-28">
+      <div class="nica-container">
+        <c-section_heading eyebrow="Hablemos" title="Contáctanos" subtitle="¿Necesitas más información?" />
+
+        <div class="grid gap-10 lg:grid-cols-5">
+          <div class="space-y-6 lg:col-span-2" data-reveal>
+            <div class="flex items-start gap-4">
+              <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-nica-ocean/10 text-nica-ocean"><i class="bi bi-geo-alt"></i></span>
+              <div>
+                <h3 class="font-heading font-bold text-nica-ink">Dirección</h3>
+                <p class="text-slate-600">Alderdi-Eder, 1, 20004 San Sebastián, Guipúzcoa.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-nica-ocean/10 text-nica-ocean"><i class="bi bi-telephone"></i></span>
+              <div>
+                <h3 class="font-heading font-bold text-nica-ink">Teléfono</h3>
+                <p class="text-slate-600">+34 747 478 842</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-nica-ocean/10 text-nica-ocean"><i class="bi bi-envelope"></i></span>
+              <div>
+                <h3 class="font-heading font-bold text-nica-ink">Email</h3>
+                <p class="text-slate-600">Estamos desarrollando los credenciales para poder contactar.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-3" data-reveal>
+            <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}" class="rounded-xl2 bg-white p-6 shadow-soft ring-1 ring-slate-900/5 md:p-8">
+              {% csrf_token %}
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>{{ form.name }}</div>
+                <div>{{ form.email }}</div>
+              </div>
+              <div class="mt-4">{{ form.message }}</div>
+              <button type="submit" class="nica-btn-primary mt-6 w-full sm:w-auto">
+                Enviar <i class="bi bi-send"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /CONTACTO -->
 
   </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="{% static 'assets/js/donativo.js' %}"></script>
+<script src="{% static 'assets/js/homepage-motion.js' %}" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var nioInput = document.getElementById("nio-input");
+    var usdOutput = document.getElementById("usd-output");
+    var eurOutput = document.getElementById("eur-output");
+    var crcOutput = document.getElementById("crc-output");
+    var gtqOutput = document.getElementById("gtq-output");
+
+    if (!nioInput) return;
+
+    var usdBase = parseFloat(usdOutput ? usdOutput.getAttribute("data-rate") : null);
+    var eurBase = parseFloat(eurOutput ? eurOutput.getAttribute("data-rate") : null);
+    var crcBase = parseFloat(crcOutput ? crcOutput.getAttribute("data-rate") : null);
+    var gtqBase = parseFloat(gtqOutput ? gtqOutput.getAttribute("data-rate") : null);
+
+    function updateRates() {
+      var amount = parseFloat(nioInput.value);
+      if (isNaN(amount)) {
+        if (usdOutput) usdOutput.textContent = "-";
+        if (eurOutput) eurOutput.textContent = "-";
+        if (crcOutput) crcOutput.textContent = "-";
+        if (gtqOutput) gtqOutput.textContent = "-";
+        return;
+      }
+      
+      if (usdOutput) usdOutput.textContent = isNaN(usdBase) ? usdOutput.getAttribute("data-rate") : ( (amount * usdBase) / 500 ).toFixed(2);
+      if (eurOutput) eurOutput.textContent = isNaN(eurBase) ? eurOutput.getAttribute("data-rate") : ( (amount * eurBase) / 500 ).toFixed(2);
+      if (crcOutput) crcOutput.textContent = isNaN(crcBase) ? crcOutput.getAttribute("data-rate") : ( (amount * crcBase) / 500 ).toFixed(2);
+      if (gtqOutput) gtqOutput.textContent = isNaN(gtqBase) ? gtqOutput.getAttribute("data-rate") : ( (amount * gtqBase) / 500 ).toFixed(2);
+    }
+
+    nioInput.addEventListener("input", updateRates);
+  });
+  
+  // ── Contact Form Prevention ──
+  document.addEventListener("DOMContentLoaded", function() {
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+          const formElements = contactForm.querySelectorAll('input, textarea, button');
+          formElements.forEach(el => {
+              // Make fields visually readonly without native behavior that allows cursor
+              if (el.tagName !== 'BUTTON') {
+                  el.style.cursor = 'not-allowed';
+                  el.setAttribute('readonly', 'readonly');
+              }
+              
+              // Handle click and focus
+              const showAlert = function(e) {
+                  e.preventDefault();
+                  if (el.tagName !== 'BUTTON') el.blur();
+                  
+                  Swal.fire({
+                      title: '¡Estamos trabajando en ello!',
+                      text: 'Actualmente estamos desarrollando este formulario de contacto. ¡Estará disponible muy pronto!',
+                      icon: 'info',
+                      confirmButtonText: 'Entendido',
+                      confirmButtonColor: '#10b981'
+                  });
+              };
+              
+              el.addEventListener('mousedown', showAlert);
+              el.addEventListener('focus', function(e) {
+                  el.blur();
+              });
+          });
+      }
+  });
+</script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

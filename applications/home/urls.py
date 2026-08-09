@@ -63,8 +63,39 @@ urlpatterns = [
     
     path('formulario/', views.formulario_contactar, name='formulario_contactar'),
 
+    path('empresa/<int:pk>/favorito/',
+        views.ToggleFavoritoView.as_view(),
+        name='toggle_favorito',
+    ),
+
+    path('mis_favoritos/',
+        views.MisFavoritosView.as_view(),
+        name='mis_favoritos',
+    ),
+
+    path('empresa/<int:pk>/valorar/',
+        views.RateEmpresaView.as_view(),
+        name='valorar_empresa',
+    ),
+
+    path('negocios/',
+        views.ExplorarNegociosView.as_view(),
+        name='explorar_negocios',
+    ),
+
+    path('publicar-nuevo/',
+        views.PublicarNuevoView.as_view(),
+        name='publicar_nuevo',
+    ),
+
+    path('preview-plantilla/<str:tipo_empresa>/',
+        views.PreviewPlantillaView.as_view(),
+        name='preview_plantilla',
+    ),
 
 #esta es la url para la empresa de catalogo la que solo es para mostrar productos
+#OJO: las rutas de arriba (favorito / mis_favoritos / valorar / negocios) deben ir ANTES de este catch-all,
+#porque "<slug:nombreUrl>/" coincide con cualquier segmento único y las taparía.
 
     path('<slug:nombreUrl>/',
         views.EmpresaDetailView.as_view(),

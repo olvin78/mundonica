@@ -2994,12 +2994,14 @@ hr {
 
 .slider-area .stock-text h2:nth-child(1) {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
     -webkit-text-fill-color: transparent
 }
 
 .slider-area .stock-text h2:nth-child(2) {
-    color: rgba(0, 0, 0, 0.2);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+    -webkit-text-fill-color: transparent;
     -webkit-animation: animate 4s ease-in-out infinite;
     animation: animate 4s ease-in-out infinite
 }

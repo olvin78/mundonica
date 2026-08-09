@@ -29,6 +29,25 @@
   <!-- Main CSS File -->
   <link href="{% static 'empresas/yummy-red/assets/css/main.css' %}" rel="stylesheet">
 
+  <style>
+    .pricing-list ul { list-style: none; padding: 0; margin: 0; }
+    .pricing-list li {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.9rem 0; border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-weight: 500; color: #212529;
+    }
+    .pricing-list li span { color: var(--default-color, #e03a3a); font-weight: 700; white-space: nowrap; }
+    .pricing-title { color: var(--default-color, #e03a3a) !important; }
+    .hero-subtitulo2 { font-size: 1rem; }
+    .about-titulo { font-style: italic; }
+    .events-titulo { font-weight: 500; }
+    .menu-brand a {
+      font-weight: 700;
+      border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+      margin-bottom: 6px;
+    }
+  </style>
+
   <!-- =======================================================
   * Template Name: Yummy
   * Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
@@ -40,83 +59,66 @@
 
 <body class="index-page">
 
-  <div id="mensaje">Esta web fue creada y subencionada por Mundo Nica</div>
-
-  <header id="header" class="header d-flex align-items-center sticky-top">
+  <header id="header" class="header pt-5 pt-lg-0 d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="{% static 'empresas/yummy-red/assets/img/logo.png" alt=""> -->
         <h1 class="sitename">{{ datos.nombre_de_la_empresa|default:"Yummy-restaurante" }}</h1>
-        <span>.</span>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
+          <li class="menu-brand d-xl-none"><a href="#hero"><i class="bi bi-shop"></i> <span>{{ datos.nombre_de_la_empresa|default:"Tu Empresa" }}</span></a></li>
           <li><a href="#hero" class="active">Inicio<br></a></li>
           <li><a href="#about">Sobre</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#events">Eventos</a></li>
           <li><a href="#chefs">Chefs</a></li>
-          {% if datos.propietario_sitio_web ==  user %}
+          {% if datos.propietario_sitio_web ==  user and datos %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'home_app:actualizar_empresa' datos.id %}">Editar Web</a>
             </li>
           {% endif%}
           <li><a href="#gallery">Galería</a></li>
-          <li class="dropdown"><a href="#"><span>Mundo Nica</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <!--<ul>
-              <li><a href="#">Asistencia Ténica</a></li>
-              <li class="dropdown"><a href="#"><span>Asistencia Ténica</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Configuración técnica</a></li>
-                  <li><a href="#">Diseño y personalización</a></li>
-                  <li><a href="#">Resolución de problemas</a></li>
-                  <li><a href="#">Asesoramiento y planificación inicial</a></li>
-                  <li><a href="#">Formación en administración del sitio</a></li>
-                </ul>
-              </li>-->
-              <li><a href="#" style="background-color:lightpink;">Donar</a></li>
-              <!--<li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>-->
-          </li>
           <li><a href="#contact">Contacto</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="#book-a-table">Reservar</a>
 
     </div>
   </header>
 
   <main class="main">
 
+    {% if datos.header_activo %}
     <!-- Hero Section -->
     <section id="hero" class="hero section light-background">
 
       <div class="container">
         <div class="row gy-4 justify-content-center justify-content-lg-between">
           <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
-            <h1 data-aos="fade-up">{{ datos.titulo_header|default:"Enjoy Your Healthy<br>Delicious Food' }}</h1>
-            <p data-aos="fade-up" data-aos-delay="100">{{ datos.subtitulo1_header|default:"We are team of talented designers making websites with Bootstrap' }}</p>
+            <h1 data-aos="fade-up">{{ datos.titulo_header|default:"Enjoy Your Healthy<br>Delicious Food" }}</h1>
+            <p data-aos="fade-up" data-aos-delay="100">{{ datos.subtitulo1_header|default:"We are team of talented designers making websites with Bootstrap" }}</p>
+            <p class="hero-subtitulo2" data-aos="fade-up" data-aos-delay="150">{{ datos.subtitulo2_header|default:"" }}</p>
             <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="#book-a-table" class="btn-get-started">Encuentra tu mesa</a>
-              <a href="{{ datos.subtitulo1_header|default:'{{ datos.video_header }}' }}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Ver Vídeo</span></a>
+              <a href="#contact" class="btn-get-started">Encuentra tu mesa</a>
+              <a href="{% static 'empresas/yummy-red/assets/img/menu-item-2.png' as vid_dflt %}{{ datos.video_header|default:vid_dflt }}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Ver Vídeo</span></a>
             </div>
           </div>
           <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
             {% if datos.imagen_header %}
             <img src="{{ datos.imagen_header.url }}" class="img-fluid animated" alt="">
             {% else %}
-            <img src=" {% static 'empresas/yummy-red/assets/img/img-portada/hero-img.png' %}" class="img-fluid animated" alt="">
+            <img src="{% static 'empresas/yummy-red/assets/img/img-portada/hero-img.png' %}" class="img-fluid animated" alt="">
             {% endif %}
           </div>
         </div>
       </div>
 
     </section><!-- /Hero Section -->
+    {% endif %}
 
 
     {% if datos.quienes_somos_activo %}
@@ -127,6 +129,7 @@
       <div class="container section-title" data-aos="fade-up">
         <h2>Sobre Nosotros<br></h2>
         <p><span>Conóce más</span> <span class="description-title">Sobre Nosotros</span></p>
+        <p class="about-titulo">{{ datos.titulo_sobrenosotros|default:"" }}</p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -138,23 +141,19 @@
             {% else %}
             <img src="{% static 'empresas/yummy-red/assets/img/about.jpg'%}" class="img-fluid mb-4" alt="">
             {% endif %}
-            <div class="book-a-table">
-              <h3>Reserva tu mesa</h3>
-              <p>{{ datos.telefono }}</p>
-            </div>
           </div>
           <div class="col-lg-5" data-aos="fade-up" data-aos-delay="250">
             <div class="content ps-0 ps-lg-5">
               <p class="fst-italic">
-                {{ datos.parrafo1_sobrenosotros|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ' }}
+                {{ datos.parrafo1_sobrenosotros|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " }}
               </p>
               <ul>
-                <li><i class="bi bi-check-circle-fill"></i> <span>{{ datos.parrafo2_sobrenosotros|default:"Ullamco laboris nisi ut aliquip ex ea commodo consequat.' }}.</span></li>
-                <li><i class="bi bi-check-circle-fill"></i> <span>{{ datos.parrafo3_sobrenosotros|default:"Duis aute irure dolor in reprehenderit in voluptate velit.' }}.</span></li>
-                <li><i class="bi bi-check-circle-fill"></i> <span>{{ datos.parrafo4_sobrenosotros|default:"Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.' }}.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>{{ datos.parrafo2_sobrenosotros|default:"Ullamco laboris nisi ut aliquip ex ea commodo consequat." }}.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>{{ datos.parrafo3_sobrenosotros|default:"Duis aute irure dolor in reprehenderit in voluptate velit." }}.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i> <span>{{ datos.parrafo4_sobrenosotros|default:"Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur." }}.</span></li>
               </ul>
               <p>
-                {{ datos.parrafo5_sobrenosotros|default:"Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident ' }}.
+                {{ datos.parrafo5_sobrenosotros|default:"Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident " }}.
               </p>
 
               <div class="position-relative mt-4">
@@ -176,11 +175,11 @@
 
       </div>
 <!--
-    </section> /About Section
+    </section><!-- /About Section -->
     {% endif %}
 
     {% if datos.menu_regalo_activo %}
-    Why Us Section 
+    <!-- Why Us / Menú de Regalo Section -->
     <section id="why-us" class="why-us section light-background">
 
       <div class="container">
@@ -188,7 +187,8 @@
         <div class="container section-title" data-aos="fade-up">
           <h2>Encuentra tu mejor opción<br></h2>
           <p><span>Menu</span> <span class="description-title">Para Regalo</span></p>
-        </div> End Section Title
+        </div><!-- End Section Title -->
+
         <div class="row gy-4">
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
@@ -198,118 +198,108 @@
                 Un menú especial diseñado para sorprender a alguien con una experiencia gastronómica única. Ofrece una selección de platos cuidadosamente elaborados, que incluyen entradas, platos principales, bebidas y postres, adaptados a diferentes gustos y ocasiones. Perfecto para regalar en cumpleaños, aniversarios o simplemente como un detalle especial para disfrutar de una comida memorable.
               </p>
             </div>
-          </div><End Why Box 
-        
+          </div><!-- End Why Box -->
+
           <div class="col-lg-8 d-flex align-items-stretch">
             <div class="row gy-4">
-               Menú para una persona 
+
               <div class="col-xl-4">
                 <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                   <i class="bi bi-person"></i>
                   <h4>Menú de regalo <br> para una persona</h4>
                   <p>Entrada, Plato principal, Bebida, Postre</p>
-                  <button class="btn btn-danger text-white" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#modalDetalles">
-                      Detalles
-                  </button>
+                  <button class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles">Detalles</button>
                 </div>
               </div>
-            -->
-              <!-- Menú para dos personas
+
               <div class="col-xl-4">
                 <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                   <i class="bi bi-people"></i>
                   <h4>Menú de regalo <br> para dos personas</h4>
                   <p>Entrada, Plato principal, Bebida, Postre</p>
-                  <button class="btn btn-danger text-white" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#modalDetalles">
-                      Detalles
-                  </button>
+                  <button class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles2">Detalles</button>
                 </div>
-              </div> -->
-            
-              <!-- Menú para más de dos personas 
+              </div>
+
               <div class="col-xl-4">
                 <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                   <i class="bi bi-person-plus"></i>
                   <h4>Menú de regalo <br> para más de dos personas</h4>
                   <p>Entrada, Plato principal, Bebida, Postre</p>
-                    <Botón básico de Bootstrap para abrir el modal
-                  <button class="btn btn-danger text-white" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#modalDetalles">
-                      Detalles
-                  </button>
+                  <button class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDetalles3">Detalles</button>
                 </div>
               </div>
-            </div>
-            
-            Modal de Bootstrap 1 
-            <div class="modal fade" id="modalDetalles" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header bg-danger">
-                    <h5 class="modal-title" id="modalDetallesLabel"><b>Detalles del Menú</b></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <h4 id="modalTitulo" class="text-danger"><b>Menú para una persona</b></h4>
-                    <p id="modalContenido">{{ datos.menu_oferta1|safe }}</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-outline-danger">Comprar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
--->
-            <!-- Modal de Bootstrap 2
-            <div class="modal fade" id="modalDetalles2" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white" id="modalDetallesLabel"><b>Detalles del Menú</b></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <h4 id="modalTitulo" class="text-danger"><b>Menú para dos persona</b></h4>
-                    <p id="modalContenido">{{ datos.menu_oferta2|safe  }}</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-outline-danger">Comprar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-           Modal de Bootstrap 3 
-            <div class="modal fade" id="modalDetalles3" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header bg-danger">
-                    <h5 class="modal-title" id="modalDetallesLabel"><b>Detalles del Menú</b></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <h4 id="modalTitulo" class="text-danger"><b>Menú para más de dos personas</b></h4>
-                    <p id="modalContenido">{{ datos.menu_oferta1|safe  }}</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-outline-danger">Comprar</button>
-                  </div>
-                </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modal de Bootstrap 1 -->
+        <div class="modal fade" id="modalDetalles" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="modalDetallesLabel"><b>Detalles del Menú</b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 id="modalTitulo" class="text-danger"><b>Menú para una persona</b></h4>
+                <p id="modalContenido">{{ datos.menu_oferta1|safe }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger">Comprar</button>
               </div>
             </div>
-    </section> Why Us Section 
+          </div>
+        </div>
+
+        <!-- Modal de Bootstrap 2 -->
+        <div class="modal fade" id="modalDetalles2" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white" id="modalDetallesLabel"><b>Detalles del Menú</b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 id="modalTitulo" class="text-danger"><b>Menú para dos persona</b></h4>
+                <p id="modalContenido">{{ datos.menu_oferta2|safe  }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger">Comprar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Bootstrap 3 -->
+        <div class="modal fade" id="modalDetalles3" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="modalDetallesLabel"><b>Detalles del Menú</b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4 id="modalTitulo" class="text-danger"><b>Menú para más de dos personas</b></h4>
+                <p id="modalContenido">{{ datos.menu_oferta3|safe  }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn bg-danger text-white" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-danger">Comprar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- /Why Us Section -->
     {% endif %}
 
     {% if datos.clientes_activo %}
--->
     <!-- Stats Section -->
     <section id="stats" class="stats section dark-background">
 
@@ -428,7 +418,7 @@
                 {% else %}
                 <a href="{% static 'empresas/yummy-red/assets/img/menu/menu-item-2.png' %}" class="glightbox"><img src="{% static 'empresas/yummy-red/assets/img/menu/menu-item-2.png' %}" class="menu-img img-fluid" alt=""></a>
                 {% endif %}
-                <h4>{{ datos.nombre2_plato_menu|default:"Aut Luia' }}</h4>
+                <h4>{{ datos.nombre2_plato_menu|default:"Aut Luia" }}</h4>
                 <p class="ingredients">
                   {{ datos.descriptcion2_plato_menu|default:"Lorem, deren, trataro, filede, nerada" }}
                 </p>
@@ -497,6 +487,66 @@
                 </p>
               </div><!-- Menu Item -->
 
+              <div class="col-lg-4 menu-item">
+                {% if datos.imagen7_plato_menu %}
+                <a href="{{ datos.imagen7_plato_menu }}" class="glightbox"><img src="{{ datos.imagen7_plato_menu }}" class="menu-img img-fluid" alt=""></a>
+                {% else %}
+                <a href="{% static 'empresas/yummy-red/assets/img/menu/menu-item-4.png' %}" class="glightbox"><img src="{% static 'empresas/yummy-red/assets/img/menu/menu-item-4.png' %}" class="menu-img img-fluid" alt=""></a>
+                {% endif %}
+                <h4>{{ datos.nombre7_plato_menu|default:"Enim Perspiciatis" }}</h4>
+                <p class="ingredients">
+                  {{ datos.descriptcion7_plato_menu|default:"Lorem, deren, trataro, filede, nerada" }}
+                </p>
+                <p class="price">
+                  C${{ datos.precio7_plato_menu|default:"11.95" }}
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                {% if datos.imagen8_plato_menu %}
+                <a href="{{ datos.imagen8_plato_menu }}" class="glightbox"><img src="{{ datos.imagen8_plato_menu }}" class="menu-img img-fluid" alt=""></a>
+                {% else %}
+                <a href="{% static 'empresas/yummy-red/assets/img/menu/menu-item-5.png' %}" class="glightbox"><img src="{% static 'empresas/yummy-red/assets/img/menu/menu-item-5.png' %}" class="menu-img img-fluid" alt=""></a>
+                {% endif %}
+                <h4>{{ datos.nombre8_plato_menu|default:"Nostrum Voluptates" }}</h4>
+                <p class="ingredients">
+                  {{ datos.descriptcion8_plato_menu|default:"Lorem, deren, trataro, filede, nerada" }}
+                </p>
+                <p class="price">
+                  C${{ datos.precio8_plato_menu|default:"13.95" }}
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                {% if datos.imagen9_plato_menu %}
+                <a href="{{ datos.imagen9_plato_menu }}" class="glightbox"><img src="{{ datos.imagen9_plato_menu }}" class="menu-img img-fluid" alt=""></a>
+                {% else %}
+                <a href="{% static 'empresas/yummy-red/assets/img/menu/menu-item-6.png' %}" class="glightbox"><img src="{% static 'empresas/yummy-red/assets/img/menu/menu-item-6.png' %}" class="menu-img img-fluid" alt=""></a>
+                {% endif %}
+                <h4>{{ datos.nombre9_plato_menu|default:"Dignissimos Rerum" }}</h4>
+                <p class="ingredients">
+                  {{ datos.descriptcion9_plato_menu|default:"Lorem, deren, trataro, filede, nerada" }}
+                </p>
+                <p class="price">
+                  C${{ datos.precio9_plato_menu|default:"10.95" }}
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                {% if datos.imagen10_plato_menu %}
+                <a href="{{ datos.imagen10_plato_menu }}" class="glightbox"><img src="{{ datos.imagen10_plato_menu }}" class="menu-img img-fluid" alt=""></a>
+                {% else %}
+                <a href="{% static 'empresas/yummy-red/assets/img/menu/menu-item-1.png' %}" class="glightbox"><img src="{% static 'empresas/yummy-red/assets/img/menu/menu-item-1.png' %}" class="menu-img img-fluid" alt=""></a>
+                {% endif %}
+                <h4>{{ datos.nombre10_plato_menu|default:"Accusantium Quam" }}</h4>
+                <p class="ingredients">
+                  {{ datos.descriptcion10_plato_menu|default:"Lorem, deren, trataro, filede, nerada" }}
+                </p>
+                <p class="price">
+                  C${{ datos.precio10_plato_menu|default:"12.95" }}
+                </p>
+              </div><!-- Menu Item -->
+
             </div>
           </div><!-- End Starter Menu Content -->
         </div>
@@ -542,13 +592,13 @@
               <div class="testimonial-item">
                 <div class="row gy-4 justify-content-center">
                   <div class="col-lg-6">
-                    <div class="testimonial-content">parrafo1_comentario
+                    <div class="testimonial-content">
                       <p>
                         <i class="bi bi-quote quote-icon-left"></i>
-                        <span>{{ datos.parrafo1_comentario|default:"Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et.Maecenaliquam, risus at semper' }} .</span>
+                        <span>{{ datos.parrafo1_comentario|default:"Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et.Maecenaliquam, risus at semper" }} .</span>
                         <i class="bi bi-quote quote-icon-right"></i>
                       </p>
-                      <h3>{{ datos.nombre1_comentario|default:"Saul Goodman' }}</h3>
+                      <h3>{{ datos.nombre1_comentario|default:"Saul Goodman" }}</h3>
                     
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -556,8 +606,8 @@
                     </div>
                   </div>
                   <div class="col-lg-2 text-center">
-                    {% if datos.%}
-                    <img src="{{ datos.imagen1_comentario }}" class="img-fluid testimonial-img" alt="">
+                    {% if datos.imagen1_comentario %}
+                    <img src="{{ datos.imagen1_comentario.url }}" class="img-fluid testimonial-img" alt="">
                     {% else %}
                     <img src="{% static 'empresas/yummy-red/assets/img/testimonials/testimonials-1.jpg' %}" class="img-fluid testimonial-img" alt="">
                     {% endif %}
@@ -573,10 +623,10 @@
                     <div class="testimonial-content">
                       <p>
                         <i class="bi bi-quote quote-icon-left"></i>
-                        <span>{{ datos.parrafo1_comentario|default:"Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa' }}.</span>
+                        <span>{{ datos.parrafo2_comentario|default:"Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa" }}.</span>
                         <i class="bi bi-quote quote-icon-right"></i>
                       </p>
-                      <h3>{{ datos.nombre2_comentario|default:"Sara Wilsson' }}</h3>
+                      <h3>{{ datos.nombre2_comentario|default:"Sara Wilsson" }}</h3>
                       
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -584,8 +634,8 @@
                     </div>
                   </div>
                   <div class="col-lg-2 text-center">
-                    {% if datos.%}
-                    <img src="{{ datos.imagen2_comentario }}" class="img-fluid testimonial-img" alt="">
+                    {% if datos.imagen2_comentario %}
+                    <img src="{{ datos.imagen2_comentario.url }}" class="img-fluid testimonial-img" alt="">
                     {% else %}
                     <img src="{% static 'empresas/yummy-red/assets/img/testimonials/testimonials-2.jpg' %}" class="img-fluid testimonial-img" alt="">
                     {% endif %}
@@ -601,10 +651,10 @@
                     <div class="testimonial-content">
                       <p>
                         <i class="bi bi-quote quote-icon-left"></i>
-                        <span>{{ datos.parrafo1_comentario|default:"Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim' }}.</span>
+                        <span>{{ datos.parrafo3_comentario|default:"Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim" }}.</span>
                         <i class="bi bi-quote quote-icon-right"></i>
                       </p>
-                      <h3>{{ datos.nombre3_comentario|default:"Jena Karlis' }}</h3>
+                      <h3>{{ datos.nombre3_comentario|default:"Jena Karlis" }}</h3>
                       
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -612,8 +662,8 @@
                     </div>
                   </div>
                   <div class="col-lg-2 text-center">
-                    {% if datos.%}
-                    <img src="{{ datos.imagen3_comentario }}" class="img-fluid testimonial-img" alt="">
+                    {% if datos.imagen3_comentario %}
+                    <img src="{{ datos.imagen3_comentario.url }}" class="img-fluid testimonial-img" alt="">
                     {% else %}
                     <img src="{% static 'empresas/yummy-red/assets/img/testimonials/testimonials-3.jpg' %}" class="img-fluid testimonial-img" alt="">
                     {% endif %}
@@ -634,6 +684,11 @@
 
     <!-- Events Section -->
     <section id="events" class="events section">
+
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Eventos</h2>
+        <p><span class="events-titulo">{{ datos.titulo_servicios|default:"Organiza tus eventos con nosotros" }}</span></p>
+      </div><!-- End Section Title -->
 
       <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
 
@@ -665,7 +720,7 @@
           </script>
           <div class="swiper-wrapper">
 
-            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({{ datos.imagen_servicio1.url|default:static('empresas/yummy-red/assets/img/events-1.jpg') }})">
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({% static 'empresas/yummy-red/assets/img/events-1.jpg' as st_dflt_1 %}{{ datos.imagen_servicio1.url|default:st_dflt_1}})">
               <h3>{{ datos.nombre_servicio1|default:"Custom Parties" }}</h3>
               <!--<div class="price align-self-start">$99</div>-->
               <p class="description">
@@ -673,7 +728,7 @@
               </p>
           </div><!-- End Event item -->
 
-          <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({{ datos.imagen_servicio2.url|default:static('empresas/yummy-red/assets/img/events-2.jpg') }})">
+          <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({% static 'empresas/yummy-red/assets/img/events-2.jpg' as st_dflt_2 %}{{ datos.imagen_servicio2.url|default:st_dflt_2}})">
               <h3>{{ datos.nombre_servicio2|default:"Private Parties" }}</h3>
               <!--<div class="price align-self-start">$99</div>-->
               <p class="description">
@@ -681,7 +736,7 @@
               </p>
           </div><!-- End Event item -->
 
-            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({{ datos.imagen_servicio3.url|default:static('empresas/yummy-red/assets/img/events-3.jpg') }})">
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({% static 'empresas/yummy-red/assets/img/events-3.jpg' as st_dflt_3 %}{{ datos.imagen_servicio3.url|default:st_dflt_3}})">
                 <h3>{{ datos.nombre_servicio3|default:"Birthday Parties" }}</h3>
                 <!--<div class="price align-self-start">$99</div>-->
                 <p class="description">
@@ -690,7 +745,7 @@
             </div>
             <!-- End Event item -->
 
-            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({{ datos.imagen_servicio1.url|default:static('empresas/yummy-red/assets/img/events-4.jpg') }})">
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({% static 'empresas/yummy-red/assets/img/events-4.jpg' as st_dflt_4 %}{{ datos.imagen_servicio1.url|default:st_dflt_4}})">
               <h3>{{ datos.nombre_servicio4|default:"Wedding Parties" }}</h3>
               <!--<div class="price align-self-start">$99</div>-->
               <p class="description">
@@ -726,7 +781,7 @@
           <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member">
               <div class="member-img">
-                <img src="{{ datos.imagen_chef1.url|default:static('empresas/yummy-red/assets/img/chefs/chefs-1.jpg') }}" class="img-fluid" alt="Chef">
+                <img src="{% static 'empresas/yummy-red/assets/img/chefs/chefs-1.jpg' as st_dflt_5 %}{{ datos.imagen_chef1.url|default:st_dflt_5}}" class="img-fluid" alt="Chef">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -735,7 +790,7 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>{{ datos.nombre_chef1|default:"Walter White' }}</h4>
+                <h4>{{ datos.nombre_chef1|default:"Walter White" }}</h4>
               </div>
             </div>
           </div><!-- End Chef Team Member -->
@@ -743,7 +798,7 @@
           <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="team-member">
               <div class="member-img">
-                <img src="{{ datos.imagen_chef2.url|default:static('empresas/yummy-red/assets/img/chefs/chefs-1.jpg') }}" class="img-fluid" alt="Chef">
+                <img src="{% static 'empresas/yummy-red/assets/img/chefs/chefs-1.jpg' as st_dflt_6 %}{{ datos.imagen_chef2.url|default:st_dflt_6}}" class="img-fluid" alt="Chef">
 
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -753,15 +808,15 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>{{ datos.nombre_chef2|default:"Sarah Jhonson' }}</h4>
-              </div>s
+                <h4>{{ datos.nombre_chef2|default:"Sarah Jhonson" }}</h4>
+              </div>
             </div>
           </div><!-- End Chef Team Member -->
 
           <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
             <div class="team-member">
               <div class="member-img">
-                <img src="{{ datos.imagen_chef3.url|default:static('empresas/yummy-red/assets/img/chefs/chefs-1.jpg') }}" class="img-fluid" alt="Chef">
+                <img src="{% static 'empresas/yummy-red/assets/img/chefs/chefs-1.jpg' as st_dflt_7 %}{{ datos.imagen_chef3.url|default:st_dflt_7}}" class="img-fluid" alt="Chef">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -770,7 +825,7 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>{{ datos.nombre_chef3|default:"William Anderson' }}</h4>
+                <h4>{{ datos.nombre_chef3|default:"William Anderson" }}</h4>
               </div>
             </div>
           </div><!-- End Chef Team Member -->
@@ -782,6 +837,46 @@
     </section><!-- /Chefs Section -->
     {% endif %}
 
+    {% if datos.titulo_tarifa %}
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing section light-background">
+
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Precios</h2>
+        <p><span class="pricing-title">{{ datos.titulo_tarifa|default:"Nuestros precios" }}</span></p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="pricing-list">
+              <ul>
+                <li>{{ datos.nombre_servicio1_tarifa|default:'Corte de pelo' }}. . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio1_tarifa|default:'10' }}</span></li>
+                <li>{{ datos.nombre_servicio2_tarifa|default:'Menú del día' }}. . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio2_tarifa|default:'15' }}</span></li>
+                <li>{{ datos.nombre_servicio3_tarifa|default:'Menú Degustación' }}. . . . . . . . . . .<span>C${{ datos.precio_servicio3_tarifa|default:'20' }}</span></li>
+                <li>{{ datos.nombre_servicio4_tarifa|default:'Menú Parejas' }}. . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio4_tarifa|default:'25' }}</span></li>
+                <li>{{ datos.nombre_servicio5_tarifa|default:'Menú Familiar' }}. . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio5_tarifa|default:'30' }}</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="pricing-list">
+              <ul>
+                <li>{{ datos.nombre_servicio6_tarifa|default:'Menú Ejecutivo' }}. . . . . . . . . . . . . .<span>C${{ datos.precio_servicio6_tarifa|default:'12' }}</span></li>
+                <li>{{ datos.nombre_servicio7_tarifa|default:'Menú Infantil' }}. . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio7_tarifa|default:'8' }}</span></li>
+                <li>{{ datos.nombre_servicio8_tarifa|default:'Menú Vegetariano' }}. . . . . . . . . . .<span>C${{ datos.precio_servicio8_tarifa|default:'18' }}</span></li>
+                <li>{{ datos.nombre_servicio9_tarifa|default:'Menú Gourmet' }}. . . . . . . . . . . . . .<span>C${{ datos.precio_servicio9_tarifa|default:'35' }}</span></li>
+                <li>{{ datos.nombre_servicio10_tarifa|default:'Menú Especial' }}. . . . . . . . . . . . .<span>C${{ datos.precio_servicio10_tarifa|default:'40' }}</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Pricing Section -->
+    {% endif %}
+
+    {% comment %} Sección "Reservar una mesa" desactivada: el usuario prefiere solo información de contacto
     {% if datos.reservar_activo %}
     <!-- Book A Table Section -->
     <section id="book-a-table" class="book-a-table section">
@@ -796,10 +891,11 @@
 
         <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
 
-          <div class="col-lg-4 reservation-img" style="background-image: url({{ datos.imagen_portada_reserva.url|default:static('empresas/yummy-red/assets/img/reservation.jpg') }});"></div>
+          <div class="col-lg-4 reservation-img" style="background-image: url({% static 'empresas/yummy-red/assets/img/reservation.jpg' as st_dflt_8 %}{{ datos.imagen_portada_reserva.url|default:st_dflt_8}});"></div>
      
 
           <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
+            <!-- Formulario de reserva desactivado: ahora solo se muestra información de contacto
             <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form">
               <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
@@ -833,6 +929,12 @@
                 <button type="submit">Reserva tu mesa</button>
               </div>
             </form>
+            -->
+            <div class="reservation-contact">
+              <h3>Reserva llamando</h3>
+              <p><i class="bi bi-telephone"></i> <strong>{{ datos.telefono|default:'+34 612 345 678' }}</strong></p>
+              <p><i class="bi bi-envelope"></i> {{ datos.email|default:'info@mundo-nica.com' }}</p>
+            </div>
           </div><!-- End Reservation Form -->
 
         </div>
@@ -841,6 +943,7 @@
 
     </section><!-- /Book A Table Section -->
     {% endif %}
+    {% endcomment %}
 
     {% if datos.galeria_activo %}
     <!-- Gallery Section -->
@@ -888,57 +991,57 @@
           <div class="swiper-wrapper align-items-center">
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen1_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery1.jpg') }}">
-                    <img src="{{ datos.imagen1_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery1.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-1.jpg' as st_dflt_9 %}{{ datos.imagen1_galeria.url|default:st_dflt_9}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-1.jpg' as st_dflt_10 %}{{ datos.imagen1_galeria.url|default:st_dflt_10}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 1">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen2_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery2.jpg') }}">
-                    <img src="{{ datos.imagen2_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery2.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-2.jpg' as st_dflt_11 %}{{ datos.imagen2_galeria.url|default:st_dflt_11}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-2.jpg' as st_dflt_12 %}{{ datos.imagen2_galeria.url|default:st_dflt_12}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 2">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen3_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery3.jpg') }}">
-                    <img src="{{ datos.imagen3_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery3.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-3.jpg' as st_dflt_13 %}{{ datos.imagen3_galeria.url|default:st_dflt_13}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-3.jpg' as st_dflt_14 %}{{ datos.imagen3_galeria.url|default:st_dflt_14}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 3">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen4_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery4.jpg') }}">
-                    <img src="{{ datos.imagen4_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery4.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-4.jpg' as st_dflt_15 %}{{ datos.imagen4_galeria.url|default:st_dflt_15}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-4.jpg' as st_dflt_16 %}{{ datos.imagen4_galeria.url|default:st_dflt_16}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 4">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen5_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery5.jpg') }}">
-                    <img src="{{ datos.imagen5_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery5.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-5.jpg' as st_dflt_17 %}{{ datos.imagen5_galeria.url|default:st_dflt_17}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-5.jpg' as st_dflt_18 %}{{ datos.imagen5_galeria.url|default:st_dflt_18}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 5">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen6_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery6.jpg') }}">
-                    <img src="{{ datos.imagen6_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery6.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-6.jpg' as st_dflt_19 %}{{ datos.imagen6_galeria.url|default:st_dflt_19}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-6.jpg' as st_dflt_20 %}{{ datos.imagen6_galeria.url|default:st_dflt_20}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 6">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen7_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery7.jpg') }}">
-                    <img src="{{ datos.imagen7_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery7.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-7.jpg' as st_dflt_21 %}{{ datos.imagen7_galeria.url|default:st_dflt_21}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-7.jpg' as st_dflt_22 %}{{ datos.imagen7_galeria.url|default:st_dflt_22}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 7">
                 </a>
             </div>
             <div class="swiper-slide">
                 <a class="glightbox" data-gallery="images-gallery" 
-                   href="{{ datos.imagen8_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery8.jpg') }}">
-                    <img src="{{ datos.imagen8_galeria.url|default:static('empresas/yummy-red/assets/img/default-gallery8.jpg') }}" 
+                   href="{% static 'empresas/yummy-red/assets/img/gallery/gallery-8.jpg' as st_dflt_23 %}{{ datos.imagen8_galeria.url|default:st_dflt_23}}">
+                    <img src="{% static 'empresas/yummy-red/assets/img/gallery/gallery-8.jpg' as st_dflt_24 %}{{ datos.imagen8_galeria.url|default:st_dflt_24}}" 
                          class="img-fluid form-control form-control-lg border-success" alt="Galería 8">
                 </a>
             </div>
@@ -977,6 +1080,7 @@
               <div>
                 <h3>Dirección</h3>
                 <p>{{ datos.direccion }}</p>
+                <p class="contact-location"><span class="contact-ciudad">{{ datos.ciudad|default:"" }}</span><span class="contact-sep">, </span><span class="contact-pais">{{ datos.pais|default:"" }}</span></p>
               </div>
             </div>
           </div><!-- End Info Item -->
@@ -1006,13 +1110,14 @@
               <i class="icon bi bi-clock flex-shrink-0"></i>
               <div>
                 <h3>Horario<br></h3>
-                <p><strong>Lun-Sab:</strong> 11AM - 23PM; <strong>Domingo:</strong> Cerrado</p>
+                <p class="contact-schedule"><strong>Lun-Sab:</strong> <span>{{ datos.horario|default:"11AM - 23PM" }}</span>; <strong>Domingo:</strong> Cerrado</p>
               </div>
             </div>
           </div><!-- End Info Item -->
 
         </div>
 
+        <!-- Formulario de correo desactivado: ahora solo se muestra información de contacto
         <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
           <div class="row gy-4">
 
@@ -1041,7 +1146,7 @@
             </div>
 
           </div>
-        </form><!-- End Contact Form -->
+        </form> End Contact Form -->
 
       </div>
 
@@ -1059,7 +1164,7 @@
           <div class="address">
             <h4>Dirección</h4>
             <p>{{ datos.direccion }}</p>
-            <p></p>
+            <p class="footer-location"><span class="footer-ciudad">{{ datos.ciudad|default:"" }}</span><span class="footer-sep">, </span><span class="footer-pais">{{ datos.pais|default:"" }}</span></p>
           </div>
 
         </div>
@@ -1070,12 +1175,12 @@
             <h4>Contacto</h4>
             <p>
               <strong>Teléfono:</strong>
-              <span>
+              <span class="footer-phone">
                   {{ datos.telefono|default:"Número no disponible" }}
               </span><br>
 
               <strong>Correo:</strong>
-              <span>
+              <span class="footer-email">
                   {{ datos.correo|default:"yuyu@gmail.com" }}
               </span><br>
 
@@ -1088,7 +1193,7 @@
           <div>
             <h4>Horario</h4>
             <p>
-              <strong>Lun-Sab:</strong> <span>{{ datos.horario|default:"11AM - 23PM" }}</span><br>
+              <strong>Lun-Sab:</strong> <span class="footer-schedule">{{ datos.horario|default:"11AM - 23PM" }}</span><br>
             </p>
           </div>
         </div>
@@ -1146,34 +1251,6 @@
   document.getElementById('modalTitulo').innerText = titulo;
   document.getElementById('modalContenido').innerHTML = contenido;
 }
-</script>
-<!--esta es una prueba de apatrecer un mensaje al cargar la web que diga quien creo la web-->
-<script>
-  // Animación con GSAP
-  const mensaje = document.getElementById('mensaje');
-
-  // Efecto de entrada
-  gsap.fromTo(
-    mensaje,
-    { opacity: 0, scale: 0.8 }, // Inicio: transparente y reducido
-    {
-      opacity: 1,
-      scale: 1, // Aparece con tamaño normal
-      duration: 1, // Duración de la animación de entrada
-      ease: "power2.out", // Suavizado
-    }
-  );
-
-  // Mantener visible por 5 segundos, luego desaparecer
-  setTimeout(() => {
-    gsap.to(mensaje, {
-      opacity: 0, // Desaparece gradualmente
-      scale: 0.8, // Reduce ligeramente su tamaño
-      duration: 1, // Duración de la salida
-      ease: "power2.in", // Suavizado
-      onComplete: () => (mensaje.style.display = 'none'), // Ocultarlo completamente
-    });
-  }, 5000);
 </script>
 
 </body>

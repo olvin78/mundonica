@@ -86,6 +86,7 @@ class Empresa(models.Model):
     tipo_empresa = models.ForeignKey(TipoEmpresa,on_delete=models.CASCADE,related_name="empresas",verbose_name="Elija el tipo de Empresa",null=True, blank=True,default=1)
     nombreUrl = models.SlugField(max_length=150, unique=True, null=True, blank=True,verbose_name="Elija el nombre de la URl sin espacios")
     #Header titulo en la página como texto principal h1
+    header_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de Cabecera", default=True)
     titulo_header = models.CharField(max_length=100, verbose_name="titulo header", null=True, blank=True)
     #header subtitulo subtitulo numero uno
     subtitulo1_header = models.CharField(max_length=100, verbose_name="subtitulo 1 header", null=True, blank=True)
@@ -106,7 +107,7 @@ class Empresa(models.Model):
 
 
     #activar el aparatado de quienes somos, para poder agregarlo o que no aparezca
-    quienes_somos_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección Sobre Nosotros")
+    quienes_somos_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección Sobre Nosotros", default=True)
     #titulo para describir sobre nosotros quienes somos como empresas
     titulo_sobrenosotros = models.CharField(max_length=500, verbose_name="parrafo para describir sobrenosotros 1", null=True, blank=True)
     #titulo sobre nosotros para descripcion
@@ -135,7 +136,7 @@ class Empresa(models.Model):
 
 
     #activar el aparatado de vender menu de regalo, para poder agregarlo o que no aparezca
-    menu_regalo_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para vender menu de regalo")
+    menu_regalo_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para vender menu de regalo", default=True)
 
     #esto es el campo para incluir lo que ofrece el menu para una persona en el apartado de menu de regalo numero 1
     #menu_regalo1 = models.CharField(max_length=500, verbose_name="menu_regalo1", null=True, blank=True)
@@ -146,10 +147,10 @@ class Empresa(models.Model):
     menu_oferta3 = HTMLField(blank=True,null=True)
 
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
-    clientes_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para ver clientes")
+    clientes_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para ver clientes", default=True)
 
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
-    platos_menu_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de platos")
+    platos_menu_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de platos", default=True)
 
 
     #apartado para la seccion de la exposixcino de platos , su descripciony su precio
@@ -206,7 +207,7 @@ class Empresa(models.Model):
 
 
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
-    comentarios_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de comentarios")
+    comentarios_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de comentarios", default=True)
     
     #parrafo para el apartado de los comentarios
     parrafo1_comentario = models.CharField(max_length=500, verbose_name="parrafo comentario 1", null=True, blank=True)
@@ -224,9 +225,9 @@ class Empresa(models.Model):
     imagen3_comentario = models.ImageField(upload_to='empresas/imagenes/comentarios', null=True, blank=True)
     
      #activar el aparatado de la galería, para poder agregarlo o que no aparezca
-    eventos_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de enventos")
+    eventos_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de enventos", default=True)
 
-    chefs_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de chefs")
+    chefs_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de chefs", default=True)
 
     imagen_chef1 = models.ImageField(upload_to='empresas/imagenes/chefs/', verbose_name="Agregar imagen Chef 1", blank=True, null=True)
     imagen_chef2 = models.ImageField(upload_to='empresas/imagenes/chefs/', verbose_name="Agregar imagen Chef 2", blank=True, null=True)
@@ -236,7 +237,7 @@ class Empresa(models.Model):
     nombre_chef2 = models.CharField(max_length=255, verbose_name="Introduzca el nombre del Chef 2", blank=True, null=True)
     nombre_chef3 = models.CharField(max_length=255, verbose_name="Introduzca el nombre del Chef 3", blank=True, null=True)
 
-    reservar_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para reservas")
+    reservar_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para reservas", default=True)
 
 
         ##############  Sobre los Servicios ################
@@ -244,6 +245,7 @@ class Empresa(models.Model):
 
 
     #titulo para describir sobre los servicios
+    servicios_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de servicios", default=True)
     titulo_servicios = models.CharField(max_length=500, verbose_name="titulo servicios", null=True, blank=True)
 
     #imagen para el apartado de los servicios numero 1
@@ -270,6 +272,7 @@ class Empresa(models.Model):
 
 
      #titulo para describir sobre los servicios
+    trabajadores_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de trabajadores", default=True)
     titulo_trabajadores = models.CharField(max_length=500, verbose_name="parrafo1", null=True, blank=True)
 
     #imagen para el apartado de de equipo de trabajo numero 1
@@ -288,6 +291,7 @@ class Empresa(models.Model):
         ##########################################################################
 
     #titulo para describir las tarifas
+    tarifa_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de tarifas/catálogo", default=True)
     titulo_tarifa = models.CharField(max_length=500, verbose_name="Titulo sccion de tarifa", null=True, blank=True)
 
     #imagen para el apartado de las tarifas numero 1
@@ -324,7 +328,7 @@ class Empresa(models.Model):
 
 
     # Activar el apartado de la galería para agregarlo o que no aparezca
-    galeria_activo = models.BooleanField(blank=True, verbose_name="Agregar sección Galería")
+    galeria_activo = models.BooleanField(blank=True, verbose_name="Agregar sección Galería", default=True)
 
     # Título para el apartado de galería
     titulo1_galeria = models.CharField(max_length=500, verbose_name="Título de la galería", null=True, blank=True)
@@ -348,7 +352,7 @@ class Empresa(models.Model):
     imagen_portada_reserva = models.ImageField(upload_to='reservas/',verbose_name="Imagen Portada Reserva",blank=True,null=True)
 
     #activar el aparatado de la galería, para poder agregarlo o que no aparezca
-    contactar_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para contactar")
+    contactar_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección para contactar", default=True)
 
     #horario para el apartado de contactar
     horario = models.CharField(max_length=500, verbose_name="horario", null=True, blank=True)
@@ -531,3 +535,73 @@ class Receta(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+class Favorito(models.Model):
+    """Negocio (Empresa) que un usuario guardó en "Me gusta" (tipo TripAdvisor)."""
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favoritos')
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='favoritos')
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Favorito"
+        verbose_name_plural = "Favoritos"
+        unique_together = ('usuario', 'empresa')
+        ordering = ['-fecha']
+
+    def __str__(self):
+        return f"{self.usuario} ❤ {self.empresa}"
+
+
+class Valoracion(models.Model):
+    """Valoración de 1 a 5 estrellas de un usuario sobre un negocio (tipo TripAdvisor)."""
+    PUNTUACIONES = [(i, i) for i in range(1, 6)]
+
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='valoraciones')
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='valoraciones')
+    puntuacion = models.PositiveSmallIntegerField(choices=PUNTUACIONES, verbose_name="Puntuación (1-5)")
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Valoración"
+        verbose_name_plural = "Valoraciones"
+        unique_together = ('usuario', 'empresa')
+        ordering = ['-fecha']
+
+    def __str__(self):
+        return f"{self.usuario} valoró {self.empresa} con {self.puntuacion}★"
+
+
+class SeccionMenu(models.Model):
+    """Controla qué enlaces del menú principal (header) se muestran en el sitio.
+
+    Se administra desde el admin de Django: desactivar una sección aquí la oculta
+    del menú en todas las páginas, sin tocar código. La "clave" identifica de forma
+    estable a qué enlace del menú corresponde (ver base.html).
+    """
+
+    CLAVES = [
+        ('inicio', 'Inicio'),
+        ('blog', 'Blog'),
+        ('mapa', 'Mapa'),
+        ('galeria', 'Galería'),
+        ('recetas', 'Recetas'),
+        ('servicios', 'Servicios (Preguntas y Moneda)'),
+        ('donativos', 'Donativos'),
+        ('empresas', 'Empresas (Explorar negocios)'),
+        ('extranjeros', 'Extranjeros (Consulados, Embajadas, Abogados)'),
+        ('contacto', 'Contacto'),
+    ]
+
+    clave = models.CharField(max_length=50, choices=CLAVES, unique=True, verbose_name="Enlace del menú")
+    nombre = models.CharField(max_length=100, verbose_name="Nombre visible en el menú")
+    activo = models.BooleanField(default=True, verbose_name="Mostrar en el menú")
+    orden = models.PositiveIntegerField(default=0, verbose_name="Orden")
+
+    class Meta:
+        verbose_name = "Sección del menú"
+        verbose_name_plural = "Secciones del menú"
+        ordering = ['orden', 'nombre']
+
+    def __str__(self):
+        return f"{self.nombre} ({'visible' if self.activo else 'oculto'})"

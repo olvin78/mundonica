@@ -1,0 +1,12 @@
+<c-vars number="" counter="" suffix="" label="" />
+<div
+  class="rounded-xl2 bg-white/10 px-4 py-6 text-center ring-1 ring-inset ring-white/15 backdrop-blur"
+  data-reveal
+>
+  {% if counter %}
+    <p class="font-heading text-3xl md:text-4xl font-extrabold text-white" data-counter="{{ counter }}" data-counter-suffix="{{ suffix }}">0{{ suffix }}</p>
+  {% else %}
+    <p class="font-heading text-3xl md:text-4xl font-extrabold text-white">{{ number }}</p>
+  {% endif %}
+  <p class="mt-1 text-sm font-semibold text-white/80">{{ label }}</p>
+</div>

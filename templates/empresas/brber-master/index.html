@@ -39,6 +39,32 @@
     color: #aaa!important; /* Color del texto del placeholder */
 }
 
+.testimonial-card {
+    background: #f8f8f8;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 25px 20px;
+    min-height: 180px;
+}
+.testimonial-card .testimonial-parrafo {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+.testimonial-card .testimonial-nombre {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c2c2c;
+}
+.empresa-nombre {
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -48,11 +74,11 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    {% if datos.imagen_logo_empresa %}
+                    <!-- {% if datos.imagen_logo_empresa %}
                     <img src="{{ datos.imagen_logo_empresa.url }}" alt="">
                     {% else %}
                     <img src="{% static 'mpresas/brber-master/assets/img/logo/loder.png' %}" alt="">
-                    {% endif %}
+                    {% endif %} -->
                 </div>
             </div>
         </div>
@@ -67,7 +93,7 @@
                         <!-- Logo -->
                         <div class="col-xl-2 col-lg-2 col-md-1">
                             <div class="logo">
-                                <a href="index.html"><img src="{% static 'empresas/brber-master/assets/img/logo/logo.png' %}" alt=""></a>
+                                <a href="index.html"><!-- <img src="{% static 'empresas/brber-master/assets/img/logo/logo.png' %}" alt=""> --><span class="empresa-nombre">{{ datos.nombre_de_la_empresa|default:'' }}</span></a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10">
@@ -81,7 +107,7 @@
                                             <li><a href="services.html">Servicios</a></li>
                                             <li><a href="portfolio.html">Galería</a></li>  
 
-                                            {% if datos.propietario_sitio_web ==  user %}
+                                            {% if datos.propietario_sitio_web ==  user and datos %}
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{% url 'home_app:actualizar_empresa' datos.id %}">Editar Web</a>
                                             </li>
@@ -91,7 +117,7 @@
                                     </nav>
                                 </div>
                                 <div class="header-right-btn f-right d-none d-lg-block ml-30">
-                                    <a href="#newsletter-form-email" class="btn header-btn">Reservar</a>
+                                    <a href="#" class="btn header-btn">Contactar</a>
                                 </div>
                             </div>
                         </div>   
@@ -106,6 +132,7 @@
         <!-- Header End -->
     </header>
     <main>
+        {% if datos.header_activo %}
         <!--? slider Area Start-->
         <div class="slider-area position-relative fix">
             <div class="slider-active">
@@ -138,18 +165,21 @@
             </div>
             <!-- stroke Text -->
             <div class="stock-text">
-                <h2>{{ datos.subtitulo2_header|default:"Get More confident" }}</h2>
-                <h2>{{ datos.subtitulo2_header|default:"Get More confident" }}</h2>
+                <h2 style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);">{{ datos.subtitulo2_header|default:"Get More confident" }}</h2>
+                <h2 style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);">{{ datos.subtitulo2_header|default:"Get More confident" }}</h2>
             </div>
-             <!-- Arrow -->
+             <!-- Arrow 
              <div class="thumb-content-box">
                 <div class="thumb-content">
                     <h3>Reservar ahora</h3>
                     <a href="#"> <i class="fas fa-long-arrow-alt-right"></i></a>
                 </div>
             </div>
+            -->
         </div>
         <!-- slider Area End-->
+        {% endif %}
+        {% if datos.quienes_somos_activo %}
         <!--? About Area Start -->
         <section class="about-area section-padding30 position-relative">
             <div class="container">
@@ -185,15 +215,13 @@
             </div>
             <!-- About Shape -->
             <div class="about-shape">
-                {% if datos.%}
                 <img src="{% static 'empresas/brber-master/assets/img/gallery/about-shape.png' %}" alt="">
-                {% else %}
-                <img src="{% static 'empresas/brber-master/assets/img/gallery/about-shape.png' %}" alt="">
-                {% endif %}
             </div>
         </section>
         <!-- About-2 Area End -->
+        {% endif %}
 
+        {% if datos.servicios_activo %}
         <!--? Services Area Start -->
         <section class="service-area pb-170">
             <div class="container">
@@ -211,8 +239,8 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="services-caption text-center mb-30">
                             <div class="service-icon">
-                                {% if datos.%}
-                                <img src="imagen_servicio1" alt="">
+                                {% if datos.imagen_servicio1 %}
+                                <img src="{{ datos.imagen_servicio1.url }}" alt="">
                                 {% else %}
                                 <i class="flaticon-fitness"></i>
                                 {% endif %}
@@ -226,8 +254,8 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="services-caption active text-center mb-30">
                             <div class="service-icon">
-                                {% if datos.%}
-                                <img src="imagen_servicio2" alt="">
+                                {% if datos.imagen_servicio2 %}
+                                <img src="{{ datos.imagen_servicio2.url }}" alt="">
                                 {% else %}
                                 <i class="flaticon-fitness"></i>
                                 {% endif %}
@@ -241,8 +269,8 @@
                     <div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="services-caption text-center mb-30">
                             <div class="service-icon">
-                                {% if datos.%}
-                                <img src="imagen_servicio3" alt="">
+                                {% if datos.imagen_servicio3 %}
+                                <img src="{{ datos.imagen_servicio3.url }}" alt="">
                                 {% else %}
                                 <i class="flaticon-fitness"></i>
                                 {% endif %}
@@ -257,7 +285,9 @@
             </div>
         </section>
         <!-- Services Area End -->
+        {% endif %}
 
+        {% if datos.trabajadores_activo %}
         <!--? Team Start -->
         <div class="team-area pb-180">
             <div class="container">
@@ -318,6 +348,8 @@
             </div>
         </div>
         <!-- Team End -->
+        {% endif %}
+        {% if datos.tarifa_activo %}
         <!-- Best Pricing Area Start -->
         <div class="best-pricing section-padding2 position-relative">
             <div class="container">
@@ -325,7 +357,7 @@
                     <div class="col-xl-6 col-lg-6">
                         <div class="section-tittle mb-50">
                             <span>Nuestros Mejores Precios</span>
-                            <h2>We provide best price<br> in the city!</h2>
+                            <h2 class="pricing-title">{{ datos.titulo_tarifa|default:'We provide best price in the city!' }}</h2>
                         </div>
                         <!-- Pricing  -->
                         <div class="row">
@@ -347,7 +379,7 @@
                                     <ul>
                                         <li>{{ datos.nombre_servicio8_tarifa|default:'Cut' }}. . . . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio8_tarifa|default:'25' }}</span></li>
                                         <li>{{ datos.nombre_servicio9_tarifa|default:'Shave' }}. . . . . . . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio9_tarifa|default:'65' }}</span></li>
-                                        <li>{{ datos.nombre_servicio10_tarifa|default:'Beard trim' }}. . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio10ss_tarifa|default:'65' }}</span></li>
+                                        <li>{{ datos.nombre_servicio10_tarifa|default:'Beard trim' }}. . . . . . . . . . . . . . .<span>C${{ datos.precio_servicio10_tarifa|default:'65' }}</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -371,6 +403,8 @@
             </div>
         </div>
         <!-- Best Pricing Area End -->
+        {% endif %}
+        {% if datos.galeria_activo %}
         <!--? Gallery Area Start -->
         <div class="gallery-area section-padding30">
             <div class="container">
@@ -428,6 +462,7 @@
             </div>
         </div>
         <!-- Gallery Area End -->
+        {% endif %}
         <!-- Cut Details Start -->
         <div class="cut-details section-bg section-padding2" data-background="{% static 'empresas/brber-master/assets/img/gallery/section_bg02.png' %}">
            <div class="container">
@@ -502,6 +537,40 @@
 
         </section>
         <!-- Blog Area End -->
+        <!--? Testimonios / Comentarios Start -->
+        <section class="testimonial-area section-padding30">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-8 col-md-11 col-sm-11">
+                        <div class="section-tittle text-center mb-90">
+                            <span>Testimonios</span>
+                            <h2>{{ datos.titulo1_galeria|default:'Lo que dicen nuestros clientes' }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="testimonial-card text-center mb-30">
+                            <p class="testimonial-parrafo">"{{ datos.parrafo1_comentario|default:'Excelente servicio y trato increíble.' }}"</p>
+                            <h4 class="testimonial-nombre">{{ datos.nombre1_comentario|default:'Saul Goodman' }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="testimonial-card text-center mb-30">
+                            <p class="testimonial-parrafo">"{{ datos.parrafo2_comentario|default:'El mejor lugar para arreglarse la barba.' }}"</p>
+                            <h4 class="testimonial-nombre">{{ datos.nombre2_comentario|default:'Sara Wilsson' }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="testimonial-card text-center mb-30">
+                            <p class="testimonial-parrafo">"{{ datos.parrafo3_comentario|default:'Ambiente genial y profesionales.' }}"</p>
+                            <h4 class="testimonial-nombre">{{ datos.nombre3_comentario|default:'Jena Karlis' }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--? Testimonios End -->
     </main>
     <footer>
         <!--? Footer Start-->
@@ -513,11 +582,11 @@
                             <div class="single-footer-caption mb-50">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    {% if datos.imagen_logo_empresa %}
+                                    <!-- {% if datos.imagen_logo_empresa %}
                                     <img  style="height: 90px;width: 90px;" src="{{ datos.imagen_logo_empresa.url }}" alt="">
                                     {% else %}
                                     <img src="{% static 'empresas/brber-master/assets/img/logo/logo.png' %}" alt="">
-                                    {% endif %}
+                                    {% endif %} -->
                                     <p></p>
                                 </div>
                                 <div class="footer-tittle">
@@ -526,8 +595,8 @@
                                     </div>
                                 </div>
                                 <div class="footer-number">
-                                    <h4><span style="color: sandybrown;">{{ datos.telefono|default:'7885 3222' }}</h4>
-                                    <p>{{ datos.email|default:'youremail@gmail.com' }}</p>
+                                    <h4 class="footer-phone">{{ datos.telefono|default:'7885 3222' }}</h4>
+                                    <p class="footer-email">{{ datos.email|default:'youremail@gmail.com' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -541,6 +610,7 @@
                                 </div>
                                 <!-- Form -->
                                 <div class="footer-form">
+                                    <!-- Formulario de correo desactivado: ahora solo se muestra información de contacto
                                     <div id="mc_embed_signup">
                                         <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part" novalidate="true">
                                             <input type="email" name="EMAIL" id="newsletter-form-email" placeholder="Tu correo Electrónico" class="placeholder hide-on-focus mb-3 form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tu correo Electrónico'">
@@ -556,6 +626,12 @@
                                             </div>
                                             <div class="mt-10 info"></div>
                                         </form>
+                                    </div>
+                                    -->
+                                    <div class="footer-contact-info">
+                                        <p class="info1"><i class="bi bi-clock"></i> <span class="footer-horario">{{ datos.horario|default:'9AM - 20PM' }}</span></p>
+                                        <p class="info1"><i class="bi bi-geo-alt"></i> <span class="footer-direccion">{{ datos.direccion|default:'Calle Mayor 12, Madrid' }}</span></p>
+                                        <p class="info1"><i class="bi bi-globe"></i> <span class="footer-ciudad">{{ datos.ciudad|default:'' }}</span><span class="footer-sep">, </span><span class="footer-pais">{{ datos.pais|default:'' }}</span></p>
                                     </div>
                                 </div>
                             </div>

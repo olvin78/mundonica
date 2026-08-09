@@ -6,6 +6,7 @@ db.sqlite3
 
 #ignorar avariables del entorno
 .env
+.env.docker
 #ignorar archivos generados automaticamente
 __pycache__/
 *.pyc
@@ -14,3 +15,6 @@ __pycache__/
 
 #ignorar archivos estatios y multimedia genrados
 /staticfiles/
+
+#ignorar dependencias de node (Tailwind); el CSS compilado (static/css/tailwind.css) sí se versiona
+/node_modules/

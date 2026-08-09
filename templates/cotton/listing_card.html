@@ -1,0 +1,148 @@
+<c-vars empresa="" index="" />
+<article class="group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-slate-200 transition-all duration-300 hover:shadow-lift hover:-translate-y-1.5 h-full">
+  <!-- Entire card is clickable link to detail -->
+  {% if empresa.nombreUrl %}
+    <a href="{% url 'home_app:empresa_detalle' empresa.nombreUrl %}" class="absolute inset-0 z-10" aria-label="{{ empresa.nombre_de_la_empresa }}"></a>
+  {% endif %}
+
+  <!-- Image Container -->
+  <div class="relative w-full aspect-[4/3] shrink-0 overflow-hidden bg-gradient-to-br from-nica-ocean/20 to-nica-emerald/20">
+    {% if empresa.imagen_header %}
+      <img src="{{ empresa.imagen_header.url }}" alt="{{ empresa.nombre_de_la_empresa }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+    {% elif empresa.imagen %}
+      <img src="{{ empresa.imagen.url }}" alt="{{ empresa.nombre_de_la_empresa }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+    {% elif empresa.imagen_portada %}
+      <img src="{{ empresa.imagen_portada.url }}" alt="{{ empresa.nombre_de_la_empresa }}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+    {% else %}
+      <div class="flex h-full w-full items-center justify-center bg-slate-50">
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+          <i class="bi
+            {% if empresa.tipo_empresa.nombre == 'Restaurante' %}bi-cup-hot
+            {% elif empresa.tipo_empresa.nombre == 'Peluquería' %}bi-scissors
+            {% elif empresa.tipo_empresa.nombre == 'Comercio' %}bi-bag
+            {% else %}bi-shop{% endif %}
+            text-lg"></i>
+        </span>
+      </div>
+    {% endif %}
+
+    <!-- Top Badge / Category -->
+    <span class="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-0.5 text-[11px] sm:text-[9px] xl:text-[10px] font-extrabold uppercase tracking-wider text-slate-600 shadow-sm backdrop-blur-sm">
+      {{ empresa.tipo_empresa.nombre|default:"Negocio" }}
+    </span>
+
+    <!-- Top Rated / Recommendation Badge (TripAdvisor Style) -->
+    {% if empresa.rating_avg >= 4.5 %}
+      <div class="absolute left-3 bottom-3 flex items-center gap-1 bg-white/95 rounded-lg px-2 py-0.5 shadow-sm backdrop-blur-sm border border-slate-100">
+        <i class="bi bi-award-fill text-nica-emerald text-[10px]"></i>
+        <span class="text-[10px] sm:text-[8px] xl:text-[9px] font-black text-slate-700 uppercase tracking-widest">Top Rated</span>
+      </div>
+    {% endif %}
+
+    <!-- Favorite Button (Keep interactive z-index so user can click it) -->
+    <div class="absolute right-3 top-3 z-20">
+      {% if request.user.is_authenticated %}
+        <form action="{% url 'home_app:toggle_favorito' empresa.pk %}" method="post" class="m-0 p-0" data-favorito-form>
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="flex h-8 w-8 items-center justify-center rounded-full bg-white text-red-500 shadow-sm transition-all duration-300 hover:bg-red-50 hover:scale-110 cursor-pointer border-0 p-0"
+            aria-label="{% if empresa.id in favoritos_ids %}Quitar de favoritos{% else %}Guardar en favoritos{% endif %}"
+            data-favorito-btn
+          >
+            <i class="bi {% if empresa.id in favoritos_ids %}bi-heart-fill{% else %}bi-heart{% endif %} text-xs"></i>
+          </button>
+        </form>
+      {% else %}
+        <button
+          type="button"
+          class="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm transition-all duration-300 hover:text-red-500 hover:scale-110 cursor-pointer border-0 p-0"
+          data-bs-toggle="modal" data-bs-target="#exampleModal"
+          aria-label="Inicia sesión para guardar en favoritos"
+        >
+          <i class="bi bi-heart text-xs"></i>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Content Body -->
+  <div class="flex flex-1 flex-col p-4 sm:p-3 justify-between bg-white">
+    <div>
+      <div class="flex gap-2">
+        <!-- Rank Index Number (TripAdvisor Style) -->
+        {% if index %}
+          <div class="font-heading text-3xl sm:text-2xl font-extrabold text-slate-800 leading-none shrink-0 pt-0.5">
+            {{ index }}
+          </div>
+        {% endif %}
+
+        <!-- Location Badge & Title -->
+        <div class="flex-1 min-w-0">
+          {% if empresa.ciudad %}
+            <span class="inline-block rounded bg-slate-100 px-1.5 py-0.5 text-[10px] sm:text-[8px] xl:text-[9px] font-bold text-slate-600 uppercase tracking-wider mb-1">
+              {{ empresa.ciudad }}
+            </span>
+          {% endif %}
+          
+          <h3 class="font-heading text-sm sm:text-xs xl:text-sm font-bold leading-snug text-slate-800 m-0 mb-1 group-hover:text-nica-ocean transition-colors duration-200 line-clamp-2" title="{{ empresa.nombre_de_la_empresa }}">
+            {{ empresa.nombre_de_la_empresa }}
+          </h3>
+        </div>
+      </div>
+
+      <!-- Rating Row (TripAdvisor Style: Score + Circles/Stars + Count) -->
+      {% load rating_filters %}
+      <div class="flex items-center gap-1 mb-2 mt-1" data-rating-widget data-rate-url="{% url 'home_app:valorar_empresa' empresa.pk %}" data-rating-value="{{ empresa.rating_avg }}">
+        <!-- Numeric Score -->
+        <span class="text-xs sm:text-[10px] xl:text-xs font-bold text-slate-700 leading-none" data-rating-label>
+          {% if empresa.rating_avg %}{{ empresa.rating_avg|floatformat:1 }}{% else %}-{% endif %}
+        </span>
+
+        <!-- Rating Stars (emerald color like TripAdvisor) -->
+        <div class="relative flex items-center text-xs sm:text-[9px] xl:text-[10px] leading-none">
+          {% for star_type in empresa.rating_avg|rating_stars_list %}
+            <i class="bi {% if star_type == 'fill' %}bi-star-fill text-emerald-600{% elif star_type == 'half' %}bi-star-half text-emerald-600{% else %}bi-star text-slate-300{% endif %}" data-rating-star></i>
+          {% endfor %}
+
+          <!-- Keep rating submission functionality overlay with z-index so user can click stars -->
+          {% if request.user.is_authenticated %}
+            <div class="absolute inset-0 flex bg-transparent z-20">
+              {% for n in "12345" %}
+                <button
+                  type="button"
+                  data-rate="{{ forloop.counter }}"
+                  class="flex-1 bg-transparent border-0 p-0 m-0 cursor-pointer focus:outline-none focus:ring-0 opacity-0"
+                  style="background: transparent; border: none; padding: 0; margin: 0; outline: none; box-shadow: none; opacity: 0;"
+                  aria-label="Valorar {{ empresa.nombre_de_la_empresa }} con {{ forloop.counter }} estrella{{ forloop.counter|pluralize }}"
+                ></button>
+              {% endfor %}
+            </div>
+            {% csrf_token %}
+          {% endif %}
+        </div>
+        
+        <!-- Ratings Count -->
+        {% if empresa.rating_count %}
+          <span class="text-xs sm:text-[9px] xl:text-[10px] font-medium text-slate-400">({{ empresa.rating_count }})</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Bottom Detail (Contact/Address) -->
+    <div class="border-t border-slate-100 pt-2 flex items-center justify-between mt-auto">
+      <span class="text-xs sm:text-[9px] xl:text-[10px] text-slate-500 font-semibold line-clamp-1 flex-1">
+        {% if empresa.telefono %}
+          <i class="bi bi-telephone-fill text-slate-400 mr-0.5"></i> {{ empresa.telefono }}
+        {% else %}
+          <i class="bi bi-geo-alt-fill text-slate-400 mr-0.5"></i> {% if empresa.direccion %}{{ empresa.direccion }}{% else %}{{ empresa.ciudad|default:"España" }}{% endif %}
+        {% endif %}
+      </span>
+
+      <!-- Small Link Indicator -->
+      <span class="text-[11px] sm:text-[9px] xl:text-[10px] font-bold text-slate-400 group-hover:text-nica-ocean transition-colors duration-200">
+        Ver perfil <i class="bi bi-chevron-right text-[7px]"></i>
+      </span>
+    </div>
+  </div>
+</article>

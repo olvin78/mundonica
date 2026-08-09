@@ -1,133 +1,173 @@
-/* Contenedor Central */
-.profile-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+:root {
+  --brand-emerald: #198754;
+  --brand-ocean: #0b4f6c;
+  --brand-ink: #0f172a;
+  --brand-slate: #475569;
+  --brand-mist: #e2e8f0;
+  --brand-white: #ffffff;
 }
 
-/* Tarjeta de Perfil */
+body.profile-page {
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #eef2f7 0%, #f8fafc 60%, #eef2f7 100%);
+  font-family: "Poppins", sans-serif;
+}
+
+.profile-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
 .profile-card {
-    width: 95%;
-    /* Ajuste más ancho */
-    max-width: 400px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    position: relative;
-    /* Para posicionar el botón de salir */
+  width: 100%;
+  max-width: 460px;
+  background: var(--brand-white);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.2);
 }
 
-/* Encabezado con Fondo y Avatar */
-.card-header {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
+.profile-cover {
+  position: relative;
+  height: 170px;
+  background: var(--brand-ocean);
 }
 
-.background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.profile-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-logout {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(15, 23, 42, 0.7);
+  color: var(--brand-white);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: none;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(11, 79, 108, 0.85);
+  transform: translateY(-2px);
+  color: var(--brand-white);
 }
 
 .avatar {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 80px;
-    border: 4px solid #fff;
-    border-radius: 50%;
-    background: #f3f4f6;
-    color: #777;
-    font-size: 2rem;
-    overflow: hidden;
+  position: absolute;
+  left: 50%;
+  bottom: -45px;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid var(--brand-white);
+  background: var(--brand-mist);
+  overflow: hidden;
 }
 
 .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.avatar i {
-    display: none;
+.profile-body {
+  padding: 60px 24px 26px;
+  text-align: center;
 }
 
-/* Cuerpo de la Tarjeta */
-.card-body {
-    padding: 20px;
-    text-align: center;
+.profile-body h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-ink);
+  margin-bottom: 6px;
 }
 
-.card-body h2 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #333;
+.profile-body p {
+  color: var(--brand-slate);
 }
 
-.card-body .role {
-    font-size: 1rem;
-    color: #777;
-    margin-bottom: 15px;
+.form-group {
+  text-align: left;
 }
 
-.info-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.form-group label {
+  font-weight: 600;
+  color: var(--brand-ink);
+  margin-bottom: 6px;
 }
 
-.info-list li {
-    font-size: 0.9rem;
-    color: #555;
-    padding: 5px 0;
+.form-group input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 10px 12px;
 }
 
-/* Pie de Tarjeta */
-.card-footer {
-    padding: 15px;
-    text-align: center;
-    background: #f9f9f9;
-    border-top: 1px solid #eee;
+.form-group input[type="file"] {
+  padding: 10px;
+  background: #fff;
+}
+
+.current-avatar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  margin-bottom: 10px;
+}
+
+.current-avatar img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.current-avatar span {
+  color: var(--brand-slate);
+  font-weight: 600;
 }
 
 .btn-edit {
-    background: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+  background: var(--brand-emerald);
+  color: var(--brand-white);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 24px rgba(25, 135, 84, 0.35);
 }
 
 .btn-edit:hover {
-    background: #45a049;
-    transform: scale(1.05);
+  transform: translateY(-2px);
+  color: var(--brand-white);
 }
 
-/* Responsivo para móviles */
-@media (max-width: 768px) {
-    .profile-card {
-        width: 95%;
-        /* Más ancho para móviles */
-    }
+@media (max-width: 576px) {
+  .profile-card {
+    max-width: 100%;
+  }
 
-    .avatar {
-        width: 70px;
-        height: 70px;
-    }
-
-    .card-body h2 {
-        font-size: 1.5rem;
-    }
-
-    .info-list li {
-        font-size: 0.8rem;
-    }
+  .profile-body {
+    padding: 60px 18px 22px;
+  }
 }

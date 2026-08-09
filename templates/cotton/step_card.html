@@ -1,0 +1,11 @@
+<c-vars step="1" icon="bi-check2" title="" text="" /><div
+  class="group relative h-full rounded-xl2 bg-white p-6 shadow-soft ring-1 ring-slate-900/5 transition-transform duration-300 hover:-translate-y-1.5 hover:shadow-lift"
+  data-reveal
+>
+  <span class="absolute right-5 top-5 font-heading text-4xl font-extrabold text-slate-100 select-none">{{ step }}</span>
+  <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-nica-emerald/10 text-nica-ocean transition-colors duration-300 group-hover:bg-nica-emerald group-hover:text-white">
+    <i class="bi {{ icon }} text-xl" aria-hidden="true"></i>
+  </div>
+  <h3 class="font-heading text-lg font-bold text-nica-ink">{{ title }}</h3>
+  <p class="mt-2 text-sm leading-relaxed text-slate-600">{{ text }}</p>
+</div>

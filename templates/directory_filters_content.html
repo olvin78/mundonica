@@ -1,0 +1,67 @@
+<!-- Buscador por Texto -->
+<form method="get" class="space-y-2 m-0">
+  {% if tipo_actual %}<input type="hidden" name="tipo" value="{{ tipo_actual }}">{% endif %}
+  {% if orden_actual and orden_actual != 'recientes' %}<input type="hidden" name="orden" value="{{ orden_actual }}">{% endif %}
+  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 m-0">Buscar</h4>
+  <div class="relative flex items-center rounded-xl bg-slate-50 border border-slate-200 px-3 py-2.5 focus-within:ring-2 focus-within:ring-nica-ocean focus-within:border-transparent transition-all">
+    <i class="bi bi-search text-slate-400 mr-2"></i>
+    <input
+      type="text" name="q" value="{{ q_actual }}"
+      placeholder="Ej. Nombre, ciudad..."
+      class="w-full border-0 bg-transparent p-0 text-sm text-nica-ink placeholder:text-slate-400 focus:outline-none focus:ring-0"
+    >
+  </div>
+  <button type="submit" class="w-full inline-flex items-center justify-center gap-1.5 rounded-xl bg-nica-ocean py-2.5 text-xs font-bold text-white hover:bg-nica-ocean/90 transition-all border-0 cursor-pointer">
+    Buscar
+  </button>
+</form>
+
+<hr class="border-slate-100 my-0" />
+
+<!-- Categorías en Menú Vertical -->
+<div class="space-y-3">
+  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 m-0">Categorías</h4>
+  <div class="flex flex-col gap-1">
+    <a 
+      href="?{% if q_actual %}q={{ q_actual|urlencode }}&{% endif %}{% if orden_actual and orden_actual != 'recientes' %}orden={{ orden_actual }}{% endif %}" 
+      class="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition-all no-underline {% if not tipo_actual %}bg-nica-ocean/10 text-nica-ocean{% else %}text-slate-600 hover:bg-slate-50{% endif %}"
+    >
+      <span>Todos los negocios</span>
+      <span class="text-[10px] opacity-75 font-semibold">({{ total_negocios }})</span>
+    </a>
+    {% for cat in categorias %}
+      <a 
+        href="?tipo={{ cat.nombre|urlencode }}{% if q_actual %}&q={{ q_actual|urlencode }}{% endif %}{% if orden_actual and orden_actual != 'recientes' %}&orden={{ orden_actual }}{% endif %}" 
+        class="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-bold transition-all no-underline {% if tipo_actual == cat.nombre %}bg-nica-ocean/10 text-nica-ocean{% else %}text-slate-600 hover:bg-slate-50{% endif %}"
+      >
+        <span class="flex items-center gap-2">
+          {% if cat.nombre == 'Restaurante' %}<i class="bi bi-cup-hot text-[13px]"></i>
+          {% elif cat.nombre == 'Peluquería' %}<i class="bi bi-scissors text-[13px]"></i>
+          {% elif cat.nombre == 'Comercio' %}<i class="bi bi-bag text-[13px]"></i>
+          {% else %}<i class="bi bi-shop text-[13px]"></i>{% endif %}
+          {{ cat.nombre }}
+        </span>
+        <span class="text-[10px] opacity-75 font-semibold">({{ cat.total }})</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<hr class="border-slate-100 my-0" />
+
+<!-- Selector de Ordenación -->
+<div class="space-y-2">
+  <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 m-0">Ordenar por</h4>
+  <form method="get" class="m-0">
+    {% if tipo_actual %}<input type="hidden" name="tipo" value="{{ tipo_actual }}">{% endif %}
+    {% if q_actual %}<input type="hidden" name="q" value="{{ q_actual }}">{% endif %}
+    <select 
+      id="orden" name="orden" onchange="this.form.submit()" 
+      class="w-full rounded-xl bg-slate-50 border border-slate-200 px-3 py-2 text-xs font-bold text-nica-ink focus:outline-none focus:ring-2 focus:ring-nica-ocean cursor-pointer"
+    >
+      <option value="recientes" {% if orden_actual == 'recientes' %}selected{% endif %}>Más recientes</option>
+      <option value="valorados" {% if orden_actual == 'valorados' %}selected{% endif %}>Mejor valorados</option>
+      <option value="nombre" {% if orden_actual == 'nombre' %}selected{% endif %}>Nombre (A-Z)</option>
+    </select>
+  </form>
+</div>

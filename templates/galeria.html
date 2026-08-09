@@ -1,27 +1,101 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
-            <!-- Portfolio Section -->
-    <section id="galeria" class="portfolio section">
+{% block head %}
+  <style>
+    :root {
+      --brand-emerald: #198754;
+      --brand-ocean: #0b4f6c;
+      --brand-ink: #0f172a;
+      --brand-slate: #475569;
+      --brand-white: #ffffff;
+    }
 
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-          <h2>Galería</h2>
-          <h4 style="color: grey;text-align: center;">"Cada imagen, una historia por contar."</h4>
-        </div><!-- End Section Title -->
-  
-        <div class="container">
-  
-          <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-  
-            <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-              <li data-filter="*" class="filter-active">Todas</li>
-              <li data-filter=".filter-app">Cultura</li>
-              <li data-filter=".filter-product">Tradición</li>
-              <li data-filter=".filter-branding">Naturaleza</li>
-            </ul><!-- End Portfolio Filters -->
-  
-            <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+    .galeria-hero {
+      background: linear-gradient(135deg, rgba(11, 79, 108, 0.95), rgba(25, 135, 84, 0.9));
+      color: var(--brand-white);
+      padding: 110px 0 70px;
+    }
+
+    .galeria-hero h1 {
+      color: var(--brand-white);
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+
+    .galeria-hero p {
+      color: rgba(248, 250, 252, 0.9);
+      max-width: 680px;
+      margin-bottom: 0;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(242, 193, 78, 0.2);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .galeria-section {
+      background: #f8fafc;
+      padding: 50px 0 80px;
+    }
+
+    .portfolio-filters li {
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      border-radius: 999px;
+      padding: 6px 14px;
+      margin: 0 6px;
+      color: var(--brand-ink);
+    }
+
+    .portfolio-filters li.filter-active {
+      background: var(--brand-ocean);
+      color: var(--brand-white);
+      border-color: var(--brand-ocean);
+    }
+
+    .portfolio-item img {
+      border-radius: 16px;
+      height: 240px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .portfolio-info {
+      border-radius: 16px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <section class="galeria-hero" data-aos="fade">
+    <div class="container">
+      <span class="hero-pill">Cultura y tradición</span>
+      <h1>Galería MundoNica</h1>
+      <p>Imágenes que cuentan nuestra historia, nuestra gente y nuestra tierra.</p>
+    </div>
+  </section>
+
+  <section id="galeria" class="portfolio section galeria-section">
+
+    <div class="container">
+
+      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+        <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+          <li data-filter="*" class="filter-active">Todas</li>
+          <li data-filter=".filter-app">Cultura</li>
+          <li data-filter=".filter-product">Tradición</li>
+          <li data-filter=".filter-branding">Naturaleza</li>
+        </ul><!-- End Portfolio Filters -->
+
+        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
   
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
                 <img src="{% static 'images/gueguense.JPG' %}" class="img-fluid" alt="Desfile cultural nicaragüense con trajes típicos y coloridos, representando la tradición y el folklore del país.">
@@ -105,15 +179,12 @@
                 </div>
               </div><!-- End Portfolio Item -->
   
-            </div><!-- End Portfolio Container -->
-  
-          </div>
-  
-        </div>
-  
-      </section><!-- /Portfolio Section -->
-     
-    </body>
-    </html>
+        </div><!-- End Portfolio Container -->
 
-    {% endblock %}
+      </div>
+
+    </div>
+
+  </section><!-- /Portfolio Section -->
+
+{% endblock %}

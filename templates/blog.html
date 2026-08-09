@@ -2,79 +2,184 @@
 
 {% load static %}
 
+{% block head %}
+  <style>
+    :root {
+      --brand-emerald: #198754;
+      --brand-ocean: #0b4f6c;
+      --brand-ink: #0f172a;
+      --brand-slate: #475569;
+      --brand-white: #ffffff;
+    }
+
+    .blog-hero {
+      background: linear-gradient(135deg, rgba(11, 79, 108, 0.95), rgba(25, 135, 84, 0.9));
+      color: var(--brand-white);
+      padding: 110px 0 70px;
+    }
+
+    .blog-hero h1 {
+      color: var(--brand-white);
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+
+    .blog-hero p {
+      color: rgba(248, 250, 252, 0.9);
+      max-width: 680px;
+      margin-bottom: 0;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(242, 193, 78, 0.2);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .blog-section {
+      padding: 50px 0 80px;
+      background: #f8fafc;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .blog-card {
+      background: #ffffff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .blog-media {
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .blog-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .blog-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .blog-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--brand-emerald);
+      font-weight: 600;
+    }
+
+    .blog-body h2 {
+      font-size: 1.2rem;
+      margin: 0;
+      color: var(--brand-ink);
+    }
+
+    .blog-summary {
+      color: var(--brand-slate);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .blog-meta img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .blog-meta .author {
+      font-weight: 600;
+      color: var(--brand-ink);
+      margin: 0;
+    }
+
+    .blog-meta time {
+      color: var(--brand-slate);
+      font-size: 0.85rem;
+    }
+
+    .blog-pagination {
+      background: #f8fafc;
+      padding-bottom: 60px;
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title bg-dark" data-aos="fade" style="background-image: url(assets/img/page-title-bg.webp);">
-      <div class="container position-relative text-white">
-        <h1>Blog</h1>
-        <p>"Conectando comunidades, compartiendo experiencias."</p>
-        
-      </div>
-    </div><!-- End Page Title -->
-    <!-- Blog Posts Section -->
-<!-- Blog Posts Section -->
-<section id="blog-posts" class="blog-posts section">
-  <div class="container">
-    <div class="row gy-4">
-      {% for dato in datos %}
-      <div class="col-lg-4">
-        <article>
-          <a href="{% url 'home_app:articulo' dato.id %}">
-            <div class="post-img">
-              <img src="/media/{{dato.imagen}}" alt="" class="img-fluid">
-            </div>
-          </a>
-
-          <p class="post-category">{{dato.categoria}}</p>
-
-          <h2 class="title">
-            <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
-          </h2>
-
-          <p class="post-category">{{dato.resumen|safe}}</p>
-
-          <div class="d-flex align-items-center">
-            <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="" class="img-fluid post-author-img flex-shrink-0">
-            <div class="post-meta">
-              <p class="post-author">{{dato.autor}}</p>
-              
-              <p class="post-date">
-                <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-      <!-- End post list item -->
-      {% endfor %}
-    </div>
-  </div>
-</section>
-<!-- /Blog Posts Section -->
-
-    <!-- /Blog Posts Section -->
-
-    <!-- Blog Pagination Section -->
-    <section id="blog-pagination" class="blog-pagination section">
-
+    <section class="blog-hero" data-aos="fade">
       <div class="container">
-        <div class="d-flex justify-content-center">
-          <ul>
-            <li><a href="#"><i class="bi bi-chevron-left"></i></a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#" class="active">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li>...</li>
-            <li><a href="#">10</a></li>
-            <li><a href="#"><i class="bi bi-chevron-right"></i></a></li>
-          </ul>
+        <span class="hero-pill">Comunidad y experiencias</span>
+        <h1>Blog MundoNica</h1>
+        <p>Historias, guías y novedades para conectar a la comunidad nica.</p>
+      </div>
+    </section>
+
+    <section class="blog-section">
+      <div class="container">
+        <div class="blog-grid">
+          {% for dato in datos %}
+          <article class="blog-card" data-aos="fade-up">
+            <a href="{% url 'home_app:articulo' dato.id %}" class="blog-media">
+              <img src="/media/{{dato.imagen}}" alt="{{dato.titulo}}">
+            </a>
+            <div class="blog-body">
+              <span class="blog-category">{{dato.categoria}}</span>
+              <h2>
+                <a href="{% url 'home_app:articulo' dato.id %}">{{dato.titulo}}</a>
+              </h2>
+              <p class="blog-summary">{{dato.resumen|safe}}</p>
+              <div class="blog-meta">
+                <img src="{% static 'assets/img/pubiocacioneslogo.png' %}" alt="Autor">
+                <div>
+                  <p class="author">{{dato.autor}}</p>
+                  <time datetime="2022-01-01">{{dato.fecha_hora}}</time>
+                </div>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
         </div>
       </div>
+    </section>
 
-    </section><!-- /Blog Pagination Section -->
+    
 
   </main>
 

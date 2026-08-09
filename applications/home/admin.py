@@ -8,7 +8,8 @@ from applications.home.models import (
     Post,
     Perfil,
     Empresa,
-    Receta
+    Receta,
+    SeccionMenu,
 )
 
 # consulados your models here.
@@ -26,7 +27,7 @@ admin.site.register(Embajada,EmbajadaAdmin )
 # comercios your models here.
 
 class EmpresaAdmin(admin.ModelAdmin):
-    list_display = ("nombre_de_la_empresa","tipo_empresa","id")
+    list_display = ("nombre_de_la_empresa", "nombreUrl", "tipo_empresa", "id")
 
 admin.site.register(Empresa,EmpresaAdmin )
 
@@ -76,3 +77,13 @@ class RecetaAdmin(admin.ModelAdmin):
         return qs.filter(autor=request.user)
 
 admin.site.register(Receta, RecetaAdmin)
+
+
+# Secciones del menú (header): activar/desactivar enlaces sin tocar código.
+class SeccionMenuAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "clave", "activo", "orden")
+    list_editable = ("activo", "orden")  # se puede togglear directo desde la lista, sin abrir cada uno
+    list_filter = ("activo",)
+    ordering = ("orden",)
+
+admin.site.register(SeccionMenu, SeccionMenuAdmin)
