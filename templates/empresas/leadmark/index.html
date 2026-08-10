@@ -774,7 +774,7 @@
     
         // Add a marker to the map (optional)
         L.marker([{{ datos.latitud|default:"12.136389" }},{{ datos.longitud|default:"-86.251389" }}]).addTo(map)
-            .bindPopup("Bienvenido a {{ datos.ciudad|default:'Managua' }},{{ datos.pais|default:' Nicaragua!' }}")
+            .bindPopup("<strong>{{ datos.nombre_de_la_empresa|escapejs }}</strong><br>{% if datos.ciudad %}{{ datos.ciudad|escapejs }}, {{ datos.pais|default:''|escapejs }}{% else %}Ubicación exacta{% endif %}")
             .openPopup();
     </script>
 </body>

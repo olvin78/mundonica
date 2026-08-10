@@ -2,189 +2,220 @@
 {% load static %}
 {% block head %}
   <style>
-    :root {
-      --brand-emerald: #198754;
-      --brand-ocean: #0b4f6c;
-      --brand-ink: #0f172a;
-      --brand-slate: #475569;
-      --brand-white: #ffffff;
+    /* Estilos base para la galería Masonry con Tailwind CSS */
+    .masonry-grid {
+      column-count: 1;
+      column-gap: 1.5rem;
     }
-
-    .galeria-hero {
-      background: linear-gradient(135deg, rgba(11, 79, 108, 0.95), rgba(25, 135, 84, 0.9));
-      color: var(--brand-white);
-      padding: 110px 0 70px;
+    @media (min-width: 640px) {
+      .masonry-grid { column-count: 2; }
     }
-
-    .galeria-hero h1 {
-      color: var(--brand-white);
-      font-size: 2.6rem;
-      margin-bottom: 10px;
+    @media (min-width: 1024px) {
+      .masonry-grid { column-count: 3; }
     }
-
-    .galeria-hero p {
-      color: rgba(248, 250, 252, 0.9);
-      max-width: 680px;
-      margin-bottom: 0;
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
     }
-
-    .hero-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: rgba(242, 193, 78, 0.2);
-      color: #fff;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 16px;
+    
+    /* Animación suave para la entrada de las imágenes */
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+      transform: translateY(20px);
     }
-
-    .galeria-section {
-      background: #f8fafc;
-      padding: 50px 0 80px;
-    }
-
-    .portfolio-filters li {
-      border: 1px solid rgba(15, 23, 42, 0.15);
-      border-radius: 999px;
-      padding: 6px 14px;
-      margin: 0 6px;
-      color: var(--brand-ink);
-    }
-
-    .portfolio-filters li.filter-active {
-      background: var(--brand-ocean);
-      color: var(--brand-white);
-      border-color: var(--brand-ocean);
-    }
-
-    .portfolio-item img {
-      border-radius: 16px;
-      height: 240px;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    .portfolio-info {
-      border-radius: 16px;
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 {% endblock %}
 
 {% block content %}
-  <section class="galeria-hero" data-aos="fade">
-    <div class="container">
-      <span class="hero-pill">Cultura y tradición</span>
-      <h1>Galería MundoNica</h1>
-      <p>Imágenes que cuentan nuestra historia, nuestra gente y nuestra tierra.</p>
+  <!-- HERO SECTION MODERNIZADO -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-nica-ink via-nica-ocean to-nica-emerald pt-32 pb-24 lg:pt-40 lg:pb-32">
+    <!-- Círculos decorativos de fondo -->
+    <div class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-64 w-64 translate-x-1/3 translate-y-1/3 rounded-full bg-nica-emerald/20 blur-3xl"></div>
+    
+    <div class="nica-container relative z-10 text-center">
+      <span class="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold tracking-wide text-white ring-1 ring-white/20 backdrop-blur-md fade-in-up" style="animation-delay: 0.1s;">
+        <i class="bi bi-camera"></i> Descubre nuestra tierra
+      </span>
+      <h1 class="font-heading text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl fade-in-up" style="animation-delay: 0.2s;">
+        Galería <span class="text-nica-sand">MundoNica</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-200 fade-in-up" style="animation-delay: 0.3s;">
+        Un viaje visual por la cultura, tradiciones y los paisajes más impresionantes de Nicaragua. 
+        Imágenes que cuentan nuestra historia y esencia.
+      </p>
     </div>
   </section>
+  <!-- /HERO SECTION -->
 
-  <section id="galeria" class="portfolio section galeria-section">
-
-    <div class="container">
-
-      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-        <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-          <li data-filter="*" class="filter-active">Todas</li>
-          <li data-filter=".filter-app">Cultura</li>
-          <li data-filter=".filter-product">Tradición</li>
-          <li data-filter=".filter-branding">Naturaleza</li>
-        </ul><!-- End Portfolio Filters -->
-
-        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-                <img src="{% static 'images/gueguense.JPG' %}" class="img-fluid" alt="Desfile cultural nicaragüense con trajes típicos y coloridos, representando la tradición y el folklore del país.">
-                <div class="portfolio-info">
-                  <h4>Baile Tradicional</h4>
-                  <p>El Güegüense, una expresión virulenta de protesta contra el dominio colonial, es un drama satírico bien conocido en Nicaragua</p>
-                  <a href="{% static 'images/gueguense.JPG' %}" title="Tradición" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="Tradición" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                <img src="{% static 'images/tabaco.jpg' %}" class="img-fluid" alt="Detalle de un puro nicaragüense artesanal, reconocido por su calidad y tradición en la industria tabacalera.">
-                <div class="portfolio-info">
-                  <h4>El TABACO</h4>
-                  <p>Los puros nicaragüenses se fuman en más de 90 países alrededor del mundo.</p>
-                  <a href="{% static 'images/tabaco.jpg' %}" title="TABACO" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="TABACO" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                <img src="{% static 'images/pinol.webp' %}" class="img-fluid" alt="Mesa con maíz, atol y cuajada, destacando los ingredientes y sabores tradicionales de la gastronomía nicaragüense.">
-                <div class="portfolio-info">
-                  <h4>Pozol y el Pinol</h4>
-                  <p>El pozol es una bebida fermentada a base de maíz, agua y cacao, muy popular en Nicaragua. <br> El pinol es un polvo fino obtenido de maíz tostado y molido. </p>
-                  <a href="{% static 'images/pinol.webp'' %}" title="Tradición" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="Tradición" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-                <img src="{% static 'images/folklorenica.webp' %}" class="img-fluid" alt="Grupo de bailarines nicaragüenses en trajes folclóricos, representando danzas tradicionales del país.">
-                <div class="portfolio-info">
-                  <h4>Folclore</h4>
-                  <p> La tradición folclórica nicaragüense posee diversas manifestaciones culturales que incluyen la música, la danza, las leyendas y tradiciones, las canciones, los proverbios populares, las bombas y retahílas, los cuentos, los refranes, los romances, las adivinanzas, los instrumentos coloniales</p>
-                  <a href="{% static 'images/folklorenica.webp' %}" title="Folclore" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                <img src="{% static 'images/nacatamal.webp' %}" class="img-fluid" alt="Nacatamales nicaragüenses en una olla, preparados con maíz, carne y especias, una comida típica y emblemática del país.">
-                <div class="portfolio-info">
-                  <h4>Nacatamal</h4>
-                  <p>Nacatamal, es un plato Nicaragüense que se originó de los Nahua Nicaraos del oeste de Nicaragua, Consiste en una masa a base de carne, verduras y arroz, entre otros, dividida en porciones que se cuecen envueltos en hojas de plátano o banano.</p>
-                  <a href="{% static 'images/nacatamal.webp' %}" title="Nacatamal" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="Nacatamal" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item  filter-app">
-                <img src="{% static 'images/ciudadanos.webp' %}" class="img-fluid" alt="Familia campesina nicaragüense en un paisaje rural, representando la conexión con la agricultura y la tierra.">
-                <div class="portfolio-info">
-                  <h4>Pueblo Nicaraüense</h4>
-                  <p>los nicaragüenses son personas alegres, creativas y hospitalarias, con un sentido del humor único que los distingue. Su capacidad para encontrar el lado positivo de las cosas, incluso en tiempos difíciles.</p>
-                  <a href="{% static 'images/ciudadanos.webp' %}" title="Pueblo Nicaragüense" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="Pueblo Nicaragüense" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-                <img src="{% static 'images/islaometepe.jpeg' %}" class="img-fluid" alt="Vista panorámica de un volcán nicaragüense rodeado de vegetación, destacando los impresionantes paisajes naturales del país.">
-                <div class="portfolio-info">
-                  <h4>Ometepe, un Edén Volcánico en el Corazón de Nicaragua</h4>
-                  <p>La isla de Ometepe, ubicada en el gran Lago de Nicaragua, es una joya natural que cautiva a los viajeros con sus paisajes volcánicos, exuberante vegetación y rica biodiversidad.</p>
-                  <a href="{% static 'images/islaometepe.jpeg' %}" title="Naturaleza" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="Naturaleza" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
-                <img src="{% static 'images/cornisland.jpeg' %}" class="img-fluid" alt="Playa tropical de corn ssisland en Nicaragua con arena blanca y palmeras, un destino turístico paradisíaco del Pacífico nicaragüense.">
-                <div class="portfolio-info">
-                  <h4>Corn Island, Archipiélago</h4>
-                  <p>Corn Island, también conocida como Islas del Maíz, es un archipiélago ubicado en el mar Caribe nicaragüense. Este destino turístico es famoso por sus playas de arena blanca, aguas cristalinas y una rica biodiversidad marina.</p>
-                  <a href="{% static 'images/cornisland.jpeg' %}" title="Naturaleza" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="Naturaleza" class="details-link"><!--<i class="bi bi-link-45deg"></i>--></a>
-                </div>
-              </div><!-- End Portfolio Item -->
-  
-        </div><!-- End Portfolio Container -->
-
+  <!-- GALERÍA MASONRY -->
+  <section class="bg-nica-sand py-16 md:py-24">
+    <div class="nica-container">
+      
+      <!-- Filtros (Opcional, diseño moderno) -->
+      <div class="mb-12 flex flex-wrap items-center justify-center gap-3 fade-in-up" style="animation-delay: 0.4s;">
+        <span class="rounded-full bg-nica-ocean px-5 py-2 text-sm font-bold text-white shadow-soft transition-colors cursor-pointer">Todas</span>
+        <span class="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Cultura</span>
+        <span class="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Naturaleza</span>
+        <span class="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Gastronomía</span>
       </div>
 
+      <!-- Contenedor Grid Masonry -->
+      <div class="masonry-grid">
+        
+        <!-- ITEM 1: Catedral de Granada (Nueva) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Cathedral_of_Granada_Nicaragua.jpg" alt="Catedral de Granada" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-nica-emerald/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Arquitectura</span>
+              <h4 class="font-heading text-xl font-bold text-white">Catedral de Granada</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">Un ícono colonial inconfundible con su vibrante color amarillo, ubicada en la plaza principal de la ciudad más antigua del continente en tierra firme.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 2: Güegüense (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/gueguense.JPG' %}" alt="El Güegüense" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-nica-ocean/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Cultura</span>
+              <h4 class="font-heading text-xl font-bold text-white">Baile Tradicional</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">El Güegüense, Patrimonio Oral e Inmaterial de la Humanidad. Un drama satírico que representa la resistencia pacífica contra la colonia.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 3: Volcán Masaya (Nueva) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Volcan_Masaya.jpg" alt="Volcán Masaya" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-orange-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Naturaleza</span>
+              <h4 class="font-heading text-xl font-bold text-white">Volcán Masaya</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">Uno de los pocos volcanes en el mundo donde puedes llegar en vehículo hasta el cráter y ver el lago de lava activa brillando en la noche.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 4: Nacatamal (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/nacatamal.webp' %}" alt="Nacatamal" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-yellow-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Gastronomía</span>
+              <h4 class="font-heading text-xl font-bold text-white">Nacatamal</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">El rey de los fines de semana. Masa de maíz, carne, papas y hierbabuena envueltos mágicamente en hoja de plátano.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 5: San Juan del Sur (Nueva) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/San_Juan_del_Sur%2C_Nicaragua.jpg" alt="San Juan del Sur" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-cyan-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Turismo</span>
+              <h4 class="font-heading text-xl font-bold text-white">San Juan del Sur</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">La bahía en forma de herradura del Pacífico nicaragüense, famosa por sus atardeceres dorados y sus increíbles olas para el surf.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 6: Tabaco (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/tabaco.jpg' %}" alt="Tabaco" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-stone-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Tradición</span>
+              <h4 class="font-heading text-xl font-bold text-white">Puros Artesanales</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">Estelí es conocida como la capital del tabaco. Los puros nicaragüenses son considerados entre los de más alta calidad a nivel mundial.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 7: Catedral de León (Nueva) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Leon_Cathedral_Nicaragua.jpg" alt="Catedral de León" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-nica-emerald/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Arquitectura</span>
+              <h4 class="font-heading text-xl font-bold text-white">Basílica Catedral de León</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">La catedral más grande de Centroamérica y Patrimonio de la Humanidad. En su interior descansan los restos del poeta Rubén Darío.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 8: Pinol (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/pinol.webp' %}" alt="Pozol y Pinol" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-yellow-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Gastronomía</span>
+              <h4 class="font-heading text-xl font-bold text-white">El Pinol</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">"Soy puro pinolero, nicaragüense por gracia de Dios." Base de nuestra alimentación ancestral hecha de maíz tostado.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 9: Cerro Negro (Nueva) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Cerro_Negro_Volcano.jpg" alt="Volcán Cerro Negro" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-orange-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Aventura</span>
+              <h4 class="font-heading text-xl font-bold text-white">Cerro Negro</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">El volcán más joven de Centroamérica, famoso a nivel mundial por permitir el excitante deporte del 'Volcano Boarding' en sus faldas de ceniza.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 10: Isla de Ometepe (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/islaometepe.jpeg' %}" alt="Isla de Ometepe" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-green-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Naturaleza</span>
+              <h4 class="font-heading text-xl font-bold text-white">Isla de Ometepe</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">El oasis de paz formado por dos imponentes volcanes (Concepción y Maderas) en medio del enorme Lago Cocibolca.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 11: Folclore (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/folklorenica.webp' %}" alt="Folclore Nicaragüense" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-nica-ocean/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Danza</span>
+              <h4 class="font-heading text-xl font-bold text-white">Nuestra Danza</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">Marimba, faldas de colores y algarabía. La danza folclórica transmite el mestizaje y la identidad vibrante del pueblo nica.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM 12: Corn Island (Existente) -->
+        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+          <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
+            <img src="{% static 'images/cornisland.jpeg' %}" alt="Corn Island" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-nica-ink/90 via-nica-ink/40 to-transparent p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span class="mb-2 w-max rounded-full bg-cyan-500/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">Caribe</span>
+              <h4 class="font-heading text-xl font-bold text-white">Corn Island</h4>
+              <p class="mt-2 text-sm text-slate-200 line-clamp-3">El paraíso caribeño de aguas turquesas, arena blanca y cocoteros. Un rinconcito mágico de la Costa Caribe nicaragüense.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-
-  </section><!-- /Portfolio Section -->
-
+  </section>
+  <!-- /GALERÍA MASONRY -->
 {% endblock %}
