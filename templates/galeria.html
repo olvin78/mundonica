@@ -40,7 +40,7 @@
 
 {% block content %}
   <!-- HERO SECTION MODERNIZADO -->
-  <section class="relative overflow-hidden pt-32 pb-24 lg:pt-40 lg:pb-32" style="background: linear-gradient(135deg, #0f172a, #0b4f6c, #198754);">
+  <section class="relative overflow-hidden bg-gradient-to-br from-nica-ink via-nica-ocean to-nica-emerald pt-32 pb-24 lg:pt-40 lg:pb-32">
     <!-- Círculos decorativos de fondo -->
     <div class="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-64 w-64 translate-x-1/3 translate-y-1/3 rounded-full bg-nica-emerald/20 blur-3xl"></div>
@@ -65,18 +65,18 @@
     <div class="nica-container">
       
       <!-- Filtros (Opcional, diseño moderno) -->
-      <div class="mb-12 flex flex-wrap items-center justify-center gap-3 fade-in-up" style="animation-delay: 0.4s;">
-        <span class="rounded-full bg-nica-ocean px-5 py-2 text-sm font-bold text-white shadow-soft transition-colors cursor-pointer">Todas</span>
-        <span class="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Cultura</span>
-        <span class="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Naturaleza</span>
-        <span class="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Gastronomía</span>
+      <div class="mb-12 flex flex-wrap items-center justify-center gap-3 fade-in-up" style="animation-delay: 0.4s;" id="gallery-filters">
+        <span data-filter="all" class="filter-btn rounded-full bg-nica-ocean px-5 py-2 text-sm font-bold text-white shadow-soft transition-colors cursor-pointer">Todas</span>
+        <span data-filter="cultura" class="filter-btn rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Cultura</span>
+        <span data-filter="naturaleza" class="filter-btn rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Naturaleza</span>
+        <span data-filter="gastronomia" class="filter-btn rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-600 shadow-sm ring-1 ring-slate-900/5 hover:bg-slate-50 transition-colors cursor-pointer">Gastronomía</span>
       </div>
 
       <!-- Contenedor Grid Masonry -->
-      <div class="masonry-grid">
+      <div class="masonry-grid" id="gallery-grid">
 
         <!-- ITEM 1: Güegüense -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="cultura" style="animation-delay: 0.1s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/gueguense.JPG' %}" alt="El Güegüense" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -88,7 +88,7 @@
         </div>
 
         <!-- ITEM 2: Pinol -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="gastronomia" style="animation-delay: 0.2s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/pinol.webp' %}" alt="Pozol y Pinol" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -100,7 +100,7 @@
         </div>
 
         <!-- ITEM 3: Isla de Ometepe -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="naturaleza" style="animation-delay: 0.3s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/islaometepe.jpeg' %}" alt="Isla de Ometepe" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -112,7 +112,7 @@
         </div>
 
         <!-- ITEM 4: Nacatamal -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="gastronomia" style="animation-delay: 0.1s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/nacatamal.webp' %}" alt="Nacatamal" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -124,7 +124,7 @@
         </div>
 
         <!-- ITEM 5: Folclore -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="cultura" style="animation-delay: 0.2s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/folklorenica.webp' %}" alt="Folclore Nicaragüense" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -136,7 +136,7 @@
         </div>
 
         <!-- ITEM 6: Tabaco -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="cultura" style="animation-delay: 0.3s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/tabaco.jpg' %}" alt="Tabaco" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -148,7 +148,7 @@
         </div>
 
         <!-- ITEM 7: Corn Island -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.1s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="naturaleza" style="animation-delay: 0.1s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/cornisland.jpeg' %}" alt="Corn Island" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -160,7 +160,7 @@
         </div>
 
         <!-- ITEM 8: Pueblo Nicaragüense -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.2s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="cultura" style="animation-delay: 0.2s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/ciudadanos.webp' %}" alt="Pueblo Nicaragüense" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -172,7 +172,7 @@
         </div>
 
         <!-- ITEM 9: Artesanía en Barro -->
-        <div class="masonry-item fade-in-up" style="animation-delay: 0.3s;">
+        <div class="masonry-item gallery-item fade-in-up" data-category="cultura" style="animation-delay: 0.3s;">
           <div class="group relative overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-900/5">
             <img src="{% static 'images/barro.jpg' %}" alt="Artesanía en Barro" class="w-full object-cover transition-transform duration-700 group-hover:scale-110">
             <div class="absolute inset-0 flex flex-col justify-end custom-overlay p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -187,4 +187,35 @@
     </div>
   </section>
   <!-- /GALERÍA MASONRY -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Reset all buttons
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-nica-ocean', 'text-white');
+            b.classList.add('bg-white', 'text-slate-600');
+          });
+          
+          // Set active button
+          btn.classList.remove('bg-white', 'text-slate-600');
+          btn.classList.add('bg-nica-ocean', 'text-white');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          galleryItems.forEach(item => {
+            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
 {% endblock %}
