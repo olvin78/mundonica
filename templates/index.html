@@ -275,7 +275,7 @@
               <span class="text-nica-emerald">y es gratis</span>.
             </p>
             {% if user.is_authenticated %}
-              <a href="{% url 'home_app:crear_tipo_empresa' 'restaurante' %}" class="nica-btn-primary" aria-label="Agregar Mi Empresa">
+              <a href="{% url 'home_app:explorar_negocios' %}" class="nica-btn-primary" aria-label="Agregar Mi Empresa">
                 Publicar mi negocio <i class="bi bi-arrow-right"></i>
               </a>
             {% else %}
@@ -486,7 +486,7 @@
         <div class="mx-auto mb-8 max-w-xs text-center" data-reveal>
           <label for="nio-input" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Cantidad en Córdobas (NIO)</label>
           <div class="relative flex items-center justify-center rounded-xl bg-white shadow-soft ring-1 ring-slate-900/5 focus-within:ring-nica-ocean/40 transition-shadow">
-            <span class="pl-4 text-lg font-bold text-slate-400">C$</span>
+            <span class="pl-4 text-lg font-bold text-slate-400" translate="no" title="Córdoba Nicaragüense">C$</span>
             <input type="number" id="nio-input" value="500" min="0" step="any" class="w-full border-0 bg-transparent px-3 py-3 text-lg font-bold text-nica-ink outline-none" placeholder="0" style="box-shadow: none;">
           </div>
         </div>

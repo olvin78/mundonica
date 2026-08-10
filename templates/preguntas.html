@@ -1,374 +1,608 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% block head%}
-  <style>
-    :root {
-      --brand-emerald: #198754;
-      --brand-ocean: #0b4f6c;
-      --brand-ink: #0f172a;
-      --brand-slate: #475569;
-      --brand-white: #ffffff;
-      --brand-mist: #f1f5f9;
-    }
+{% block head %}
+<style>
+  :root {
+    --faq-primary: #0b4f6c; /* nica-ocean */
+    --faq-accent: #198754; /* nica-emerald */
+    --faq-bg: #f8fafc;
+    --faq-text-dark: #1e293b;
+    --faq-text-muted: #475569;
+  }
 
-    .faq-hero-alt {
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(11, 79, 108, 0.92));
-      color: var(--brand-white);
-      padding: 110px 0 80px;
-      position: relative;
-      overflow: hidden;
-    }
+  .faq-page-wrapper {
+    background-color: var(--faq-bg);
+    min-height: 100vh;
+    padding-bottom: 80px;
+    font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-    .faq-hero-alt::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(25, 135, 84, 0.25), transparent 55%);
-      pointer-events: none;
-    }
+  .faq-hero {
+    background: linear-gradient(135deg, #0f172a, #0b4f6c);
+    padding: 100px 20px 80px;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+  }
 
-    .faq-hero-alt h1 {
-      color: var(--brand-white);
-      font-size: 2.8rem;
-      margin-bottom: 12px;
-    }
+  .faq-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
 
-    .faq-hero-alt p {
-      color: rgba(248, 250, 252, 0.9);
-      max-width: 720px;
-      margin-bottom: 0;
-    }
+  .faq-hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+    color: #ffffff;
+  }
 
-    .hero-actions {
-      margin-top: 20px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+  .faq-hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    color: #e2e8f0;
+    position: relative;
+  }
 
-    .hero-actions .btn {
-      border-radius: 999px;
-      padding: 8px 16px;
-      font-weight: 600;
-    }
+  .faq-container {
+    max-width: 1000px;
+    margin: -40px auto 0;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+  }
 
-    .faq-board {
-      background: var(--brand-mist);
-      padding: 50px 0 90px;
-    }
+  .faq-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
 
-    .faq-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
+  .faq-nav a {
+    text-decoration: none;
+    color: var(--faq-text-muted);
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: all 0.3s;
+    font-size: 1rem;
+    border: 2px solid transparent;
+  }
 
-    .faq-tags a {
-      background: #ffffff;
-      border: 1px solid rgba(15, 23, 42, 0.15);
-      color: var(--brand-ink);
-      border-radius: 999px;
-      padding: 6px 14px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
+  .faq-nav a:hover {
+    color: var(--faq-primary);
+    background: #f1f5f9;
+  }
 
-    .faq-tags a:hover {
-      border-color: var(--brand-emerald);
-      color: var(--brand-emerald);
-    }
+  .faq-nav a.active {
+    background: var(--faq-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(11, 79, 108, 0.3);
+  }
 
-    .faq-category {
-      margin-bottom: 36px;
-    }
+  .faq-section {
+    margin-bottom: 60px;
+    scroll-margin-top: 120px;
+    background: transparent;
+  }
 
-    .faq-category h2 {
-      font-size: 1.4rem;
-      color: var(--brand-ink);
-      margin-bottom: 16px;
-    }
+  .faq-section h2 {
+    font-size: 2rem;
+    color: var(--faq-primary);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+  }
 
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px;
-    }
+  .faq-section h2 i {
+    color: var(--faq-accent);
+    background: rgba(25, 135, 84, 0.1);
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 1.5rem;
+  }
 
-    details.faq-card {
-      background: #ffffff;
-      border-radius: 16px;
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
-      border-left: 4px solid rgba(25, 135, 84, 0.3);
-      padding: 14px 16px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+  details {
+    background: #ffffff;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    border: 1px solid #cbd5e1;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
 
-    details.faq-card[open] {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
-      border-left-color: var(--brand-emerald);
-    }
+  details[open] {
+    box-shadow: 0 15px 30px rgba(11, 79, 108, 0.1);
+    border-color: var(--faq-primary);
+  }
 
-    details.faq-card summary {
-      list-style: none;
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--brand-ink);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+  summary {
+    padding: 22px 25px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--faq-text-dark);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    details.faq-card summary::after {
-      content: "+";
-      color: var(--brand-emerald);
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
+  summary:hover {
+    color: var(--faq-primary);
+    background: #f8fafc;
+  }
 
-    details.faq-card[open] summary::after {
-      content: "–";
-    }
+  summary::-webkit-details-marker {
+    display: none;
+  }
 
-    details.faq-card summary::-webkit-details-marker {
-      display: none;
-    }
+  summary::after {
+    content: '\F282'; /* bi-plus-circle */
+    font-family: 'bootstrap-icons';
+    font-size: 1.4rem;
+    color: var(--faq-accent);
+    transition: transform 0.3s;
+  }
 
-    .faq-answer {
-      margin-top: 12px;
-      color: var(--brand-slate);
-      font-size: 0.95rem;
-    }
+  details[open] summary::after {
+    content: '\F28e'; /* bi-dash-circle */
+    color: var(--faq-primary);
+    transform: rotate(180deg);
+  }
 
-    .faq-answer a {
-      color: var(--brand-emerald);
-      font-weight: 600;
-    }
-  </style>
+  details[open] summary {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .faq-answer {
+    padding: 25px;
+    color: var(--faq-text-dark);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+  
+  details[open] .faq-answer {
+    animation: fadeIn 0.4s ease;
+  }
+
+  .faq-answer h4 {
+    color: var(--faq-primary);
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  .faq-answer ul, .faq-answer ol {
+    margin-top: 10px;
+    padding-left: 25px;
+    margin-bottom: 15px;
+  }
+  
+  .faq-answer li {
+    margin-bottom: 8px;
+  }
+
+  .faq-answer a {
+    color: #2563eb;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .faq-answer a:hover {
+    color: #1e40af;
+  }
+
+  .faq-alert {
+    background: rgba(25, 135, 84, 0.1);
+    border-left: 4px solid var(--faq-accent);
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+    font-size: 0.95rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .faq-hero h1 { font-size: 2.2rem; }
+    .faq-nav { flex-direction: column; text-align: center; border-radius: 20px; gap: 8px; padding: 15px; }
+    .faq-section h2 { font-size: 1.5rem; }
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-  <section class="faq-hero-alt">
-    <div class="container">
-      <h1>Centro de ayuda MundoNica</h1>
-      <p>Respuestas claras y rápidas sobre trámites, migración y servicios para la comunidad nica.</p>
-      <div class="hero-actions">
-        <a href="{% url 'home_app:home' %}" class="btn btn-light">Volver</a>
-        <a href="{% url 'home_app:home' %}#contact" class="btn btn-success">Contactar</a>
-      </div>
+<div class="faq-page-wrapper">
+  <section class="faq-hero">
+    <h1>Centro de Ayuda MundoNica</h1>
+    <p>La guía más completa para la diáspora. Respuestas claras sobre trámites consulares, leyes migratorias, retornos y cómo usar nuestra plataforma.</p>
+    <div style="position: relative; z-index: 10; margin-top: 20px;">
+      <a href="{% url 'home_app:home' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold" style="border-width: 2px;">
+        <i class="bi bi-arrow-left me-2"></i> Volver al Inicio
+      </a>
     </div>
   </section>
 
-  <section class="faq-board">
-    <div class="container">
-      <div class="faq-tags">
-        <a href="#cat-general">General</a>
-        <a href="#cat-emergencias">Emergencias</a>
-        <a href="#cat-tramites">Trámites</a>
-        <a href="#cat-migracion">Migración y visas</a>
-        <a href="#cat-otros">Otros</a>
-      </div>
-
-      <div id="cat-general" class="faq-category">
-        <h2>General</h2>
-        <div class="faq-grid">
-          <details class="faq-card" open>
-            <summary>¿Cuáles son los beneficios?</summary>
-            <div class="faq-answer">
-              <p><b>Comodidad y ahorro de tiempo:</b><br>
-                1. Todo en un solo lugar.<br>
-                2. Eliminación de búsquedas dispersas.<br>
-                3. Acceso rápido y fácil con información clara.
-              </p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Por qué esta web?</summary>
-            <div class="faq-answer">
-              <p>Fuentes confiables, equipo especializado y proceso de verificación.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Mundonica es de pago?</summary>
-            <div class="faq-answer">
-              <p>No. Es gratuita para todos. Nos mantenemos gracias a donaciones voluntarias.</p>
-            </div>
-          </details>
-        </div>
-      </div>
-
-      <div id="cat-emergencias" class="faq-category">
-        <h2>Emergencias</h2>
-        <div class="faq-grid">
-          <details class="faq-card">
-            <summary>¿A quién llamar en caso de emergencia?</summary>
-            <div class="faq-answer">
-              <p>
-                <strong>Nicaragua:</strong> 118 (Emergencias generales)<br>
-                <strong>Estados Unidos:</strong> 911 (Emergencias)<br>
-                <strong>España:</strong> 112 (Emergencias generales), 060 (Información gubernamental)<br>
-                <strong>Costa Rica:</strong> 911 (Emergencias)<br>
-                <strong>Panamá:</strong> 911 (Emergencias generales)<br>
-                <strong>México:</strong> 911 (Emergencias)<br>
-                <strong>Honduras:</strong> 911 (Emergencias generales)<br>
-                <strong>El Salvador:</strong> 911 (Emergencias generales)<br>
-                <strong>Guatemala:</strong> 110 (Policía Nacional), 122 (Bomberos), 123 (Emergencias médicas)
-              </p>
-            </div>
-          </details>
-        </div>
-      </div>
-
-      <div id="cat-tramites" class="faq-category">
-        <h2>Trámites y documentos</h2>
-        <div class="faq-grid">
-          <details class="faq-card">
-            <summary>¿Cómo solicito un pasaporte nicaragüense en el extranjero?</summary>
-            <div class="faq-answer">
-              <p>Acude al consulado con partida de nacimiento, cédula y fotos. Consulta costos y tiempos en la oficina consular o en línea.
-                <br><a href="https://tramitesconsulares.mint.gob.ni">Solicitar pasaporte</a>
-              </p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Cómo puedo registrar a mi hijo nacido en el extranjero?</summary>
-            <div class="faq-answer">
-              <p>Debes acudir al consulado con la partida de nacimiento apostillada y tu identificación nicaragüense.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué documentos necesito si mi pasaporte está vencido?</summary>
-            <div class="faq-answer">
-              <p>Solicita un salvoconducto en el consulado con tu cédula y formulario de solicitud.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Puedo tramitar mi cédula desde el extranjero?</summary>
-            <div class="faq-answer">
-              <p>Generalmente el trámite se realiza en Nicaragua, algunos consulados brindan asistencia limitada.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Cómo solicito antecedentes penales desde fuera?</summary>
-            <div class="faq-answer">
-              <p>Puedes autorizar a un tercero en Nicaragua o consultar si el consulado ofrece el servicio.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué debo hacer si pierdo mi pasaporte?</summary>
-            <div class="faq-answer">
-              <p>Repórtalo a autoridades locales y al consulado. Solicita nuevo pasaporte o salvoconducto.</p>
-            </div>
-          </details>
-        </div>
-      </div>
-
-      <div id="cat-migracion" class="faq-category">
-        <h2>Migración y visas</h2>
-        <div class="faq-grid">
-          <details class="faq-card">
-            <summary>¿Qué necesito para solicitar una visa de turismo?</summary>
-            <div class="faq-answer">
-              <p>Pasaporte válido, solvencia económica, itinerario y carta de invitación si aplica.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Cómo obtengo una visa para trabajar?</summary>
-            <div class="faq-answer">
-              <p>Necesitas contrato de trabajo y cumplir requisitos migratorios del país de destino.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Cómo puedo obtener la residencia permanente?</summary>
-            <div class="faq-answer">
-              <p>Varía según el país. Usualmente requiere oferta de trabajo, familiares directos o inversión.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué es una visa de trabajo?</summary>
-            <div class="faq-answer">
-              <p>Permite laborar legalmente en otro país con una oferta laboral y requisitos migratorios.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Cómo solicito asilo en otro país?</summary>
-            <div class="faq-answer">
-              <p>Se solicita ante autoridades migratorias y debes demostrar persecución o temor fundado.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué es el TPS y cómo aplica a nicaragüenses?</summary>
-            <div class="faq-answer">
-              <p>Permite vivir y trabajar temporalmente por condiciones extraordinarias. Verifica si aplica.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Puedo tener doble nacionalidad?</summary>
-            <div class="faq-answer">
-              <p>Sí, Nicaragua permite doble nacionalidad. Revisa reglas del otro país.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué debo hacer si mi visa expira?</summary>
-            <div class="faq-answer">
-              <p>Regulariza tu estatus en la oficina de migración local lo antes posible.</p>
-            </div>
-          </details>
-        </div>
-      </div>
-
-      <div id="cat-otros" class="faq-category">
-        <h2>Otros</h2>
-        <div class="faq-grid">
-          <details class="faq-card">
-            <summary>¿Puedo votar desde el extranjero?</summary>
-            <div class="faq-answer">
-              <p>Depende de la legislación electoral. Consulta con tu consulado.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué necesito para traer a mi familia?</summary>
-            <div class="faq-answer">
-              <p>Debes demostrar solvencia y lazos familiares según leyes del país de residencia.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué es una carta de invitación?</summary>
-            <div class="faq-answer">
-              <p>Documento de un residente que declara que te hospedará durante la visita.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Puedo abrir una cuenta bancaria en otro país?</summary>
-            <div class="faq-answer">
-              <p>Sí, suele requerir pasaporte, prueba de residencia y visa según el país.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Cómo solicito ciudadanía en otro país?</summary>
-            <div class="faq-answer">
-              <p>Requiere residencia legal por un tiempo, integración cultural y examen cívico.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué necesito para estudiar en el extranjero?</summary>
-            <div class="faq-answer">
-              <p>Admisión en institución educativa, visa de estudiante y fondos suficientes.</p>
-            </div>
-          </details>
-          <details class="faq-card">
-            <summary>¿Qué sucede si soy deportado?</summary>
-            <div class="faq-answer">
-              <p>Contacta a tu consulado para apoyo legal y posibles restricciones futuras.</p>
-            </div>
-          </details>
-        </div>
-      </div>
+  <div class="faq-container">
+    <div class="faq-nav">
+      <a href="#pasos" class="active">Primeros Pasos y Citas</a>
+      <a href="#tramites">Trámites y Consulares</a>
+      <a href="#finanzas">Bancos y Tarjetas</a>
+      <a href="#retorno">Retorno a Nicaragua</a>
+      <a href="#negocios">Plataforma y Negocios</a>
+      <a href="#emergencias">Emergencias</a>
     </div>
-  </section>
+
+    <!-- SECCIÓN PRIMEROS PASOS Y CITAS (NUEVO) -->
+    <div id="pasos" class="faq-section">
+      <h2><i class="bi bi-person-walking"></i> Primeros Pasos al Emigrar y Citas</h2>
+      
+      <details open>
+        <summary>España: El Empadronamiento (Lo primero que debes hacer al llegar)</summary>
+        <div class="faq-answer">
+          <strong>El Empadronamiento es el paso más importante</strong> cuando llegas a España, sin importar tu estatus migratorio (con o sin papeles). Es el registro en el Ayuntamiento (Alcaldía) que demuestra que vives en ese municipio.
+          <h4>¿Por qué es vital empadronarse apenas llegas?</h4>
+          <ul>
+            <li><strong>Demuestra tu tiempo en España:</strong> Es la prueba principal para poder solicitar la residencia por <em>Arraigo Social o Laboral</em> al cumplir los años requeridos por la ley.</li>
+            <li><strong>Salud Pública:</strong> Con el padrón puedes solicitar tu Tarjeta Sanitaria para recibir atención médica gratuita en el centro de salud de tu barrio.</li>
+            <li><strong>Escolarización:</strong> Es obligatorio para poder inscribir a tus hijos en el colegio.</li>
+            <li><strong>Bancos:</strong> Como mencionamos en la sección de finanzas, te lo pedirán para abrir una cuenta básica.</li>
+          </ul>
+          <div class="faq-alert">
+            <strong>Recomendación:</strong> Para empadronarte necesitas tu pasaporte y tu contrato de alquiler. Si rentas solo una habitación, el dueño de la casa (o el titular del contrato) debe ir contigo al Ayuntamiento para autorizar tu empadronamiento.
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Cómo sacar citas en instituciones de Nicaragua (Migración, Policía, MINREX)?</summary>
+        <div class="faq-answer">
+          Para realizar trámites en Nicaragua (como sacar pasaporte nuevo, solicitar récord de policía o legalizar documentos), debes agendar tu cita de forma digital. <strong>Ya no se atiende sin cita previa.</strong>
+          <ul>
+            <li><strong>Migración (Pasaportes y visas):</strong> Debes ingresar al portal <a href="https://citas.mint.gob.ni/" target="_blank">citas.mint.gob.ni</a>. Allí creas una cuenta y programas tu visita a la sede central o delegaciones departamentales.</li>
+            <li><strong>Récord de Policía:</strong> Se tramita en línea a través del portal de la Policía Nacional (<a href="https://www.policia.gob.ni/" target="_blank">policia.gob.ni</a>), en la sección de "Trámites en Línea". Puedes pagarlo ahí mismo o en el banco.</li>
+            <li><strong>Legalizaciones (MINREX):</strong> Para apostillar títulos o actas de nacimiento en Managua, se saca cita en la página web del Ministerio de Relaciones Exteriores (<a href="https://servicios.minrex.gob.ni/" target="_blank">servicios.minrex.gob.ni</a>).</li>
+          </ul>
+          <div class="faq-alert mt-3" style="background-color: rgba(220, 53, 69, 0.1); border-left-color: #dc3545;">
+            <strong><i class="bi bi-exclamation-triangle-fill text-danger"></i> ¡Aviso Crítico desde el Extranjero!</strong><br>
+            Muchas de estas páginas del gobierno nicaragüense (especialmente MINREX y Migración) <strong>bloquean el acceso si estás fuera de Nicaragua</strong> (en USA, España, etc.) por motivos de seguridad. Si la página se queda en blanco o no carga, tienes dos opciones:
+            <ol class="mt-2 mb-0">
+              <li>Pedirle a un <strong>familiar dentro de Nicaragua</strong> que entre a la página y te programe la cita desde allí.</li>
+              <li>Usar una aplicación <strong>VPN</strong> en tu celular o computadora y conectarte a un servidor de Nicaragua o un país permitido antes de abrir la página.</li>
+            </ol>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>España: Citas de Extranjería y Asilo (La odisea de las citas)</summary>
+        <div class="faq-answer">
+          Conseguir citas en España para Extranjería (para poner huellas, recoger la TIE) o para solicitar Asilo Político puede ser un proceso muy frustrante debido a la altísima demanda.
+          <ul>
+            <li><strong>Citas de Extranjería / Policía:</strong> Se solicitan a través de la <a href="https://icp.administracionelectronica.gob.es/icpplus/index.html" target="_blank">Sede Electrónica de Administraciones Públicas</a>. 
+            <br><em>Consejo de la comunidad:</em> Suelen liberar nuevas citas en horarios específicos (normalmente los viernes a las 9:00 AM o a las 14:00 PM, aunque varía por provincia). Mantente refrescando la página.</li>
+            <li><strong>Solicitud de Asilo:</strong> En la mayoría de provincias, la primera cita para manifestar la voluntad de solicitar asilo se saca por teléfono o mediante un correo electrónico a la comisaría provincial asignada, no por la web general.</li>
+          </ul>
+          <div class="faq-alert">
+            <strong>Cuidado con las estafas:</strong> Vender citas gubernamentales es <strong>ilegal</strong>. Evita pagar a mafias o locutorios por citas que son gratuitas, ya que la policía puede anularlas si detecta que fueron obtenidas por bots de venta.
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- SECCIÓN TRÁMITES CONSULARES -->
+    <div id="tramites" class="faq-section">
+      <h2><i class="bi bi-passport"></i> Trámites Consulares Vitales</h2>
+      
+      <details open>
+        <summary>Renovación o Solicitud de Pasaporte Nicaragüense en el Exterior</summary>
+        <div class="faq-answer">
+          Para solicitar o renovar tu libreta de pasaporte en cualquier Consulado de Nicaragua, los requisitos obligatorios son:
+          <ul>
+            <li><strong>Partida de nacimiento:</strong> Original y actualizada (con un máximo de 6 meses de emisión).</li>
+            <li><strong>Cédula de Identidad Ciudadana:</strong> Original y copia ampliada. Si no tienes, debes tramitarla previamente.</li>
+            <li><strong>Fotografías:</strong> 3 fotos tamaño pasaporte (4.5 x 3.5 cm), fondo blanco, sin lentes, orejas y frente descubiertas.</li>
+            <li><strong>Comprobante de pago:</strong> El arancel consular (el precio varía dependiendo del país de residencia, generalmente ronda los $50 USD en América o 50€ en Europa).</li>
+          </ul>
+          <div class="faq-alert">
+            <strong>Tip de oro:</strong> Si tu pasaporte está vencido y necesitas viajar de emergencia *sólo de regreso a Nicaragua*, puedes solicitar un <strong>Salvoconducto Provisional</strong>. Es más barato, se entrega en el mismo día, pero solo sirve para viajar en una dirección hacia Managua.
+          </div>
+          Para más información, visita el <a href="https://tramitesconsulares.mint.gob.ni" target="_blank">Portal de Trámites Consulares (MINT)</a>.
+        </div>
+      </details>
+      <details>
+        <summary>Poderes Notariales (Dejar representación legal en Nicaragua)</summary>
+        <div class="faq-answer">
+          Si estás en el extranjero y necesitas que alguien venda una propiedad, retire fondos de un banco o te represente en un juicio en Nicaragua, debes otorgar un <strong>Poder Notarial</strong>. Tienes dos opciones:
+          <ol>
+            <li><strong>En el Consulado:</strong> El Cónsul actúa como Notario Público nicaragüense. Redacta el poder y este documento se envía a Nicaragua donde un familiar debe llevarlo a la Corte Suprema de Justicia para autenticar la firma del Cónsul, y luego a un notario local para protocolizarlo.</li>
+            <li><strong>Ante un Notario Extranjero:</strong> Haces el poder con un notario del país donde resides, luego debes <strong>Apostillarlo</strong>. Al llegar a Nicaragua, ese documento debe ser traducido (si está en otro idioma) y protocolizado por un notario nicaragüense.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details>
+        <summary>Inscripción de Nacimiento (Hijos nacidos en el extranjero)</summary>
+        <div class="faq-answer">
+          Por derecho constitucional, todo hijo de madre o padre nicaragüense nacido en el exterior tiene derecho a la nacionalidad. El trámite se llama <strong>Inscripción Consular de Nacimiento</strong>.
+          <h4>Documentos Requeridos:</h4>
+          <ol>
+            <li><strong>Certificado de nacimiento local del menor:</strong> Emitido por el país donde nació. Debe estar <em>Apostillado</em> o <em>Autenticado</em>, y si está en otro idioma (inglés, francés, etc.), debe estar <em>Traducido oficialmente al español</em>.</li>
+            <li><strong>Documentos de los padres:</strong> Cédula de Identidad de los padres nicaragüenses o Pasaportes vigentes. Si uno de los padres es extranjero, debe presentar su pasaporte.</li>
+          </ol>
+          Una vez inscrito en el consulado, el documento debe llevarse al Registro Central del Estado Civil de las Personas en Managua para que tenga validez legal en el país.
+        </div>
+      </details>
+
+      <details>
+        <summary>Inscripción de Matrimonio o Divorcio ocurrido en el extranjero</summary>
+        <div class="faq-answer">
+          Para que tu estado civil cambie legalmente en Nicaragua tras casarte o divorciarte en otro país:
+          <ul>
+            <li><strong>Matrimonio:</strong> Debes apostillar el Acta de Matrimonio extranjera. Si no está en español, traducirla legalmente. Luego se presenta ante el Registro Civil de Managua (directamente o mediante un apoderado legal).</li>
+            <li><strong>Divorcio:</strong> Si la sentencia de divorcio fue dictada por un juez extranjero, debes realizar un trámite en la Corte Suprema de Justicia de Nicaragua llamado <em>"Exequátur"</em> (Reconocimiento de Sentencia Extranjera). Necesitarás un abogado en Nicaragua con Poder Especial para representarte.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>Permiso de Salida para Menores de Edad</summary>
+        <div class="faq-answer">
+          Si un menor nicaragüense va a viajar fuera de Nicaragua con solo uno de sus padres, o con un tercero, es <strong>obligatorio</strong> contar con un Permiso Notarial de Salida.
+          <br><br>
+          Si el padre o madre que debe dar la autorización se encuentra en el extranjero, debe acudir al Consulado de Nicaragua para otorgar una <strong>Escritura Pública de Autorización de Salida de Menor</strong>. Este poder consular se envía a Nicaragua para que un abogado lo protocolice y Migración permita la salida del menor.
+        </div>
+      </details>
+
+      <details>
+        <summary>Homologación y Auténtica de Títulos Universitarios</summary>
+        <div class="faq-answer">
+          Para que tu título universitario nicaragüense sea válido en el extranjero, debes seguir la cadena de legalizaciones:
+          <ol>
+            <li>Autenticación de firmas en el CNU (Consejo Nacional de Universidades) en Managua.</li>
+            <li>Legalización en el Ministerio de Relaciones Exteriores (MINREX).</li>
+            <li><strong>Apostilla de La Haya</strong> (también en MINREX) si vas a un país del convenio, o legalización en la embajada del país destino en Nicaragua si no pertenecen al convenio.</li>
+          </ol>
+          <em>MundoNica recomienda</em> iniciar este trámite con antelación o dejar un Poder Generalísimo a un familiar de confianza en Nicaragua si ya has emigrado.
+        </div>
+      </details>
+    </div>
+    <!-- SECCIÓN FINANZAS Y BANCOS (NUEVO) -->
+    <div id="finanzas" class="faq-section">
+      <h2><i class="bi bi-credit-card-2-front"></i> Bancos y Tarjetas (Para recién llegados)</h2>
+      
+      <details open>
+        <summary>España: Cuentas bancarias solo con Pasaporte (Incluso en situación irregular)</summary>
+        <div class="faq-answer">
+          Por la <em>Ley de Cuenta de Pago Básica</em>, los bancos en España están obligados a abrirte una cuenta básica si no tienes otra cuenta en el país, incluso si no tienes permiso de residencia (solo con tu pasaporte nicaragüense vigente).
+          <br><br>
+          Si los bancos tradicionales (BBVA, Santander) te ponen trabas, estas son las mejores <strong>alternativas 100% garantizadas y usadas por la comunidad nica:</strong>
+          <ul>
+            <li><strong>Nickel:</strong> Es la cuenta más famosa entre recién llegados. Se abre en 5 minutos en estancos de tabaco o loterías. Solo necesitas tu pasaporte nicaragüense, un número de teléfono y 25€ (coste anual). Te dan la tarjeta Mastercard al instante.</li>
+            <li><strong>Correos Prepago:</strong> Vas a cualquier oficina de Correos de España con tu pasaporte y por un pago único te dan una tarjeta prepago Mastercard con IBAN español. Es ideal para recibir nóminas si trabajas de interna/o o enviar dinero.</li>
+            <li><strong>N26:</strong> Es un banco online alemán con sucursal en España. A veces aceptan solo el pasaporte si puedes demostrar tu domicilio (con padrón o factura). Es gratuita y se abre desde la app.</li>
+          </ul>
+          <div class="faq-alert">
+            <strong>Consejo:</strong> Lleva siempre contigo tu <em>Certificado de Empadronamiento</em>, ya que muchas de estas entidades te pedirán demostrar dónde vives, aunque no tengas "papeles".
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>Estados Unidos: Abrir cuenta bancaria sin Número de Seguro Social (SSN)</summary>
+        <div class="faq-answer">
+          Si eres recién llegado a Estados Unidos y no tienes un Social Security Number (SSN), todavía puedes abrir una cuenta bancaria y obtener una tarjeta de débito para evitar llevar grandes cantidades de efectivo.
+          <h4>¿Qué necesitas?</h4>
+          <ol>
+            <li><strong>Tu Pasaporte Nicaragüense:</strong> Vigente. Siempre será tu identificación principal.</li>
+            <li><strong>Número ITIN:</strong> Es el <em>Individual Taxpayer Identification Number</em>. Lo tramita el IRS (el fisco de EE.UU.) para personas que necesitan pagar impuestos pero no califican para un SSN. Con el ITIN, muchos bancos abren cuentas.</li>
+            <li><strong>Comprobante de domicilio:</strong> Un contrato de renta a tu nombre, o facturas de servicios (luz, agua, internet) en Estados Unidos.</li>
+          </ol>
+          <h4>Bancos amigables con inmigrantes:</h4>
+          <ul>
+            <li><strong>Bank of America:</strong> Es conocido por ser uno de los más flexibles y suele aceptar pasaporte + matrícula consular o pasaporte + segunda identificación.</li>
+            <li><strong>Wells Fargo:</strong> Acepta ITIN y también matrícula consular como identificación secundaria, abriendo cuentas a personas no ciudadanas.</li>
+            <li><strong>Chase:</strong> A veces abren cuentas a no residentes presentando el pasaporte y un comprobante de domicilio firme, pero depende de la sucursal.</li>
+          </ul>
+          <div class="faq-alert">
+            <strong>Nota:</strong> Pregunta en el banco por las "Cuentas de cheques para no ciudadanos" (<em>Checking accounts for non-citizens</em>) antes de iniciar el trámite.
+          </div>
+        </div>
+      </details>
+      
+      <details>
+        <summary>Aplicaciones para enviar Remesas y cambiar Córdobas</summary>
+        <div class="faq-answer">
+          Además de los bancos, existen aplicaciones digitales o Fintechs que te permiten tener tarjetas virtuales y enviar dinero a Nicaragua rápidamente.
+          <ul>
+            <li><strong>Remitly / WorldRemit:</strong> Muy populares para enviar dinero directamente a cuentas en BAC, Banpro, Lafise, o para retiros en ventanilla (Western Union / AirPak) en Nicaragua.</li>
+            <li><strong>Revolut / Wise (En Europa/USA):</strong> Son cuentas multidivisas que te dan tarjeta de débito. Muy útiles para manejar tus euros/dólares, pero suelen requerir comprobante de residencia legal (TIE o Green Card) para la apertura completa de la cuenta.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <!-- SECCIÓN RETORNO, INSS Y REPATRIACIÓN -->
+    <div id="retorno" class="faq-section">
+      <h2><i class="bi bi-house-door"></i> Retorno, Seguro (INSS) y Repatriación</h2>
+      
+      <details>
+        <summary>¿Puedo seguir cotizando al INSS desde el extranjero para jubilarme?</summary>
+        <div class="faq-answer">
+          <strong>Sí.</strong> El Instituto Nicaragüense de Seguridad Social (INSS) permite a los nicaragüenses en el extranjero cotizar bajo la modalidad de <strong>Seguro Facultativo (Régimen IVM)</strong>.
+          <br><br>
+          Esto significa que puedes enviar tus cuotas mensuales para acumular las semanas necesarias para tu pensión de jubilación (mínimo 750 semanas) y tener cobertura para ti o tus dependientes en Nicaragua. Este trámite suele requerir que un familiar en Nicaragua haga la inscripción como tu representante legal, presentando copia de tu cédula.
+        </div>
+      </details>
+
+      <details>
+        <summary>Ley del Menaje de Casa (Ley N° 535) para Nicas que retornan</summary>
+        <div class="faq-answer">
+          La <strong>Ley N° 535</strong> otorga beneficios a los nicaragüenses que han residido permanentemente en el extranjero (por más de 24 meses) y deciden regresar a vivir definitivamente a Nicaragua.
+          <br><br>
+          Esta ley te permite <strong>importar libres de impuestos aduaneros</strong>:
+          <ul>
+            <li>Todos tus muebles, electrodomésticos, y artículos del hogar usados.</li>
+            <li>Equipo y herramientas esenciales para ejercer tu profesión u oficio independiente.</li>
+            <li>Un (1) vehículo automotor usado (aplican ciertas restricciones de año y cilindrada).</li>
+          </ul>
+          Debes solicitar el <em>Certificado de Menaje de Casa</em> en el Consulado de tu jurisdicción antes de enviar tus bienes.
+        </div>
+      </details>
+      
+      <details>
+        <summary>Repatriación de Cuerpos (Fallecimiento en el exterior)</summary>
+        <div class="faq-answer">
+          En el doloroso evento de que un ciudadano nicaragüense fallezca en el exterior y la familia desee repatriar el cuerpo para darle sepultura en Nicaragua, se deben cumplir normas sanitarias internacionales estrictas.
+          <br><br>
+          <strong>Procedimiento general:</strong>
+          <ol>
+            <li>La funeraria en el país extranjero debe encargarse del embalsamamiento y colocar el cuerpo en un ataúd sellado herméticamente (ataúd de zinc/plomo).</li>
+            <li>Se requiere el <strong>Certificado de Defunción</strong> apostillado, el <strong>Certificado de Embalsamamiento</strong>, y un <strong>Permiso de Tránsito de Cadáver</strong>.</li>
+            <li>Todos estos documentos deben llevarse al <strong>Consulado de Nicaragua</strong> para que emitan el Visto Bueno Consular.</li>
+            <li>Una vez que el cuerpo llega al Aeropuerto de Managua, el MINSA realiza la inspección sanitaria.</li>
+          </ol>
+          Debido a los altos costos, es muy recomendable que los nicaragüenses en el extranjero adquieran seguros de repatriación.
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Cómo envío remesas o paquetes a Nicaragua de forma segura?</summary>
+        <div class="faq-answer">
+          En nuestra sección de <a href="{% url 'home_app:explorar_negocios' %}">Negocios</a>, puedes encontrar agencias de envíos certificadas publicadas por la comunidad. 
+          <br><br>
+          Para remesas, las instituciones financieras piden como requisito el nombre completo del beneficiario, número de cédula y, en algunos casos, el origen de los fondos. Recuerda usar siempre agencias establecidas para evitar estafas.
+        </div>
+      </details>
+    </div>
+
+    <!-- SECCIÓN PLATAFORMA Y NEGOCIOS -->
+    <div id="negocios" class="faq-section">
+      <h2><i class="bi bi-laptop"></i> Uso de MundoNica</h2>
+      
+      <details>
+        <summary>¿MundoNica es realmente gratuito?</summary>
+        <div class="faq-answer">
+          <strong>Sí, 100% gratuito.</strong> Nuestro objetivo es fortalecer a la comunidad nicaragüense. Publicar tu emprendimiento, utilizar las plantillas web, contactar negocios o acceder a nuestros directorios no tiene costo.
+        </div>
+      </details>
+
+      <details>
+        <summary>¿Cómo publico mi negocio en MundoNica?</summary>
+        <div class="faq-answer">
+          Es muy sencillo y te tomará solo 5 minutos:
+          <ol>
+            <li>Haz clic en el botón <strong>"Publicar mi negocio"</strong> desde la página principal.</li>
+            <li>Regístrate o inicia sesión.</li>
+            <li>Elige una plantilla diseñada específicamente para tu rubro (Restaurantes, Servicios Generales, Talleres, Comercio, etc.).</li>
+            <li>Completa el formulario interactivo con tus textos, añade fotografías y enlaces a tu WhatsApp o redes sociales.</li>
+            <li>¡Listo! Tu negocio generará una página web automática y profesional (Ej: <em>mundonica.org/tu-negocio</em>).</li>
+          </ol>
+        </div>
+      </details>
+    </div>
+
+    <!-- SECCIÓN EMERGENCIAS -->
+    <div id="emergencias" class="faq-section">
+      <h2><i class="bi bi-telephone-fill"></i> Contactos de Emergencia</h2>
+      
+      <details>
+        <summary>Líneas de ayuda dentro de Nicaragua</summary>
+        <div class="faq-answer">
+          <ul>
+            <li><strong>Policía Nacional:</strong> 118</li>
+            <li><strong>Bomberos Unificados:</strong> 115</li>
+            <li><strong>Ambulancias (Cruz Blanca):</strong> 128</li>
+            <li><strong>SINAPRED (Desastres Naturales):</strong> 100</li>
+          </ul>
+        </div>
+      </details>
+      
+      <details>
+        <summary>Líneas vitales para nicaragüenses en Estados Unidos</summary>
+        <div class="faq-answer">
+          <ul>
+            <li><strong>Emergencias Médicas/Policía:</strong> 911</li>
+            <li><strong>Línea Nacional de Prevención del Suicidio y Crisis (en Español):</strong> 988 (Presione 2)</li>
+            <li><strong>Línea Nacional contra la Violencia Doméstica:</strong> 1-800-799-SAFE (7233) o envía "INICIO" al 88788.</li>
+            <li><strong>Servicios de Inmigración (USCIS):</strong> 1-800-375-5283</li>
+          </ul>
+        </div>
+      </details>
+      
+      <details>
+        <summary>Líneas vitales para nicaragüenses en España</summary>
+        <div class="faq-answer">
+          <ul>
+            <li><strong>Emergencias Generales (Gratuito):</strong> 112</li>
+            <li><strong>Atención a víctimas de Violencia de Género (No deja rastro en la factura):</strong> 016</li>
+            <li><strong>Policía Nacional:</strong> 091</li>
+            <li><strong>Información para Extranjería:</strong> 060</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.faq-nav a');
+    const sections = document.querySelectorAll('.faq-section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === entry.target.id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
 {% endblock %}

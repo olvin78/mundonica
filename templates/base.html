@@ -232,25 +232,34 @@
       {% endblock %}
 
 
-  <footer id="footer" class="footer dark-background">
-    <div class="container">
-      <h3 class="sitename">MundoNica</h3>
-      <p>"Un espacio para crecer juntos, compartir experiencias y encontrar soluciones."</p>
-      <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
+  <footer id="footer" class="footer dark-background" style="padding: 60px 0 30px 0; border-top: 1px solid rgba(255,255,255,0.1);">
+    <div class="container text-center">
+      <h3 class="sitename" style="font-size: 2rem; font-weight: 700; margin-bottom: 15px; color: #fff; letter-spacing: 1px;">MundoNica</h3>
+      <p style="font-size: 1.1rem; color: #cbd5e1; max-width: 600px; margin: 0 auto 25px auto; font-style: italic;">
+        "Un espacio para crecer juntos, compartir experiencias y encontrar soluciones."
+      </p>
+      
+      <div class="social-links d-flex justify-content-center" style="gap: 15px; margin-bottom: 40px;">
+        <a href="#" style="background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: 0.3s;"><i class="bi bi-facebook"></i></a>
+        <a href="#" style="background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: 0.3s;"><i class="bi bi-instagram"></i></a>
+        <a href="#" style="background: rgba(255,255,255,0.05); color: #fff; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; transition: 0.3s;"><i class="bi bi-linkedin"></i></a>
       </div>
-      <div class="container">
-        <div class="copyright">
-          <a style="color: white;" href="{% url 'home_app:aviso_legal' %}"><span>Aviso legal | </span></a> 
-
-          <a style="color: white;"  href="{% url 'home_app:politicas_de_privacidad' %}"><strong class="px-1 sitename">Políticas de privacidad | 
-          </strong></a>
-          <a style="color: white;"  href="{% url 'home_app:politicas_de_cookies' %}"><span> Política de Cookies</span></a>
+      
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+        <div class="legal-links" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; font-size: 0.9rem;">
+          <a style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" href="{% url 'home_app:aviso_legal' %}">Aviso Legal</a> 
+          <span style="color: #475569;">|</span>
+          <a style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" href="{% url 'home_app:politicas_de_privacidad' %}">Políticas de Privacidad</a>
+          <span style="color: #475569;">|</span>
+          <a style="color: #94a3b8; text-decoration: none; transition: color 0.3s;" href="{% url 'home_app:politicas_de_cookies' %}">Política de Cookies</a>
         </div>
-        <div class="credits">
-          Designed by <a href="https://www.euskodev.eus/es/">Euskodev</a>
+        
+        <div class="copyright" style="color: #64748b; font-size: 0.85rem;">
+          &copy; Copyright <strong>MundoNica</strong>. Todos los derechos reservados.
+        </div>
+        
+        <div class="credits" style="color: #64748b; font-size: 0.85rem;">
+          Designed by <a href="https://www.euskodev.eus/es/" style="color: #6366f1; text-decoration: none; font-weight: 600;">Euskodev</a>
         </div>
       </div>
     </div>

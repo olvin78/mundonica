@@ -1,332 +1,561 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Billetes de Nicaragua</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Billetes de Nicaragua - Colección Numismática</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-body {
-    padding: 5px;
-    background-color: #438f6f; /* Fondo negro para la página */
-    color: #ffffff; /* Texto en blanco para mejor contraste */
-    font-family: Arial, sans-serif;
-}
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+        }
 
-.filter-buttons button {
-    margin-top: 30px;
-    font-weight: bold;
-    padding: 10px 20px; /* Aumenta el tamaño del botón */
-    border: none;
-    border-radius: 8px; /* Bordes redondeados */
-    background: linear-gradient(90deg, #007bff, #00d4ff); /* Gradiente de azul */
-    color: #ffffff; /* Texto en blanco */
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transiciones suaves */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra del botón */
-}
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(15, 23, 42, 1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, rgba(56, 189, 248, 0.15) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, rgba(15, 23, 42, 1) 0, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+        }
 
-.filter-buttons button:hover {
-    transform: scale(1.1); /* Botón crece ligeramente al pasar el mouse */
-    background: linear-gradient(90deg, #0056b3, #009fda); /* Gradiente más oscuro */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
-}
+        /* Nav */
+        nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-btn {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: var(--accent);
+        }
 
-.filter-buttons button:active {
-    transform: scale(0.95); /* Botón se presiona hacia adentro */
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Sombra más pequeña */
-}
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin: 0 0 15px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-.row > div{
-    border: 1px dashed rgb(228, 221, 221);
-    padding: 15px;
-}
-img{
-    display: flex;
-   margin: auto;
-    align-items: center;
-}
-</style>
+        /* Filters */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #0f172a;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Gallery Grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 40px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Card */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7), 0 0 20px rgba(56, 189, 248, 0.1);
+            z-index: 10;
+        }
+        
+        .card-img-container {
+            padding: 30px 20px;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+            height: 160px;
+        }
+        .card-img-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .card img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
+            transition: transform 0.5s ease;
+        }
+        .card:hover img {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0 0 5px;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-value {
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .card-year {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .card-desc strong {
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        /* No results */
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .gallery { padding: 0 20px 40px; }
+            nav { padding: 20px; }
+        }
+    </style>
 </head>
 <body>
 
- 
-        <!-- Filtros -->
-        <div class="filter-buttons text-center mb-4">
-            <button class="btn btn-primary" onclick="filterByYear('2009')">Serie 2009</button>
-            <button class="btn btn-primary" onclick="filterByYear('2011')">Serie 2011</button>
-            <button class="btn btn-primary" onclick="filterByYear('2015')">Serie 2015</button>
-            <button class="btn btn-primary" onclick="filterByYear('2016')">Serie 2016</button>
-            <button class="btn btn-primary" onclick="filterByYear('2019')">Serie 2019</button>
-            <button class="btn btn-primary" onclick="filterByYear('2020')">Serie 2020</button>
-            <button class="btn btn-secondary" onclick="filterByYear('all')">Mostrar Todos</button>
+    <nav>
+        <a href="{% url 'home_app:home' %}" class="back-btn">
+            <i class="bi bi-arrow-left"></i> Volver al inicio
+        </a>
+    </nav>
+
+    <header>
+        <h1>Billetes de Nicaragua</h1>
+        <p>Explora la historia y la cultura nicaragüense a través de su colección numismática. Una galería visual de nuestras series más emblemáticas.</p>
+    </header>
+
+    <div class="filters" id="filter-container">
+        <button class="filter-btn active" data-year="all">Todos los Billetes</button>
+        <button class="filter-btn" data-year="2009">Serie 2009</button>
+        <button class="filter-btn" data-year="2011">Serie 2011</button>
+        <button class="filter-btn" data-year="2015">Serie 2015</button>
+        <button class="filter-btn" data-year="2016">Serie 2016</button>
+        <button class="filter-btn" data-year="2019">Serie 2019</button>
+        <button class="filter-btn" data-year="2020">Serie 2020</button>
+    </div>
+
+    <div class="gallery" id="gallery">
+        <!-- Serie 2009 -->
+        <div class="card" data-year="2009">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_deiz_2009.png' %}" alt="Billete de 10 Córdobas (2009)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Diez Córdobas <span class="card-value" translate="no">C$10</span></h3>
+                <div><span class="card-year">2009</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Monumento Nacional</p>
+            </div>
         </div>
-        
-   <div class="container">
-        <div class="image-gallery">
 
-            <!-- Serie 2009 -->
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2009">
-                        <img src="{% static 'assets/img/billetes/billete_de_deiz_2009.png' %}" alt="Billete de 10 Córdobas (2009)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 10 Córdobas</p>
-                            <p><strong>Valor:</strong> 10 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Monumento Nacional</p>
-                            <p><strong>Año de emisión:</strong> 2009</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2009">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_veinte_2009.png' %}" alt="Billete de 20 Córdobas (2009)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Veinte Córdobas <span class="card-value" translate="no">C$20</span></h3>
+                <div><span class="card-year">2009</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Iglesia Morava, Laguna de Perlas</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2009">
-                        <img src="{% static 'assets/img/billetes/billete_de_veinte_2009.png' %}" alt="Billete de 20 Córdobas (2009)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 20 Córdobas</p>
-                            <p><strong>Valor:</strong> 20 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Iglesia Morava, Laguna de Perlas</p>
-                            <p><strong>Año de emisión:</strong> 2009</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2009">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_cincuenta_2009.png' %}" alt="Billete de 50 Córdobas (2009)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cincuenta Córdobas <span class="card-value" translate="no">C$50</span></h3>
+                <div><span class="card-year">2009</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Teatro Nacional Rubén Darío</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2009">
-                        <img src="{% static 'assets/img/billetes/billete_de_cincuenta_2009.png' %}" alt="Billete de 50 Córdobas (2009)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 50 Córdobas</p>
-                            <p><strong>Valor:</strong> 50 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Teatro Nacional Rubén Darío</p>
-                            <p><strong>Año de emisión:</strong> 2009</p>
-                        </div>
-                    </div>
-                
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2009">
-                        <img src="{% static 'assets/img/billetes/billete_de_cien_2009.png' %}" alt="Billete de 100 Córdobas (2009)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 100 Córdobas</p>
-                            <p><strong>Valor:</strong> 100 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Rubén Darío</p>
-                            <p><strong>Año de emisión:</strong> 2009</p>
-                        </div>
-                    </div>
-                </div> 
+        <div class="card" data-year="2009">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_cien_2009.png' %}" alt="Billete de 100 Córdobas (2009)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cien Córdobas <span class="card-value" translate="no">C$100</span></h3>
+                <div><span class="card-year">2009</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Rubén Darío</p>
+            </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2009">
-                        <img src="{% static 'assets/img/billetes/billete_docientos_2009.png' %}" alt="Billete de 200 Córdobas (2009)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 200 Córdobas</p>
-                            <p><strong>Valor:</strong> 200 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Mariposa Nacional</p>
-                            <p><strong>Año de emisión:</strong> 2009</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2009">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_docientos_2009.png' %}" alt="Billete de 200 Córdobas (2009)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Doscientos Córdobas <span class="card-value" translate="no">C$200</span></h3>
+                <div><span class="card-year">2009</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Mariposa Nacional</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2009">
-                        <img src="{% static 'assets/img/billetes/billete_quinientos_2009.png' %}" alt="Billete de 500 Córdobas (2009)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 500 Córdobas</p>
-                            <p><strong>Valor:</strong> 500 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Catedral de León</p>
-                            <p><strong>Año de emisión:</strong> 2009</p>
-                        </div>
-                    </div>
-            
-                    <!-- Serie 2011 --> 
+        <div class="card" data-year="2009">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_quinientos_2009.png' %}" alt="Billete de 500 Córdobas (2009)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Quinientos Córdobas <span class="card-value" translate="no">C$500</span></h3>
+                <div><span class="card-year">2009</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Catedral de León</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2011">
-                        <img src="{% static 'assets/img/billetes/billete_de_deiz_2009.png' %}" alt="Billete de 10 Córdobas (2011)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 10 Córdobas</p>
-                            <p><strong>Valor:</strong> 10 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Laguna de Masaya</p>
-                            <p><strong>Año de emisión:</strong> 2011</p>
-                        </div>
-                    </div>
+        <!-- Serie 2011 -->
+        <div class="card" data-year="2011">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_deiz_2009.png' %}" alt="Billete de 10 Córdobas (2011)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Diez Córdobas <span class="card-value" translate="no">C$10</span></h3>
+                <div><span class="card-year">2011</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Laguna de Masaya</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2011">
-                        <img src="{% static 'assets/img/billetes/billete_de_veinte_2009.png' %}" alt="Billete de 20 Córdobas (2011)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 20 Córdobas</p>
-                            <p><strong>Valor:</strong> 20 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> La Diosa del Maíz</p>
-                            <p><strong>Año de emisión:</strong> 2011</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="card" data-year="2011">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_veinte_2009.png' %}" alt="Billete de 20 Córdobas (2011)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Veinte Córdobas <span class="card-value" translate="no">C$20</span></h3>
+                <div><span class="card-year">2011</span></div>
+                <p class="card-desc"><strong>Representa:</strong> La Diosa del Maíz</p>
+            </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2011">
-                        <img src="{% static 'assets/img/billetes/billete_de_cien_2009.png' %}" alt="Billete de 100 Córdobas (2011)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 100 Córdobas</p>
-                            <p><strong>Valor:</strong> 100 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Fortaleza El Castillo</p>
-                            <p><strong>Año de emisión:</strong> 2011</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2011">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_cien_2009.png' %}" alt="Billete de 100 Córdobas (2011)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cien Córdobas <span class="card-value" translate="no">C$100</span></h3>
+                <div><span class="card-year">2011</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Fortaleza El Castillo</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2011">
-                        <img src="{% static 'assets/img/billetes/billete_docientos_2009.png' %}" alt="Billete de 200 Córdobas (2011)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 200 Córdobas</p>
-                            <p><strong>Valor:</strong> 200 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Reserva Biológica Indio Maíz</p>
-                            <p><strong>Año de emisión:</strong> 2011</p>
-                        </div>
-                    </div>
-                
+        <div class="card" data-year="2011">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_docientos_2009.png' %}" alt="Billete de 200 Córdobas (2011)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Doscientos Córdobas <span class="card-value" translate="no">C$200</span></h3>
+                <div><span class="card-year">2011</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Reserva Biológica Indio Maíz</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2011">
-                        <img src="{% static 'assets/img/billetes/billete_quinientos_2009.png' %}" alt="Billete de 500 Córdobas (2011)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 500 Córdobas</p>
-                            <p><strong>Valor:</strong> 500 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Catedral de Granada</p>
-                            <p><strong>Año de emisión:</strong> 2011</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2011">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_quinientos_2009.png' %}" alt="Billete de 500 Córdobas (2011)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Quinientos Córdobas <span class="card-value" translate="no">C$500</span></h3>
+                <div><span class="card-year">2011</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Catedral de Granada</p>
+            </div>
+        </div>
 
-                <!-- Serie 2015 -->
+        <!-- Serie 2015 -->
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_diez_2015.png' %}" alt="Billete de 10 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Diez Córdobas <span class="card-value" translate="no">C$10</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Puerto Salvador Allende, Managua</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_diez_2015.png' %}" alt="Billete de 10 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 10 Córdobas</p>
-                            <p><strong>Valor:</strong> 10 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Puerto Salvador Allende, Managua</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_veinte_2015.png' %}" alt="Billete de 20 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Veinte Córdobas <span class="card-value" translate="no">C$20</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Iglesia Morava, Laguna de Perlas</p>
+            </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_veinte_2015.png' %}" alt="Billete de 20 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 20 Córdobas</p>
-                            <p><strong>Valor:</strong> 20 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Iglesia Morava, Laguna de Perlas</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_cincuenta_2015.png' %}" alt="Billete de 50 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cincuenta Córdobas <span class="card-value" translate="no">C$50</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Mercado de Artesanías de Masaya</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_cincuenta_2015.png' %}" alt="Billete de 50 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 50 Córdobas</p>
-                            <p><strong>Valor:</strong> 50 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Mercado de Artesanías de Masaya</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
-        
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_cien_2015.png' %}" alt="Billete de 100 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 100 Córdobas</p>
-                            <p><strong>Valor:</strong> 100 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Catedral de Granada</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_cien_2015.png' %}" alt="Billete de 100 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cien Córdobas <span class="card-value" translate="no">C$100</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Catedral de Granada</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_docientos_2015.png' %}" alt="Billete de 200 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 200 Córdobas</p>
-                            <p><strong>Valor:</strong> 200 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Teatro Nacional Rubén Darío</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_docientos_2015.png' %}" alt="Billete de 200 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Doscientos Córdobas <span class="card-value" translate="no">C$200</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Teatro Nacional Rubén Darío</p>
+            </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_quinientos_2015.png' %}" alt="Billete de 500 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 500 Córdobas</p>
-                            <p><strong>Valor:</strong> 500 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Catedral de León</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_quinientos_2015.png' %}" alt="Billete de 500 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Quinientos Córdobas <span class="card-value" translate="no">C$500</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Catedral de León</p>
+            </div>
+        </div>
 
-                    <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2015">
-                        <img src="{% static 'assets/img/billetes/billete_de_mil_2015.png' %}" alt="Billete de 1000 Córdobas (2015)" class="img-fluid rounded">
-                        <div class="details mt-3">
-                            <p><strong>Nombre del billete:</strong> 1000 Córdobas</p>
-                            <p><strong>Valor:</strong> 1000 C$</p>
-                            <p><strong>Personaje/Cultura representada:</strong> Hacienda San Jacinto</p>
-                            <p><strong>Año de emisión:</strong> 2015</p>
-                        </div>
-                    </div>
-                    <!-- Agrega más billetes aquí -->
+        <div class="card" data-year="2015">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_mil_2015.png' %}" alt="Billete de 1000 Córdobas (2015)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Mil Córdobas <span class="card-value" translate="no">C$1000</span></h3>
+                <div><span class="card-year">2015</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Hacienda San Jacinto</p>
+            </div>
+        </div>
 
-                    <!-- Serie 2016 -->
+        <!-- Serie 2016 -->
+        <div class="card" data-year="2016">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_mil_2016.png' %}" alt="Billete de 1000 Córdobas (2016)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Mil Córdobas <span class="card-value" translate="no">C$1000</span></h3>
+                <div><span class="card-year">2016</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Monumento de Rubén Darío</p>
+            </div>
+        </div>
 
-                        <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2016">
-                            <img src="{% static 'assets/img/billetes/billete_de_mil_2016.png' %}" alt="Billete de 1000 Córdobas (2016)" class="img-fluid rounded">
-                            <div class="details mt-3">
-                                <p><strong>Nombre del billete:</strong> 1000 Córdobas</p>
-                                <p><strong>Valor:</strong> 1000 C$</p>
-                                <p><strong>Personaje/Cultura representada:</strong> Monumento de Rubén Darío</p>
-                                <p><strong>Año de emisión:</strong> 2016</p>
-                            </div>
-                        </div>
+        <!-- Serie 2019 -->
+        <div class="card" data-year="2019">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_quinientos_2019.png' %}" alt="Billete de 500 Córdobas (2019)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Quinientos Córdobas <span class="card-value" translate="no">C$500</span></h3>
+                <div><span class="card-year">2019</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Monumento a la Revolución, Managua</p>
+            </div>
+        </div>
 
+        <div class="card" data-year="2019">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_mil_2019.png' %}" alt="Billete de 1000 Córdobas (2019)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Mil Córdobas <span class="card-value" translate="no">C$1000</span></h3>
+                <div><span class="card-year">2019</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Volcán Momotombo</p>
+            </div>
+        </div>
 
-                    <!-- Serie 2019 -->
+        <!-- Serie 2020 -->
+        <div class="card" data-year="2020">
+            <div class="card-img-container">
+                <img src="{% static 'assets/img/billetes/billete_de_cinco_2020.png' %}" alt="Billete de 5 Córdobas (2020)">
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Cinco Córdobas <span class="card-value" translate="no">C$5</span></h3>
+                <div><span class="card-year">2020</span></div>
+                <p class="card-desc"><strong>Representa:</strong> Estadio Nacional de Béisbol Denis Martínez</p>
+            </div>
+        </div>
 
-                        <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2019">
-                            <img src="{% static 'assets/img/billetes/billete_de_quinientos_2019.png' %}" alt="Billete de 500 Córdobas (2019)" class="img-fluid rounded">
-                            <div class="details mt-3">
-                                <p><strong>Nombre del billete:</strong> 500 Córdobas</p>
-                                <p><strong>Valor:</strong> 500 C$</p>
-                                <p><strong>Personaje/Cultura representada:</strong> Monumento a la Revolución, Managua</p>
-                                <p><strong>Año de emisión:</strong> 2019</p>
-                            </div>
-                        </div>
-                </div>
-
-                <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2019" style="padding: 10px;">
-                            <img src="{% static 'assets/img/billetes/billete_de_mil_2019.png' %}" alt="Billete de 1000 Córdobas (2019)" class="img-fluid rounded">
-                            <div class="details mt-3">
-                                <p><strong>Nombre del billete:</strong> 1000 Córdobas</p>
-                                <p><strong>Valor:</strong> 1000 C$</p>
-                                <p><strong>Personaje/Cultura representada:</strong> Volcán Momotombo</p>
-                                <p><strong>Año de emisión:</strong> 2019</p>
-                            </div>
-                        </div>
-                
-                    <!-- Serie 2020 -->
-                        <div class="col-sm-6 col-md-6 col-lg-3 image-item" data-year="2020" style="padding: 10px;">
-                            <img src="{% static 'assets/img/billetes/billete_de_cinco_2020.png' %}" alt="Billete de 5 Córdobas (2020)" class="img-fluid rounded">
-                            <div class="details mt-3">
-                                <p><strong>Nombre del billete:</strong> 5 Córdobas</p>
-                                <p><strong>Valor:</strong> 5 C$</p>
-                                <p><strong>Personaje/Cultura representada:</strong> Estadio Nacional de Béisbol Denis Martínez</p>
-                                <p><strong>Año de emisión:</strong> 2020</p>
-                            </div>
-                        </div>  
-                </div> 
+        <div class="no-results" id="no-results">
+            <i class="bi bi-search" style="font-size: 2rem; color: var(--text-secondary); margin-bottom: 10px; display: block;"></i>
+            No se encontraron billetes para esta serie.
         </div>
     </div>
-    
-  <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        function filterByYear(year) {
-            const items = document.querySelectorAll('.image-item');
-            items.forEach(item => {
-                if (year === 'all' || item.getAttribute('data-year') === year) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
+            const noResults = document.getElementById('no-results');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class
+                    buttons.forEach(b => b.classList.remove('active'));
+                    // Add active class
+                    btn.classList.add('active');
+
+                    const year = btn.getAttribute('data-year');
+                    let visibleCount = 0;
+
+                    cards.forEach(card => {
+                        if (year === 'all' || card.getAttribute('data-year') === year) {
+                            card.style.display = 'flex';
+                            // Reset animation
+                            card.style.animation = 'none';
+                            card.offsetHeight; // trigger reflow
+                            card.style.animation = 'fadeIn 0.5s ease forwards';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    if (visibleCount === 0) {
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                });
             });
-        }
+        });
     </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </body>
 </html>
