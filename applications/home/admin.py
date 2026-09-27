@@ -10,6 +10,8 @@ from applications.home.models import (
     Empresa,
     Receta,
     SeccionMenu,
+    HistoriaPropuesta,
+    HistoriaConfiguracion,
 )
 
 # consulados your models here.
@@ -87,3 +89,24 @@ class SeccionMenuAdmin(admin.ModelAdmin):
     ordering = ("orden",)
 
 admin.site.register(SeccionMenu, SeccionMenuAdmin)
+
+
+@admin.register(HistoriaPropuesta)
+class HistoriaPropuestaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'ciudad_pais', 'email', 'estado', 'recibida_en')
+    list_filter = ('estado', 'preferencia_contacto', 'recibida_en')
+    list_editable = ('estado',)
+    search_fields = ('nombre', 'ciudad_pais', 'email', 'historia')
+    readonly_fields = ('recibida_en', 'actualizada_en')
+    ordering = ('-recibida_en',)
+
+
+@admin.register(HistoriaConfiguracion)
+class HistoriaConfiguracionAdmin(admin.ModelAdmin):
+    fields = ('video_youtube_id',)
+
+    def has_add_permission(self, request):
+        return not HistoriaConfiguracion.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False

@@ -548,6 +548,11 @@
           </div>
 
           <div class="lg:col-span-3" data-reveal>
+            {% if messages %}
+              {% for message in messages %}
+                <div class="mb-4 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800" role="status">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
             <form id="contactForm" data-sb-form-api-token="API_TOKEN" method="post" action="{% url 'home_app:formulario_contactar' %}" class="rounded-xl2 bg-white p-6 shadow-soft ring-1 ring-slate-900/5 md:p-8">
               {% csrf_token %}
               <div class="grid gap-4 sm:grid-cols-2">
@@ -604,40 +609,5 @@
     nioInput.addEventListener("input", updateRates);
   });
   
-  // ── Contact Form Prevention ──
-  document.addEventListener("DOMContentLoaded", function() {
-      const contactForm = document.getElementById('contactForm');
-      if (contactForm) {
-          const formElements = contactForm.querySelectorAll('input, textarea, button');
-          formElements.forEach(el => {
-              // Make fields visually readonly without native behavior that allows cursor
-              if (el.tagName !== 'BUTTON') {
-                  el.style.cursor = 'not-allowed';
-                  el.setAttribute('readonly', 'readonly');
-              }
-              
-              // Handle click and focus
-              const showAlert = function(e) {
-                  e.preventDefault();
-                  if (el.tagName !== 'BUTTON') el.blur();
-                  
-                  Swal.fire({
-                      title: '¡Estamos trabajando en ello!',
-                      text: 'Actualmente estamos desarrollando este formulario de contacto. ¡Estará disponible muy pronto!',
-                      icon: 'info',
-                      confirmButtonText: 'Entendido',
-                      confirmButtonColor: '#10b981'
-                  });
-              };
-              
-              el.addEventListener('mousedown', showAlert);
-              el.addEventListener('focus', function(e) {
-                  el.blur();
-              });
-          });
-      }
-  });
 </script>
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

@@ -4,6 +4,35 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from urllib.parse import parse_qs, urlparse
+import re
+
+
+def normalizar_youtube_id(value):
+    """Devuelve un ID de YouTube de 11 caracteres o lanza ValidationError."""
+    from django.core.exceptions import ValidationError
+
+    candidate = (value or '').strip()
+    if re.fullmatch(r'[A-Za-z0-9_-]{11}', candidate):
+        return candidate
+
+    parsed = urlparse(candidate)
+    hostname = (parsed.hostname or '').lower()
+    if hostname == 'youtu.be':
+        video_id = parsed.path.strip('/').split('/')[0]
+    elif hostname in {'youtube.com', 'www.youtube.com', 'm.youtube.com'}:
+        if parsed.path == '/watch':
+            video_id = parse_qs(parsed.query).get('v', [''])[0]
+        elif parsed.path.startswith('/shorts/') or parsed.path.startswith('/embed/'):
+            video_id = parsed.path.split('/')[2]
+        else:
+            video_id = ''
+    else:
+        video_id = ''
+
+    if not re.fullmatch(r'[A-Za-z0-9_-]{11}', video_id):
+        raise ValidationError('Introduce una URL de YouTube válida o un ID de 11 caracteres.')
+    return video_id
 
 # Create your models here.
 #stes es el molde de los consulados
@@ -572,6 +601,66 @@ class Valoracion(models.Model):
         return f"{self.usuario} valoró {self.empresa} con {self.puntuacion}★"
 
 
+class HistoriaPropuesta(models.Model):
+    ESTADOS = [
+        ('nueva', 'Nueva'),
+        ('contactada', 'Contactada'),
+        ('conversacion', 'En conversación'),
+        ('cerrada', 'Cerrada'),
+    ]
+
+    nombre = models.CharField(max_length=100, verbose_name='Nombre')
+    ciudad_pais = models.CharField(max_length=150, verbose_name='Ciudad y país')
+    email = models.EmailField(verbose_name='Correo electrónico')
+    telefono = models.CharField(max_length=40, blank=True, verbose_name='Teléfono o WhatsApp')
+    historia = models.TextField(max_length=2500, verbose_name='Historia')
+    preferencia_contacto = models.CharField(
+        max_length=20,
+        choices=(
+            ('email', 'Correo electrónico'),
+            ('telefono', 'Teléfono o WhatsApp'),
+            ('indiferente', 'Me es indiferente'),
+        ),
+        default='email',
+        verbose_name='Preferencia de contacto',
+    )
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='nueva', verbose_name='Estado')
+    recibida_en = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de recepción')
+    actualizada_en = models.DateTimeField(auto_now=True, verbose_name='Última actualización')
+
+    class Meta:
+        ordering = ['-recibida_en']
+        verbose_name = 'Propuesta de historia'
+        verbose_name_plural = 'Propuestas de historias'
+
+    def __str__(self):
+        return f'{self.nombre} - {self.ciudad_pais}'
+
+
+class HistoriaConfiguracion(models.Model):
+    video_youtube_id = models.CharField(
+        max_length=200,
+        default='3dJC1Z9Sl78',
+        verbose_name='ID o URL del vídeo de YouTube',
+        help_text='Pega una URL de YouTube o su ID. Se guardará únicamente el ID validado.',
+    )
+
+    class Meta:
+        verbose_name = 'Configuración de Historias'
+        verbose_name_plural = 'Configuración de Historias'
+
+    def clean(self):
+        self.video_youtube_id = normalizar_youtube_id(self.video_youtube_id)
+
+    def save(self, *args, **kwargs):
+        self.video_youtube_id = normalizar_youtube_id(self.video_youtube_id)
+        self.pk = 1
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return 'Vídeo de presentación de Historias'
+
+
 class SeccionMenu(models.Model):
     """Controla qué enlaces del menú principal (header) se muestran en el sitio.
 
@@ -582,6 +671,7 @@ class SeccionMenu(models.Model):
 
     CLAVES = [
         ('inicio', 'Inicio'),
+        ('historias', 'Historias'),
         ('blog', 'Blog'),
         ('mapa', 'Mapa'),
         ('galeria', 'Galería'),

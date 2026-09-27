@@ -101,64 +101,51 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          {% comment %}
-          Qué enlaces se muestran aquí se controla desde el admin de Django:
-          Inicio > Secciones del menú. Desactivar una ahí la oculta en todo el sitio.
-          {% endcomment %}
           {% if 'inicio' in menu_activo %}
-            <li><a href="{% url 'home_app:home' %}" class="active">Inicio</a></li>
+            <li><a href="{% url 'home_app:home' %}"{% if request.resolver_match.url_name == 'home' %} class="active"{% endif %}>Inicio</a></li>
           {% endif %}
-          {% if 'blog' in menu_activo %}
-            <li><a href="{% url 'home_app:blog' %}">Blog</a></li>
+          {% if 'historias' in menu_activo %}
+            <li><a href="{% url 'home_app:historias' %}"{% if request.resolver_match.url_name == 'historias' %} class="active"{% endif %}>Historias</a></li>
           {% endif %}
-          {% if 'mapa' in menu_activo %}
-            <li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>
-          {% endif %}
-          {% if 'galeria' in menu_activo %}
-            <li><a href="{% url 'home_app:galeria' %}">Galería</a></li>
-          {% endif %}
-          {% if 'recetas' in menu_activo %}
-            <li><a href="{% url 'home_app:recetas' %}">Recetas</a></li>
-          {% endif %}
-          {% if 'servicios' in menu_activo %}
-            <li class="dropdown"><a href="#servicios"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="{% url 'home_app:preguntas' %}">Preguntas y respuestas</a></li>
-                <li class="dropdown"><a href="#"><span>Moneda</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown">
+            <a href="{% url 'home_app:home' %}#mundonica-menu" aria-haspopup="true" aria-expanded="false"{% if request.resolver_match.url_name != 'home' and request.resolver_match.url_name != 'historias' %} class="active"{% endif %}>
+              <span>Mundónica</span> <i class="bi bi-chevron-down toggle-dropdown" role="button" tabindex="0" aria-label="Abrir menú Mundónica"></i>
+            </a>
+            <ul id="mundonica-menu">
+              {% if 'blog' in menu_activo %}<li><a href="{% url 'home_app:blog' %}">Blog</a></li>{% endif %}
+              {% if 'mapa' in menu_activo %}<li><a href="{% url 'home_app:mapa' %}">Mapa</a></li>{% endif %}
+              {% if 'galeria' in menu_activo %}<li><a href="{% url 'home_app:galeria' %}">Galería</a></li>{% endif %}
+              {% if 'recetas' in menu_activo %}<li><a href="{% url 'home_app:recetas' %}">Recetas</a></li>{% endif %}
+              {% if 'servicios' in menu_activo %}
+                <li class="dropdown"><a href="{% url 'home_app:preguntas' %}"><span>Servicios</span> <i class="bi bi-chevron-down toggle-dropdown" role="button" tabindex="0" aria-label="Abrir Servicios"></i></a>
                   <ul>
-                    <li><a href="{% url 'home_app:billetes' %}">Moneda nicaragüense</a></li>
-                    <li><a href="{% url 'home_app:billetes' %}">Cambio de moneda</a></li>
+                    <li><a href="{% url 'home_app:preguntas' %}">Preguntas y respuestas</a></li>
+                    <li class="dropdown"><a href="{% url 'home_app:billetes' %}"><span>Moneda</span> <i class="bi bi-chevron-down toggle-dropdown" role="button" tabindex="0" aria-label="Abrir Moneda"></i></a>
+                      <ul>
+                        <li><a href="{% url 'home_app:billetes' %}">Moneda nicaragüense</a></li>
+                        <li><a href="{% url 'home_app:billetes' %}">Cambio de moneda</a></li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
-              </ul>
-            </li>
-          {% endif %}
-          {% if 'donativos' in menu_activo %}
-            <li><a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E"><strong style="color: #0067c6;">Donativos</strong></a></li>
-          {% endif %}
-          {% if 'empresas' in menu_activo %}
-            <li><a href="{% url 'home_app:explorar_negocios' %}">Descubre</a></li>
-          {% endif %}
-          {% if 'extranjeros' in menu_activo %}
-            <li class="dropdown"><a href="#"><span>Extranjeros</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <!--<li><a href="#">Cultura</a></li>-->
-                <li><a href="{% url 'home_app:mapa' %}">Consulados</a></li>
-                <li><a href="{% url 'home_app:mapa' %}">Embajadas</a></li>
-                <li><a href="#">Migración</a></li>
-                <li class="dropdown"><a href="#"><span>Otros Trámites</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              {% endif %}
+              {% if 'donativos' in menu_activo %}<li><a href="https://www.paypal.com/donate/?hosted_button_id=B826RUSWYUF5E">Donativos</a></li>{% endif %}
+              {% if 'empresas' in menu_activo %}<li><a href="{% url 'home_app:explorar_negocios' %}">Descubre</a></li>{% endif %}
+              {% if 'extranjeros' in menu_activo %}
+                <li class="dropdown"><a href="{% url 'home_app:mapa' %}"><span>Extranjeros</span> <i class="bi bi-chevron-down toggle-dropdown" role="button" tabindex="0" aria-label="Abrir Extranjeros"></i></a>
                   <ul>
-                    <li><a href="{% url 'home_app:abogados' %}">Abogados</a></li>
-                    <!--<li><a href="#">Deep Dropdown 4</a></li>-->
+                    <li><a href="{% url 'home_app:mapa' %}">Consulados</a></li>
+                    <li><a href="{% url 'home_app:mapa' %}">Embajadas</a></li>
+                    <li class="dropdown"><a href="{% url 'home_app:abogados' %}"><span>Otros trámites</span> <i class="bi bi-chevron-down toggle-dropdown" role="button" tabindex="0" aria-label="Abrir Otros trámites"></i></a>
+                      <ul><li><a href="{% url 'home_app:abogados' %}">Abogados</a></li></ul>
+                    </li>
                   </ul>
                 </li>
-                <!--<li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>-->
-              </ul>
-            </li>
-          {% endif %}
+              {% endif %}
+            </ul>
+          </li>
           {% if 'contacto' in menu_activo %}
-            <li><a href="{% url 'home_app:home' %}#contact">Contacto</a></li>
+            <li><a href="{% url 'home_app:home' %}#contact">Contactar</a></li>
           {% endif %}
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

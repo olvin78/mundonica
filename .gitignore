@@ -1,20 +1,36 @@
-#ignorar las configuraciones sencibles
-settings.py
-
-#ignorar la base de datos
-db.sqlite3
-
-#ignorar avariables del entorno
+# Configuración sensible: los archivos reales de entorno nunca se versionan
 .env
-.env.docker
-#ignorar archivos generados automaticamente
+.env.*
+!.env.example
+!.env.*.example
+
+# Bases de datos y copias de seguridad locales
+*.sqlite
+*.sqlite3
+*.db
+*.bak
+*.backup
+*.dump
+*.sql
+
+# Claves privadas, certificados y almacenes de credenciales
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.jks
+*.keystore
+
+# Archivos generados automáticamente por Python
 __pycache__/
 *.pyc
 *.pyo
 
-
-#ignorar archivos estatios y multimedia genrados
+# Archivos estáticos y multimedia generados
 /staticfiles/
 
-#ignorar dependencias de node (Tailwind); el CSS compilado (static/css/tailwind.css) sí se versiona
+# Dependencias de Node; el CSS compilado sí se versiona
 /node_modules/

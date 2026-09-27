@@ -45,11 +45,20 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function (e) {
+    function toggleDropdown(e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+      this.parentNode.setAttribute(
+        'aria-expanded',
+        this.parentNode.classList.contains('active') ? 'true' : 'false'
+      );
       e.stopImmediatePropagation();
+    }
+
+    navmenu.addEventListener('click', toggleDropdown);
+    navmenu.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') toggleDropdown.call(this, e);
     });
   });
 

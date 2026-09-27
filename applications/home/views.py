@@ -4,17 +4,19 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from .models import Abogado,Perfil
 #importaciones para contactar
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib import messages
 import requests
+import logging
+from smtplib import SMTPException
 from django.conf import settings
 #impraciones para cpntactar
 from django.http import HttpResponse
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.utils.decorators import method_decorator
-from .forms import ContactForm,AbogadoForm,RestauranteForm,UsuarioForm,PeluqueriaForm,EmpresaForm,ComercioForm,RecetaForm
+from .forms import ContactForm,HistoriaPropuestaForm,AbogadoForm,RestauranteForm,UsuarioForm,PeluqueriaForm,EmpresaForm,ComercioForm,RecetaForm
 from django.views.generic.edit import UpdateView
 from django.http import Http404
 from django.shortcuts import get_object_or_404
@@ -24,7 +26,7 @@ from django.utils.text import slugify
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from applications.home.models import Consulado,Embajada,Abogado,Blog,Empresa,Post,Receta,Favorito,Valoracion,TipoEmpresa
+from applications.home.models import Consulado,Embajada,Abogado,Blog,Empresa,Post,Receta,Favorito,Valoracion,TipoEmpresa,HistoriaPropuesta,HistoriaConfiguracion
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.db.models import Avg, Count, Q, F
@@ -38,27 +40,33 @@ from django.views.generic import (
     View,
 )
 
+logger = logging.getLogger(__name__)
+
 ################################### formulario para contactar ###################################
 #############################################################################################################
 
 
 
 def formulario_contactar(request):
-    print("Formulario de contactar")
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        message = "Nombre: " + name + " Email: " + " Mensaje: " + message
-        
-        print(name, email, message)
-        from_email = settings.EMAIL_HOST_USER
-        recipient_list = ['duarteolvin30@gmail.com','olvind78@gmail.com']
-        print(email, message, from_email, recipient_list)
-        send_mail(email, message, from_email, recipient_list)
-        messages.add_message(request, messages.INFO, "Hemos recibido el email, en breve nos pondremos en contacto. | Emaila jaso dugu, laster harremanetan jarriko gara.")
+    form = ContactForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            send_mail(
+                subject=f"Nuevo mensaje de contacto de {form.cleaned_data['name']}",
+                message=(
+                    f"Nombre: {form.cleaned_data['name']}\n"
+                    f"Correo: {form.cleaned_data['email']}\n\n"
+                    f"{form.cleaned_data['message']}"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['duarteolvin30@gmail.com', 'olvind78@gmail.com'],
+                fail_silently=False,
+            )
+            messages.success(request, 'Hemos recibido tu mensaje y te responderemos pronto.')
+        else:
+            messages.error(request, 'Revisa los campos del formulario e inténtalo de nuevo.')
 
-    return render(request, "home/index.html")
+    return redirect('home_app:home')
 
 #fin formulario contacar
 
@@ -198,6 +206,47 @@ class HomePageView(ListView):
             context['gtq_rate'] = 'Error al conectar con la API'
 
         return context
+
+
+def historias_view(request):
+    form = HistoriaPropuestaForm(request.POST or None)
+    configuracion = HistoriaConfiguracion.objects.first()
+    video_id = configuracion.video_youtube_id if configuracion else '3dJC1Z9Sl78'
+
+    if request.method == 'POST' and form.is_valid():
+        propuesta = form.save()
+        aviso_enviado = False
+        if settings.EMAIL_HOST_PASSWORD and settings.EMAIL_HOST_USER:
+            try:
+                aviso = EmailMessage(
+                    subject='Nueva propuesta de historia en Mundónica',
+                    body=(
+                        f'Nombre: {propuesta.nombre}\n'
+                        f'Ciudad y país: {propuesta.ciudad_pais}\n'
+                        f'Correo: {propuesta.email}\n'
+                        f'Teléfono o WhatsApp: {propuesta.telefono or "No indicado"}\n'
+                        f'Preferencia: {propuesta.get_preferencia_contacto_display()}\n\n'
+                        f'Historia:\n{propuesta.historia}'
+                    ),
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[settings.HISTORIAS_NOTIFICATION_EMAIL],
+                    reply_to=[propuesta.email],
+                )
+                aviso_enviado = aviso.send(fail_silently=False) == 1
+            except (SMTPException, OSError):
+                logger.exception('No se pudo enviar el aviso de una propuesta de historia')
+        else:
+            logger.warning('Aviso de propuestas no enviado: SMTP no configurado')
+
+        if not aviso_enviado:
+            logger.warning('La propuesta se guardó, pero su aviso por correo no fue enviado')
+        messages.success(
+            request,
+            'Hemos recibido tu propuesta. La revisaremos y nos pondremos en contacto si queremos conocerla mejor.',
+        )
+        return redirect('home_app:historias')
+
+    return render(request, 'historias.html', {'form': form, 'video_id': video_id})
 
 
 

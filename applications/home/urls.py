@@ -55,6 +55,11 @@ urlpatterns = [
         
         ),
 
+    path('historias/',
+        views.historias_view,
+        name='historias',
+    ),
+
 
     path('preguntas/',
         views.PreguntasView.as_view(),

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/historias.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="historias-page">
+  <section class="historias-hero">
+    <div class="historias-shell historias-hero-grid">
+      <div>
+        <p class="historias-kicker">Historias de nuestra comunidad</p>
+        <h1>Tu historia también merece ser contada</h1>
+        <p class="historias-lead">Mundónica quiere escuchar a nicaragüenses que viven en España y en otros países de Europa: los cambios, los aprendizajes y todo aquello que les sigue conectando con casa.</p>
+        <a class="historias-button historias-button-primary" href="#proponer-historia">Quiero compartir mi historia <i class="bi bi-arrow-down"></i></a>
+      </div>
+      <figure class="historias-hero-image">
+        <img src="{% static 'images/mundonica-historias-01.png' %}" alt="Olvin conversa con una persona invitada mientras el equipo de Mundónica prepara la grabación">
+      </figure>
+    </div>
+  </section>
+
+  <section class="historias-section historias-intro" aria-labelledby="presentacion-title">
+    <div class="historias-shell historias-two-column">
+      <div>
+        <p class="historias-kicker">Conoce la propuesta</p>
+        <h2 id="presentacion-title">Una charla con Olvin, desde donde estés</h2>
+        <p>Queremos conocer tu recorrido y ponerle voz a las experiencias de nuestra comunidad nicaragüense en Europa. No buscamos historias perfectas: buscamos personas reales, con algo que compartir.</p>
+        <p class="historias-small-note"><i class="bi bi-info-circle"></i> Enviar este formulario no confirma una entrevista ni implica publicación automática.</p>
+      </div>
+      <div class="historias-video-wrap">
+        {% if video_id %}
+          <iframe src="https://www.youtube-nocookie.com/embed/{{ video_id }}" title="Presentación de Olvin y Mundónica" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        {% else %}
+          <div class="historias-video-fallback">
+            <i class="bi bi-mic"></i>
+            <p>Olvin te contará muy pronto cómo son estas conversaciones.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="historias-section historias-process" aria-labelledby="proceso-title">
+    <div class="historias-shell">
+      <div class="historias-section-heading">
+        <p class="historias-kicker">Así funciona</p>
+        <h2 id="proceso-title">Primero nos conocemos</h2>
+      </div>
+      <div class="historias-steps">
+        <article><span>01</span><h3>Nos escribes</h3><p>Cuéntanos qué te gustaría compartir y dónde vives.</p></article>
+        <article><span>02</span><h3>Hablamos</h3><p>Te contactamos para conocernos y entender mejor tu propuesta.</p></article>
+        <article><span>03</span><h3>Lo acordamos</h3><p>Si encaja, buscamos contigo el mejor lugar y momento para grabar.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="proponer-historia" class="historias-section historias-form-section" aria-labelledby="form-title">
+    <div class="historias-shell historias-form-grid">
+      <div class="historias-form-copy">
+        <p class="historias-kicker">Da el primer paso</p>
+        <h2 id="form-title">Propón tu historia</h2>
+        <p>Cuéntanos lo esencial. El equipo de Mundónica revisará cada propuesta con calma y tratará tus datos de forma privada.</p>
+        <div class="historias-contact"><i class="bi bi-envelope"></i><div><span>También puedes escribirnos</span><a href="mailto:info@mundonica.org">info@mundonica.org</a></div></div>
+      </div>
+
+      <div class="historias-form-card">
+        {% if messages %}
+          {% for message in messages %}<div class="historias-alert" role="status"><strong>Enviado correctamente</strong><span>{{ message }}</span></div>{% endfor %}
+        {% endif %}
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ form.website }}
+          {% if form.non_field_errors %}<div class="historias-form-error">{{ form.non_field_errors }}</div>{% endif %}
+          <div class="historias-fields">
+            {% for field in form.visible_fields %}
+              <div class="historias-field{% if field.errors %} has-error{% endif %}{% if field.name == 'historia' %} historias-field-wide{% endif %}">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+                {% for error in field.errors %}<p class="historias-form-error">{{ error }}</p>{% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+          <p class="historias-privacy"><i class="bi bi-lock"></i> No publicaremos tu propuesta ni compartiremos tus datos.</p>
+          <button class="historias-button historias-button-primary" type="submit">Enviar propuesta <i class="bi bi-send"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

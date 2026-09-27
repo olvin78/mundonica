@@ -1,35 +1,35 @@
 from django import forms
-from .models import Abogado,Empresa,Receta
+from .models import Abogado,Empresa,Receta,HistoriaPropuesta
 from .models import Perfil
 from django.utils.html import strip_tags
 
 
 class ContactForm(forms.Form):
-    name = forms.CharField(
-        max_length=100,
-        required=True,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Tu nombre'
-        })
-    )
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Tu correo electrónico'
-        })
-    )
-    message = forms.CharField(
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'placeholder': 'Tu mensaje',
-            'rows': 5
-        }),
-        required=True,
-        max_length=2000
-    )
+    name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tu nombre'}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Tu correo electrónico'}))
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Tu mensaje', 'rows': 5}), required=True, max_length=2000)
 
+
+class HistoriaPropuestaForm(forms.ModelForm):
+    website = forms.CharField(required=False, widget=forms.HiddenInput)
+
+    class Meta:
+        model = HistoriaPropuesta
+        fields = ['nombre', 'ciudad_pais', 'email', 'telefono', 'historia', 'preferencia_contacto']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Tu nombre', 'autocomplete': 'name'}),
+            'ciudad_pais': forms.TextInput(attrs={'placeholder': 'Ej. Madrid, España'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'tu@email.com', 'autocomplete': 'email'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Opcional', 'autocomplete': 'tel'}),
+            'historia': forms.Textarea(attrs={'placeholder': 'Cuéntanos brevemente qué te gustaría compartir.', 'rows': 6}),
+            'preferencia_contacto': forms.Select(),
+        }
+
+    def clean_website(self):
+        value = self.cleaned_data.get('website', '').strip()
+        if value:
+            raise forms.ValidationError('No se ha podido enviar la propuesta.')
+        return value
 
 
 class AbogadoForm(forms.ModelForm):

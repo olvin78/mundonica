@@ -9,13 +9,47 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+def env_bool(name, default=False):
+    return os.environ.get(name, str(default)).strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def env_list(name, default):
+    value = os.environ.get(name)
+    return [item.strip() for item in value.split(',') if item.strip()] if value else default
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-cambiar-en-produccion")
+SECRET_KEY = os.environ.get('SECRET_KEY') or os.environ.get(
+    'DJANGO_SECRET_KEY', 'django-insecure-cambiar-en-produccion'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+DEBUG = env_bool('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = ['www.mundonica.org', 'mundonica.org', 'localhost', '127.0.0.1', '192.168.1.51']
+ALLOWED_HOSTS = env_list(
+    'DJANGO_ALLOWED_HOSTS',
+    ['www.mundonica.org', 'mundonica.org', 'localhost', '127.0.0.1', '192.168.1.51'],
+)
+
+# Cloudflare Tunnel terminates TLS before the local Nginx proxy. Nginx preserves
+# the original forwarded scheme so Django can apply HTTPS and CSRF checks.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = env_bool('DJANGO_USE_X_FORWARDED_HOST', False)
+CSRF_TRUSTED_ORIGINS = env_list(
+    'DJANGO_CSRF_TRUSTED_ORIGINS',
+    [
+        'https://mundonica.org',
+        'https://www.mundonica.org',
+        'http://localhost',
+        'http://localhost:8001',
+        'http://127.0.0.1',
+        'http://127.0.0.1:8001',
+    ],
+)
+CSRF_COOKIE_SECURE = env_bool('DJANGO_CSRF_COOKIE_SECURE', False)
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = env_bool('DJANGO_SESSION_COOKIE_SECURE', False)
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 # Application definition
 
@@ -181,17 +215,36 @@ LOGOUT_REDIRECT_URL = 'home_app:home'  # Redirige después del logout
 LOGIN_URL = '/'  # Página para iniciar sesión
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587  # Usa 587 para TLS
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mundonica'  # Literalmente escribe "apikey" como usuario
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "info@mundonica.org")
+HISTORIAS_NOTIFICATION_EMAIL = os.environ.get(
+    'HISTORIAS_NOTIFICATION_EMAIL', 'euskodev@gmail.com'
+)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'loggers': {
+        'django.security.csrf': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
 
 
 #prueba para el capcha
 RECAPTCHA_PUBLIC_KEY = '6Lf-LqwqAAAAAM50PAeaSWVpSP5BVh9554X3uZ3N'
-RECAPTCHA_PRIVATE_KEY = 't6Lf-LqwqAAAAANtzmSliUCEM68-MoHzEGuFFpq74'
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY', '')
 
 
 TEMPLATES = [
