@@ -1,6 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mundónica">
+<meta property="og:title" content="Cuenta tu historia en Mundónica | Nicaragüenses en Europa">
+<meta property="og:description" content="Comparte gratis tu historia en Mundónica si eres nicaragüense y tienes un negocio en España o Europa. Queremos conocer tu camino y darle voz.">
+<meta property="og:url" content="https://mundonica.org/historias/">
+<meta property="og:image" content="https://mundonica.org{% static 'images/mundonica-historias-01.png' %}">
+<meta property="og:image:alt" content="Una conversación de Mundónica preparada para grabar una historia de la comunidad nicaragüense">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cuenta tu historia en Mundónica | Nicaragüenses en Europa">
+<meta name="twitter:description" content="Comparte gratis tu historia en Mundónica si eres nicaragüense y tienes un negocio en España o Europa. Queremos conocer tu camino y darle voz.">
+<meta name="twitter:image" content="https://mundonica.org{% static 'images/mundonica-historias-01.png' %}">
+<meta name="twitter:image:alt" content="Una conversación de Mundónica preparada para grabar una historia de la comunidad nicaragüense">
+{% endblock %}
+
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/historias.css' %}">
 {% endblock %}

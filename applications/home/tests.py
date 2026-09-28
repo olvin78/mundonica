@@ -127,6 +127,22 @@ class HistoriasViewTests(TestCase):
 			mail.outbox[0].body,
 		)
 
+	def test_social_metadata_uses_one_absolute_historias_image(self):
+		response = self.client.get(
+			self.url,
+			HTTP_HOST='mundonica.org',
+			HTTP_X_FORWARDED_PROTO='https',
+		)
+		html = response.content.decode()
+		image_url = 'https://mundonica.org/static/images/mundonica-historias-01.png'
+
+		self.assertEqual(html.count('property="og:image"'), 1)
+		self.assertContains(response, f'property="og:image" content="{image_url}"')
+		self.assertContains(response, 'property="og:url" content="https://mundonica.org/historias/"')
+		self.assertContains(response, 'property="og:image:alt"')
+		self.assertContains(response, f'name="twitter:image" content="{image_url}"')
+		self.assertNotIn('/static/assets/img/og-image.jpg', html)
+
 	def test_recording_preferences_are_required_and_show_initial_option(self):
 		response = self.client.get(self.url, HTTP_HOST='localhost')
 		self.assertContains(response, 'Selecciona una opción', count=2)

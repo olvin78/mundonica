@@ -16,11 +16,11 @@
   <main class="main">
 
     <!-- ============ HERO ============ -->
-    <section id="hero" class="relative isolate flex min-h-[640px] items-center overflow-hidden md:min-h-[88vh]" data-hero-section>
+    <section id="hero" class="homepage-hero relative isolate flex items-center overflow-hidden" data-hero-section>
 
       <!-- Imagen grande de portada, optimizada para SEO y accesibilidad -->
       <img
-        src="{% static 'images/nicaraguaheader.webp' %}"
+        src="{% static 'images/nicaragua-header-03.png' %}"
         alt="Paisaje y comunidad de Nicaragua, símbolo de MundoNica"
         data-hero-bg
         class="absolute inset-0 -z-20 h-[125%] w-full object-cover object-center"
@@ -65,11 +65,11 @@
       <div class="nica-container relative py-24 md:py-0">
         <div class="max-w-2xl">
           <span data-hero-el class="nica-eyebrow bg-white/15 text-white">
-            <i class="bi bi-geo-alt-fill"></i> Comunidad nicaragüense en España
+            <i class="bi bi-geo-alt-fill"></i> Comunidad nicaragüense en España y Europa
           </span>
 
           <h1 data-hero-el class="mt-6 font-heading text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl lg:text-[3.4rem]">
-            El punto de encuentro de los negocios y proyectos nicas en España
+            El punto de encuentro de los negocios y proyectos nicas en España y Europa
           </h1>
 
           <p data-hero-el class="mt-5 max-w-xl text-lg leading-relaxed text-white/85">
@@ -84,7 +84,7 @@
               </a>
             {% else %}
               <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Publicar mi negocio en el mapa de MundoNica" class="nica-btn-primary">
-                Publicar mi negocio gratis <i class="bi bi-arrow-right"></i>
+                Añadir mi negocio <i class="bi bi-arrow-right"></i>
               </button>
             {% endif %}
             <a href="{% url 'home_app:mapa' %}" aria-label="Explorar el mapa de MundoNica" class="nica-btn-secondary">
@@ -92,7 +92,7 @@
             </a>
           </div>
 
-          <div data-hero-el class="mt-6">
+          <!--<div data-hero-el class="mt-6">
             <a
               href="{% static 'assets/img/presentacion.mp4' %}"
               class="glightbox group inline-flex items-center gap-3 text-sm font-semibold text-white/90 transition-colors hover:text-white"
@@ -106,11 +106,11 @@
               </span>
               Ver vídeo de presentación
             </a>
-          </div>
+          </div>-->
 
-          <p data-hero-el class="mt-7 text-xs font-bold uppercase tracking-[0.16em] text-white/65">
+          <!--<p data-hero-el class="mt-7 text-xs font-bold uppercase tracking-[0.16em] text-white/65">
             Gratis · Sin comisiones · Comunidad activa en toda España
-          </p>
+          </p>-->
         </div>
       </div>
 

@@ -34,6 +34,7 @@ ALLOWED_HOSTS = env_list(
 # Cloudflare Tunnel terminates TLS before the local Nginx proxy. Nginx preserves
 # the original forwarded scheme so Django can apply HTTPS and CSRF checks.
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 USE_X_FORWARDED_HOST = env_bool('DJANGO_USE_X_FORWARDED_HOST', False)
 CSRF_TRUSTED_ORIGINS = env_list(
     'DJANGO_CSRF_TRUSTED_ORIGINS',

@@ -14,12 +14,21 @@
   <!-- Información adicional -->
   <meta name="author" content="Mundonica Team">
   <meta name="robots" content="index, follow">
-  <!-- Meta etiquetas para dispositivos móviles y redes sociales -->
-  <meta property="og:title" content="Mundonica - Descubre Nicaragua">
-  <meta property="og:description" content="Explora la naturaleza, cultura y servicios de Nicaragua con Mundonica.">
-  <meta property="og:image" content="{% static 'assets/img/og-image.jpg' %}">
-  <meta property="og:url" content="https://www.mundonica.com">
+  <!-- Metadatos sociales predeterminados; cada página puede sobrescribir el bloque completo. -->
+  {% block social_meta %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mundónica">
+  <meta property="og:title" content="Mundónica - Descubre Nicaragua">
+  <meta property="og:description" content="Explora la naturaleza, cultura y servicios de Nicaragua con Mundónica.">
+  <meta property="og:url" content="https://mundonica.org/">
+  <meta property="og:image" content="https://mundonica.org{% static 'assets/img/mapamundonica.png' %}">
+  <meta property="og:image:alt" content="Mundónica, turismo, cultura y servicios de Nicaragua">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mundónica - Descubre Nicaragua">
+  <meta name="twitter:description" content="Explora la naturaleza, cultura y servicios de Nicaragua con Mundónica.">
+  <meta name="twitter:image" content="https://mundonica.org{% static 'assets/img/mapamundonica.png' %}">
+  <meta name="twitter:image:alt" content="Mundónica, turismo, cultura y servicios de Nicaragua">
+  {% endblock %}
   <!-- CSS de estilos personalizados -->
   <link rel="stylesheet" href="{% static 'css/style2.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
