@@ -98,7 +98,7 @@
 
       <div class="historias-form-card">
         {% if messages %}
-          {% for message in messages %}<div class="historias-alert" role="status"><strong>Enviado correctamente</strong><span>{{ message }}</span></div>{% endfor %}
+          {% for message in messages %}<div class="historias-alert{% if message.tags %} historias-alert-{{ message.tags }}{% endif %}" role="status"><strong>{% if message.tags == 'warning' %}Propuesta guardada con aviso pendiente{% elif message.tags == 'error' %}No se pudo completar el envío{% else %}Enviado correctamente{% endif %}</strong><span>{{ message }}</span></div>{% endfor %}
         {% endif %}
         <form method="post" novalidate>
           {% csrf_token %}

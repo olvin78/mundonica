@@ -42,6 +42,10 @@ from django.views.generic import (
 
 logger = logging.getLogger(__name__)
 
+
+def smtp_configurado():
+    return bool(settings.EMAIL_HOST_USER and settings.EMAIL_HOST_PASSWORD)
+
 ################################### formulario para contactar ###################################
 #############################################################################################################
 
@@ -51,19 +55,47 @@ def formulario_contactar(request):
     form = ContactForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            send_mail(
-                subject=f"Nuevo mensaje de contacto de {form.cleaned_data['name']}",
-                message=(
-                    f"Nombre: {form.cleaned_data['name']}\n"
-                    f"Correo: {form.cleaned_data['email']}\n\n"
-                    f"{form.cleaned_data['message']}"
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=['duarteolvin30@gmail.com', 'olvind78@gmail.com'],
-                fail_silently=False,
-            )
-            messages.success(request, 'Hemos recibido tu mensaje y te responderemos pronto.')
+            aviso_enviado = False
+            if smtp_configurado():
+                try:
+                    aviso_enviado = send_mail(
+                        subject=f"Nuevo mensaje de contacto de {form.cleaned_data['name']}",
+                        message=(
+                            f"Nombre: {form.cleaned_data['name']}\n"
+                            f"Correo: {form.cleaned_data['email']}\n\n"
+                            f"{form.cleaned_data['message']}"
+                        ),
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[settings.MUNDONICA_NOTIFICATION_EMAIL],
+                        fail_silently=False,
+                    ) == 1
+                except (SMTPException, OSError) as exc:
+                    logger.error(
+                        'No se pudo enviar el aviso del formulario de contacto (%s)',
+                        type(exc).__name__,
+                    )
+            else:
+                logger.warning('Aviso de contacto no enviado: SMTP no configurado')
+
+            if aviso_enviado:
+                request.session.pop('contact_form_draft', None)
+                messages.success(request, 'Hemos recibido tu mensaje y te responderemos pronto.')
+            else:
+                request.session['contact_form_draft'] = {
+                    key: form.cleaned_data[key]
+                    for key in ('name', 'email', 'message')
+                }
+                messages.error(
+                    request,
+                    'No hemos podido enviar tu mensaje en este momento. '
+                    'Tus datos siguen en el formulario para que puedas revisarlos '
+                    'o intentarlo de nuevo.',
+                )
         else:
+            request.session['contact_form_draft'] = {
+                key: request.POST.get(key, '')
+                for key in ('name', 'email', 'message')
+            }
             messages.error(request, 'Revisa los campos del formulario e inténtalo de nuevo.')
 
     return redirect('home_app:home')
@@ -89,7 +121,8 @@ class HomePageView(ListView):
         # Obtén el contexto predeterminado del ListView
         context = super().get_context_data(**kwargs)
         # Añade el formulario al contexto
-        context['form'] = ContactForm()  # Instancia del formulario
+        contact_form_draft = self.request.session.pop('contact_form_draft', None)
+        context['form'] = ContactForm(initial=contact_form_draft)
 
         # Agrega los datos de otros modelos al contexto paa ver el mapa en el index
         context['empresas'] = Empresa.objects.filter(tipo_empresa__nombre='Empresa')
@@ -215,7 +248,7 @@ def historias_view(request):
     if request.method == 'POST' and form.is_valid():
         propuesta = form.save()
         aviso_enviado = False
-        if settings.EMAIL_HOST_PASSWORD and settings.EMAIL_HOST_USER:
+        if smtp_configurado():
             try:
                 aviso = EmailMessage(
                     subject='Nueva propuesta de historia en Mundónica',
@@ -230,21 +263,30 @@ def historias_view(request):
                         f'Historia:\n{propuesta.historia}'
                     ),
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    to=[settings.HISTORIAS_NOTIFICATION_EMAIL],
+                    to=[settings.MUNDONICA_NOTIFICATION_EMAIL],
                     reply_to=[propuesta.email],
                 )
                 aviso_enviado = aviso.send(fail_silently=False) == 1
-            except (SMTPException, OSError):
-                logger.exception('No se pudo enviar el aviso de una propuesta de historia')
+            except (SMTPException, OSError) as exc:
+                logger.error(
+                    'No se pudo enviar el aviso de una propuesta de historia (%s)',
+                    type(exc).__name__,
+                )
         else:
             logger.warning('Aviso de propuestas no enviado: SMTP no configurado')
 
-        if not aviso_enviado:
+        if aviso_enviado:
+            messages.success(
+                request,
+                'Hemos recibido tu propuesta. La revisaremos y nos pondremos en contacto si queremos conocerla mejor.',
+            )
+        else:
             logger.warning('La propuesta se guardó, pero su aviso por correo no fue enviado')
-        messages.success(
-            request,
-            'Hemos recibido tu propuesta. La revisaremos y nos pondremos en contacto si queremos conocerla mejor.',
-        )
+            messages.warning(
+                request,
+                'Tu propuesta se ha guardado correctamente, pero no pudimos enviar '
+                'el aviso al equipo. No hace falta que la envíes de nuevo.',
+            )
         return redirect('home_app:historias')
 
     return render(request, 'historias.html', {'form': form, 'video_id': video_id})

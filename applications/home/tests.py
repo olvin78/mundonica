@@ -1,6 +1,9 @@
 from unittest.mock import patch
 from smtplib import SMTPException
 
+import requests
+
+from django.contrib.messages import get_messages
 from django.core import mail
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
@@ -9,11 +12,68 @@ from .models import HistoriaPropuesta
 
 
 @override_settings(
+	EMAIL_HOST_USER='smtp-login@example.test',
+	EMAIL_HOST_PASSWORD='test-password',
+	DEFAULT_FROM_EMAIL='info@mundonica.org',
+	MUNDONICA_NOTIFICATION_EMAIL='info@mundonica.org',
+)
+class ContactFormularioTests(TestCase):
+	def setUp(self):
+		self.client = Client()
+		self.url = reverse('home_app:formulario_contactar')
+		self.data = {
+			'name': 'Persona de prueba',
+			'email': 'persona@example.com',
+			'message': 'Este es un mensaje de prueba para Mundónica.',
+		}
+
+	@patch('applications.home.views.send_mail', return_value=1)
+	def test_success_sends_to_configured_recipient_and_confirms(self, send_mail_mock):
+		response = self.client.post(self.url, self.data)
+
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(
+			send_mail_mock.call_args.kwargs['recipient_list'],
+			['info@mundonica.org'],
+		)
+		shown_messages = [str(message) for message in get_messages(response.wsgi_request)]
+		self.assertIn(
+			'Hemos recibido tu mensaje y te responderemos pronto.',
+			shown_messages,
+		)
+		self.assertNotIn('contact_form_draft', self.client.session)
+
+	@patch('applications.home.views.send_mail', side_effect=SMTPException('SMTP unavailable'))
+	def test_smtp_failure_keeps_data_and_shows_honest_message(self, send_mail_mock):
+		response = self.client.post(self.url, self.data)
+
+		self.assertEqual(response.status_code, 302)
+		shown_messages = [str(message) for message in get_messages(response.wsgi_request)]
+		self.assertIn(
+			'No hemos podido enviar tu mensaje en este momento. '
+			'Tus datos siguen en el formulario para que puedas revisarlos '
+			'o intentarlo de nuevo.',
+			shown_messages,
+		)
+		self.assertEqual(self.client.session['contact_form_draft'], self.data)
+		send_mail_mock.assert_called_once()
+
+		with patch(
+			'applications.home.views.requests.get',
+			side_effect=requests.RequestException('offline'),
+		):
+			home_response = self.client.get(reverse('home_app:home'))
+
+		self.assertEqual(home_response.status_code, 200)
+		self.assertEqual(home_response.context['form'].initial, self.data)
+
+
+@override_settings(
 	EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend',
 	EMAIL_HOST_USER='smtp-login@example.test',
 	EMAIL_HOST_PASSWORD='test-password',
 	DEFAULT_FROM_EMAIL='info@mundonica.org',
-	HISTORIAS_NOTIFICATION_EMAIL='euskodev@gmail.com',
+	MUNDONICA_NOTIFICATION_EMAIL='info@mundonica.org',
 )
 class HistoriasViewTests(TestCase):
 	def setUp(self):
@@ -60,7 +120,7 @@ class HistoriasViewTests(TestCase):
 		self.assertEqual(propuesta.preferencia_grabacion, 'sabado_manana')
 		self.assertEqual(propuesta.lugar_grabacion, 'estudio_mundonica')
 		self.assertEqual(len(mail.outbox), 1)
-		self.assertEqual(mail.outbox[0].to, ['euskodev@gmail.com'])
+		self.assertEqual(mail.outbox[0].to, ['info@mundonica.org'])
 		self.assertIn('Preferencia de grabación: Sábado por la mañana', mail.outbox[0].body)
 		self.assertIn(
 			'Lugar de grabación: En el estudio de Mundónica, en Oiartzun (Gipuzkoa, España)',
@@ -113,6 +173,7 @@ class HistoriasViewTests(TestCase):
 			follow=True,
 		)
 
-		self.assertContains(response, 'Enviado correctamente')
+		self.assertContains(response, 'Propuesta guardada con aviso pendiente')
+		self.assertContains(response, 'No hace falta que la envíes de nuevo.')
 		self.assertEqual(HistoriaPropuesta.objects.count(), 1)
 		email_send_mock.assert_called_once()
