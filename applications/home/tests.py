@@ -26,6 +26,8 @@ class HistoriasViewTests(TestCase):
 			'telefono': '',
 			'historia': 'Una historia suficientemente larga para explicar la propuesta.',
 			'preferencia_contacto': 'email',
+			'preferencia_grabacion': 'sabado_manana',
+			'lugar_grabacion': 'estudio_mundonica',
 			'website': '',
 		}
 
@@ -54,8 +56,34 @@ class HistoriasViewTests(TestCase):
 
 		self.assertContains(response, 'Enviado correctamente')
 		self.assertEqual(HistoriaPropuesta.objects.count(), 1)
+		propuesta = HistoriaPropuesta.objects.get()
+		self.assertEqual(propuesta.preferencia_grabacion, 'sabado_manana')
+		self.assertEqual(propuesta.lugar_grabacion, 'estudio_mundonica')
 		self.assertEqual(len(mail.outbox), 1)
 		self.assertEqual(mail.outbox[0].to, ['euskodev@gmail.com'])
+		self.assertIn('Preferencia de grabación: Sábado por la mañana', mail.outbox[0].body)
+		self.assertIn(
+			'Lugar de grabación: En el estudio de Mundónica, en Oiartzun (Gipuzkoa, España)',
+			mail.outbox[0].body,
+		)
+
+	def test_recording_preferences_are_required_and_show_initial_option(self):
+		response = self.client.get(self.url, HTTP_HOST='localhost')
+		self.assertContains(response, 'Selecciona una opción', count=2)
+
+		token = response.cookies['csrftoken'].value
+		invalid_data = {
+			**self.data,
+			'preferencia_grabacion': '',
+			'lugar_grabacion': '',
+			'csrfmiddlewaretoken': token,
+		}
+		response = self.client.post(self.url, invalid_data, HTTP_HOST='localhost')
+
+		self.assertEqual(response.status_code, 200)
+		self.assertIn('preferencia_grabacion', response.context['form'].errors)
+		self.assertIn('lugar_grabacion', response.context['form'].errors)
+		self.assertEqual(HistoriaPropuesta.objects.count(), 0)
 
 	def test_post_without_csrf_is_rejected(self):
 		response = self.client.post(self.url, self.data, HTTP_HOST='localhost')

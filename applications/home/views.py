@@ -212,7 +212,6 @@ def historias_view(request):
     form = HistoriaPropuestaForm(request.POST or None)
     configuracion = HistoriaConfiguracion.objects.first()
     video_id = configuracion.video_youtube_id if configuracion else '3dJC1Z9Sl78'
-
     if request.method == 'POST' and form.is_valid():
         propuesta = form.save()
         aviso_enviado = False
@@ -225,7 +224,9 @@ def historias_view(request):
                         f'Ciudad y país: {propuesta.ciudad_pais}\n'
                         f'Correo: {propuesta.email}\n'
                         f'Teléfono o WhatsApp: {propuesta.telefono or "No indicado"}\n'
-                        f'Preferencia: {propuesta.get_preferencia_contacto_display()}\n\n'
+                        f'Preferencia de contacto: {propuesta.get_preferencia_contacto_display()}\n'
+                        f'Preferencia de grabación: {propuesta.get_preferencia_grabacion_display()}\n'
+                        f'Lugar de grabación: {propuesta.get_lugar_grabacion_display()}\n\n'
                         f'Historia:\n{propuesta.historia}'
                     ),
                     from_email=settings.DEFAULT_FROM_EMAIL,

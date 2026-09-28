@@ -609,6 +609,21 @@ class HistoriaPropuesta(models.Model):
         ('cerrada', 'Cerrada'),
     ]
 
+    PREFERENCIAS_GRABACION = [
+        ('laborable_manana', 'Lunes a viernes por la mañana'),
+        ('laborable_tarde', 'Lunes a viernes por la tarde'),
+        ('sabado_manana', 'Sábado por la mañana'),
+        ('sabado_tarde', 'Sábado por la tarde'),
+        ('domingo_manana', 'Domingo por la mañana'),
+        ('domingo_tarde', 'Domingo por la tarde'),
+        ('flexible', 'Tengo flexibilidad de fecha y hora'),
+    ]
+
+    LUGARES_GRABACION = [
+        ('ubicacion_propia', 'En mi restaurante, bar, empresa u hogar'),
+        ('estudio_mundonica', 'En el estudio de Mundónica, en Oiartzun (Gipuzkoa, España)'),
+    ]
+
     nombre = models.CharField(max_length=100, verbose_name='Nombre')
     ciudad_pais = models.CharField(max_length=150, verbose_name='Ciudad y país')
     email = models.EmailField(verbose_name='Correo electrónico')
@@ -623,6 +638,20 @@ class HistoriaPropuesta(models.Model):
         ),
         default='email',
         verbose_name='Preferencia de contacto',
+    )
+    preferencia_grabacion = models.CharField(
+        max_length=20,
+        choices=PREFERENCIAS_GRABACION,
+        blank=True,
+        default='',
+        verbose_name='Preferencia para grabar el podcast o la entrevista',
+    )
+    lugar_grabacion = models.CharField(
+        max_length=20,
+        choices=LUGARES_GRABACION,
+        blank=True,
+        default='',
+        verbose_name='¿Dónde prefieres que grabemos el podcast o la entrevista?',
     )
     estado = models.CharField(max_length=20, choices=ESTADOS, default='nueva', verbose_name='Estado')
     recibida_en = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de recepción')

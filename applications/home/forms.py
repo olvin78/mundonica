@@ -15,7 +15,10 @@ class HistoriaPropuestaForm(forms.ModelForm):
 
     class Meta:
         model = HistoriaPropuesta
-        fields = ['nombre', 'ciudad_pais', 'email', 'telefono', 'historia', 'preferencia_contacto']
+        fields = [
+            'nombre', 'ciudad_pais', 'email', 'telefono', 'historia',
+            'preferencia_contacto', 'preferencia_grabacion', 'lugar_grabacion',
+        ]
         widgets = {
             'nombre': forms.TextInput(attrs={'placeholder': 'Tu nombre', 'autocomplete': 'name'}),
             'ciudad_pais': forms.TextInput(attrs={'placeholder': 'Ej. Madrid, España'}),
@@ -23,7 +26,19 @@ class HistoriaPropuestaForm(forms.ModelForm):
             'telefono': forms.TextInput(attrs={'placeholder': 'Opcional', 'autocomplete': 'tel'}),
             'historia': forms.Textarea(attrs={'placeholder': 'Cuéntanos brevemente qué te gustaría compartir.', 'rows': 6}),
             'preferencia_contacto': forms.Select(),
+            'preferencia_grabacion': forms.Select(attrs={'class': 'form-select'}),
+            'lugar_grabacion': forms.Select(attrs={'class': 'form-select'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in ('preferencia_grabacion', 'lugar_grabacion'):
+            field = self.fields[field_name]
+            field.required = True
+            field.choices = [
+                ('', 'Selecciona una opción'),
+                *((value, label) for value, label in field.choices if value),
+            ]
 
     def clean_website(self):
         value = self.cleaned_data.get('website', '').strip()

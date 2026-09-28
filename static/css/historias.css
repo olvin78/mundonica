@@ -41,6 +41,52 @@
 .historias-steps article { border-top: 1px solid #c7d4d0; padding-top: 20px; }
 .historias-steps span { color: var(--historias-ocean); font-weight: 800; letter-spacing: .08em; }
 .historias-steps p { margin: 0; }
+.historias-platforms {
+  width: 100%;
+  background: #153243;
+  padding: 66px 0;
+}
+.historias-platforms-heading { text-align: center; margin: 0 auto 34px; }
+.historias-platforms h2 { color: #fff; margin-bottom: 0; }
+.historias-platforms-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.historias-platform {
+  min-width: 0;
+  min-height: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  background: rgba(255,255,255,.07);
+  padding: 20px 12px;
+  text-align: center;
+  font-weight: 700;
+}
+.historias-platform-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  font-size: 1.65rem;
+}
+.historias-platform-youtube .historias-platform-icon,
+.historias-platform-youtube-music .historias-platform-icon { color: #ff0000; }
+.historias-platform-spotify .historias-platform-icon { color: #1db954; }
+.historias-platform-apple-podcasts .historias-platform-icon { color: #872ec4; }
+.historias-platform-amazon-music .historias-platform-icon { color: #25d1da; }
+
 .historias-form-section { background: #fffdf9; }
 .historias-form-grid { align-items: start; }
 .historias-form-copy { padding-top: 18px; }
@@ -73,5 +119,13 @@
   .historias-section { padding: 66px 0; }
   .historias-steps, .historias-fields { grid-template-columns: 1fr; }
   .historias-field-wide { grid-column: auto; }
+  .historias-platforms { padding: 52px 0; }
+  .historias-platforms-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .historias-platform { min-height: 108px; padding: 16px 8px; }
+  .historias-platform:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .historias-form-card { padding: 22px 18px; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .historias-platforms-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

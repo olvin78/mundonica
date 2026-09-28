@@ -56,12 +56,43 @@
     </div>
   </section>
 
+  <section id="proximamente-plataformas" class="historias-platforms" aria-labelledby="plataformas-title">
+    <div class="historias-shell">
+      <div class="historias-platforms-heading">
+        <h2 id="plataformas-title">Próximamente también en</h2>
+      </div>
+      <ul class="historias-platforms-list" aria-label="Plataformas previstas">
+        <li class="historias-platform historias-platform-youtube">
+          <span class="historias-platform-icon" aria-hidden="true"><i class="bi bi-youtube"></i></span>
+          <span>YouTube</span>
+        </li>
+        <li class="historias-platform historias-platform-spotify">
+          <span class="historias-platform-icon" aria-hidden="true"><i class="bi bi-spotify"></i></span>
+          <span>Spotify</span>
+        </li>
+        <li class="historias-platform historias-platform-apple-podcasts">
+          <span class="historias-platform-icon" aria-hidden="true"><i class="bi bi-apple"></i></span>
+          <span>Apple Podcasts</span>
+        </li>
+        <li class="historias-platform historias-platform-youtube-music">
+          <span class="historias-platform-icon" aria-hidden="true"><i class="bi bi-music-note-beamed"></i></span>
+          <span>YouTube Music</span>
+        </li>
+        <li class="historias-platform historias-platform-amazon-music">
+          <span class="historias-platform-icon" aria-hidden="true"><i class="bi bi-amazon"></i></span>
+          <span>Amazon Music</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <section id="proponer-historia" class="historias-section historias-form-section" aria-labelledby="form-title">
     <div class="historias-shell historias-form-grid">
       <div class="historias-form-copy">
         <p class="historias-kicker">Da el primer paso</p>
         <h2 id="form-title">Propón tu historia</h2>
         <p>Cuéntanos lo esencial. El equipo de Mundónica revisará cada propuesta con calma y tratará tus datos de forma privada.</p>
+        <p>No tiene un coste, Mundonica se mantiene por donativos y publicidad.</p>
         <div class="historias-contact"><i class="bi bi-envelope"></i><div><span>También puedes escribirnos</span><a href="mailto:info@mundonica.org">info@mundonica.org</a></div></div>
       </div>
 
@@ -75,7 +106,7 @@
           {% if form.non_field_errors %}<div class="historias-form-error">{{ form.non_field_errors }}</div>{% endif %}
           <div class="historias-fields">
             {% for field in form.visible_fields %}
-              <div class="historias-field{% if field.errors %} has-error{% endif %}{% if field.name == 'historia' %} historias-field-wide{% endif %}">
+              <div class="historias-field{% if field.errors %} has-error{% endif %}{% if field.name == 'historia' or field.name == 'preferencia_grabacion' or field.name == 'lugar_grabacion' %} historias-field-wide{% endif %}">
                 {{ field.label_tag }}
                 {{ field }}
                 {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}

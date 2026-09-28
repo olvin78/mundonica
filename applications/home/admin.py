@@ -93,8 +93,14 @@ admin.site.register(SeccionMenu, SeccionMenuAdmin)
 
 @admin.register(HistoriaPropuesta)
 class HistoriaPropuestaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'ciudad_pais', 'email', 'estado', 'recibida_en')
-    list_filter = ('estado', 'preferencia_contacto', 'recibida_en')
+    list_display = (
+        'nombre', 'ciudad_pais', 'email', 'preferencia_grabacion',
+        'lugar_grabacion', 'estado', 'recibida_en',
+    )
+    list_filter = (
+        'estado', 'preferencia_contacto', 'preferencia_grabacion',
+        'lugar_grabacion', 'recibida_en',
+    )
     list_editable = ('estado',)
     search_fields = ('nombre', 'ciudad_pais', 'email', 'historia')
     readonly_fields = ('recibida_en', 'actualizada_en')
