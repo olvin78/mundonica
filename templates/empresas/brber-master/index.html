@@ -4,8 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Barbería</title>
-    <meta name="description" content="">
+    <title>{{ datos.nombre_de_la_empresa }} | Mundónica</title>
+    <meta name="description" content="{% if datos.descripcion_directorio %}{{ datos.descripcion_directorio|striptags|truncatechars:155 }}{% else %}{{ datos.relacion_nicaragua|striptags|truncatechars:155 }}{% endif %}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="website"><meta property="og:title" content="{{ datos.nombre_de_la_empresa }} | Mundónica"><meta property="og:description" content="{% if datos.descripcion_directorio %}{{ datos.descripcion_directorio|striptags|truncatechars:155 }}{% else %}{{ datos.relacion_nicaragua|striptags|truncatechars:155 }}{% endif %}"><meta property="og:url" content="{{ canonical_url }}">
+    <script type="application/ld+json">{{ schema_json|safe }}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'empresas/brber-master/assets/img/favicon.ico' %}">
@@ -595,8 +598,8 @@
                                     </div>
                                 </div>
                                 <div class="footer-number">
-                                    <h4 class="footer-phone">{{ datos.telefono|default:'7885 3222' }}</h4>
-                                    <p class="footer-email">{{ datos.email|default:'youremail@gmail.com' }}</p>
+                                    <h4 class="footer-phone">{{ datos.telefono|default:'' }}</h4>
+                                    <p class="footer-email">{{ datos.email|default:'' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -629,8 +632,8 @@
                                     </div>
                                     -->
                                     <div class="footer-contact-info">
-                                        <p class="info1"><i class="bi bi-clock"></i> <span class="footer-horario">{{ datos.horario|default:'9AM - 20PM' }}</span></p>
-                                        <p class="info1"><i class="bi bi-geo-alt"></i> <span class="footer-direccion">{{ datos.direccion|default:'Calle Mayor 12, Madrid' }}</span></p>
+                                        {% if datos.horario %}<p class="info1"><i class="bi bi-clock"></i> <span class="footer-horario">{{ datos.horario }}</span></p>{% endif %}
+                                        {% if mostrar_direccion and datos.direccion %}<p class="info1"><i class="bi bi-geo-alt"></i> <span class="footer-direccion">{{ datos.direccion }}</span></p>{% endif %}
                                         <p class="info1"><i class="bi bi-globe"></i> <span class="footer-ciudad">{{ datos.ciudad|default:'' }}</span><span class="footer-sep">, </span><span class="footer-pais">{{ datos.pais|default:'' }}</span></p>
                                     </div>
                                 </div>
@@ -715,9 +718,9 @@
     <script src="{% static 'empresas/brber-master/assets/js/plugins.js' %}"></script>
     <script src="{% static 'empresas/brber-master/assets/js/main.js' %}"></script>
     <!--leaflet-->
-    <script>
+    {% if mostrar_mapa %}<script>
         // Initialize the Leaflet map
-        var map = L.map('map').setView([12.136389, -86.251389], 13); // Set the view to Managua, Nicaragua (or change coordinates)
+        var map = L.map('map').setView([{{ datos.latitud }}, {{ datos.longitud }}], 13); // Set the view to Managua, Nicaragua (or change coordinates)
     
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -726,9 +729,9 @@
         }).addTo(map);
     
         // Add a marker to the map (optional)
-        L.marker([{{ datos.latitud|default:"12.136389" }}, {{ datos.longitud|default:"-86.251389" }}]).addTo(map)
+        L.marker([{{ datos.latitud }}, {{ datos.longitud }}]).addTo(map)
             .bindPopup("<strong>{{ datos.nombre_de_la_empresa|escapejs }}</strong><br>{% if datos.ciudad %}{{ datos.ciudad|escapejs }}, {{ datos.pais|default:''|escapejs }}{% else %}Ubicación exacta{% endif %}")
             .openPopup();
-    </script>
+    </script>{% endif %}
     </body>
 </html>

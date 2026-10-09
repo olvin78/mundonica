@@ -57,20 +57,26 @@ class TipoEmpresaViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class EmpresaViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Empresa.objects.select_related('tipo_empresa', 'propietario_sitio_web').all()
+    queryset = Empresa.objects.filter(estado_publicacion="published").select_related("tipo_empresa")
     serializer_class = EmpresaSerializer
     permission_classes = [permissions.AllowAny]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['nombre_de_la_empresa', 'pais', 'ciudad', 'titulo_header', 'nombreUrl']
-    ordering_fields = ['nombre_de_la_empresa', 'pais', 'ciudad']
+    search_fields = ["nombre_de_la_empresa", "pais", "region", "provincia", "ciudad", "titulo_header", "nombreUrl", "descripcion_directorio", "relacion_nicaragua"]
+    ordering_fields = ["nombre_de_la_empresa", "pais", "region", "provincia", "ciudad"]
     lookup_field = 'nombreUrl'
     lookup_url_kwarg = 'nombreUrl'
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        tipo = self.request.query_params.get('tipo')
-        if tipo:
-            queryset = queryset.filter(tipo_empresa__nombre__iexact=tipo)
+        filters = {
+            "tipo": "tipo_empresa__nombre__iexact", "tipo_perfil": "tipo_perfil",
+            "pais": "pais__iexact", "region": "region__iexact",
+            "provincia": "provincia__iexact", "ciudad": "ciudad__iexact",
+        }
+        for parameter, lookup in filters.items():
+            value = self.request.query_params.get(parameter)
+            if value:
+                queryset = queryset.filter(**{lookup: value})
         return queryset
 
 

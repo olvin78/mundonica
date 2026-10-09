@@ -60,57 +60,37 @@ class TipoEmpresaSerializer(serializers.ModelSerializer):
 
 class EmpresaSerializer(serializers.ModelSerializer):
     tipo_empresa = TipoEmpresaSerializer(read_only=True)
-    propietario_sitio_web = UserSerializer(read_only=True)
-    imagen_logo_empresa = serializers.SerializerMethodField()
-    imagen_fondo_header = serializers.SerializerMethodField()
-    imagen_header = serializers.SerializerMethodField()
-    imagen1_nosotros = serializers.SerializerMethodField()
-    imagen2_nosotros_fondo = serializers.SerializerMethodField()
-    imagen3_nosotros = serializers.SerializerMethodField()
-    imagen1_plato_menu = serializers.SerializerMethodField()
-    imagen2_plato_menu = serializers.SerializerMethodField()
-    imagen3_plato_menu = serializers.SerializerMethodField()
-    imagen4_plato_menu = serializers.SerializerMethodField()
-    imagen5_plato_menu = serializers.SerializerMethodField()
-    imagen6_plato_menu = serializers.SerializerMethodField()
-    imagen7_plato_menu = serializers.SerializerMethodField()
-    imagen8_plato_menu = serializers.SerializerMethodField()
-    imagen9_plato_menu = serializers.SerializerMethodField()
-    imagen10_plato_menu = serializers.SerializerMethodField()
-    imagen1_comentario = serializers.SerializerMethodField()
-    imagen2_comentario = serializers.SerializerMethodField()
-    imagen3_comentario = serializers.SerializerMethodField()
-    imagen_chef1 = serializers.SerializerMethodField()
-    imagen_chef2 = serializers.SerializerMethodField()
-    imagen_chef3 = serializers.SerializerMethodField()
-    imagen_servicio1 = serializers.SerializerMethodField()
-    imagen_servicio2 = serializers.SerializerMethodField()
-    imagen_servicio3 = serializers.SerializerMethodField()
-    imagen_servicio4 = serializers.SerializerMethodField()
-    imagen_trabajador1 = serializers.SerializerMethodField()
-    imagen_trabajador2 = serializers.SerializerMethodField()
-    imagen_trabajador3 = serializers.SerializerMethodField()
-    imagen_tarifa1 = serializers.SerializerMethodField()
-    imagen_tarifa2 = serializers.SerializerMethodField()
-    imagen1_galeria = serializers.SerializerMethodField()
-    imagen2_galeria = serializers.SerializerMethodField()
-    imagen3_galeria = serializers.SerializerMethodField()
-    imagen4_galeria = serializers.SerializerMethodField()
-    imagen5_galeria = serializers.SerializerMethodField()
-    imagen6_galeria = serializers.SerializerMethodField()
-    imagen7_galeria = serializers.SerializerMethodField()
-    imagen8_galeria = serializers.SerializerMethodField()
-    imagen9_galeria = serializers.SerializerMethodField()
-    imagen10_galeria = serializers.SerializerMethodField()
-    imagen11_galeria = serializers.SerializerMethodField()
-    imagen_portada_reserva = serializers.SerializerMethodField()
-    imagen = serializers.SerializerMethodField()
-    imagen_portada = serializers.SerializerMethodField()
+    direccion = serializers.SerializerMethodField()
+    latitud = serializers.SerializerMethodField()
+    longitud = serializers.SerializerMethodField()
 
     class Meta:
         model = Empresa
-        fields = '__all__'
-        depth = 1
+        fields = [
+            "id", "nombre_de_la_empresa", "nombreUrl", "tipo_empresa", "tipo_perfil",
+            "descripcion_directorio", "pais", "region", "provincia", "ciudad",
+            "direccion", "codigo_postal", "telefono", "email", "sitio_web",
+            "latitud", "longitud", "relacion_nicaragua", "imagen_logo_empresa",
+            "imagen_header", "imagen", "imagen_portada", "titulo_header",
+            "subtitulo1_header", "subtitulo2_header",
+        ]
+
+    def get_direccion(self, obj):
+        return obj.direccion if obj.direccion_es_publica() else None
+
+    def _coordenadas_publicables(self, obj):
+        if not obj.direccion_es_publica() or not obj.coordenadas_validas():
+            return False
+        try:
+            return obj.importacion_perfil.precision_localizacion == "address_unverified"
+        except Exception:
+            return True
+
+    def get_latitud(self, obj):
+        return obj.latitud if self._coordenadas_publicables(obj) else None
+
+    def get_longitud(self, obj):
+        return obj.longitud if self._coordenadas_publicables(obj) else None
 
     def get_imagen_logo_empresa(self, obj):
         return url_or_null(obj.imagen_logo_empresa, self.context.get('request'))

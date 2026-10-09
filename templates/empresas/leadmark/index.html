@@ -4,15 +4,17 @@
 <head>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Start your development with LeadMark landing page.">
-    <meta name="author" content="Devcrud">
-    <title>Nicaragüense por gracia de Dios.</title>
+    <meta name="description" content="{% if datos.descripcion_directorio %}{{ datos.descripcion_directorio|striptags|truncatechars:155 }}{% else %}{{ datos.relacion_nicaragua|striptags|truncatechars:155 }}{% endif %}">
+    <meta name="author" content="Mundónica">
+    <title>{{ datos.nombre_de_la_empresa }} | Mundónica</title>
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="website"><meta property="og:title" content="{{ datos.nombre_de_la_empresa }} | Mundónica"><meta property="og:description" content="{% if datos.descripcion_directorio %}{{ datos.descripcion_directorio|striptags|truncatechars:155 }}{% else %}{{ datos.relacion_nicaragua|striptags|truncatechars:155 }}{% endif %}"><meta property="og:url" content="{{ canonical_url }}">
+    <script type="application/ld+json">{{ schema_json|safe }}</script>
         <!--leaflet-->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <!--leaflet-->
 
-    </style>
     <!-- font icons -->
     <link rel="stylesheet" href="{% static 'empresas/leadmarck/assets/vendors/themify-icons/css/themify-icons.css' %}">
     <!-- Bootstrap + LeadMark main styles -->
@@ -667,28 +669,16 @@
             <div class="row align-items-center">
                 <div class="col-md-5 my-3">
                     <h6 class="mb-0">teléfono</h6>
-                    {% if datos.telefono %}
-                    <p class="mb-4">{{ datos.telefono }}</p>
-                    {% else %}
-                    <p class="mb-4">+123-456-7890</p>
-                    {% endif %}
+                    {% if datos.telefono %}<p class="mb-4">{{ datos.telefono }}</p>{% endif %}
 
                     <h6 class="mb-0">Dirección</h6>
-                    {% if datos.direccion %}
-                    <p class="mb-4">{{ datos.direccion }}</p>
-                    {% else %}
-                    <p class="mb-4">12345 Estos credenciales se estan desarrollando</p>
-                    {% endif %}
+                    {% if mostrar_direccion and datos.direccion %}<p class="mb-4">{{ datos.direccion }}</p>{% endif %}
                     <h6 class="mb-0">Ciudad / País</h6>
                     <p class="mb-4"><span class="contact-ciudad">{{ datos.ciudad|default:"" }}</span><span class="contact-sep">, </span><span class="contact-pais">{{ datos.pais|default:"" }}</span></p>
                     <h6 class="mb-0">Horario</h6>
-                    <p class="mb-4">{{ datos.horario|default:"9AM - 20PM" }}</p>
+                    {% if datos.horario %}<p class="mb-4">{{ datos.horario }}</p>{% endif %}
                     <h6 class="mb-0">Correo</h6>
-                    {% if datos.email %}
-                    <p class="mb-0">{{ datos.email }}</p>
-                    {% else %}
-                    <p class="mb-0">info@miweb.com</p>
-                    {% endif %}
+                    {% if datos.email %}<p class="mb-0">{{ datos.email }}</p>{% endif %}
                 </div>
                 <div class="col-md-7">
                     <!-- Formulario de correo desactivado: ahora solo se muestra información de contacto
@@ -713,9 +703,9 @@
                     -->
                     <div class="contact-info-extras">
                         <h4 class="mb-4">Contáctanos</h4>
-                        <p class="mb-3"><i class="bi bi-telephone"></i> {{ datos.telefono|default:'+123-456-7890' }}</p>
-                        <p class="mb-3"><i class="bi bi-envelope"></i> {{ datos.email|default:'info@miweb.com' }}</p>
-                        <p class="mb-0"><i class="bi bi-geo-alt"></i> {{ datos.direccion|default:'12345 Dirección' }}</p>
+                        {% if datos.telefono %}<p class="mb-3"><i class="bi bi-telephone"></i> {{ datos.telefono }}</p>{% endif %}
+                        {% if datos.email %}<p class="mb-3"><i class="bi bi-envelope"></i> {{ datos.email }}</p>{% endif %}
+                        {% if mostrar_direccion and datos.direccion %}<p class="mb-0"><i class="bi bi-geo-alt"></i> {{ datos.direccion }}</p>{% endif %}
                     </div>
                 </div>
             </div>
@@ -763,9 +753,9 @@
     <script src="{% static 'empresas/leadmarck/assets/js/leadmark.js' %}"></script>
        <!-- Script Leaflet JS -->
     <!--leaflet-->
-    <script>
+    {% if mostrar_mapa %}<script>
         // Initialize the Leaflet map
-        var map = L.map('map').setView([{{ datos.latitud|default:"12.136389" }}, {{ datos.longitud|default:"-86.251389"}}], 13); // Set the view to Managua, Nicaragua (or change coordinates)
+        var map = L.map('map').setView([{{ datos.latitud }}, {{ datos.longitud }}], 13); // Set the view to Managua, Nicaragua (or change coordinates)
     
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -773,9 +763,9 @@
         }).addTo(map);
     
         // Add a marker to the map (optional)
-        L.marker([{{ datos.latitud|default:"12.136389" }},{{ datos.longitud|default:"-86.251389" }}]).addTo(map)
+        L.marker([{{ datos.latitud }},{{ datos.longitud }}]).addTo(map)
             .bindPopup("<strong>{{ datos.nombre_de_la_empresa|escapejs }}</strong><br>{% if datos.ciudad %}{{ datos.ciudad|escapejs }}, {{ datos.pais|default:''|escapejs }}{% else %}Ubicación exacta{% endif %}")
             .openPopup();
-    </script>
+    </script>{% endif %}
 </body>
 </html>

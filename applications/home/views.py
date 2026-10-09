@@ -1,4 +1,6 @@
 from typing import Any
+import json
+from urllib.parse import urlencode
 #actualizar el campo de perfil de abogados 
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
@@ -125,23 +127,23 @@ class HomePageView(ListView):
         context['form'] = ContactForm(initial=contact_form_draft)
 
         # Agrega los datos de otros modelos al contexto paa ver el mapa en el index
-        context['empresas'] = Empresa.objects.filter(tipo_empresa__nombre='Empresa')
+        context['empresas'] = Empresa.objects.filter(estado_publicacion="published", tipo_empresa__nombre="Empresa")
         # Carrusel de negocios destacados (los más recientes en unirse a la plataforma)
         context['empresas_destacadas'] = (
-            Empresa.objects.select_related('tipo_empresa')
+            Empresa.objects.filter(estado_publicacion="published").select_related("tipo_empresa")
             .annotate(rating_avg=Avg('valoraciones__puntuacion'), rating_count=Count('valoraciones', distinct=True))
             .order_by('-id')[:12]
         )
         # Marca los negocios más recientes como "Nuevo" (mismo orden -id de arriba, sin inventar fechas)
         context['ids_nuevos'] = set(
-            Empresa.objects.order_by('-id').values_list('id', flat=True)[:2]
+            Empresa.objects.filter(estado_publicacion="published").order_by("-id").values_list('id', flat=True)[:2]
         )
 
         # Estadísticas REALES (no cifras de marketing infladas): conteo en vivo de la BD.
         # Meta de fundadores: es una meta pública declarada, no un dato actual disfrazado de real.
-        context['total_negocios'] = Empresa.objects.count()
+        context['total_negocios'] = Empresa.objects.filter(estado_publicacion="published").count()
         context['total_ciudades'] = (
-            Empresa.objects.exclude(ciudad__isnull=True).exclude(ciudad__exact='')
+            Empresa.objects.filter(estado_publicacion="published").exclude(ciudad__isnull=True).exclude(ciudad__exact='')
             .values('ciudad').distinct().count()
         )
         context['meta_fundadores'] = 50
@@ -158,8 +160,8 @@ class HomePageView(ListView):
             context['mis_valoraciones'] = {}
         context['embajadas'] = Embajada.objects.all()
         context['consulados'] = Consulado.objects.all()
-        context['peluquerias'] = Empresa.objects.filter(tipo_empresa__nombre='Peluquería')
-        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
+        context["peluquerias"] = Empresa.objects.filter(estado_publicacion="published", tipo_empresa__nombre="Peluquería")
+        context["comercios"] = Empresa.objects.filter(estado_publicacion="published", tipo_empresa__nombre="Comercio")
         # En tu vista filtrado de empresa por usuario
         if self.request.user.is_authenticated:
             context['empresasDeUsuario'] = Empresa.objects.filter(propietario_sitio_web=self.request.user)
@@ -323,8 +325,7 @@ class EmpresasView(ListView):
     context_object_name = 'datos'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.all()
+        return super().get_queryset().filter(estado_publicacion="published")
 
 
 class AbogadosListView(ListView):
@@ -365,11 +366,14 @@ class MapaListView(ListView):
         context = super().get_context_data(**kwargs)
         
         # Agrega los datos de otros modelos al contexto paa ver el mapa en el index
-        context['empresas'] = Empresa.objects.all()
+        perfiles_mapa = [e for e in Empresa.objects.filter(estado_publicacion="published").select_related("tipo_empresa", "importacion_perfil") if e.coordenadas_validas() and e.direccion_es_publica() and (not hasattr(e, "importacion_perfil") or e.importacion_perfil.precision_localizacion == "address_unverified")]
+        context["empresas"] = perfiles_mapa
         context['embajadas'] = Embajada.objects.all()
         context['consulados'] = Consulado.objects.all()
-        context['peluquerias'] = Empresa.objects.filter(tipo_empresa__nombre='Peluquería')
-        context['comercios'] = Empresa.objects.filter(tipo_empresa__nombre='Comercio')
+        context["peluquerias"] = [e for e in perfiles_mapa if e.tipo_empresa and e.tipo_empresa.plantilla_perfil == "peluqueria"]
+        context["comercios"] = [e for e in perfiles_mapa if e.tipo_empresa and e.tipo_empresa.plantilla_perfil == "comercio"]
+        context["restaurantes"] = [e for e in perfiles_mapa if e.tipo_empresa and e.tipo_empresa.plantilla_perfil == "restaurante"]
+        context["otros_perfiles"] = [e for e in perfiles_mapa if not e.tipo_empresa or e.tipo_empresa.plantilla_perfil == "generica"]
 
         return context
 
@@ -599,24 +603,49 @@ def contact_view(request):
 
 
 class EmpresaDetailView(DetailView):
-    model = Empresa  # Especifica el modelo
+    model = Empresa
     context_object_name = 'datos'
     slug_field = 'nombreUrl'
     slug_url_kwarg = 'nombreUrl'
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related("tipo_empresa")
+        if self.request.user.is_staff and self.request.user.has_perm("home.change_empresa"):
+            return queryset
+        return queryset.filter(estado_publicacion="published")
 
     def get_template_names(self):
         # Obtén el objeto actual basado en el slug
         empresa = self.get_object()
 
-        # Verifica el tipo de empresa y asigna el template correspondiente
-        if empresa.tipo_empresa.nombre == 'Peluquería':  # Ajusta según el campo relacionado
-            return ['empresas/brber-master/index.html']
-        elif empresa.tipo_empresa.nombre == 'Restaurante':
-            return ['empresas/yummy-red/index.html']
-        elif empresa.tipo_empresa.nombre == 'Comercio':
-            return ['empresas/leadmark/index.html']
-        else:
-            return ['empresas/leadmark/index.html']  # Template por defecto
+        plantilla = empresa.tipo_empresa.plantilla_perfil if empresa.tipo_empresa else "generica"
+        if empresa.identificador_externo or (plantilla != "generica" and not (empresa.imagen_header or empresa.imagen_fondo_header or empresa.imagen_portada)):
+            plantilla = "generica"
+        return {
+            "peluqueria": ["empresas/brber-master/index.html"],
+            "restaurante": ["empresas/yummy-red/index.html"],
+            "comercio": ["empresas/leadmark/index.html"],
+        }.get(plantilla, ["perfil_generico.html"])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        empresa = self.object
+        tiene_importacion = hasattr(empresa, "importacion_perfil")
+        context["mostrar_direccion"] = empresa.direccion_es_publica()
+        context["mostrar_mapa"] = empresa.coordenadas_validas() and empresa.direccion_es_publica() and (not tiene_importacion or empresa.importacion_perfil.precision_localizacion == "address_unverified")
+        context["canonical_url"] = self.request.build_absolute_uri()
+        schema_type = {"business": "LocalBusiness", "organization": "Organization", "person": "Person", "project": "Project"}.get(empresa.tipo_perfil, "Thing")
+        schema = {"@context": "https://schema.org", "@type": schema_type, "name": empresa.nombre_de_la_empresa, "url": context["canonical_url"]}
+        if empresa.descripcion_directorio or empresa.relacion_nicaragua:
+            schema["description"] = empresa.descripcion_directorio or empresa.relacion_nicaragua
+        if empresa.sitio_web:
+            schema["sameAs"] = [empresa.sitio_web]
+        if empresa.email:
+            schema["email"] = empresa.email
+        if empresa.telefono:
+            schema["telephone"] = empresa.telefono
+        context["schema_json"] = json.dumps(schema, ensure_ascii=False).replace("<", "\\u003c")
+        return context
 
 
 class RecetaDetailView(DetailView):
@@ -702,10 +731,15 @@ class ActualizartipoEmpresaView(LoginRequiredMixin, UpdateView):
     template_name = 'empresa_crear.html'
     success_url = reverse_lazy('home_app:home')  # Cambia por la URL adecuada
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.is_staff and self.request.user.has_perm("home.change_empresa"):
+            return queryset
+        return queryset.filter(propietario_sitio_web=self.request.user)
+
     def get_form_class(self):
         # Obtener la instancia de la empresa usando el id (pk) proporcionado en la URL
-        empresa = get_object_or_404(Empresa, pk=self.kwargs['pk'])
-        print(empresa.tipo_empresa)
+        empresa = self.get_object()
         # Seleccionar el formulario basado en el tipo de empresa
         if empresa.tipo_empresa.nombre == 'Peluquería':
             return PeluqueriaForm
@@ -720,7 +754,7 @@ class ActualizartipoEmpresaView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        empresa = get_object_or_404(Empresa, pk=self.kwargs['pk'])
+        empresa = self.get_object()
         slug = {
             'Peluquería': 'peluqueria',
             'Restaurante': 'restaurante',
@@ -731,8 +765,6 @@ class ActualizartipoEmpresaView(LoginRequiredMixin, UpdateView):
         return ctx
 
     def form_valid(self, form):
-        # Asignar el usuario actual antes de guardar
-        form.instance.propietario_sitio_web = self.request.user
         return super().form_valid(form)
 
 
@@ -759,7 +791,7 @@ class ToggleFavoritoView(LoginRequiredMixin, View):
     """Guarda/quita una empresa de los favoritos del usuario. Responde en JSON si la llamada es AJAX."""
 
     def post(self, request, pk):
-        empresa = get_object_or_404(Empresa, pk=pk)
+        empresa = get_object_or_404(Empresa, pk=pk, estado_publicacion="published")
         favorito, created = Favorito.objects.get_or_create(usuario=request.user, empresa=empresa)
         if created:
             liked = True
@@ -780,7 +812,7 @@ class MisFavoritosView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return (
-            Empresa.objects.filter(favoritos__usuario=self.request.user)
+            Empresa.objects.filter(favoritos__usuario=self.request.user, estado_publicacion="published")
             .select_related('tipo_empresa')
             .annotate(rating_avg=Avg('valoraciones__puntuacion'), rating_count=Count('valoraciones', distinct=True))
             .order_by('-favoritos__fecha')
@@ -810,7 +842,7 @@ class RateEmpresaView(LoginRequiredMixin, View):
     """Crea o actualiza la valoración (1-5 estrellas) del usuario sobre un negocio."""
 
     def post(self, request, pk):
-        empresa = get_object_or_404(Empresa, pk=pk)
+        empresa = get_object_or_404(Empresa, pk=pk, estado_publicacion="published")
         try:
             puntuacion = int(request.POST.get('puntuacion', 0))
         except (TypeError, ValueError):
@@ -858,18 +890,33 @@ class ExplorarNegociosView(ListView):
 
     def get_queryset(self):
         queryset = (
-            Empresa.objects.select_related('tipo_empresa')
+            Empresa.objects.filter(estado_publicacion="published").select_related("tipo_empresa")
             .annotate(rating_avg=Avg('valoraciones__puntuacion'), rating_count=Count('valoraciones', distinct=True))
         )
 
-        tipo = self.request.GET.get('tipo', '').strip()
+        tipo = self.request.GET.get("tipo", "").strip()
+        tipo_perfil = self.request.GET.get("tipo_perfil", "").strip()
+        pais = self.request.GET.get("pais", "").strip()
+        region = self.request.GET.get("region", "").strip()
+        provincia = self.request.GET.get("provincia", "").strip()
+        ciudad = self.request.GET.get("ciudad", "").strip()
+        if tipo_perfil:
+            queryset = queryset.filter(tipo_perfil=tipo_perfil)
+        if pais:
+            queryset = queryset.filter(pais=pais)
+        if region:
+            queryset = queryset.filter(region=region)
+        if provincia:
+            queryset = queryset.filter(provincia=provincia)
+        if ciudad:
+            queryset = queryset.filter(ciudad=ciudad)
         if tipo:
             queryset = queryset.filter(tipo_empresa__nombre=tipo)
 
         q = self.request.GET.get('q', '').strip()
         if q:
             queryset = queryset.filter(
-                Q(nombre_de_la_empresa__icontains=q) | Q(ciudad__icontains=q) | Q(pais__icontains=q)
+                Q(nombre_de_la_empresa__icontains=q) | Q(ciudad__icontains=q) | Q(pais__icontains=q) | Q(descripcion_directorio__icontains=q) | Q(relacion_nicaragua__icontains=q)
             )
 
         orden = self.request.GET.get('orden', 'recientes')
@@ -884,11 +931,18 @@ class ExplorarNegociosView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categorias'] = TipoEmpresa.objects.annotate(total=Count('empresas')).order_by('nombre')
-        context['total_negocios'] = Empresa.objects.count()
+        context["categorias"] = TipoEmpresa.objects.annotate(total=Count("empresas", filter=Q(empresas__estado_publicacion="published"))).filter(total__gt=0).order_by("nombre")
+        context['total_negocios'] = Empresa.objects.filter(estado_publicacion="published").count()
         context['tipo_actual'] = self.request.GET.get('tipo', '')
         context['q_actual'] = self.request.GET.get('q', '')
         context['orden_actual'] = self.request.GET.get('orden', 'recientes')
+        context["tipos_perfil"] = Empresa.TIPOS_PERFIL
+        for field in ("tipo_perfil", "pais", "region", "provincia", "ciudad"):
+            context[f"{field}_actual"] = self.request.GET.get(field, "")
+        context["filtros_query"] = "&" + urlencode({field: self.request.GET.get(field) for field in ("tipo_perfil", "pais", "region", "provincia", "ciudad") if self.request.GET.get(field)}) if any(self.request.GET.get(field) for field in ("tipo_perfil", "pais", "region", "provincia", "ciudad")) else ""
+        publicados = Empresa.objects.filter(estado_publicacion="published")
+        for field in ("pais", "region", "provincia", "ciudad"):
+            context[f"{field}_opciones"] = publicados.exclude(**{field: ""}).values_list(field, flat=True).distinct().order_by(field)
 
         # Dividir empresas para renderizado estilo TripAdvisor (Destacadas vs Normales)
         empresas_list = list(context['empresas'])
@@ -903,7 +957,7 @@ class ExplorarNegociosView(ListView):
             context['favoritos_ids'] = set()
 
         context['ids_nuevos'] = set(
-            Empresa.objects.order_by('-id').values_list('id', flat=True)[:2]
+            Empresa.objects.filter(estado_publicacion="published").order_by("-id").values_list('id', flat=True)[:2]
         )
         return context
 

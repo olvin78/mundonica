@@ -6,10 +6,14 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Soy de nicaragua</title>
-  <meta name="description" content="">
+  <title>{{ datos.nombre_de_la_empresa }} | Mundónica</title>
+  <meta name="description" content="{% if datos.descripcion_directorio %}{{ datos.descripcion_directorio|striptags|truncatechars:155 }}{% else %}{{ datos.relacion_nicaragua|striptags|truncatechars:155 }}{% endif %}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta property="og:type" content="website"><meta property="og:title" content="{{ datos.nombre_de_la_empresa }} | Mundónica"><meta property="og:description" content="{% if datos.descripcion_directorio %}{{ datos.descripcion_directorio|striptags|truncatechars:155 }}{% else %}{{ datos.relacion_nicaragua|striptags|truncatechars:155 }}{% endif %}"><meta property="og:url" content="{{ canonical_url }}">
+  <script type="application/ld+json">{{ schema_json|safe }}</script>
   <meta name="keywords" content="">
 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.9.4/dist/leaflet.css">
   <!-- Favicons -->
   <link href="{% static 'empresas/yummy-red/assets/img/favicon.png' %}" rel="icon">
   <link href="{% static 'empresas/yummy-red/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
@@ -932,8 +936,8 @@
             -->
             <div class="reservation-contact">
               <h3>Reserva llamando</h3>
-              <p><i class="bi bi-telephone"></i> <strong>{{ datos.telefono|default:'+34 612 345 678' }}</strong></p>
-              <p><i class="bi bi-envelope"></i> {{ datos.email|default:'info@mundo-nica.com' }}</p>
+              {% if datos.telefono %}<p><i class="bi bi-telephone"></i> <strong>{{ datos.telefono }}</strong></p>{% endif %}
+              {% if datos.email %}<p><i class="bi bi-envelope"></i> {{ datos.email }}</p>{% endif %}
             </div>
           </div><!-- End Reservation Form -->
 
@@ -1069,7 +1073,7 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="mb-5">
-          <iframe style="width: 100%; height: 400px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen=""></iframe>
+          {% if mostrar_mapa %}<div id="map" style="width: 100%; height: 400px;" aria-label="Mapa de {{ datos.nombre_de_la_empresa }}"></div>{% endif %}
         </div><!-- End Google Maps -->
 
         <div class="row gy-4">
@@ -1079,7 +1083,7 @@
               <i class="icon bi bi-geo-alt flex-shrink-0"></i>
               <div>
                 <h3>Dirección</h3>
-                <p>{{ datos.direccion }}</p>
+                {% if mostrar_direccion and datos.direccion %}<p>{{ datos.direccion }}</p>{% endif %}
                 <p class="contact-location"><span class="contact-ciudad">{{ datos.ciudad|default:"" }}</span><span class="contact-sep">, </span><span class="contact-pais">{{ datos.pais|default:"" }}</span></p>
               </div>
             </div>
@@ -1163,7 +1167,7 @@
           <i class="bi bi-geo-alt icon"></i>
           <div class="address">
             <h4>Dirección</h4>
-            <p>{{ datos.direccion }}</p>
+            {% if mostrar_direccion and datos.direccion %}<p>{{ datos.direccion }}</p>{% endif %}
             <p class="footer-location"><span class="footer-ciudad">{{ datos.ciudad|default:"" }}</span><span class="footer-sep">, </span><span class="footer-pais">{{ datos.pais|default:"" }}</span></p>
           </div>
 
@@ -1176,12 +1180,12 @@
             <p>
               <strong>Teléfono:</strong>
               <span class="footer-phone">
-                  {{ datos.telefono|default:"Número no disponible" }}
+                  {% if datos.telefono %}{{ datos.telefono }}{% endif %}
               </span><br>
 
               <strong>Correo:</strong>
               <span class="footer-email">
-                  {{ datos.correo|default:"yuyu@gmail.com" }}
+                  {% if datos.email %}{{ datos.email }}{% endif %}
               </span><br>
 
             </p>
@@ -1253,6 +1257,8 @@
 }
 </script>
 
+<script src="https://unpkg.com/leaflet.9.4/dist/leaflet.js"></script>
+{% if mostrar_mapa %}<script>const map=L.map('map').setView([{{ datos.latitud }},{{ datos.longitud }}],13);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);L.marker([{{ datos.latitud }},{{ datos.longitud }}]).addTo(map).bindPopup('{{ datos.nombre_de_la_empresa|escapejs }}');</script>{% endif %}
 </body>
 
 </html>

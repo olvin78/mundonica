@@ -88,8 +88,11 @@ class Embajada(models.Model):
 
 
 class TipoEmpresa(models.Model):
+    PLANTILLAS = [("generica", "Genérica"), ("restaurante", "Restaurante"), ("peluqueria", "Peluquería"), ("comercio", "Comercio")]
+
     nombre = models.CharField(max_length=100, unique=True, verbose_name="Nombre del Tipo de Empresa")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
+    plantilla_perfil = models.CharField(max_length=20, choices=PLANTILLAS, default="generica", verbose_name="Plantilla de perfil")
 
     class Meta:
         verbose_name = "Tipo de Empresa"
@@ -107,13 +110,31 @@ class TipoEmpresa(models.Model):
 
 
 class Empresa(models.Model):
+    TIPOS_PERFIL = [("business", "Empresa o negocio"), ("organization", "Asociación u organización"), ("person", "Profesional o persona"), ("project", "Proyecto o iniciativa")]
+    ESTADOS_PUBLICACION = [("draft", "Borrador"), ("published", "Publicado"), ("archived", "Archivado")]
+    ESTADOS_VERIFICACION = [("pending", "Pendiente"), ("verified", "Verificado"), ("rejected", "Rechazado")]
+    ESTADOS_RECLAMACION = [("unclaimed", "No reclamado"), ("claimed", "Reclamado"), ("under_review", "En revisión")]
+
 
         ##############   Header de empresa #############
     propietario_sitio_web = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="Propietario", null=True, blank=True)
     
     nombre_de_la_empresa = models.CharField(max_length=100, verbose_name="Nombre de la Empresa")
-    tipo_empresa = models.ForeignKey(TipoEmpresa,on_delete=models.CASCADE,related_name="empresas",verbose_name="Elija el tipo de Empresa",null=True, blank=True,default=1)
+    tipo_empresa = models.ForeignKey(TipoEmpresa,on_delete=models.CASCADE,related_name="empresas",verbose_name="Elija el tipo de Empresa",null=True, blank=True)
     nombreUrl = models.SlugField(max_length=150, unique=True, null=True, blank=True,verbose_name="Elija el nombre de la URl sin espacios")
+    identificador_externo = models.CharField(max_length=50, unique=True, null=True, blank=True, db_index=True, verbose_name="Identificador externo")
+    tipo_perfil = models.CharField(max_length=20, choices=TIPOS_PERFIL, default="business", db_index=True, verbose_name="Tipo de perfil")
+    estado_publicacion = models.CharField(max_length=20, choices=ESTADOS_PUBLICACION, default="draft", db_index=True, verbose_name="Estado de publicación")
+    descripcion_directorio = models.TextField(blank=True, verbose_name="Descripción del directorio")
+    region = models.CharField(max_length=100, blank=True, verbose_name="Comunidad autónoma o región")
+    provincia = models.CharField(max_length=100, blank=True, verbose_name="Provincia")
+    codigo_postal = models.CharField(max_length=20, blank=True, verbose_name="Código postal")
+    sitio_web = models.URLField(max_length=500, blank=True, verbose_name="Página web")
+    relacion_nicaragua = models.TextField(blank=True, verbose_name="Relación con Nicaragua")
+    estado_verificacion = models.CharField(max_length=20, choices=ESTADOS_VERIFICACION, default="pending", db_index=True, verbose_name="Estado de verificación")
+    estado_reclamacion = models.CharField(max_length=20, choices=ESTADOS_RECLAMACION, default="unclaimed", db_index=True, verbose_name="Estado de reclamación")
+    fecha_incorporacion = models.DateTimeField(default=timezone.now, editable=False)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
     #Header titulo en la página como texto principal h1
     header_activo = models.BooleanField(blank=True, null=True, verbose_name="Agregar sección de Cabecera", default=True)
     titulo_header = models.CharField(max_length=100, verbose_name="titulo header", null=True, blank=True)
@@ -403,6 +424,67 @@ class Empresa(models.Model):
 
     def __str__(self):
         return f"{self.nombre_de_la_empresa} - {self.titulo_header}, - {self.subtitulo2_header}"
+
+
+    def esta_publicado(self):
+        return self.estado_publicacion == "published"
+
+    def coordenadas_validas(self):
+        try:
+            latitud = float((self.latitud or "").replace(",", "."))
+            longitud = float((self.longitud or "").replace(",", "."))
+        except (TypeError, ValueError):
+            return False
+        return -90 <= latitud <= 90 and -180 <= longitud <= 180
+
+    def direccion_es_publica(self):
+        try:
+            return self.importacion_perfil.tipo_direccion == "business_or_public"
+        except ImportacionPerfil.DoesNotExist:
+            return True
+
+
+class ImportacionPerfil(models.Model):
+    TIPOS_DIRECCION = [("business_or_public", "Negocio o dirección pública"), ("institutional_contact", "Contacto institucional"), ("registry_not_for_visit", "Registral, no visitable"), ("not_provided", "No informada")]
+    PRECISIONES = [("address_unverified", "Dirección sin verificar"), ("municipality_only", "Solo municipio"), ("unknown", "Desconocida")]
+    RESULTADOS = [("valid", "Válido"), ("warnings", "Con advertencias"), ("error", "Error")]
+
+    empresa = models.OneToOneField(Empresa, on_delete=models.CASCADE, related_name="importacion_perfil", null=True, blank=True)
+    identificador_externo = models.CharField(max_length=50, unique=True)
+    fuente_informacion = models.CharField(max_length=100, default="mundonica_perfiles.csv")
+    url_origen = models.URLField(max_length=500, blank=True)
+    hoja_origen = models.CharField(max_length=100, blank=True)
+    notas_internas = models.TextField(blank=True)
+    canal_contacto = models.CharField(max_length=50, blank=True)
+    disponibilidad_contacto = models.CharField(max_length=50, blank=True)
+    tipo_direccion = models.CharField(max_length=30, choices=TIPOS_DIRECCION, blank=True)
+    precision_localizacion = models.CharField(max_length=30, choices=PRECISIONES, blank=True)
+    verificacion_original = models.CharField(max_length=255, blank=True)
+    hash_fila = models.CharField(max_length=64, blank=True, db_index=True)
+    primera_importacion = models.DateTimeField(auto_now_add=True)
+    ultima_importacion = models.DateTimeField(auto_now=True)
+    resultado_validacion = models.CharField(max_length=20, choices=RESULTADOS, default="valid")
+    datos_ultima_importacion = models.JSONField(default=dict, blank=True)
+    campos_en_conflicto = models.JSONField(default=dict, blank=True)
+    errores_validacion = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = "Importación de perfil"
+        verbose_name_plural = "Importaciones de perfiles"
+        ordering = ["identificador_externo"]
+
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.empresa_id and self.empresa.identificador_externo != self.identificador_externo:
+            raise ValidationError({"identificador_externo": "Debe coincidir con el identificador externo de la empresa."})
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        nombre = self.empresa.nombre_de_la_empresa if self.empresa_id else "fila rechazada"
+        return f"{self.identificador_externo} — {nombre}"
 
 ######################## este es el modelo de tipo de empresa de Catalogo ###################################
 ###############################################################################################################

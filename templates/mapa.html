@@ -313,6 +313,12 @@ const restaurantes = L.layerGroup([
 {% endif %}
 
 
+const otrosPerfiles = L.layerGroup([
+{% for perfil in otros_perfiles %}
+  L.marker([{{ perfil.latitud }}, {{ perfil.longitud }}]).bindPopup("<strong>{{ perfil.nombre_de_la_empresa|escapejs }}</strong><br>{{ perfil.get_tipo_perfil_display|escapejs }}"),
+{% endfor %}
+]);
+
 // Capas base (mapas de fondo)
 var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -343,6 +349,7 @@ var baseMaps = {
 };
 
 var overlayMaps = {
+  "Otros perfiles": otrosPerfiles,
   "Consulados": consulados,
   "Embajadas": embajadas,
   {% if restaurantes %}
@@ -362,6 +369,7 @@ L.control.layers(baseMaps, overlayMaps).addTo(map);
 // Opcional: Mostrar ciertas capas por defecto
 consulados.addTo(map);
 embajadas.addTo(map);
+otrosPerfiles.addTo(map);
 
 {% if restaurantes %}
 restaurantes.addTo(map);
